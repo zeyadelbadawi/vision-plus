@@ -1,0 +1,53 @@
+{
+  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese for layout review only — NOT client-approved. Final Chinese is supplied by the client (D-12)." },
+  "solutions": {
+    "mobile-nvr-mobile-surveillance": { "name": "移动NVR与移动监控", "summary": "移动视频监控、车辆监控、GPS定位、网络连接、远程监控与车队智能管理。" },
+    "cctv-security-systems": { "name": "闭路电视与安防系统", "summary": "先进监控、智能视频管理、分析、录像与集中安防。" },
+    "access-control": { "name": "门禁控制", "summary": "对人员、车辆、访客及安全区域的智能化管理。" },
+    "networking-ict": { "name": "网络与信息通信技术", "summary": "连接人员、设备、系统与信息的可靠且可扩展的基础设施。" },
+    "elv-systems": { "name": "弱电系统", "summary": "支撑现代互联环境的一体化弱电（ELV）基础设施。" },
+    "audio-visual": { "name": "音视频系统", "summary": "专业的沟通、协作、演示、数字标牌与音频解决方案。" },
+    "smart-building-home-automation": { "name": "智能楼宇与家居自动化", "summary": "为楼宇和住宅技术提供智能控制的互联环境。" },
+    "fire-alarm-systems": { "name": "火灾报警系统", "summary": "可靠的探测、通报、集成与生命安全解决方案。" }
+  },
+  "services": {
+    "system-design-consultancy": { "name": "系统设计与咨询" },
+    "project-management": { "name": "项目管理" },
+    "installation-commissioning": { "name": "安装与调试" },
+    "testing-integration": { "name": "测试与集成" },
+    "maintenance-support": { "name": "维护与售后支持" },
+    "technical-training-support": { "name": "技术培训与支持" }
+  },
+  "approach": [
+    { "title": "理解", "text": "我们从目标、环境、用户和运营需求出发。" },
+    { "title": "设计", "text": "将需求转化为务实且可扩展的系统架构。" },
+    { "title": "选型", "text": "从适用性、兼容性、可靠性和全生命周期价值评估技术。" },
+    { "title": "交付", "text": "以专业方式协调、安装、管理项目并形成文档。" },
+    { "title": "集成", "text": "将各项技术连接为一个协同运作的环境。" },
+    { "title": "验证", "text": "依据约定的要求对系统进行测试和调试。" },
+    { "title": "赋能", "text": "为客户团队提供有效运行系统所需的培训与知识。" },
+    { "title": "支持", "text": "我们持续提供维护、技术协助、优化以及未来升级。" }
+  ],
+  "industries": {
+    "transportation-fleet": { "name": "交通与车队", "summary": "移动NVR、车辆监控、GPS定位、网络连接、远程监控、车队安防与集中管理。" },
+    "government-public-sector": { "name": "政府与公共部门", "summary": "一体化安防、通信、网络、监控、出入管理与智能基础设施。" },
+    "commercial-corporate": { "name": "商业与企业", "summary": "融合信息通信技术、安防、门禁、音视频、自动化与集中管理的互联办公环境。" },
+    "banking-finance": { "name": "银行与金融", "summary": "以安全为核心的环境，需要监控、受控出入、可靠连接与集中监测。" },
+    "hospitality": { "name": "酒店与餐旅", "summary": "围绕宾客体验、安防、沟通、娱乐、网络连接与运营效率而设计的技术。" },
+    "retail": { "name": "零售", "summary": "安防、网络连接、数字化沟通、监控、分析以及多站点技术管理。" },
+    "education": { "name": "教育", "summary": "融合安防、网络、出入管理、通信与交通监控的互联学习环境。" },
+    "healthcare": { "name": "医疗健康", "summary": "支撑安防、出入管理、通信、网络及关键运营环境的可靠基础设施。" },
+    "residential": { "name": "住宅", "summary": "一体化安防、网络、娱乐、出入管理与智能家居自动化。" },
+    "logistics-warehousing": { "name": "物流与仓储", "summary": "设施监控、出入管理、信息通信基础设施、车队监控、移动监控与集中控制。" },
+    "industrial-manufacturing": { "name": "工业与制造", "summary": "稳健的安防、网络、通信、监控及一体化技术基础设施。" }
+  },
+  "productCategories": {
+    "cctv-surveillance": { "name": "闭路电视与监控" },
+    "access-control": { "name": "门禁控制" },
+    "time-attendance": { "name": "考勤管理" },
+    "video-intercom": { "name": "可视对讲" },
+    "intrusion-alarm": { "name": "入侵报警" },
+    "fire-life-safety": { "name": "消防与生命安全" },
+    "security-networking": { "name": "安防网络" }
+  }
+}

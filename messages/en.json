@@ -1,0 +1,88 @@
+{
+  "_meta": { "status": "draft", "note": "Team-authored interface microcopy — awaiting client approval (D-18)." },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main",
+    "mobileNav": "Site menu",
+    "openMenu": "Menu",
+    "closeMenu": "Close menu",
+    "language": "Language",
+    "home": "VISION PLUS — home",
+    "pauseLogos": "Pause logo movement",
+    "playLogos": "Play logo movement",
+    "footerNav": "Footer",
+    "solutionsDiagram": "Eight capabilities connected as one system",
+    "approachProgress": "Lifecycle steps"
+  },
+  "nav": {
+    "solutions": "Solutions",
+    "products": "Products",
+    "industries": "Industries",
+    "services": "Services",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "featured": "Featured capability",
+    "allSolutions": "All solutions",
+    "howWeWork": "How we work",
+    "allIndustries": "All industries",
+    "allServices": "All services",
+    "ourApproach": "Our approach",
+    "askProducts": "Ask about products",
+    "productsIntro": "Technology categories we supply and integrate.",
+    "aboutLinks": {
+      "whoWeAre": "Who we are",
+      "journey": "Our journey",
+      "visionMission": "Vision & mission",
+      "values": "Core values",
+      "why": "Why Vision Plus",
+      "partners": "Technology partners",
+      "companyProfile": "Company profile"
+    }
+  },
+  "cta": {
+    "consultation": "Request a consultation",
+    "exploreSolutions": "Explore solutions",
+    "exploreMnvr": "Explore Mobile NVR",
+    "allIndustries": "Explore industries",
+    "approach": "See how we work",
+    "ourStory": "Our story",
+    "viewProjects": "View projects",
+    "viewPartners": "Technology partners",
+    "companyProfile": "View company profile",
+    "learnMore": "Learn more"
+  },
+  "home": {
+    "capabilitiesLabel": "Capabilities",
+    "marketsLabel": "Markets",
+    "step": "Step {n}"
+  },
+  "footer": {
+    "solutions": "Solutions",
+    "company": "Company",
+    "offices": "Offices",
+    "rights": "© {year} VISION PLUS. All rights reserved.",
+    "privacy": "Privacy policy",
+    "language": "Language"
+  },
+  "placeholder": {
+    "address": "Office address — pending client",
+    "phone": "Phone — pending client",
+    "email": "Email — pending client",
+    "projectPending": "Awaiting client project data",
+    "projectNote": "Projects are published only with real data and client permission.",
+    "partnerPending": "Partner logo",
+    "partnerNote": "Partner logos appear once confirmed by Vision Plus."
+  },
+  "preview": {
+    "label": "Preview",
+    "title": "Preview build — not for publication",
+    "copyStatus": "Copy: {status}",
+    "statusApproved": "approved English",
+    "statusDraftMt": "draft translation for layout review (not approved)",
+    "logo": "Interim wordmark — official logo pending",
+    "images": "Image slots show placeholders until real photography is delivered",
+    "sections": "Projects and Partners are hidden in production until real data exists",
+    "close": "Close"
+  }
+}

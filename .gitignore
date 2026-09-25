@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.env*
+!.env.example
+/public/fonts/noto-sans-sc/
+/public/_img/
+/test-results/
+/playwright-report/
+/tests/screenshots/
+.DS_Store

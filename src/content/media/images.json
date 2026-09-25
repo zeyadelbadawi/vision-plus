@@ -1,0 +1,11 @@
+{
+  "_readme": "Final (designer-delivered) images. Add an entry per asset ID when the real file is placed at the manifest's replacement path, then run `pnpm assets:check && pnpm build`. See docs/IMAGE_ASSET_MANIFEST.md §6.",
+  "_example": {
+    "HOME-HERO": {
+      "status": "final",
+      "focal": { "x": 0.5, "y": 0.45 },
+      "alt": { "en": "…", "ar": "…", "zh": "…" }
+    }
+  },
+  "assets": {}
+}

@@ -1,0 +1,88 @@
+{
+  "_meta": { "status": "draft-mt", "note": "Draft Arabic UI strings — NOT client-approved (D-13, D-18)." },
+  "a11y": {
+    "skipToContent": "انتقل إلى المحتوى",
+    "mainNav": "الرئيسية",
+    "mobileNav": "قائمة الموقع",
+    "openMenu": "القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "language": "اللغة",
+    "home": "VISION PLUS — الصفحة الرئيسية",
+    "pauseLogos": "إيقاف حركة الشعارات",
+    "playLogos": "تشغيل حركة الشعارات",
+    "footerNav": "تذييل الصفحة",
+    "solutionsDiagram": "ثماني قدرات مترابطة كمنظومة واحدة",
+    "approachProgress": "مراحل دورة الحياة"
+  },
+  "nav": {
+    "solutions": "الحلول",
+    "products": "المنتجات",
+    "industries": "القطاعات",
+    "services": "الخدمات",
+    "projects": "المشاريع",
+    "about": "من نحن",
+    "contact": "تواصل معنا",
+    "featured": "قدرة مميزة",
+    "allSolutions": "جميع الحلول",
+    "howWeWork": "كيف نعمل",
+    "allIndustries": "جميع القطاعات",
+    "allServices": "جميع الخدمات",
+    "ourApproach": "منهجيتنا",
+    "askProducts": "استفسر عن المنتجات",
+    "productsIntro": "فئات التقنيات التي نوردها ونُكاملها.",
+    "aboutLinks": {
+      "whoWeAre": "من نحن",
+      "journey": "رحلتنا",
+      "visionMission": "الرؤية والرسالة",
+      "values": "قيمنا",
+      "why": "لماذا VISION PLUS",
+      "partners": "شركاء التقنية",
+      "companyProfile": "الملف التعريفي"
+    }
+  },
+  "cta": {
+    "consultation": "اطلب استشارة",
+    "exploreSolutions": "استكشف الحلول",
+    "exploreMnvr": "استكشف Mobile NVR",
+    "allIndustries": "استكشف القطاعات",
+    "approach": "تعرّف على طريقة عملنا",
+    "ourStory": "قصتنا",
+    "viewProjects": "عرض المشاريع",
+    "viewPartners": "شركاء التقنية",
+    "companyProfile": "عرض الملف التعريفي",
+    "learnMore": "اعرف المزيد"
+  },
+  "home": {
+    "capabilitiesLabel": "القدرات",
+    "marketsLabel": "الأسواق",
+    "step": "المرحلة {n}"
+  },
+  "footer": {
+    "solutions": "الحلول",
+    "company": "الشركة",
+    "offices": "المكاتب",
+    "rights": "© {year} VISION PLUS. جميع الحقوق محفوظة.",
+    "privacy": "سياسة الخصوصية",
+    "language": "اللغة"
+  },
+  "placeholder": {
+    "address": "عنوان المكتب — بانتظار العميل",
+    "phone": "الهاتف — بانتظار العميل",
+    "email": "البريد الإلكتروني — بانتظار العميل",
+    "projectPending": "بانتظار بيانات المشروع من العميل",
+    "projectNote": "لا تُنشر المشاريع إلا ببيانات حقيقية وبإذن العميل.",
+    "partnerPending": "شعار الشريك",
+    "partnerNote": "تظهر شعارات الشركاء بعد تأكيدها من VISION PLUS."
+  },
+  "preview": {
+    "label": "معاينة",
+    "title": "نسخة معاينة — ليست للنشر",
+    "copyStatus": "النصوص: {status}",
+    "statusApproved": "الإنجليزية المعتمدة",
+    "statusDraftMt": "ترجمة مبدئية لمراجعة التخطيط (غير معتمدة)",
+    "logo": "شعار نصي مؤقت — الشعار الرسمي قيد الانتظار",
+    "images": "تظهر خانات الصور كعناصر نائبة إلى حين تسليم الصور الحقيقية",
+    "sections": "قسما المشاريع والشركاء مخفيان في النسخة النهائية إلى حين توفر بيانات حقيقية",
+    "close": "إغلاق"
+  }
+}
