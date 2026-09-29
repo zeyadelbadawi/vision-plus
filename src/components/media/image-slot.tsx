@@ -48,8 +48,9 @@ export function ImageSlot({ id, locale, sizes, fill, priority, maskReveal, class
   );
 
   if (final && slot.desktop) {
-    const d = slot.desktop;
-    const m = slot.mobile ?? d;
+    // Real delivered sizes win over the manifest spec, so srcsets never advertise pixels that don't exist.
+    const d = final.size ?? slot.desktop;
+    const m = final.mobileSize ?? slot.mobile ?? d;
     const base = variantBase(slot.path);
     const mBase = slot.mobilePath ? variantBase(slot.mobilePath) : null;
     const set = (b: string, w: number, fmt: string) => variantWidths(w).map((x) => `${b}-${x}.${fmt} ${x}w`).join(', ');

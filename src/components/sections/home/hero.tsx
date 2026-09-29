@@ -3,7 +3,8 @@ import type { Locale } from '@/i18n/locales';
 import { getCompany } from '@/content';
 import { ImageSlot } from '@/components/media/image-slot';
 import { HeroPlaceholderArt } from '@/components/media/hero-placeholder-art';
-import { isFinal } from '@/content/media';
+import { getFinal, isFinal } from '@/content/media';
+import { cn } from '@/lib/cn';
 import { isPreview } from '@/lib/env';
 import { LinkButton } from '@/components/ui/button';
 
@@ -19,8 +20,11 @@ export async function HomeHero({ locale }: { locale: Locale }) {
     getTranslations({ locale, namespace: 'home' }),
   ]);
 
+  // Artwork-specific composition: text stays on the side the artwork keeps clear (e.g. a banner with a
+  // baked-in logo on the right keeps text on the left in every locale, including RTL).
+  const textZone = getFinal('HOME-HERO')?.textZone ?? 'inline-start';
   return (
-    <section aria-labelledby="hero-title" className="hero theme-dark">
+    <section aria-labelledby="hero-title" className={cn('hero theme-dark', textZone === 'left' && 'hero--text-left')}>
       <div className="hero__media">
         <ImageSlot id="HOME-HERO" locale={locale} fill priority maskReveal sizes="100vw" labelAlign="top-end" />
         {isPreview && !isFinal('HOME-HERO') && <HeroPlaceholderArt />}

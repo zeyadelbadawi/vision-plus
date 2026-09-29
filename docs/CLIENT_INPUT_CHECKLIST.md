@@ -63,7 +63,7 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 
 | ID | Item | Details | Priority |
 |---|---|---|---|
-| D-05 | **Official logo** | Vector files (SVG, plus AI/EPS or PDF): horizontal logo on light and dark backgrounds, a symbol or monogram if one exists, and any brand rules (clear space, minimum size). The mock-ups show a wordmark, but we cannot recreate a logo from a picture. | 🔴 |
+| D-05 | **Official logo** | Vector files (SVG, plus AI/EPS or PDF): horizontal logo on light and dark backgrounds, a symbol or monogram if one exists, and any brand rules (clear space, minimum size). The hero banner you sent (2026-09-29) shows the "VisionPlus" logo with the VP monogram. Please send it as vectors so the header and footer can use it; we cannot trace a logo from a picture. Also confirm whether "From vision to execution" is approved copy. | 🔴 |
 | D-25 | **Missing source files** | `03_Vision_Plus_Website_Sitemap.png` (we used the copy inside the PDF) and **`05_Vision_Plus_Reference_Image.jpg` (not received; contents unknown)** | 🟠 |
 
 ## D. Content
@@ -92,7 +92,7 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 
 | ID | Item | Details | Priority |
 |---|---|---|---|
-| D-11 | **Website imagery** | All slots in `IMAGE_ASSET_MANIFEST.md` / `image-asset-manifest.csv`, with exact sizes, crops and file names. Real photography only, with consent from people who appear and permission for client sites. | P1 slots 🔴 |
+| D-11 | **Website imagery** | All slots in `IMAGE_ASSET_MANIFEST.md` / `image-asset-manifest.csv`, with exact sizes, crops and file names. Real photography only, with consent from people who appear and permission for client sites. **HOME-HERO is received** (1500×938). Please also send the full-size master (2880×1800) and, ideally, a dedicated 4:5 mobile version (1080×1350). | P1 slots 🔴 |
 | D-21 | **Smart Building photo sequence** *(optional upgrade)* | 3–5 photos of the **same real interior** from a fixed tripod position (lights off, zones on, shades down, and so on), for the interactive Smart Building scene | 🟢 |
 | D-26 | **Mobile NVR footage** *(optional)* | Real, cleared camera footage or screenshots from a Vision Plus mobile surveillance system, used as an optional short clip | 🟢 |
 

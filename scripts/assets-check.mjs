@@ -11,6 +11,7 @@ const mode = process.env.CONTENT_MODE === 'production' ? 'production' : 'preview
 const manifest = JSON.parse(readFileSync('src/content/media/manifest.generated.json', 'utf8'));
 const finals = JSON.parse(readFileSync('src/content/media/images.json', 'utf8')).assets;
 const errors = [];
+const warnings = [];
 const blockers = [];
 
 // 1. manifest sync
@@ -33,16 +34,18 @@ for (const [id, f] of Object.entries(finals)) {
   const slot = manifest[id];
   if (!slot) { errors.push(`images.json: unknown slot ${id}`); continue; }
   for (const l of ['en', 'ar', 'zh']) if (!f.alt?.[l]) errors.push(`${id}: missing ${l} alt text`);
-  const check = async (path, want) => {
+  const check = async (path, want, declared) => {
     if (!existsSync(path)) return errors.push(`${id}: missing file ${path}`);
     if (!want) return;
     const m = await sharp(path).metadata();
     const r = m.width / m.height, w = want.width / want.height;
+    // Ratio is structural (the layout reserves it) → error. Resolution is quality → warning.
     if (Math.abs(r - w) / w > 0.01) errors.push(`${id}: ${path} ratio ${m.width}×${m.height} ≠ manifest ${want.width}×${want.height}`);
-    if (m.width < want.width) errors.push(`${id}: ${path} is ${m.width}px wide; manifest asks for ${want.width}px`);
+    if (m.width < want.width) warnings.push(`${id}: ${path} is ${m.width}×${m.height}; manifest master is ${want.width}×${want.height} (soft on high-DPI screens — request the full-size master)`);
+    if (declared && (declared.width !== m.width || declared.height !== m.height)) errors.push(`${id}: images.json declares ${declared.width}×${declared.height} but ${path} is ${m.width}×${m.height}`);
   };
-  await check(slot.path, slot.desktop);
-  if (slot.mobilePath) await check(slot.mobilePath, slot.mobile);
+  await check(slot.path, slot.desktop, f.size);
+  if (slot.mobilePath) await check(slot.mobilePath, slot.mobile, f.mobileSize);
 }
 
 // 4. production gate
@@ -52,6 +55,7 @@ for (const id of referenced) {
 }
 blockers.push('BRAND-LOGO (P0): official logo not supplied (D-05) — interim wordmark in use');
 
+if (warnings.length) console.warn(`assets:check — ${warnings.length} warning(s):\n  ` + warnings.join('\n  '));
 if (errors.length) {
   console.error(`assets:check — ${errors.length} error(s):\n  ` + errors.join('\n  '));
   process.exit(1);

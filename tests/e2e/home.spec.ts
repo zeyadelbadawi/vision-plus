@@ -41,7 +41,17 @@ test('image placeholders are hidden from assistive technology and carry manifest
   const slots = page.locator('[data-slot]');
   expect(await slots.count()).toBeGreaterThan(10);
   for (const s of await slots.all()) await expect(s).toHaveAttribute('aria-hidden', 'true');
-  await expect(page.locator('[data-slot="HOME-HERO"]')).toHaveCount(1);
+});
+
+test('the supplied hero banner renders as a responsive picture with localized alt text', async ({ page }) => {
+  for (const [code, fragment] of [['en', 'VISION PLUS logo'], ['ar', 'شعار VISION PLUS'], ['zh', 'VISION PLUS 标志']] as const) {
+    await page.goto(`/${code}`);
+    const img = page.locator('.hero picture img');
+    await expect(img).toHaveAttribute('alt', new RegExp(fragment));
+    expect(await img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    await expect(page.locator('[data-slot="HOME-HERO"]')).toHaveCount(0);
+    await expect(page.locator('.hero-art')).toHaveCount(0);
+  }
 });
 
 test.describe('desktop navigation', () => {

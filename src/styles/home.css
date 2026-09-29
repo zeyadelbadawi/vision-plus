@@ -51,7 +51,13 @@ html:lang(en) .hero__markets { text-transform: uppercase; letter-spacing: 0.14em
 @media (max-width: 767px) {
   .hero__ctas .btn { flex: 1 1 100%; }
 }
-@media (min-width: 768px) {
+/* Tablet: stack the desktop (16:10) art above the text so nothing crops into the artwork */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero__media { aspect-ratio: 16 / 10; }
+  .hero__body { padding-block: 48px 36px; }
+  .hero__foot { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; }
+}
+@media (min-width: 1024px) {
   .hero {
     display: flex;
     flex-direction: column;
@@ -63,16 +69,47 @@ html:lang(en) .hero__markets { text-transform: uppercase; letter-spacing: 0.14em
     background:
       linear-gradient(to top, rgb(31 31 31 / 0.92) 0%, rgb(31 31 31 / 0.55) 34%, rgb(31 31 31 / 0) 70%);
   }
-  .hero__body { padding-block: 0 44px; }
+  .hero__body { padding-block: 0 56px; }
   .hero__seam { margin-block: 40px 32px; }
   .hero__foot { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; }
+}
+@media (min-width: 768px) {
   .hero__capabilities ul { justify-content: space-between; flex-wrap: nowrap; }
   .hero__capabilities li { padding-inline: 0; margin-inline-end: 0; border-inline-end: 0; }
-  .hero__capabilities li + li { position: relative; }
 }
+
+/* Artwork with a baked-in element on the right (textZone: 'left'): the text column stays on the
+   physical left in every locale, the seam stops at the column (never crosses the logo), and the scrim
+   darkens only the text side and the bottom strip. Column = 54% of the viewport minus page padding. */
 @media (min-width: 1024px) {
-  .hero__body { padding-block-end: 56px; }
+  .hero--text-left { --text-col: calc(54vw - var(--page-pad)); }
+  .hero--text-left .hero__scrim {
+    background:
+      linear-gradient(to top, rgb(31 31 31 / 0.9) 0%, rgb(31 31 31 / 0) 20%),
+      linear-gradient(to right, rgb(31 31 31 / 0.62) 0%, rgb(31 31 31 / 0.5) 42%, rgb(31 31 31 / 0) 62%);
+  }
+  .hero--text-left .hero__markets,
+  .hero--text-left .hero__title,
+  .hero--text-left .hero__seam,
+  .hero--text-left .hero__foot { width: min(100%, var(--text-col)); }
+  .hero--text-left .hero__title { max-width: none; }
+  .hero--text-left .hero__seam { margin-inline-end: 0; }
+  .hero--text-left .hero__foot { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .hero--text-left .hero__descriptor { color: var(--color-gray-light); }
+  [dir='rtl'] .hero--text-left .hero__markets,
+  [dir='rtl'] .hero--text-left .hero__title,
+  [dir='rtl'] .hero--text-left .hero__seam,
+  [dir='rtl'] .hero--text-left .hero__foot { margin-inline-start: auto; }
+  [dir='rtl'] .hero--text-left .hero__markets { justify-content: flex-start; }
+  .hero--text-left .hero__markets { color: var(--color-gray-light); }
+  /* RTL text is anchored on its right edge, so that edge must sit inside the dark zone */
+  [dir='rtl'] .hero--text-left { --text-col: calc(46vw - var(--page-pad)); }
 }
+@media (min-width: 1440px) {
+  .hero--text-left { --text-col: calc(54vw - var(--page-pad) - (100vw - var(--container-max)) / 2); }
+  [dir='rtl'] .hero--text-left { --text-col: calc(46vw - var(--page-pad) - (100vw - var(--container-max)) / 2); }
+}
+
 
 /* Preview-only hero linework (HeroPlaceholderArt) */
 .hero-art { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; }

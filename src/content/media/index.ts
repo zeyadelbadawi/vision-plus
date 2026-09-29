@@ -28,6 +28,17 @@ export interface FinalAsset {
   status: 'final';
   focal?: { x: number; y: number };
   alt: Record<Locale, string>;
+  /** Actual delivered master size, when it differs from the manifest (e.g. an undersized interim file). */
+  size?: { width: number; height: number };
+  mobileSize?: { width: number; height: number };
+  /**
+   * Where overlaid text may sit for this specific artwork. Default = manifest safe zones
+   * (text at the inline-start, mirrored in RTL). 'left' pins text to the physical left in every
+   * locale — used when the art has a baked-in element (e.g. a logo) on the right.
+   */
+  textZone?: 'inline-start' | 'left';
+  /** Provenance note (who supplied it, any derivation such as a crop). */
+  source?: string;
   /** Optional mirrored-composition variant for RTL (never auto-flipped). */
   rtlPath?: string;
 }
