@@ -10,7 +10,11 @@ const proc = spawn('npx', ['wrangler', 'dev', '--local', '--port', String(PORT),
   env: { ...process.env, WRANGLER_SEND_METRICS: 'false', CI: '1' },
   detached: true, // own process group, so wrangler AND its workerd child are stopped together
 });
-const stop = () => { try { process.kill(-proc.pid, 'SIGTERM'); } catch {} };
+const stop = () => {
+  try {
+    process.kill(-proc.pid, 'SIGTERM');
+  } catch {}
+};
 process.on('exit', stop);
 let log = '';
 proc.stdout.on('data', (d) => (log += d));
@@ -22,7 +26,12 @@ const get = (path, init = {}) => fetch(BASE + path, { redirect: 'manual', ...ini
 
 async function waitReady() {
   for (let i = 0; i < 120; i++) {
-    try { await fetch(`${BASE}/api/contact/health`); return; } catch { await new Promise((r) => setTimeout(r, 500)); }
+    try {
+      await fetch(`${BASE}/api/contact/health`);
+      return;
+    } catch {
+      await new Promise((r) => setTimeout(r, 500));
+    }
   }
   throw new Error('wrangler dev did not start:\n' + log);
 }
@@ -44,15 +53,28 @@ try {
   r = await get('/?utm_source=test', { headers: { 'Accept-Language': 'fr-FR' } });
   check('/ unsupported language → /en, query kept', r.headers.get('location') === '/en?utm_source=test', r.headers.get('location'));
 
-  for (const [l, lang, dir] of [['en', 'en', 'ltr'], ['ar', 'ar', 'rtl'], ['zh', 'zh-Hans', 'ltr']]) {
+  for (const [l, lang, dir] of [
+    ['en', 'en', 'ltr'],
+    ['ar', 'ar', 'rtl'],
+    ['zh', 'zh-Hans', 'ltr'],
+  ]) {
     r = await get(`/${l}`);
     const html = await r.text();
     check(`/${l} 200 with lang="${lang}" dir="${dir}"`, r.status === 200 && html.includes(`<html lang="${lang}" dir="${dir}"`), String(r.status));
-    check(`/${l} asset response carries _headers (CSP, nosniff, noindex)`, !!r.headers.get('content-security-policy') && r.headers.get('x-content-type-options') === 'nosniff' && /noindex/.test(r.headers.get('x-robots-tag') ?? ''));
+    check(
+      `/${l} asset response carries _headers (CSP, nosniff, noindex)`,
+      !!r.headers.get('content-security-policy') &&
+        r.headers.get('x-content-type-options') === 'nosniff' &&
+        /noindex/.test(r.headers.get('x-robots-tag') ?? ''),
+    );
   }
 
   r = await get('/en/');
-  check('/en/ → redirect to /en (html_handling)', [301, 307, 308].includes(r.status) && r.headers.get('location')?.endsWith('/en'), `${r.status} ${r.headers.get('location')}`);
+  check(
+    '/en/ → redirect to /en (html_handling)',
+    [301, 307, 308].includes(r.status) && r.headers.get('location')?.endsWith('/en'),
+    `${r.status} ${r.headers.get('location')}`,
+  );
 
   r = await get('/api/contact/health');
   const body = await r.json();
@@ -70,7 +92,31 @@ try {
   const html = await (await get('/en')).text();
   const asset = html.match(/\/_next\/static\/[^"]+\.js/)?.[0];
   r = await get(asset);
-  check('/_next/static/* is immutable-cached', r.status === 200 && /immutable/.test(r.headers.get('cache-control') ?? ''), `${asset} ${r.headers.get('cache-control')}`);
+  check(
+    '/_next/static/* is immutable-cached',
+    r.status === 200 && /immutable/.test(r.headers.get('cache-control') ?? ''),
+    `${asset} ${r.headers.get('cache-control')}`,
+  );
+  r = await get('/ar/solutions/mobile-nvr-mobile-surveillance');
+  check(
+    'solution page /ar/solutions/mobile-nvr-mobile-surveillance → 200 rtl',
+    r.status === 200 && (await r.text()).includes('<html lang="ar" dir="rtl"'),
+    String(r.status),
+  );
+  r = await get('/zh/contact');
+  check('template page /zh/contact → 200', r.status === 200, String(r.status));
+  r = await get('/en/solutions/video-surveillance');
+  check(
+    'sitemap alias → 301 to the canonical page',
+    r.status === 301 && /\/en\/solutions\/cctv-security-systems$/.test(r.headers.get('location') ?? ''),
+    `${r.status} ${r.headers.get('location')}`,
+  );
+  r = await get('/ar/services/security-consultation');
+  check(
+    'sitemap alias keeps the #anchor',
+    r.status === 301 && /\/ar\/services#system-design-consultancy$/.test(r.headers.get('location') ?? ''),
+    `${r.status} ${r.headers.get('location')}`,
+  );
   r = await get('/fonts/noto-sans-sc/noto-sans-sc.css');
   check('/fonts/* cached 30 days', r.status === 200 && /max-age=2592000/.test(r.headers.get('cache-control') ?? ''), r.headers.get('cache-control'));
 } catch (e) {

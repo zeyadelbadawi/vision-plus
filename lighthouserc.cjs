@@ -16,9 +16,18 @@ module.exports = {
     collect: {
       startServerCommand: 'node scripts/serve-static.mjs',
       startServerReadyPattern: 'serving out/',
-      url: ['http://localhost:4173/en', 'http://localhost:4173/ar', 'http://localhost:4173/zh'],
+      url: [
+        'http://localhost:4173/en',
+        'http://localhost:4173/ar',
+        'http://localhost:4173/zh',
+        'http://localhost:4173/en/solutions/mobile-nvr-mobile-surveillance',
+      ],
       numberOfRuns: 3,
-      settings: { chromeFlags: '--no-sandbox --headless=new' },
+      // Colour contrast is enforced by the Playwright + axe suite on every template × locale × 2 viewports,
+      // excluding only the interim text wordmark (a logotype: WCAG 1.4.3 sets no contrast requirement).
+      // Lighthouse cannot exclude one element, so its contrast audit is skipped rather than weakening the
+      // accessibility = 100 gate for everything else.
+      settings: { chromeFlags: '--no-sandbox --headless=new', skipAudits: ['color-contrast'] },
     },
     assert: {
       assertMatrix: [

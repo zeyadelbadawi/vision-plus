@@ -44,10 +44,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const locale = requested as Locale;
   setRequestLocale(locale);
   const meta = localeMeta[locale];
-  const [ta, tp] = await Promise.all([
-    getTranslations({ locale, namespace: 'a11y' }),
-    getTranslations({ locale, namespace: 'preview' }),
-  ]);
+  const [ta, tp] = await Promise.all([getTranslations({ locale, namespace: 'a11y' }), getTranslations({ locale, namespace: 'preview' })]);
   const status = copyStatus(locale);
 
   return (
@@ -59,24 +56,19 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         {locale === 'zh' && <link rel="stylesheet" href="/fonts/noto-sans-sc/noto-sans-sc.css" />}
       </head>
       <body>
-          <SkipLink label={ta('skipToContent')} />
-          <SiteHeader locale={locale} />
-          {children}
-          <SiteFooter locale={locale} />
-          <MotionController />
-          {isPreview && (
-            <PreviewNotice
-              label={tp('label')}
-              title={tp('title')}
-              closeLabel={tp('close')}
-              lines={[
-                tp('copyStatus', { status: status === 'draft-mt' ? tp('statusDraftMt') : tp('statusApproved') }),
-                tp('logo'),
-                tp('images'),
-                tp('sections'),
-              ]}
-            />
-          )}
+        <SkipLink label={ta('skipToContent')} />
+        <SiteHeader locale={locale} />
+        {children}
+        <SiteFooter locale={locale} />
+        <MotionController />
+        {isPreview && (
+          <PreviewNotice
+            label={tp('label')}
+            title={tp('title')}
+            closeLabel={tp('close')}
+            lines={[tp('copyStatus', { status: status === 'draft-mt' ? tp('statusDraftMt') : tp('statusApproved') }), tp('logo'), tp('images'), tp('sections')]}
+          />
+        )}
       </body>
     </html>
   );

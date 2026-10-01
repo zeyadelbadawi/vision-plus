@@ -3,8 +3,8 @@
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
-const BUDGET = { jsKb: 160, cssKb: 30, htmlKb: 40 }; // measured 2026-10-01: JS 142.8 · CSS 12.3 · HTML 22.9–25.1 (gzip)
-const ROUTES = ['en', 'ar', 'zh'];
+const BUDGET = { jsKb: 160, cssKb: 30, htmlKb: 40 }; // home: JS 142.8 · CSS 12.4 · HTML 22.9–25.1; scene page measured in docs (gzip)
+const ROUTES = ['en', 'ar', 'zh', 'en/solutions/mobile-nvr-mobile-surveillance', 'ar/solutions/mobile-nvr-mobile-surveillance'];
 let failed = false;
 for (const r of ROUTES) {
   const html = readFileSync(`out/${r}.html`, 'utf8');
@@ -17,6 +17,8 @@ for (const r of ROUTES) {
   const sizes = { jsKb: gz(js), cssKb: gz(css) + gzipSync(inlineCss).length / 1024, htmlKb: gzipSync(html).length / 1024 };
   const over = Object.entries(BUDGET).filter(([k, max]) => sizes[k] > max);
   if (over.length) failed = true;
-  console.log(`budget /${r}: JS ${sizes.jsKb.toFixed(1)}/${BUDGET.jsKb} KB · CSS ${sizes.cssKb.toFixed(1)}/${BUDGET.cssKb} KB · HTML ${sizes.htmlKb.toFixed(1)}/${BUDGET.htmlKb} KB ${over.length ? '✗ OVER: ' + over.map(([k]) => k).join(', ') : '✓'}`);
+  console.log(
+    `budget /${r}: JS ${sizes.jsKb.toFixed(1)}/${BUDGET.jsKb} KB · CSS ${sizes.cssKb.toFixed(1)}/${BUDGET.cssKb} KB · HTML ${sizes.htmlKb.toFixed(1)}/${BUDGET.htmlKb} KB ${over.length ? '✗ OVER: ' + over.map(([k]) => k).join(', ') : '✓'}`,
+  );
 }
 process.exit(failed ? 1 : 0);

@@ -33,7 +33,12 @@ describe('relations (§12.4, §26.5, §9.2)', () => {
   it('never force-links the solutions no industry sentence names', () => {
     for (const slug of acrossEnvironments) expect(industriesForSolution(slug)).toEqual([]);
     const linked = new Set<string>(Object.values(industrySolutions.map).flatMap((l) => l.map((x) => x.solution)));
-    expect(solutions.filter((s) => !linked.has(s.slug)).map((s) => s.slug).sort()).toEqual([...acrossEnvironments].sort());
+    expect(
+      solutions
+        .filter((s) => !linked.has(s.slug))
+        .map((s) => s.slug)
+        .sort(),
+    ).toEqual([...acrossEnvironments].sort());
   });
 
   it('maps every service to known approach steps, and the steps match the approved titles', () => {

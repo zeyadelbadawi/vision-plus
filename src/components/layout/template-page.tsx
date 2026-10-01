@@ -33,10 +33,7 @@ export async function TemplatePage({
   sections?: TemplateSection[];
   links?: { href: string; label: string }[];
 }) {
-  const [ta, tp] = await Promise.all([
-    getTranslations({ locale, namespace: 'a11y' }),
-    getTranslations({ locale, namespace: 'preview' }),
-  ]);
+  const [ta, tp] = await Promise.all([getTranslations({ locale, namespace: 'a11y' }), getTranslations({ locale, namespace: 'preview' })]);
   return (
     <main id="main" tabIndex={-1} className="template-page">
       <PageIntro locale={locale} crumbs={crumbs} crumbsLabel={ta('breadcrumb')} eyebrow={eyebrow} title={title} lede={lede} />

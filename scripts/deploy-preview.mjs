@@ -11,10 +11,13 @@ if (missing.length) {
   process.exit(2);
 }
 
-const branch =
-  process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim();
+const branch = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim();
 // Alias rules: lowercase letters, digits, dashes; starts with a letter; alias + worker name ≤ 63 chars.
-let alias = branch.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+let alias = branch
+  .toLowerCase()
+  .replace(/[^a-z0-9-]+/g, '-')
+  .replace(/-+/g, '-')
+  .replace(/^-|-$/g, '');
 if (!/^[a-z]/.test(alias)) alias = `b-${alias}`.replace(/-$/, ''); // e.g. "123-fix" → "b-123-fix"
 const room = 63 - WORKER.length - 1; // the alias + "-" + worker name form one DNS label
 if (alias.length > room) {

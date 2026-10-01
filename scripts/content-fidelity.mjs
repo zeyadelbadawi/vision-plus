@@ -14,19 +14,14 @@ const write = process.argv.includes('--write');
 
 // Text in 01 that is deliberately not website copy. Each entry needs a reason; nothing else may be skipped.
 const EXCLUDED = new Map([
-  ['Selected projects can be presented according to:', 'Instruction for the profile deck; the six field labels that follow are encoded (projects.json `fields`)'],
+  [
+    'Selected projects can be presented according to:',
+    'Instruction for the profile deck; the six field labels that follow are encoded (projects.json `fields`)',
+  ],
 ]);
 const isPlaceholder = (t) => /^\[[^\]]+\]$/.test(t);
 
-const norm = (s) =>
-  s
-    .normalize('NFKC')
-    .replace(/[‘’]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/\*\*/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase();
+const norm = (s) => s.normalize('NFKC').replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\*\*/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
 
 // ---------- 1. Units of approved text in 01 ----------
 const units = []; // { section, kind, text }
@@ -46,7 +41,10 @@ for (const raw of readFileSync(SOURCE, 'utf8').split('\n')) {
     push('section-title', head[2]);
     continue;
   }
-  line = line.replace(/^#+\s*/, '').replace(/^•\s*/, '').replace(/^\d\d — /, '');
+  line = line
+    .replace(/^#+\s*/, '')
+    .replace(/^•\s*/, '')
+    .replace(/^\d\d — /, '');
   const plain = line.replace(/\*\*/g, '').trim();
   if (isPlaceholder(plain)) {
     units.push({ section, kind: 'placeholder', text: plain });
@@ -65,7 +63,9 @@ for (const raw of readFileSync(SOURCE, 'utf8').split('\n')) {
 }
 
 // ---------- 2. The English copy corpus ----------
-const files = readdirSync(COPY).filter((f) => f.endsWith('.json')).sort();
+const files = readdirSync(COPY)
+  .filter((f) => f.endsWith('.json'))
+  .sort();
 const strings = []; // { file, path, text }
 const reviews = []; // { file, path, status, source }
 const walk = (o, file, path) => {
@@ -158,7 +158,10 @@ ${missing.length ? `## Missing\n\n${missing.map((u) => `- ${u.section} (${u.kind
 |---|---|
 ${units
   .filter((u) => u.kind === 'placeholder' || EXCLUDED.has(u.text))
-  .map((u) => `| ${u.section}: “${esc(u.text)}” | ${u.kind === 'placeholder' ? 'Placeholder in 01 — filled from client data (D-01–D-04, D-08, D-10) or not website copy' : EXCLUDED.get(u.text)} |`)
+  .map(
+    (u) =>
+      `| ${u.section}: “${esc(u.text)}” | ${u.kind === 'placeholder' ? 'Placeholder in 01 — filled from client data (D-01–D-04, D-08, D-10) or not website copy' : EXCLUDED.get(u.text)} |`,
+  )
   .join('\n')}
 
 ### Deck section titles

@@ -16,13 +16,19 @@ let made = 0;
 for (const id of Object.keys(finals)) {
   const slot = manifest[id];
   const f = finals[id];
-  for (const [path, spec] of [[slot.path, f.size ?? slot.desktop], [slot.mobilePath, f.mobileSize ?? slot.mobile]]) {
+  for (const [path, spec] of [
+    [slot.path, f.size ?? slot.desktop],
+    [slot.mobilePath, f.mobileSize ?? slot.mobile],
+  ]) {
     if (!path || !spec || !existsSync(path)) continue;
     const base = outBase(path);
     mkdirSync(dirname(base), { recursive: true });
     const srcTime = statSync(path).mtimeMs;
     for (const w of widthsFor(spec.width)) {
-      for (const [fmt, opts] of [['avif', { quality: 48, effort: 5 }], ['webp', { quality: 78 }]]) {
+      for (const [fmt, opts] of [
+        ['avif', { quality: 48, effort: 5 }],
+        ['webp', { quality: 78 }],
+      ]) {
         const out = `${base}-${w}.${fmt}`;
         if (existsSync(out) && statSync(out).mtimeMs > srcTime) continue;
         await sharp(path).resize({ width: w, withoutEnlargement: true }).toFormat(fmt, opts).toFile(out);

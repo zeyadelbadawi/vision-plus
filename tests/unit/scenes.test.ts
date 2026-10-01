@@ -25,7 +25,12 @@ const refs = (scene: (typeof scenes)[number]) =>
 describe('scene registry (§23.6, storyboards)', () => {
   it('has the homepage signature plus one scene per solution', () => {
     expect(scenes.find((s) => s.id === 'home-integration-system')?.status).toBe('built-approved');
-    expect(scenes.filter((s) => s.solution).map((s) => s.solution).sort()).toEqual(solutions.map((s) => s.slug).sort());
+    expect(
+      scenes
+        .filter((s) => s.solution)
+        .map((s) => s.solution)
+        .sort(),
+    ).toEqual(solutions.map((s) => s.slug).sort());
     expect(new Set(scenes.map((s) => s.id)).size).toBe(scenes.length);
   });
 
@@ -55,11 +60,16 @@ describe('scene registry (§23.6, storyboards)', () => {
 
   it('keeps docs/SCENE_STORYBOARDS.md in step: every beat title and label appears there', () => {
     const doc = readFileSync('docs/SCENE_STORYBOARDS.md', 'utf8');
-    for (const scene of scenes) for (const b of scene.beats) for (const r of [b.title, ...b.labels]) if (r) expect(doc, `${scene.id}: ${r.text}`).toContain(r.text);
+    for (const scene of scenes)
+      for (const b of scene.beats) for (const r of [b.title, ...b.labels]) if (r) expect(doc, `${scene.id}: ${r.text}`).toContain(r.text);
   });
 
   it('flags every derived phrase so it is reviewed with the English copy (D-18)', () => {
-    const phrases = scenes.flatMap((s) => refs(s).filter((r) => r.match === 'phrase').map((r) => r.text));
+    const phrases = scenes.flatMap((s) =>
+      refs(s)
+        .filter((r) => r.match === 'phrase')
+        .map((r) => r.text),
+    );
     expect(phrases).toEqual(['Who enters', 'Where they enter', 'When']);
   });
 });

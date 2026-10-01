@@ -18,7 +18,12 @@ export async function HomeIndustries({ locale }: { locale: Locale }) {
         <SectionHeading id="industries-title" title={copy.title} className="max-w-[48rem]" />
         <div className="mt-14 lg:mt-20">
           <IndustryIndex
-            items={industries.map((i) => ({ slug: i.slug, href: `/industries#${i.slug}`, name: c.industries[i.slug].name, summary: c.industries[i.slug].summary }))}
+            items={industries.map((i) => ({
+              slug: i.slug,
+              href: `/industries#${i.slug}`,
+              name: c.industries[i.slug].name,
+              summary: c.industries[i.slug].summary,
+            }))}
             media={industries.map((i) => (
               <ImageSlot key={i.slug} id={i.image} locale={locale} sizes="(min-width: 1440px) 528px, 36vw" />
             ))}

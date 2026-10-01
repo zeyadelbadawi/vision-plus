@@ -12,15 +12,17 @@ import { ArrowEnd } from '@/components/ui/icons';
 export async function HomeApproach({ locale }: { locale: Locale }) {
   const { approach } = getHome(locale);
   const steps = getCatalog(locale).approach;
-  const [tc, ta] = await Promise.all([
-    getTranslations({ locale, namespace: 'cta' }),
-    getTranslations({ locale, namespace: 'a11y' }),
-  ]);
+  const [tc, ta] = await Promise.all([getTranslations({ locale, namespace: 'cta' }), getTranslations({ locale, namespace: 'a11y' })]);
   return (
     <Section tone="canvas" labelledBy="approach-title">
       <div className="container-vp">
         <SectionHeading id="approach-title" title={approach.title} />
-        <ol className="lifecycle mt-14 lg:mt-20" aria-label={ta('approachProgress')} data-progress="track" style={{ '--n': steps.length } as React.CSSProperties}>
+        <ol
+          className="lifecycle mt-14 lg:mt-20"
+          aria-label={ta('approachProgress')}
+          data-progress="track"
+          style={{ '--n': steps.length } as React.CSSProperties}
+        >
           {steps.map((s, i) => (
             <li key={s.title} className="lifecycle__step" style={{ '--i': i } as React.CSSProperties}>
               <span className="lifecycle__line" aria-hidden="true">

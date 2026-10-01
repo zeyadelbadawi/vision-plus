@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// E2E against the static export (`pnpm build` first). Chromium locally; WebKit/Firefox are added in CI (§40).
+// E2E against the static export (`pnpm build` first). §40: Chromium on every push/PR; the full
+// Chromium + Firefox + WebKit matrix runs nightly (.github/workflows/e2e-matrix.yml, PW_ALL_BROWSERS=1).
+const allBrowsers = process.env.PW_ALL_BROWSERS === '1';
 export default defineConfig({
   testDir: 'tests/e2e',
   fullyParallel: true,
@@ -10,5 +12,12 @@ export default defineConfig({
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
     { name: 'mobile', use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, hasTouch: true } },
+    ...(allBrowsers
+      ? [
+          { name: 'firefox-desktop', use: { ...devices['Desktop Firefox'], viewport: { width: 1440, height: 900 } } },
+          { name: 'webkit-desktop', use: { ...devices['Desktop Safari'], viewport: { width: 1440, height: 900 } } },
+          { name: 'webkit-mobile', use: { ...devices['iPhone 13'], viewport: { width: 390, height: 844 } } },
+        ]
+      : []),
   ],
 });

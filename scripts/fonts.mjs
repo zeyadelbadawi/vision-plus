@@ -20,10 +20,13 @@ const css = readFileSync(`${SRC}/index.css`, 'utf8');
 const blocks = [...css.matchAll(/@font-face\s*{([^}]+)}/g)].map((m) => {
   const body = m[1];
   const file = body.match(/url\(\.\/files\/([^)]+)\)/)[1];
-  const ranges = body.match(/unicode-range:\s*([^;]+);/)[1].split(',').map((r) => {
-    const [a, b] = r.trim().replace(/^U\+/i, '').split('-');
-    return [parseInt(a, 16), parseInt(b ?? a, 16)];
-  });
+  const ranges = body
+    .match(/unicode-range:\s*([^;]+);/)[1]
+    .split(',')
+    .map((r) => {
+      const [a, b] = r.trim().replace(/^U\+/i, '').split('-');
+      return [parseInt(a, 16), parseInt(b ?? a, 16)];
+    });
   return { file, ranges };
 });
 
@@ -41,7 +44,9 @@ for (const b of blocks) {
   const name = b.file.replace('noto-sans-sc-', 'nssc-').replace('-wght-normal', '');
   writeFileSync(`${OUT}/${name}`, out);
   bytes += out.length;
-  rules.push(`@font-face{font-family:'Noto Sans SC Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(./${name}) format('woff2-variations');unicode-range:${toRange(cps)}}`);
+  rules.push(
+    `@font-face{font-family:'Noto Sans SC Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(./${name}) format('woff2-variations');unicode-range:${toRange(cps)}}`,
+  );
 }
 writeFileSync(
   `${OUT}/noto-sans-sc.css`,

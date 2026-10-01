@@ -35,6 +35,8 @@ jobs:
 
       - name: Lint (ESLint + RTL rule + brand colour check)
         run: pnpm lint
+      - name: Formatting (Prettier)
+        run: pnpm format:check
       - name: Typecheck
         run: pnpm typecheck
       - name: Unit tests

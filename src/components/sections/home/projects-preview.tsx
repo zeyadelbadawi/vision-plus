@@ -17,10 +17,7 @@ import { cn } from '@/lib/cn';
 export async function HomeProjects({ locale }: { locale: Locale }) {
   if (projects.length === 0 && !isPreview) return null;
   const { projects: copy } = getHome(locale);
-  const [tp, tc] = await Promise.all([
-    getTranslations({ locale, namespace: 'placeholder' }),
-    getTranslations({ locale, namespace: 'cta' }),
-  ]);
+  const [tp, tc] = await Promise.all([getTranslations({ locale, namespace: 'placeholder' }), getTranslations({ locale, namespace: 'cta' })]);
   const [, location, clientSector, solutionsDelivered, , year] = copy.fields;
   const facts = [location, clientSector, solutionsDelivered, year];
 
@@ -39,7 +36,12 @@ export async function HomeProjects({ locale }: { locale: Locale }) {
         <ul className="projects-grid mt-14 lg:mt-20" tabIndex={0} aria-label={copy.title}>
           {Array.from({ length: previewSlots.projects }, (_, i) => (
             <li key={i} className={cn('project-slot', i === 0 && 'project-slot--lead')}>
-              <ImageSlot id="PROJ-{slug}-COVER" locale={locale} sizes={i === 0 ? '(min-width: 1024px) 752px, 100vw' : '(min-width: 1024px) 528px, 100vw'} labelAlign="bottom-start" />
+              <ImageSlot
+                id="PROJ-{slug}-COVER"
+                locale={locale}
+                sizes={i === 0 ? '(min-width: 1024px) 752px, 100vw' : '(min-width: 1024px) 528px, 100vw'}
+                labelAlign="bottom-start"
+              />
               <div className="project-slot__body">
                 <p className="project-slot__title">{tp('projectPending')}</p>
                 <dl className="project-slot__facts">

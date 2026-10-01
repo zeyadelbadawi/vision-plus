@@ -1,0 +1,18 @@
+# Generated / vendored
+out/
+.next/
+node_modules/
+pnpm-lock.yaml
+public/
+.lighthouseci/
+test-results/
+playwright-report/
+src/content/media/manifest.generated.json
+# Hand-formatted on purpose: content JSON is laid out for translators and reviewers (one entry per line),
+# CSS rules are compact one-liners, and documents/client materials are prose.
+*.json
+*.css
+*.md
+client-materials/
+docs/
+*.jsonc

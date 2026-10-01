@@ -30,11 +30,19 @@ export function PageIntro({
       <Breadcrumbs items={crumbs} label={crumbsLabel} />
       <div className="page-intro__body" data-reveal="">
         <span className="seam mb-6 w-12" aria-hidden="true" />
-        {eyebrow && <p className="t-caption text-fg-muted mb-4" {...textAttrs(locale, eyebrow)}>{eyebrow}</p>}
+        {eyebrow && (
+          <p className="t-caption text-fg-muted mb-4" {...textAttrs(locale, eyebrow)}>
+            {eyebrow}
+          </p>
+        )}
         <h1 className="t-h1 max-w-[22ch]" {...textAttrs(locale, title)}>
           {title}
         </h1>
-        {lede && <p className="t-lede mt-6 max-w-[44rem] text-fg-muted" {...textAttrs(locale, lede)}>{lede}</p>}
+        {lede && (
+          <p className="t-lede mt-6 max-w-[44rem] text-fg-muted" {...textAttrs(locale, lede)}>
+            {lede}
+          </p>
+        )}
         {children}
       </div>
     </header>

@@ -24,14 +24,25 @@ const walk = (dir) => {
 };
 walk(OUT);
 
-const routeOf = (file) => '/' + file.slice(OUT.length + 1).replace(/\.html$/, '').replace(/^index$/, '');
+const routeOf = (file) =>
+  '/' +
+  file
+    .slice(OUT.length + 1)
+    .replace(/\.html$/, '')
+    .replace(/^index$/, '');
 const fileOf = (route) => {
   const r = route.replace(/\/$/, '') || '/';
   return r === '/' ? join(OUT, 'index.html') : join(OUT, `${r}.html`);
 };
 const html = new Map(pages.map((p) => [routeOf(p), readFileSync(p, 'utf8')]));
 const ids = new Map([...html].map(([r, h]) => [r, new Set([...h.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]))]));
-const decode = (s) => s.replace(/&amp;/g, '&').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+const decode = (s) =>
+  s
+    .replace(/&amp;/g, '&')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
 
 const errors = [];
 let links = 0;

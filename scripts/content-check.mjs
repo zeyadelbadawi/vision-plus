@@ -3,6 +3,9 @@
 //  - statuses are known; CONTENT_MODE=production refuses draft-mt / placeholder copy and
 //    placeholder office data, and (per §12.3) any non-approved copy on published routes.
 import { readFileSync, readdirSync } from 'node:fs';
+// Zod schemas (MASTER_PROJECT_PLAN §12.1, §40). Node 22 loads these TypeScript modules directly (type stripping).
+import { aliases as aliasesSchema, copyFile, finalImages, locations as locationsSchema, schemas, text } from '../src/content/schema/index.ts';
+import { industries, productCategories, services, solutions } from '../src/content/data/registry.ts';
 
 const mode = process.env.CONTENT_MODE === 'production' ? 'production' : 'preview';
 const LOCALES = ['en', 'ar', 'zh'];
@@ -86,10 +89,11 @@ const strings = (o, path, out) => {
 };
 const copyFiles = readdirSync('src/content/copy/en');
 const byEnglish = new Map();
-for (const f of copyFiles) for (const [path, text] of strings(read(`src/content/copy/en/${f}`), '', [])) {
-  if (!byEnglish.has(text)) byEnglish.set(text, []);
-  byEnglish.get(text).push([f, path]);
-}
+for (const f of copyFiles)
+  for (const [path, text] of strings(read(`src/content/copy/en/${f}`), '', [])) {
+    if (!byEnglish.has(text)) byEnglish.set(text, []);
+    byEnglish.get(text).push([f, path]);
+  }
 for (const l of LOCALES.filter((x) => x !== 'en')) {
   const files = Object.fromEntries(copyFiles.map((f) => [f, read(`src/content/copy/${l}/${f}`)]));
   for (const [text, uses] of byEnglish) {
@@ -98,6 +102,30 @@ for (const l of LOCALES.filter((x) => x !== 'en')) {
     if (variants.size > 1) errors.push(`copy/${l}: "${text.slice(0, 50)}…" is translated differently in ${approved.map(([f, p]) => `${f}:${p}`).join(', ')}`);
   }
 }
+
+// Zod: per-file schemas (exact registry key sets, SEO budgets, shapes) and visible-text rules for every leaf.
+const fileSchemas = schemas({
+  solutions: solutions.map((s) => s.slug),
+  services,
+  industries: industries.map((i) => i.slug),
+  productCategories,
+});
+const issues = (file, result) => {
+  if (!result.success) for (const i of result.error.issues) errors.push(`${file}: ${i.path.join('.') || '$'} — ${i.message}`);
+};
+for (const f of copyFiles) {
+  const en = read(`src/content/copy/en/${f}`);
+  for (const l of LOCALES) {
+    const file = `src/content/copy/${l}/${f}`;
+    const data = read(file);
+    issues(file, (fileSchemas[f] ?? copyFile).safeParse(data));
+    // every visible string is non-empty trimmed text, except where English itself is intentionally empty
+    for (const [path, value] of strings(data, '', [])) if (get(en, path) !== '') issues(`${file} ${path}`, text.safeParse(value));
+  }
+}
+issues('src/content/data/locations.json', locationsSchema.safeParse(read('src/content/data/locations.json')));
+issues('src/content/data/aliases.json', aliasesSchema.safeParse(read('src/content/data/aliases.json')));
+issues('src/content/media/images.json', finalImages.safeParse(read('src/content/media/images.json').assets));
 
 const loc = read('src/content/data/locations.json');
 for (const o of loc.offices) {

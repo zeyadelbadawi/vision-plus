@@ -15,10 +15,7 @@ import { LinkButton } from '@/components/ui/button';
  */
 export async function HomeHero({ locale }: { locale: Locale }) {
   const company = getCompany(locale);
-  const [tc, th] = await Promise.all([
-    getTranslations({ locale, namespace: 'cta' }),
-    getTranslations({ locale, namespace: 'home' }),
-  ]);
+  const [tc, th] = await Promise.all([getTranslations({ locale, namespace: 'cta' }), getTranslations({ locale, namespace: 'home' })]);
 
   // Artwork-specific composition: text stays on the side the artwork keeps clear (e.g. a banner with a
   // baked-in logo on the right keeps text on the left in every locale, including RTL).

@@ -21,15 +21,21 @@ export function Breadcrumbs({ items, label, className }: { items: Crumb[]; label
           return (
             <li key={`${c.label}-${i}`}>
               {i > 0 && (
-                <svg className="breadcrumbs__sep icon-directional" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" focusable="false">
+                <svg
+                  className="breadcrumbs__sep icon-directional"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                  focusable="false"
+                >
                   <path d="M9 5.5l6.5 6.5L9 18.5" />
                 </svg>
               )}
-              {c.href && !current ? (
-                <Link href={c.href}>{c.label}</Link>
-              ) : (
-                <span aria-current={current ? 'page' : undefined}>{c.label}</span>
-              )}
+              {c.href && !current ? <Link href={c.href}>{c.label}</Link> : <span aria-current={current ? 'page' : undefined}>{c.label}</span>}
             </li>
           );
         })}

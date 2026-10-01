@@ -54,10 +54,18 @@ export type ProductCategorySlug = (typeof productCategories)[number];
  * Partners and projects: EMPTY until the client supplies real, confirmed data (D-08, D-10).
  * Nothing here may be invented. Sections that depend on them are hidden in production.
  */
-export interface Partner { slug: string; name: string; logo: { mono: string; color?: string }; website?: string }
+export interface Partner {
+  slug: string;
+  name: string;
+  logo: { mono: string; color?: string };
+  website?: string;
+}
 export const partners: Partner[] = [];
 
-export interface Project { slug: string; featured?: boolean }
+export interface Project {
+  slug: string;
+  featured?: boolean;
+}
 export const projects: Project[] = [];
 
 /** Preview-only structural slots so the section layouts can be reviewed without fabricating data. */

@@ -6,7 +6,20 @@ import { brotliCompressSync, gzipSync } from 'node:zlib';
 
 const ROOT = 'out';
 const PORT = Number(process.env.PORT ?? 4173);
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.json': 'application/json', '.avif': 'image/avif', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.png': 'image/png', '.txt': 'text/plain', '.ico': 'image/x-icon' };
+const TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'text/javascript',
+  '.css': 'text/css',
+  '.woff2': 'font/woff2',
+  '.svg': 'image/svg+xml',
+  '.json': 'application/json',
+  '.avif': 'image/avif',
+  '.webp': 'image/webp',
+  '.jpg': 'image/jpeg',
+  '.png': 'image/png',
+  '.txt': 'text/plain',
+  '.ico': 'image/x-icon',
+};
 
 const memo = new Map();
 const compressed = (file, enc, buf) => {
@@ -31,8 +44,13 @@ createServer((req, res) => {
   // Compress text like Cloudflare does in production, so local Lighthouse numbers are representative.
   if (/text|javascript|json|svg/.test(type)) {
     const ae = String(req.headers['accept-encoding'] ?? '');
-    if (ae.includes('br')) { body = compressed(file, 'br', body); headers['content-encoding'] = 'br'; }
-    else if (ae.includes('gzip')) { body = compressed(file, 'gzip', body); headers['content-encoding'] = 'gzip'; }
+    if (ae.includes('br')) {
+      body = compressed(file, 'br', body);
+      headers['content-encoding'] = 'br';
+    } else if (ae.includes('gzip')) {
+      body = compressed(file, 'gzip', body);
+      headers['content-encoding'] = 'gzip';
+    }
   }
   res.writeHead(200, headers);
   res.end(body);

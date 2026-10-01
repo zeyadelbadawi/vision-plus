@@ -75,12 +75,16 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
                     {/* Values render only when supplied by the client (D-01/D-02). */}
                     {o.address ? <p className="t-body-sm text-fg-muted">{o.address}</p> : isPreview && <p className="footer-placeholder">{tp('address')}</p>}
                     {o.phone ? (
-                      <a href={`tel:${o.phone.replace(/\s/g, '')}`} dir="ltr" className="footer-link t-body-sm">{o.phone}</a>
+                      <a href={`tel:${o.phone.replace(/\s/g, '')}`} dir="ltr" className="footer-link t-body-sm">
+                        {o.phone}
+                      </a>
                     ) : (
                       isPreview && <p className="footer-placeholder">{tp('phone')}</p>
                     )}
                     {o.email ? (
-                      <a href={`mailto:${o.email}`} dir="ltr" className="footer-link t-body-sm">{o.email}</a>
+                      <a href={`mailto:${o.email}`} dir="ltr" className="footer-link t-body-sm">
+                        {o.email}
+                      </a>
                     ) : (
                       isPreview && <p className="footer-placeholder">{tp('email')}</p>
                     )}
@@ -97,7 +101,14 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
             <ul className="flex gap-6" aria-label={t('language')}>
               {locales.map((code) => (
                 <li key={code}>
-                  <Link href="/" locale={code} lang={localeMeta[code].htmlLang} hrefLang={localeMeta[code].htmlLang} className="footer-link t-caption" aria-current={code === locale ? 'true' : undefined}>
+                  <Link
+                    href="/"
+                    locale={code}
+                    lang={localeMeta[code].htmlLang}
+                    hrefLang={localeMeta[code].htmlLang}
+                    className="footer-link t-caption"
+                    aria-current={code === locale ? 'true' : undefined}
+                  >
                     {localeMeta[code].nativeName}
                   </Link>
                 </li>

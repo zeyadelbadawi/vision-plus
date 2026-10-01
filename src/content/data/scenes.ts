@@ -144,7 +144,12 @@ export const scenes: Scene[] = [
       title: { ref: sol('smart-building-home-automation', `values.${i}`), text: word },
       labels: labels.map((text) => ({ ref: caps('smart-building-home-automation'), text })),
     })),
-    coda: [{ ref: sol('smart-building-home-automation', 'closingLead'), text: 'Instead of operating multiple independent systems, users gain one coordinated environment built around:' }],
+    coda: [
+      {
+        ref: sol('smart-building-home-automation', 'closingLead'),
+        text: 'Instead of operating multiple independent systems, users gain one coordinated environment built around:',
+      },
+    ],
   },
   {
     id: 'elv-one-infrastructure',
@@ -158,7 +163,10 @@ export const scenes: Scene[] = [
       {
         key: 'coordination',
         title: { ref: sol('elv-systems', 'principles.items.0.title'), text: 'Coordination' },
-        text: { ref: sol('elv-systems', 'principles.items.0.text'), text: 'Systems are considered as part of the complete project rather than individual packages.' },
+        text: {
+          ref: sol('elv-systems', 'principles.items.0.text'),
+          text: 'Systems are considered as part of the complete project rather than individual packages.',
+        },
         // Strand legend: only systems named by the approved solutions.
         labels: [
           { ref: 'catalog:solutions.cctv-security-systems.name', text: 'CCTV & Security Systems' },
@@ -199,7 +207,11 @@ export const scenes: Scene[] = [
     budgetKb: 30,
     status: 'storyboard-pending-d20',
     beats: [
-      { key: 'see', title: { ref: sol('cctv-security-systems', 'headline'), text: 'See More.' }, labels: [{ ref: caps('cctv-security-systems'), text: 'IP CCTV Systems' }] },
+      {
+        key: 'see',
+        title: { ref: sol('cctv-security-systems', 'headline'), text: 'See More.' },
+        labels: [{ ref: caps('cctv-security-systems'), text: 'IP CCTV Systems' }],
+      },
       {
         key: 'know',
         title: { ref: sol('cctv-security-systems', 'headline'), text: 'Know More.' },
@@ -251,7 +263,12 @@ export const scenes: Scene[] = [
         ],
       },
     ],
-    coda: [{ ref: sol('access-control', 'closing'), text: 'By connecting access control with other security technologies, organizations gain greater visibility and control over who enters, where they enter, and when.' }],
+    coda: [
+      {
+        ref: sol('access-control', 'closing'),
+        text: 'By connecting access control with other security technologies, organizations gain greater visibility and control over who enters, where they enter, and when.',
+      },
+    ],
   },
   {
     id: 'fire-critical-sequence',
@@ -294,7 +311,12 @@ export const scenes: Scene[] = [
       { key: 'today', labels: [] },
       { key: 'tomorrow', labels: [] },
     ],
-    coda: [{ ref: sol('networking-ict', 'closing'), text: 'We design networks not only around today’s requirements, but around the technologies that may depend on them tomorrow.' }],
+    coda: [
+      {
+        ref: sol('networking-ict', 'closing'),
+        text: 'We design networks not only around today’s requirements, but around the technologies that may depend on them tomorrow.',
+      },
+    ],
   },
   {
     id: 'av-disappear',

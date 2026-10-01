@@ -38,13 +38,7 @@ export function IntegrationSystem({ origin, nodes, label }: { origin: string; no
             <span className="isys__marker" aria-hidden="true">
               <span className="isys__marker-on" />
             </span>
-            <Link
-              href={n.href}
-              className="isys__link"
-              aria-describedby={`isys-sum-${n.slug}`}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-            >
+            <Link href={n.href} className="isys__link" aria-describedby={`isys-sum-${n.slug}`} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}>
               <span className="isys__name">{n.name}</span>
               <ArrowEnd size={16} className="isys__arrow" />
             </Link>

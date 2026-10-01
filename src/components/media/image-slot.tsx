@@ -53,7 +53,10 @@ export function ImageSlot({ id, locale, sizes, fill, priority, maskReveal, class
     const m = final.mobileSize ?? slot.mobile ?? d;
     const base = variantBase(slot.path);
     const mBase = slot.mobilePath ? variantBase(slot.mobilePath) : null;
-    const set = (b: string, w: number, fmt: string) => variantWidths(w).map((x) => `${b}-${x}.${fmt} ${x}w`).join(', ');
+    const set = (b: string, w: number, fmt: string) =>
+      variantWidths(w)
+        .map((x) => `${b}-${x}.${fmt} ${x}w`)
+        .join(', ');
     const focal = final.focal ? `${final.focal.x * 100}% ${final.focal.y * 100}%` : '50% 50%';
     return (
       <span className={frame} style={ratioStyle}>
@@ -84,8 +87,7 @@ export function ImageSlot({ id, locale, sizes, fill, priority, maskReveal, class
   // Designed placeholder (IMAGE_ASSET_MANIFEST §5): tonal surface, hairline grid,
   // print crop marks and a discreet spec label. Hidden from assistive technology.
   const dims = slot.desktop ? `${slot.desktop.width} × ${slot.desktop.height} · ${slot.desktopRatio}` : slot.desktopRatio;
-  const mobileDims =
-    slot.separateMobile && slot.mobile ? `Mobile ${slot.mobile.width} × ${slot.mobile.height} · ${slot.mobileRatio}` : null;
+  const mobileDims = slot.separateMobile && slot.mobile ? `Mobile ${slot.mobile.width} × ${slot.mobile.height} · ${slot.mobileRatio}` : null;
   return (
     <span className={cn(frame, 'vp-placeholder', compact && 'vp-placeholder--compact')} style={ratioStyle} aria-hidden="true" data-slot={id}>
       <span className="vp-placeholder__grid" />

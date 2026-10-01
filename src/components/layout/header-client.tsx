@@ -137,7 +137,12 @@ export function HeaderClient({ items, cta, locale, locales, labels, featuredMedi
           </Link>
 
           {/* Desktop navigation (≥ nav breakpoint) — WAI-ARIA disclosure pattern (T-14) */}
-          <nav aria-label={labels.mainNav} className="hidden h-full nav:flex" onMouseLeave={scheduleClose} onMouseEnter={() => window.clearTimeout(timer.current)}>
+          <nav
+            aria-label={labels.mainNav}
+            className="hidden h-full nav:flex"
+            onMouseLeave={scheduleClose}
+            onMouseEnter={() => window.clearTimeout(timer.current)}
+          >
             <ul className="flex h-full items-stretch">
               {items.map((item) => {
                 const panelId = `${uid}-panel-${item.key}`;

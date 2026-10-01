@@ -15,13 +15,23 @@ export default function GlobalNotFound() {
           </Link>
           <span className="seam w-12" aria-hidden="true" />
           <h1 className="t-display max-w-[16ch]">Page not found.</h1>
-          <p className="t-lede max-w-[40rem] text-fg-muted">
-            The page you requested doesn&apos;t exist or has moved.
-          </p>
+          <p className="t-lede max-w-[40rem] text-fg-muted">The page you requested doesn&apos;t exist or has moved.</p>
           <ul className="flex flex-wrap gap-4">
-            <li><Link className="btn btn--primary" href="/en">Go to the homepage</Link></li>
-            <li><Link className="btn btn--secondary" href="/ar" lang="ar" dir="rtl">الصفحة الرئيسية</Link></li>
-            <li><Link className="btn btn--secondary" href="/zh" lang="zh-Hans">返回首页</Link></li>
+            <li>
+              <Link className="btn btn--primary" href="/en">
+                Go to the homepage
+              </Link>
+            </li>
+            <li>
+              <Link className="btn btn--secondary" href="/ar" lang="ar" dir="rtl">
+                الصفحة الرئيسية
+              </Link>
+            </li>
+            <li>
+              <Link className="btn btn--secondary" href="/zh" lang="zh-Hans">
+                返回首页
+              </Link>
+            </li>
           </ul>
         </main>
       </body>

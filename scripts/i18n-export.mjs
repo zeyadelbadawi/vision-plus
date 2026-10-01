@@ -66,16 +66,20 @@ function rows(files) {
 function limits(row) {
   if (row.keys.every((k) => k.startsWith('seo:'))) {
     const isTitle = row.keys[0].endsWith('.title');
-    return isTitle ? [45, 45, 'Search title: hard limit 45 characters (≤ 60 with the “ — VISION PLUS” suffix); for Chinese aim for ≤ 30'] : [155, 155, 'Search description: hard limit 155 characters; for Chinese aim for ≤ 80'];
+    return isTitle
+      ? [45, 45, 'Search title: hard limit 45 characters (≤ 60 with the “ — VISION PLUS” suffix); for Chinese aim for ≤ 30']
+      : [155, 155, 'Search description: hard limit 155 characters; for Chinese aim for ≤ 80'];
   }
   const n = row.text.length;
-  if (row.file === 'messages' || n <= 60) return [Math.ceil(n * 1.3), Math.max(2, Math.ceil(n * 0.7)), 'Short UI or heading text: keep within the hint so the layout holds'];
+  if (row.file === 'messages' || n <= 60)
+    return [Math.ceil(n * 1.3), Math.max(2, Math.ceil(n * 0.7)), 'Short UI or heading text: keep within the hint so the layout holds'];
   return ['', '', ''];
 }
 
 function notes(row) {
   const out = [];
-  if (/\{[^}]+\}/.test(row.text)) out.push('Keep {placeholders} exactly; complete every plural form your language needs (Arabic: zero/one/two/few/many/other).');
+  if (/\{[^}]+\}/.test(row.text))
+    out.push('Keep {placeholders} exactly; complete every plural form your language needs (Arabic: zero/one/two/few/many/other).');
   if (/<\w+>/.test(row.text)) out.push('Keep the <tags> around the linked words.');
   if (/VISION PLUS/.test(row.text)) out.push('Keep “VISION PLUS” in Latin capitals (Q-07).');
   if (row.keys.length > 1) out.push(`Used in ${row.keys.length} places — translate once.`);
@@ -83,8 +87,30 @@ function notes(row) {
 }
 
 const head = (labels) => labels.map((value) => ({ value, fontWeight: 'bold', backgroundColor: '#E8E8E8', wrap: true }));
-const HEAD = ['ID', 'Key(s)', 'Where it appears', 'English status', 'English (source)', 'Max length — Arabic', 'Max length — Chinese', 'Arabic (العربية)', 'Chinese (简体中文)', 'Notes'];
-const columns = [{ width: 8 }, { width: 34 }, { width: 26 }, { width: 12 }, { width: 60 }, { width: 10 }, { width: 10 }, { width: 60 }, { width: 50 }, { width: 40 }];
+const HEAD = [
+  'ID',
+  'Key(s)',
+  'Where it appears',
+  'English status',
+  'English (source)',
+  'Max length — Arabic',
+  'Max length — Chinese',
+  'Arabic (العربية)',
+  'Chinese (简体中文)',
+  'Notes',
+];
+const columns = [
+  { width: 8 },
+  { width: 34 },
+  { width: 26 },
+  { width: 12 },
+  { width: 60 },
+  { width: 10 },
+  { width: 10 },
+  { width: 60 },
+  { width: 50 },
+  { width: 40 },
+];
 
 function sheet(prefix, list) {
   return [
@@ -108,14 +134,20 @@ function sheet(prefix, list) {
   ];
 }
 
-const copyFiles = readdirSync('src/content/copy/en').filter((f) => f.endsWith('.json')).sort();
+const copyFiles = readdirSync('src/content/copy/en')
+  .filter((f) => f.endsWith('.json'))
+  .sort();
 const copyRows = rows(copyFiles);
 const uiRows = rows(['messages']);
 const approved = copyRows.filter((r) => [...r.statuses].every((s) => s === 'approved')).length;
 
 const readme = [
   [{ value: 'VISION PLUS — website translation workbook', fontWeight: 'bold', fontSize: 14 }],
-  [{ value: `Generated ${new Date().toISOString().slice(0, 10)} by \`pnpm i18n:export\`. Do not reorder or delete rows, and do not edit the ID, Key(s) or English columns.` }],
+  [
+    {
+      value: `Generated ${new Date().toISOString().slice(0, 10)} by \`pnpm i18n:export\`. Do not reorder or delete rows, and do not edit the ID, Key(s) or English columns.`,
+    },
+  ],
   [],
   [{ value: 'What to fill in', fontWeight: 'bold' }],
   [{ value: '• Arabic: the “Arabic (العربية)” column — by a professional human translator (Q-05, D-13).', wrap: true }],
@@ -123,15 +155,37 @@ const readme = [
   [{ value: '• Machine translation is not accepted for the final copy. The website build refuses machine-translated text.', wrap: true }],
   [],
   [{ value: 'Status', fontWeight: 'bold' }],
-  [{ value: '• Prepared, NOT yet released for translation. This workbook is released to translators only after the English sign-off (D-18), so the English is locked first.', wrap: true }],
+  [
+    {
+      value:
+        '• Prepared, NOT yet released for translation. This workbook is released to translators only after the English sign-off (D-18), so the English is locked first.',
+      wrap: true,
+    },
+  ],
   [{ value: `• “approved” rows (${approved} of ${copyRows.length} page-copy rows) hold the client-approved English from the approved content.`, wrap: true }],
   [{ value: '• “derived” and “draft” rows (page copy and all interface text) may still change through the English sign-off (D-18).', wrap: true }],
   [],
   [{ value: 'Rules', fontWeight: 'bold' }],
-  [{ value: '• Keep “VISION PLUS” in Latin capitals unless official Arabic / Chinese names are supplied (Q-07). See the Glossary sheet for technical terms.', wrap: true }],
+  [
+    {
+      value: '• Keep “VISION PLUS” in Latin capitals unless official Arabic / Chinese names are supplied (Q-07). See the Glossary sheet for technical terms.',
+      wrap: true,
+    },
+  ],
   [{ value: '• Keep {placeholders} and <tags> exactly as written; complete every plural form your language needs.', wrap: true }],
-  [{ value: '• Respect the max-length hints on short text (buttons, menu labels, headings, search titles) so the layout holds. Long paragraphs have no limit.', wrap: true }],
-  [{ value: '• Chinese: full-width punctuation (，。：；“”). Arabic: Western digits for years, phone numbers and technical values (Q-17, pending confirmation).', wrap: true }],
+  [
+    {
+      value: '• Respect the max-length hints on short text (buttons, menu labels, headings, search titles) so the layout holds. Long paragraphs have no limit.',
+      wrap: true,
+    },
+  ],
+  [
+    {
+      value:
+        '• Chinese: full-width punctuation (，。：；“”). Arabic: Western digits for years, phone numbers and technical values (Q-17, pending confirmation).',
+      wrap: true,
+    },
+  ],
   [{ value: '• A sentence used in several places appears once — translate it once.', wrap: true }],
   [],
   [{ value: 'Sheets', fontWeight: 'bold' }],

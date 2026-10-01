@@ -14,8 +14,7 @@ const files: Record<string, (l: Locale) => unknown> = {
   home: getHome,
 };
 
-const get = (obj: unknown, path: string): unknown =>
-  path.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown> | undefined)?.[k], obj);
+const get = (obj: unknown, path: string): unknown => path.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown> | undefined)?.[k], obj);
 
 /** Sentence split that also understands Chinese full-width terminators. */
 export const sentences = (s: string): string[] => s.match(/[^.!?。！？]+[.!?。！？]+/g)?.map((x) => x.trim()) ?? [s];
