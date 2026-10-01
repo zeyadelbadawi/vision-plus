@@ -216,3 +216,58 @@ pnpm lhci                      # CHROME_PATH=… if Chrome isn't on PATH
 | `content:check` | Structure OK. New gates verified with deliberate breakage: review paths, status claims, SEO lengths. |
 | Unit tests | 37 / 37, including relations evidence, aliases, scenes ↔ approved copy ↔ storyboard document, ICU in en/ar/zh |
 | Homepage | HTML token-identical to the approved build (hashes aside); CSS byte-identical; reduced-motion render 0 px different in en/ar/zh at 390 and 1440 |
+
+---
+
+# Remediation — P1–P4 alignment with the Master Plan (2026-10-01)
+
+**Trigger:** the P1–P4 implementation audit. **Scope:** finish what the plan requires of P2 and P3, close verification gaps, and record every deviation (plan §55). Status per phase with evidence: `docs/PHASE_STATUS.md`.
+
+## R-1. Timeline (from git history)
+
+| Date | Commit | What happened | Against the plan |
+|---|---|---|---|
+| 2026-09-25 | `dd6b24d` | Plan, checklist, manifest, client materials | P0 |
+| 2026-09-25 | `9f90b5d` | Full homepage + shared foundation ("quality gate"), on the owner's instruction | Replaced the P2 slice; P2's style guide, Mobile NVR page and Route scene not built |
+| 2026-09-29 | `c7e5c0e` | Client banner as hero | Approved homepage baseline |
+| 2026-10-01 | `54008fd` | Logo package v1 recorded, rejected, not integrated | — |
+| 2026-10-01 | `eb4facc` | P3: Worker, CI, deploy workflows, checks | "Empty templates" listed as deferred to P5; Mobile NVR scene listed as deferred to P5B; no plan change |
+| 2026-10-01 | `c4bd119`–`77137b3` | P4 content, storyboards, review docs | Nothing new rendered (by design) |
+| 2026-10-01 | `6932552` | **Remediation:** P2 completed; P3 empty templates; site check; e2e for new pages | Brings P2/P3 outputs in line with §49.1 |
+| 2026-10-01 | `9d04cf8` | **Remediation:** Zod, Prettier, nightly browser matrix, scene-page budget/Lighthouse/smoke | Closes §40/§51 gaps |
+
+## R-2. Root causes (confirmed by evidence)
+
+1. **Phase scope changed by instruction without amending the plan.** The homepage was built in place of P2's defined slice, and the plan's remaining P2 deliverables were never reconciled. *Evidence:* `9f90b5d`; plan §49.1 unchanged until §55. *Impact:* P2 could not be accepted, and P5B "Mobile NVR (finish)" assumed a first cut that did not exist.
+2. **Deferral by report instead of by decision.** The P3 report moved its own output ("empty templates") and a P2 deliverable (the Route scene) to later phases as "Deferred Items". Later phases took the report as the baseline. *Evidence:* the P3 section of these notes. *Impact:* 18 of 21 homepage links led to 404; all 96 alias redirects stayed inactive.
+3. **Verification checked what was built, not what was required.** There was no link/route check, axe ran only on the homepage at its dark top state, Lighthouse covered only the homepage, CI ran only Chromium (with a config comment claiming more), and no Prettier or Zod existed although §40/§51 require them. *Impact:* broken navigation and a contrast finding went unnoticed; CI was green on an incomplete product.
+4. **Acceptance tracked in conversation, not in the repository.** Owner approvals were not recorded against the plan's criteria (preview URL, merge to `main`, client approval), so phases read as complete while their criteria were open. *Impact:* status was ambiguous until the audit.
+5. **External dependency.** No Cloudflare account (D-22), so nothing could be deployed or verified on the real platform.
+
+## R-3. Decisions
+
+| Decision | Why |
+|---|---|
+| Complete P2 as the plan defines it (style guide, full Mobile NVR page, Route scene first cut in three modes) instead of amending P2 away | The plan is achievable; P5 depends on P2 approval |
+| Build P3 *empty* templates only (breadcrumb, h1, approved lede, section anchors) — not P5 page bodies | Fixes navigation and meets the P3 output without starting P5 ahead of its gate |
+| The full solution template is enabled for Mobile NVR only | P2 asks for one solution page; the other seven are P5 |
+| Scene engine reuses the existing MotionController (`data-progress="follow"`); beats derive from `--p` in CSS; `@property` registration makes the static state the default | §23.5 "one shared controller, JS never touches SVG nodes"; zero added JavaScript |
+| Adopt Zod (reversing P3-11) and Prettier | Required by §12.1, §40, §51; no technical reason against |
+| Interim wordmark excluded from contrast checks as a logotype; Lighthouse contrast audit skipped in favour of axe | WCAG 1.4.3 logotype exemption; avoids changing the approved header |
+| `/ar` `/zh` Lighthouse ≥ 95 stays a P10 item | Fixing it changes font loading on the approved homepage; already accepted in P3 |
+| Untranslated English on `/ar` `/zh` marked `lang="en" dir="ltr"` | Fixes bidi punctuation defects without inventing translations |
+| Commit a P2 screenshot set (`docs/review/p2/`) | P2 output; the only reviewable form until D-22 |
+| No deployment, no credentials, no external changes | Not authorised; D-22 is the client's |
+
+## R-4. Defects found and fixed during remediation
+
+| Defect | Fix |
+|---|---|
+| Last pinned beat never completed before the stage released (beat 6 ≈ 70 %) | Progress scale 1.12, mirrored in `beatProgress` and unit-tested |
+| Stepped frames showed earlier beats' labels cut off by the crop | Each frame shows only its own beat's labels; final frame cropped to the node area |
+| Bidi punctuation flipped in English placeholder copy on `/ar` | `src/lib/text-attrs.ts` |
+| Words in scripts and docs (e.g. "shadow") generated unused CSS utilities — Tailwind scanned the whole repo | Structural: `@source not` for docs, client-materials, scripts, tests and worker in `globals.css`. 21 unused utilities removed (verified absent from `src`); home CSS 12.4 → 11.3 KB gz; homepage 0 px difference at all 12 locale × width combinations |
+
+## R-5. Homepage protection
+
+Reduced-motion renders compared with the approved build `c7e5c0e`: **0 differing pixels** in en/ar/zh at 390, 768, 1440 and 1920 (Chromium), after the P2/P3 work and again after formatting. All 63 built pages are byte-identical before and after the Prettier change (build hashes aside). Limitations: Chromium only; animated states and open menus are verified functionally (e2e), not pixel-for-pixel.

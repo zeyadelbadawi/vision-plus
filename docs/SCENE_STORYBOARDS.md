@@ -1,7 +1,7 @@
 # VISION PLUS — Scene Storyboards
 
 **Phase:** P4 · **For client approval:** D-20 (one decision per scene, logged in §11).
-**Spec:** MASTER_PROJECT_PLAN §23.5 (engine) and §23.6 (per-solution concepts). **Built in:** P5B (artwork and code), only after approval.
+**Spec:** MASTER_PROJECT_PLAN §23.5 (engine) and §23.6 (per-solution concepts). **Built in:** P5B (artwork and code), only after approval. Exception, as the plan specifies: the Mobile NVR Route scene has a P2 *first cut* for direction review (built 2026-10-01); its final version still follows D-20.
 **Machine-readable twin:** `src/content/data/scenes.ts`. Every word a scene shows is a reference into the approved copy; `tests/unit/scenes.test.ts` fails the build if a label is not approved text.
 
 Per the plan's working rule, the storyboards are text, not images. Each frame below describes exactly what is drawn, so the client can approve the idea before any artwork is produced. Small composition sketches show layout only, not style.
@@ -42,7 +42,7 @@ Per the plan's working rule, the storyboards are text, not images. Each frame be
 | # | Scene | Page | Class | D / T / M | Beats | Status |
 |---|---|---|---|---|---|---|
 | 1 | Integration System | Home | Signature | in-view / stepped / stepped | 8 nodes | **Built and approved with the homepage**: documented as built, no change |
-| 2 | Route | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | Awaiting D-20 |
+| 2 | Route | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | **First cut built in P2** (`6932552`, on the Mobile NVR page; screenshots `docs/review/p2/route-*`). Storyboard still awaiting D-20 |
 | 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Awaiting D-20 |
 | 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Awaiting D-20 |
 | 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Awaiting D-20 |

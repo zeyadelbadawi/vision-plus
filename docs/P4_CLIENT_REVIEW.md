@@ -15,7 +15,7 @@ Nothing below adds new company information. All website text comes from your app
     - the Contact headline “Tell us what you need to achieve.”;
     - the Products headline reused from your partner line;
     - the 7 product-category names taken from your sitemap.
-  - **170 interface strings** (buttons, menu labels, form labels, error messages) in `messages/en.json`, shown as **159 rows** in the workbook's *Interface* sheet, because repeated strings are listed once.
+  - **176 interface strings** (buttons, menu labels, form labels, error messages) in `messages/en.json`, shown as **165 rows** in the workbook's *Interface* sheet, because repeated strings are listed once. (Six of them were added on 2026-10-01 for the P2/P3 pages: “Home” in breadcrumbs and five preview-only notices.)
 - A few lines from `01` are deliberately not used as website text. They are listed in the report with the reason, for example “Selected projects can be presented according to:” and the `[Website]` / `[Email]` placeholders.
 
 ## 2. Relations (D-19)

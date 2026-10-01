@@ -2,7 +2,7 @@
 
 Trilingual (English, Arabic RTL and Simplified Chinese) corporate website for **VISION PLUS**, which provides Integrated Technology & Systems Solutions in Qatar and Egypt.
 
-**Status:** Phase — **homepage built for review** (quality gate). Other pages are not started. See [`docs/IMPLEMENTATION_NOTES.md`](docs/IMPLEMENTATION_NOTES.md).
+**Status (2026-10-01):** approved homepage; P2 design proof (Mobile NVR page with the Route scene first cut, style guide) awaiting client review; every other route is a P3 empty template (page bodies are P5). Nothing is deployed yet (Cloudflare account pending, D-22). Phase-by-phase evidence: [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md).
 
 | Document | Purpose |
 |---|---|
@@ -10,6 +10,8 @@ Trilingual (English, Arabic RTL and Simplified Chinese) corporate website for **
 | [`docs/IMAGE_ASSET_MANIFEST.md`](docs/IMAGE_ASSET_MANIFEST.md) / [`.csv`](docs/image-asset-manifest.csv) | Every image slot, with exact dimensions, for the designer |
 | [`docs/CLIENT_INPUT_CHECKLIST.md`](docs/CLIENT_INPUT_CHECKLIST.md) | Decisions and inputs still needed from the client |
 | [`docs/IMPLEMENTATION_NOTES.md`](docs/IMPLEMENTATION_NOTES.md) | Decisions, validation results and how to run the current build |
+| [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md) | What is built, verified, blocked and awaiting approval, per phase |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Cloudflare setup, CI/CD and the access needed (D-22) |
 | [`client-materials/`](client-materials/) | Client source package (the source of truth; do not edit) |
 
 Brand: **Option B palette only** (Vision Gold `#D4AF37`, Charcoal `#1F1F1F`, Dark Gray `#3A3A3A`, Medium Gray `#6B6B6B`, Light Gray `#E5E5E5`, Off White `#F8F8F8`, White `#FFFFFF`).
@@ -19,8 +21,9 @@ Brand: **Option B palette only** (Vision Gold `#D4AF37`, Charcoal `#1F1F1F`, Dar
 ```bash
 pnpm install
 pnpm build   # content/asset gates + build-time images + static export → out/
-pnpm serve   # http://localhost:4173/en · /ar · /zh
-pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e
+pnpm serve   # http://localhost:4173/en · /ar · /zh  (style guide: /en/_lab)
+pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm test:e2e
+pnpm content:fidelity && pnpm site:check && pnpm budget && pnpm worker:smoke
 ```
 
 Stack: Next.js 16.3 (static export), React 19, TypeScript, next-intl 4, Tailwind CSS 4.3. Hosting target: Cloudflare Workers (free); see plan §42.

@@ -119,7 +119,7 @@ Everything runs on free services. **You own the accounts, and we are added as co
 | ID | Item | When |
 |---|---|---|
 | D-20 | Storyboards of the solution-page animations (one frame per step). **Ready for review:** `docs/SCENE_STORYBOARDS.md` (approval log in §11) | Phase 4 |
-| — | Design direction proof (live style guide + homepage hero + one solution page) | Phase 2 |
+| — | Design direction proof (live style guide + homepage hero + one solution page). **Ready for review:** homepage (approval relayed), Mobile NVR page with the Route scene first cut, and the style guide — screenshots in `docs/review/p2/`; a live preview link needs D-22 | Phase 2 |
 | — | English copy lock | Before translation |
 | — | Arabic and Chinese review by native speakers on the staging site | Phase 8 |
 | — | Final launch approval | Phase 11 |

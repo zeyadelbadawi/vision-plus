@@ -84,6 +84,7 @@ Reference IDs: `Q-nn` are open questions (§53.3), `D-nn` are client dependencie
 52. Final Acceptance Checklist
 53. Consistency Audit, Contradictions and Open Questions
 54. Self-Review Record and Recommended Next Step
+55. Implementation Amendments & Status Log
 
 ---
 
@@ -2261,6 +2262,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Acceptance:** all "before P2" questions are answered or have an accepted default.
 - **Done when:** the decision log is committed.
 - **Risks:** late answers delay P2 and P4 (R-02).
+- **Status (2026-10-01):** **Not complete — blocked on client input.** No decision is recorded in §53.3; the checklist exists (`docs/CLIENT_INPUT_CHECKLIST.md`) but its sending is not recorded in the repository. Received so far: the hero banner (2026-09-29) and logo package v1 (rejected, `client-materials/brand/logo-package-v1-2026-10-01/REVIEW.md`). Work proceeded on the documented defaults (see §55); none of them is a client decision.
 
 **P2: Design Direction Proof** (a coded proof, cheaper and more truthful than static mockups)
 - **Objective:** lock the visual language ("Engineered Light") in all 3 scripts before production.
@@ -2280,6 +2282,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Acceptance:** written client approval of the direction, type and motion character.
 - **Done when:** approved, with adjustments logged.
 - **Risks:** subjective iteration loops. Mitigation: a maximum of 2 revision rounds, with feedback collected as a single consolidated list.
+- **Status (2026-10-01):** **Implemented — awaiting client approval of the direction (not accepted).** The homepage slice (hero, Integration System, header/mega/drawer) was built as the full homepage in `9f90b5d`/`c7e5c0e`; its approval was relayed by the project owner in the working session (no written client record in the repository). The rest of P2 — live style guide (`/{locale}/_lab`), the full Mobile NVR solution page and the Route scene first cut in pinned, stepped and reduced-motion modes — was missing and was built in `6932552` (see §55 A-01). Review screenshots: `docs/review/p2/`. A preview URL needs D-22.
 
 **P3: Engineering Foundation**
 - **Objective:** a production-grade skeleton that every later phase builds on.
@@ -2298,6 +2301,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Acceptance:** the foundation checklist (§51), and the preview URL is shared.
 - **Done when:** merged to `main`.
 - **Risks:** static-export and i18n edge cases. Mitigation: verify early (this phase).
+- **Status (2026-10-01):** **Implemented and verified locally; acceptance criteria not all met (not closed).** The owner approved the P3 report in the working session on 2026-10-01. Open against §49.1: the preview URL (blocked, D-22); the Lighthouse ≥ 95 baseline on `/ar` and `/zh` (measured 0.88 / 0.75; moved to P10, §55 A-09); merge to `main` (the remote has no `main` branch — owner decision). The missing "empty templates in 3 locales" output was delivered in `6932552` and the missing Zod/Prettier checks in `9d04cf8` (§55 A-02, A-06, A-07).
 
 **P4: Content Encoding & Scene Storyboards**
 - **Objective:** all approved English content lives in typed content files; the scenes are storyboarded and approved.
@@ -2635,3 +2639,40 @@ It found no unresolved contradiction beyond those listed in §53.1, each of whic
 2. **Then start P3 (the foundation) and P2 (the design proof) together.** P2 delivers the live style guide, the home hero and integration system, and the **Mobile NVR page with its Route scene**. That single slice validates the visual language, the trilingual typography, RTL, the scene engine and the performance budgets before any mass production.
 
 **Implementation has not started.** This plan stops here for approval, as required.
+
+---
+
+## 55. Implementation Amendments & Status Log
+
+*Added 2026-10-01 after the P1–P4 implementation audit. The plan rule "changes are made here first" (§49, working rule 4) was not followed for the items below; this log records them retroactively and transparently. Types: **T-seq** technical sequencing adjustment; **T-impl** technical implementation choice; **Client** needs a client decision (nothing here is treated as approved by silence).*
+
+| # | Change against the plan | Type | Evidence | Status |
+|---|---|---|---|---|
+| A-01 | P2 was executed as a "homepage quality gate" (the full homepage) on the owner's instruction instead of the P2 slice; the style guide, Mobile NVR page and Route scene first cut were not built, and the P3 report then listed the scene as a P5B deferral without a decision. | T-seq | `9f90b5d`, `c7e5c0e`; audit 2026-10-01 | **Corrected:** built in `6932552`. P2 still needs client approval of the direction. |
+| A-02 | P3 output "empty templates in 3 locales" was deferred to P5, leaving 18 homepage links on 404. | T-seq | `eb4facc` | **Corrected:** templates for every sitemap route in `6932552`; page bodies remain P5. |
+| A-03 | next-intl uses `setRequestLocale` instead of `next/root-params` (§13). | T-impl | IMPLEMENTATION_NOTES I-01 | Accepted technical choice; revisit when root params work with a static root redirect. |
+| A-04 | Fonts via `next/font/local` (Fontsource files) instead of `next/font/google`; Chinese subset at build time. | T-impl | I-03, P3-08 | Same typefaces; renders verified pixel-identical. |
+| A-05 | JS budget: Next 16 + React 19 baseline is 134 KB gz, so §37's 130 KB cannot be met; budget = baseline + app allowance (160 KB cap). | T-impl | I-04, `scripts/budget.mjs` | Enforced in CI. |
+| A-06 | Content validation used TypeScript `satisfies` only (P3-11, "no Zod"), contrary to §12.1/§40. | T-impl | `eb4facc` | **Corrected:** Zod schemas run in `content:check` (`9d04cf8`). |
+| A-07 | Prettier (§40, §51) was not configured. | T-impl | — | **Corrected** (`9d04cf8`): TS/TSX/JS/YAML; JSON content, CSS and docs are hand-formatted by design (`.prettierignore`). |
+| A-08 | E2E ran Chromium only although the config claimed WebKit/Firefox in CI; §40 asks for the full matrix nightly. | T-impl | `playwright.config.ts` | **Corrected:** `.github/workflows/e2e-matrix.yml` (nightly + manual), comment fixed (`9d04cf8`). |
+| A-09 | §49 P3 asks for a Lighthouse baseline ≥ 95, while §37 sets ≥ 90 per template. Measured (mobile, Lantern): `/en` 0.95–0.98, `/ar` 0.88–0.93, `/zh` 0.73–0.79, Mobile NVR page 0.98. The gap is font payload (Arabic 3 weights, Chinese 15 subset files) competing with the hero image on the throttled link; closing it touches the approved homepage. | T-seq | `.lighthouseci`, IMPLEMENTATION_NOTES P3-3 | Reported as CI warnings; resolution scheduled for **P10** (owner accepted in P3). The 90/95 inconsistency needs one number — recommend ≥ 95 for `/en` and ≥ 90 for `/ar` and `/zh` until P10. |
+| A-10 | Lighthouse skips its colour-contrast audit; contrast is enforced by axe on every template × locale × 2 viewports, excluding only the interim text wordmark (a logotype — WCAG 1.4.3 exemption). | T-impl | `lighthouserc.cjs`, `tests/e2e/pages.spec.ts` | The official logo (D-05) must provide a light-background variant. |
+| A-11 | Arabic/Chinese for the page copy added in P4 is an English placeholder (status `placeholder`), not machine translation; marked `lang="en" dir="ltr"` when rendered. | T-impl | P4-05, `src/lib/text-attrs.ts` | Refused by the production gate until D-12/D-13. |
+| A-12 | The Route scene first cut was built before its storyboard approval, as P2 intends ("working first cut"); the final scene follows D-20 in P5B. | T-seq | `6932552` | Awaiting **Client**: D-20. |
+| A-13 | Production deployment is manual-only until launch (§42 allows CI deploys). | T-impl | `.github/workflows/deploy-production.yml` | Accepted with P3. |
+| A-14 | The repository has a single working branch and no `main`; P3 "done when merged to main" cannot be met. | — | `git ls-remote` | Needs an **owner** decision (create `main` / merge strategy). |
+
+### 55.1 Phase status summary (2026-10-01)
+
+| Phase | Status | Next action |
+|---|---|---|
+| P0 | Complete | — |
+| P1 | Blocked on client input; nothing recorded | Client decision session and inputs (§53.3, checklist) |
+| P2 | Implemented; awaiting client approval of the direction | Client review of `docs/review/p2/` (and preview URL once D-22 exists) |
+| P3 | Implemented and verified locally; open: preview URL (D-22), `/ar` `/zh` Lighthouse (P10), `main` branch | D-22; owner decision on `main` |
+| P4 | Ready for Acceptance — not accepted | D-18, D-19, D-20 sign-offs (`docs/P4_CLIENT_REVIEW.md` §6) |
+| P5 | Not started; gated on P2 approval, P3, P4 (§49.1) | — |
+
+The detailed evidence for each row is in `docs/PHASE_STATUS.md`.
+
