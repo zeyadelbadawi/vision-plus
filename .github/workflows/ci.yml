@@ -43,6 +43,8 @@ jobs:
         run: pnpm content:fidelity
       - name: Build (content + asset gates, image pipeline, fonts, static export, _headers)
         run: pnpm build
+      - name: Site check (internal links, anchors, one h1, title/description, lang/dir, redirects)
+        run: pnpm site:check
       - name: Performance budget (JS / CSS / HTML, gzip)
         run: pnpm budget
       - name: Worker config validation (wrangler dry-run, preview + production)

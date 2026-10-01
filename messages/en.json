@@ -16,6 +16,7 @@
     "breadcrumb": "Breadcrumb"
   },
   "nav": {
+    "home": "Home",
     "solutions": "Solutions",
     "products": "Products",
     "industries": "Industries",
@@ -76,6 +77,11 @@
     "partnerNote": "Partner logos appear once confirmed by Vision Plus."
   },
   "preview": {
+    "labIntro": "Live design system for review (preview only, never published).",
+    "labTitle": "Style guide",
+    "sceneFirstCut": "Route scene, first cut for direction review: the storyboard is awaiting client approval (D-20).",
+    "sectionPending": "Section content: Phase 5",
+    "templatePending": "Page template: the full page is built in Phase 5. It is shown here so that navigation works in preview.",
     "label": "Preview",
     "title": "Preview build — not for publication",
     "copyStatus": "Copy: {status}",

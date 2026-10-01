@@ -27,6 +27,7 @@
     "deploy:preview": "node scripts/deploy-preview.mjs",
     "deploy:production": "wrangler deploy --env production",
     "budget": "node scripts/budget.mjs",
+    "site:check": "node scripts/site-check.mjs",
     "lhci": "lhci autorun"
   },
   "dependencies": {

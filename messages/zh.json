@@ -16,6 +16,7 @@
     "breadcrumb": "面包屑导航"
   },
   "nav": {
+    "home": "首页",
     "solutions": "解决方案",
     "products": "产品",
     "industries": "行业",
@@ -76,6 +77,11 @@
     "partnerNote": "合作伙伴标志经 VISION PLUS 确认后展示。"
   },
   "preview": {
+    "labIntro": "用于评审的实时设计系统（仅限预览，不会发布）。",
+    "labTitle": "设计规范",
+    "sceneFirstCut": "路线场景首版，用于方向评审：分镜脚本待客户批准（D-20）。",
+    "sectionPending": "栏目内容：第 5 阶段",
+    "templatePending": "页面模板：完整页面将在第 5 阶段构建。此处显示仅为让预览中的导航可以正常使用。",
     "label": "预览",
     "title": "预览版本 — 不用于发布",
     "copyStatus": "文案：{status}",
