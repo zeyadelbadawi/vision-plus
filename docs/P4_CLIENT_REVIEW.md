@@ -1,5 +1,7 @@
 # VISION PLUS — Content & Storyboard Review (Phase 4)
 
+**Phase status:** Ready for Acceptance — **not accepted or closed**. Nothing in this document is approved until it is signed off in §6.
+
 **For:** the Vision Plus team. **What we need:** three sign-offs (D-18, D-19, D-20) and answers to the open questions in §4.
 Nothing below adds new company information. All website text comes from your approved content (`01`), except the few items clearly marked *derived* or *draft*.
 
@@ -91,8 +93,9 @@ The list is every question the plan ties to P4:
 ## 5. Translation workbook
 
 `docs/i18n/translations.xlsx` has one row per distinct English string, with max-length hints and notes.
-- **Approved rows** (352 of 374 page-copy rows) can be translated **now**.
-- **Derived/draft rows** wait for D-18.
+- **Status: prepared, not released.** The workbook is sent to translators only after D-18 is approved, so that the whole English text is locked first (plan §13: “English copy is locked” is step 1).
+- **Approved rows** (352 of 374 page-copy rows) already hold the client-approved English from `01`.
+- **Derived/draft rows** (the other 22 page-copy rows and all interface rows) may still change through D-18.
 
 Arabic needs a professional human translator (Q-05, D-13); Simplified Chinese comes from you (D-12). Machine translation is not accepted for the final text, and the website build refuses it.
 

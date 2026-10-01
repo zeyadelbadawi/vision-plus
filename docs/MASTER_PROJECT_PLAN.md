@@ -2316,6 +2316,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Acceptance:** D-18 (English sign-off), D-19 (relations), D-20 (storyboards).
 - **Done when:** English is locked and the translation workbook has been sent.
 - **Risks:** copy churn after lock; handled with a change log.
+- **Status (2026-10-01):** Ready for Acceptance — **not accepted or closed**. Implemented and validated; acceptance waits on three separate client sign-offs, D-18, D-19 and D-20 (record: `docs/P4_CLIENT_REVIEW.md` §6). The ten P4-related open questions remain unanswered, with defaults pending confirmation (§4 of that file). The translation workbook is prepared but **not released** to translators until D-18 is approved. P5 has not started and needs its own approval.
 
 **P5: Page Templates, Scene Engine & Solution Scenes**
 - **Objective:** build every page and section to spec, with placeholders, and every approved scene.
