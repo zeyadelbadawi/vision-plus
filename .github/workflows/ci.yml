@@ -39,6 +39,8 @@ jobs:
         run: pnpm typecheck
       - name: Unit tests
         run: pnpm test
+      - name: Content fidelity (approved 01 copy ↔ English copy files)
+        run: pnpm content:fidelity
       - name: Build (content + asset gates, image pipeline, fonts, static export, _headers)
         run: pnpm build
       - name: Performance budget (JS / CSS / HTML, gzip)

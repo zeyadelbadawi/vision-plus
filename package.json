@@ -16,6 +16,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "content:check": "node scripts/content-check.mjs",
+    "content:fidelity": "node scripts/content-fidelity.mjs",
+    "i18n:export": "node scripts/i18n-export.mjs",
     "assets:check": "node scripts/assets-check.mjs",
     "images": "node scripts/images.mjs",
     "manifest:sync": "node scripts/sync-image-manifest.mjs",
@@ -52,6 +54,7 @@
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
     "vitest": "5.0.2",
-    "wrangler": "^4.145.0"
+    "wrangler": "^4.145.0",
+    "write-excel-file": "4.1.1"
   }
 }

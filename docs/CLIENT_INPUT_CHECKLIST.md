@@ -72,8 +72,8 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 |---|---|---|---|
 | D-12 | **Chinese (Simplified) text** | Fill in the Chinese column of `translations.xlsx` (we send it after the English is locked). Please do not use machine translation. | 🔴 for the Chinese launch |
 | D-13 | **Arabic text** | Fill in the Arabic column of `translations.xlsx` (see Q-05) | 🔴 for the Arabic launch |
-| D-18 | **English sign-off** | Approve (1) the short summaries we cut from your approved text, and (2) new interface wording such as button labels, form messages and headings for Contact and Products. Every item is marked in the workbook. | 🔴 |
-| D-19 | **Relationship tables** | Confirm the industry-to-solution table (plan §12.4) and the service-to-approach-step mapping (plan §26.5) | 🟠 |
+| D-18 | **English sign-off** | Approve (1) the short summaries we cut from your approved text, and (2) new interface wording such as button labels, form messages and headings for Contact and Products. Every item is marked in the workbook. **Ready for review (P4):** `docs/P4_CLIENT_REVIEW.md` §1, the “Awaiting English sign-off” table in `docs/CONTENT_FIDELITY_REPORT.md`, and the *Interface* sheet of `docs/i18n/translations.xlsx`. | 🔴 |
+| D-19 | **Relationship tables** | Confirm the industry-to-solution table (plan §12.4) and the service-to-approach-step mapping (plan §26.5). **Ready for review (P4):** `docs/P4_CLIENT_REVIEW.md` §2. | 🟠 |
 | D-09 | **Products** | For each of the 7 categories (CCTV & Surveillance, Access Control, Time & Attendance, Video Intercom, Intrusion & Alarm, Fire & Life Safety, Security Networking): a 1–2 sentence description, the brands you supply in that category, and optionally key product lines. Note that the brands in the strategy PDF are a **market list**; we will only show brands you confirm you supply. | 🟠 |
 
 ## E. Partners
@@ -118,7 +118,7 @@ Everything runs on free services. **You own the accounts, and we are added as co
 
 | ID | Item | When |
 |---|---|---|
-| D-20 | Storyboards of the solution-page animations (one frame per step) | Phase 4 |
+| D-20 | Storyboards of the solution-page animations (one frame per step). **Ready for review:** `docs/SCENE_STORYBOARDS.md` (approval log in §11) | Phase 4 |
 | — | Design direction proof (live style guide + homepage hero + one solution page) | Phase 2 |
 | — | English copy lock | Before translation |
 | — | Arabic and Chinese review by native speakers on the staging site | Phase 8 |

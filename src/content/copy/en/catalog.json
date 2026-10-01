@@ -1,5 +1,11 @@
 {
-  "_meta": { "status": "approved", "source": "01 §06 (solutions), §16 (services), §17 (approach), §18 (industries); product categories: 02 p6 sitemap" },
+  "_meta": {
+    "status": "derived",
+    "source": "01 §06 (solutions), §16 (services), §17 (approach), §18 (industries); product categories: 02 p6 sitemap",
+    "review": {
+      "productCategories": { "status": "derived", "source": "The 7 category names are the client's sitemap items (02 p6), not 01 approved copy; confirm with D-18 (and Q-02 for the Products launch option)" }
+    }
+  },
   "solutions": {
     "mobile-nvr-mobile-surveillance": { "name": "Mobile NVR & Mobile Surveillance", "summary": "Mobile video surveillance, vehicle monitoring, GPS, connectivity, remote monitoring, and fleet intelligence." },
     "cctv-security-systems": { "name": "CCTV & Security Systems", "summary": "Advanced surveillance, intelligent video management, analytics, recording, and centralized security." },

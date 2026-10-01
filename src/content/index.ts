@@ -8,6 +8,33 @@ import zhCompany from './copy/zh/company.json';
 import enHome from './copy/en/home.json';
 import arHome from './copy/ar/home.json';
 import zhHome from './copy/zh/home.json';
+import enAbout from './copy/en/about.json';
+import arAbout from './copy/ar/about.json';
+import zhAbout from './copy/zh/about.json';
+import enContact from './copy/en/contact.json';
+import arContact from './copy/ar/contact.json';
+import zhContact from './copy/zh/contact.json';
+import enIndustries from './copy/en/industries.json';
+import arIndustries from './copy/ar/industries.json';
+import zhIndustries from './copy/zh/industries.json';
+import enPartners from './copy/en/partners.json';
+import arPartners from './copy/ar/partners.json';
+import zhPartners from './copy/zh/partners.json';
+import enProducts from './copy/en/products.json';
+import arProducts from './copy/ar/products.json';
+import zhProducts from './copy/zh/products.json';
+import enProjects from './copy/en/projects.json';
+import arProjects from './copy/ar/projects.json';
+import zhProjects from './copy/zh/projects.json';
+import enSeo from './copy/en/seo.json';
+import arSeo from './copy/ar/seo.json';
+import zhSeo from './copy/zh/seo.json';
+import enServices from './copy/en/services.json';
+import arServices from './copy/ar/services.json';
+import zhServices from './copy/zh/services.json';
+import enSolutions from './copy/en/solutions.json';
+import arSolutions from './copy/ar/solutions.json';
+import zhSolutions from './copy/zh/solutions.json';
 import locationsJson from './data/locations.json';
 
 export type ContentStatus = 'approved' | 'derived' | 'draft' | 'placeholder' | 'draft-mt';
@@ -17,16 +44,44 @@ type Shape<T> = Omit<T, '_meta'> & Meta;
 export type CatalogCopy = Shape<typeof enCatalog>;
 export type CompanyCopy = Shape<typeof enCompany>;
 export type HomeCopy = Shape<typeof enHome>;
+export type AboutCopy = Shape<typeof enAbout>;
+export type ContactCopy = Shape<typeof enContact>;
+export type IndustriesCopy = Shape<typeof enIndustries>;
+export type PartnersCopy = Shape<typeof enPartners>;
+export type ProductsCopy = Shape<typeof enProducts>;
+export type ProjectsCopy = Shape<typeof enProjects>;
+export type SeoCopy = Shape<typeof enSeo>;
+export type ServicesCopy = Shape<typeof enServices>;
+export type SolutionsCopy = Shape<typeof enSolutions>;
 
 // `satisfies` enforces key parity across locales at compile time; scripts/content-check.mjs
 // additionally checks array lengths and the content-status gate.
 const catalog = { en: enCatalog, ar: arCatalog, zh: zhCatalog } satisfies Record<Locale, CatalogCopy>;
 const company = { en: enCompany, ar: arCompany, zh: zhCompany } satisfies Record<Locale, CompanyCopy>;
 const home = { en: enHome, ar: arHome, zh: zhHome } satisfies Record<Locale, HomeCopy>;
+const aboutCopy = { en: enAbout, ar: arAbout, zh: zhAbout } satisfies Record<Locale, AboutCopy>;
+const contactCopy = { en: enContact, ar: arContact, zh: zhContact } satisfies Record<Locale, ContactCopy>;
+const industriesCopy = { en: enIndustries, ar: arIndustries, zh: zhIndustries } satisfies Record<Locale, IndustriesCopy>;
+const partnersCopy = { en: enPartners, ar: arPartners, zh: zhPartners } satisfies Record<Locale, PartnersCopy>;
+const productsCopy = { en: enProducts, ar: arProducts, zh: zhProducts } satisfies Record<Locale, ProductsCopy>;
+const projectsCopy = { en: enProjects, ar: arProjects, zh: zhProjects } satisfies Record<Locale, ProjectsCopy>;
+const seoCopy = { en: enSeo, ar: arSeo, zh: zhSeo } satisfies Record<Locale, SeoCopy>;
+const servicesCopy = { en: enServices, ar: arServices, zh: zhServices } satisfies Record<Locale, ServicesCopy>;
+const solutionsCopy = { en: enSolutions, ar: arSolutions, zh: zhSolutions } satisfies Record<Locale, SolutionsCopy>;
 
 export const getCatalog = (locale: Locale): CatalogCopy => catalog[locale];
 export const getCompany = (locale: Locale): CompanyCopy => company[locale];
 export const getHome = (locale: Locale): HomeCopy => home[locale];
+// Page copy encoded in P4 (consumed by the P5 templates).
+export const getAboutCopy = (locale: Locale): AboutCopy => aboutCopy[locale];
+export const getContactCopy = (locale: Locale): ContactCopy => contactCopy[locale];
+export const getIndustriesCopy = (locale: Locale): IndustriesCopy => industriesCopy[locale];
+export const getPartnersCopy = (locale: Locale): PartnersCopy => partnersCopy[locale];
+export const getProductsCopy = (locale: Locale): ProductsCopy => productsCopy[locale];
+export const getProjectsCopy = (locale: Locale): ProjectsCopy => projectsCopy[locale];
+export const getSeoCopy = (locale: Locale): SeoCopy => seoCopy[locale];
+export const getServicesCopy = (locale: Locale): ServicesCopy => servicesCopy[locale];
+export const getSolutionsCopy = (locale: Locale): SolutionsCopy => solutionsCopy[locale];
 
 /** Aggregate status of the copy shown for a locale (drives the preview notice). */
 export function copyStatus(locale: Locale): ContentStatus {

@@ -85,5 +85,163 @@
     "images": "在真实摄影素材交付前，图片位置显示为占位图",
     "sections": "在具备真实资料前，项目与合作伙伴栏目在正式版中隐藏",
     "close": "关闭"
+  },
+  "solution": {
+    "capabilities": "核心能力",
+    "lifecycleTitle": "贯穿全生命周期的交付",
+    "related": "相关内容",
+    "relatedIndustries": "行业",
+    "relatedCategories": "产品类别",
+    "relatedProjects": "项目",
+    "otherSolutions": "其他解决方案",
+    "acrossEnvironments": "适用于各类环境",
+    "ctaTitle": "与我们探讨您的{solution}需求。"
+  },
+  "scene": {
+    "stepsLabel": "{name}：步骤",
+    "progress": "第 {current} 步，共 {total} 步",
+    "skip": "跳至下一部分"
+  },
+  "industries": {
+    "indexLabel": "行业",
+    "relatedSolutions": "相关解决方案",
+    "relatedProjects": "相关项目"
+  },
+  "services": {
+    "stages": "阶段："
+  },
+  "products": {
+    "askCategory": "咨询此类别",
+    "relatedSolution": "相关解决方案",
+    "brands": "我们供应的品牌"
+  },
+  "projects": {
+    "filters": {
+      "label": "筛选项目",
+      "sector": "行业",
+      "solution": "解决方案",
+      "country": "国家",
+      "all": "全部",
+      "reset": "重置筛选"
+    },
+    "count": "{count, plural, other {# 个项目}}",
+    "empty": {
+      "title": "没有符合筛选条件的项目。",
+      "action": "显示全部项目"
+    },
+    "facts": "项目概况",
+    "gallery": {
+      "label": "项目图集",
+      "open": "打开第 {n} 张图片，共 {total} 张",
+      "previous": "上一张",
+      "next": "下一张",
+      "close": "关闭图集"
+    },
+    "nextProject": "下一个项目"
+  },
+  "about": {
+    "onThisPage": "本页内容"
+  },
+  "form": {
+    "title": "提交咨询",
+    "type": {
+      "label": "咨询类型",
+      "consultation": "预约咨询",
+      "product": "产品咨询",
+      "general": "一般咨询",
+      "partnership": "成为合作伙伴"
+    },
+    "name": {
+      "label": "姓名"
+    },
+    "company": {
+      "label": "公司 / 机构"
+    },
+    "email": {
+      "label": "电子邮箱"
+    },
+    "phone": {
+      "label": "电话",
+      "hint": "请包含国家代码，例如 +974。"
+    },
+    "location": {
+      "label": "项目所在地",
+      "qatar": "卡塔尔",
+      "egypt": "埃及",
+      "other": "其他"
+    },
+    "industry": {
+      "label": "行业",
+      "other": "其他"
+    },
+    "solution": {
+      "label": "感兴趣的解决方案",
+      "services": "专业服务",
+      "notSure": "尚不确定"
+    },
+    "category": {
+      "label": "产品类别"
+    },
+    "message": {
+      "label": "留言",
+      "hint": "请介绍项目现场、需求及时间安排。"
+    },
+    "consent": {
+      "label": "我同意 VISION PLUS 按照<privacy>隐私政策</privacy>所述，使用上述信息回复我的咨询。"
+    },
+    "optional": "选填",
+    "submit": "提交咨询",
+    "sending": "正在提交…",
+    "errors": {
+      "summary": "{count, plural, other {请修正下方 # 个字段。}}",
+      "required": "此项为必填项。",
+      "nameLength": "请输入 2 至 100 个字符。",
+      "companyLength": "最多输入 120 个字符。",
+      "email": "请输入有效的电子邮箱地址。",
+      "phone": "请使用数字、空格或连字符，开头可加 +。",
+      "messageLength": "请输入 10 至 3,000 个字符。",
+      "messageLinks": "链接请勿超过 3 个。",
+      "consent": "提交前请确认。",
+      "verification": "无法验证本次提交，请重试。",
+      "rateLimited": "此网络连接提交的咨询过多。请稍后再试，或通过电子邮件或电话联系我们。",
+      "network": "咨询未能提交。您的留言仍保留在此——请重试，或通过电子邮件或电话联系我们。"
+    },
+    "success": {
+      "title": "谢谢——我们已收到您的咨询。",
+      "reference": "参考编号：{ref}",
+      "next": "我们的团队将进行审阅，并通过电子邮件回复您。",
+      "contacts": "如有紧急事项，请直接联系我们的办公室。"
+    },
+    "noscript": "此表单需要启用 JavaScript。您也可以直接联系我们："
+  },
+  "contact": {
+    "address": "地址",
+    "phone": "电话",
+    "email": "电子邮箱",
+    "hours": "营业时间",
+    "getDirections": "获取路线",
+    "loadMap": "加载地图",
+    "mapNotice": "地图由 Google 地图提供，仅在您选择后加载。"
+  },
+  "companyProfile": {
+    "load": "加载演示文稿",
+    "loadNotice": "演示文稿托管于 Canva，仅在您选择后加载。",
+    "download": "下载 PDF",
+    "fallback": "如演示文稿无法加载，请联系我们索取副本。"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "body": "您访问的页面不存在或已移动。",
+    "home": "返回首页",
+    "links": "常用栏目"
+  },
+  "legal": {
+    "contents": "目录"
+  },
+  "pending": {
+    "category": "类别说明 — 待客户提供（D-09）",
+    "privacy": "隐私政策正文 — 待客户提供（D-16）",
+    "companyProfile": "公司介绍演示文稿 — 待客户提供（D-06）",
+    "map": "地图 — 待客户提供（D-03）"
   }
 }

@@ -47,6 +47,58 @@ for (const set of sets) {
   }
 }
 
+// _meta.review (MASTER_PROJECT_PLAN §12.3, §12.5): a file that is not fully client-approved lists every
+// derived / draft / placeholder entry with its source. Paths must resolve, and such a file cannot claim "approved".
+const get = (obj, path) => path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+for (const f of readdirSync('src/content/copy/en')) {
+  const data = read(`src/content/copy/en/${f}`);
+  const review = data._meta?.review ?? {};
+  for (const [path, entry] of Object.entries(review)) {
+    if (get(data, path) === undefined) errors.push(`copy/en/${f}: _meta.review path "${path}" does not exist`);
+    if (!['derived', 'draft', 'placeholder'].includes(entry?.status)) errors.push(`copy/en/${f}: _meta.review "${path}" has invalid status "${entry?.status}"`);
+    if (!entry?.source) errors.push(`copy/en/${f}: _meta.review "${path}" needs a source`);
+  }
+  if (Object.keys(review).length && data._meta.status === 'approved') errors.push(`copy/en/${f}: has pending review items but claims status "approved"`);
+}
+
+// SEO length budgets (§36): rendered "<title> — VISION PLUS" ≤ 60 characters, description ≤ 155.
+const SUFFIX = ' — VISION PLUS'.length;
+for (const l of LOCALES) {
+  const seo = read(`src/content/copy/${l}/seo.json`);
+  const walk = (o, path) => {
+    for (const [k, v] of Object.entries(o)) {
+      if (k === '_meta' || !v || typeof v !== 'object') continue;
+      if (typeof v.title === 'string') {
+        if (v.title.length + SUFFIX > 60) errors.push(`copy/${l}/seo.json: ${path}${k}.title renders at ${v.title.length + SUFFIX} chars (max 60)`);
+        if (v.description.length > 155) errors.push(`copy/${l}/seo.json: ${path}${k}.description is ${v.description.length} chars (max 155)`);
+      } else walk(v, `${path}${k}.`);
+    }
+  };
+  walk(seo, '');
+}
+
+// The same approved English sentence can appear on several pages (e.g. the homepage selection and the full
+// page). Once a locale's files are approved, each such sentence must be translated identically everywhere.
+const strings = (o, path, out) => {
+  if (typeof o === 'string') out.push([path, o]);
+  else if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) if (k !== '_meta') strings(v, path ? `${path}.${k}` : k, out);
+  return out;
+};
+const copyFiles = readdirSync('src/content/copy/en');
+const byEnglish = new Map();
+for (const f of copyFiles) for (const [path, text] of strings(read(`src/content/copy/en/${f}`), '', [])) {
+  if (!byEnglish.has(text)) byEnglish.set(text, []);
+  byEnglish.get(text).push([f, path]);
+}
+for (const l of LOCALES.filter((x) => x !== 'en')) {
+  const files = Object.fromEntries(copyFiles.map((f) => [f, read(`src/content/copy/${l}/${f}`)]));
+  for (const [text, uses] of byEnglish) {
+    const approved = uses.filter(([f]) => files[f]._meta?.status === 'approved');
+    const variants = new Set(approved.map(([f, path]) => get(files[f], path)));
+    if (variants.size > 1) errors.push(`copy/${l}: "${text.slice(0, 50)}…" is translated differently in ${approved.map(([f, p]) => `${f}:${p}`).join(', ')}`);
+  }
+}
+
 const loc = read('src/content/data/locations.json');
 for (const o of loc.offices) {
   for (const k of ['address', 'phone', 'email', 'mapUrl', 'mapEmbedSrc']) if (!o[k]) blockers.push(`locations: ${o.key}.${k} pending client (D-01/D-02/D-03)`);

@@ -173,3 +173,44 @@ pnpm build && pnpm budget
 pnpm worker:check && pnpm worker:smoke
 pnpm lhci                      # CHROME_PATH=… if Chrome isn't on PATH
 ```
+
+---
+
+# Implementation Notes — Phase P4: Content Encoding & Scene Storyboards
+
+**Scope delivered:** P4 as defined in MASTER_PROJECT_PLAN §49.1 and §50:
+- All approved English copy (`01`) encoded in typed copy files, with source references.
+- Relations (§12.4, §26.5, §9.2) and sitemap aliases.
+- Draft UI microcopy and per-page SEO strings.
+- The translation workbook export.
+- `docs/SCENE_STORYBOARDS.md` for the 8 solution scenes plus the homepage scene.
+- The fidelity report.
+- A one-stop client review sheet: `docs/P4_CLIENT_REVIEW.md`.
+
+**Not done (by instruction):** no page templates, routes or scene artwork/code (P5/P5B). The homepage is unchanged: its HTML is token-identical to the approved build apart from build hashes, the CSS is byte-identical, and the reduced-motion render is pixel-identical in en/ar/zh at 390 and 1440.
+
+## P4-1. Decisions
+
+| # | Topic | Decision | Why |
+|---|---|---|---|
+| P4-01 | Copy layout | New page files in `copy/<locale>/`: `solutions`, `services`, `industries`, `products`, `projects`, `partners`, `about`, `contact`, `seo`. Names, one-line summaries and approach steps stay in the existing `catalog.json`; Why Vision Plus stays in `company.json`. | §12.1 split, reusing the files the approved homepage already reads. Nothing is moved, so the homepage code is untouched. |
+| P4-02 | Repeated sentences | A page file is complete for its page, even when the homepage selection repeats a sentence (for example the Mobile NVR intro and the journey). | The workbook gives each distinct English string one row, so it is translated once. `content:check` requires identical translations once a locale is approved. This keeps the homepage untouched without coupling pages to `home.json`. |
+| P4-03 | Block-level status | `_meta.review` lists every non-verbatim entry (`derived` / `draft` / `placeholder`) with its source. A file with entries cannot claim `approved` (`content:check`). | §12.3 asks for status per block; this records it without wrapping every string. It is also the D-18 sign-off list. |
+| P4-04 | Honest labelling of the product-category names | `catalog.json` is now `derived`: the 7 category names are the client's sitemap labels (02 p6), not `01` text. | Found by the fidelity check. It is metadata only, with no rendering change. The production gate now also waits on D-18 for these names. |
+| P4-05 | ar / zh for the new page copy | `placeholder` status containing the **English** source, not machine translation. | Long-form approved copy is translated by people (D-12, D-13); placeholders keep key parity and are refused by the production gate. For RTL/CJK layout QA in P5, draft translations can be added as `draft-mt` **if you approve it** (as was done for the homepage). |
+| P4-06 | ar / zh for the new UI microcopy | `draft-mt`, matching the existing status of `messages/ar.json` and `messages/zh.json`. | Short interface strings; preview-only, refused in production. Every message compiles as ICU in its locale, including the six Arabic plural forms (unit test). |
+| P4-07 | Relations with evidence | `data/relations.ts`. Every industry→solution link carries the words from the approved sentence that justify it, and a test checks those words exist. ELV and Fire Alarm are not force-linked. All relations are `derived` until D-19. | §12.4 says links are derived *only* where the wording names the technology. The test makes that rule enforceable. |
+| P4-08 | Aliases | `data/aliases.json` (+ typed `aliases.ts`): 32 sitemap paths → canonical routes, anchors or filters. `postbuild` writes `out/_redirects`, emitting each 301 only once its target page exists, and fails if an alias collides with a real page. Real Estate & Compounds (Q-08) and Supply & Procurement (Q-09) are listed as pending, not redirected. | Verified locally through `wrangler dev`: 301 with anchor and query targets preserved; the canonical page still serves 200. Aliases switch on automatically as the P5 routes land. |
+| P4-09 | Scene registry | `data/scenes.ts` mirrors the storyboards. Every title, label and caption is a reference into the copy, never a literal. A test resolves each reference against the approved text and checks the storyboard document lists every label. | §23.6: “Scene labels use only approved terms.” Localised scenes resolve the same references in ar/zh. |
+| P4-10 | Workbook | `pnpm i18n:export` writes `docs/i18n/translations.xlsx`. It uses `write-excel-file` (MIT, one dependency) instead of `exceljs`, whose archive dependencies are older. | Approved rows can be translated now; derived/draft rows wait for D-18. Machine drafts are never pre-filled. The import (`i18n:import`) is built in P8, where the plan places it. |
+| P4-11 | Fidelity | `pnpm content:fidelity` (in CI) checks both directions: every approved 01 unit appears verbatim, and every English string comes from 01 or is declared. `--write` regenerates `docs/CONTENT_FIDELITY_REPORT.md`. | The P4 validation item in §49. A negative test confirmed it catches a removed sentence and an altered word. |
+| P4-12 | Open client questions | Q-01, Q-02, Q-04, Q-07, Q-08, Q-09, Q-10, Q-17, Q-19 are unanswered. The plan's documented defaults are applied and recorded as pending in `docs/P4_CLIENT_REVIEW.md` §4. Nothing is encoded without approved text. | “Do not assume that unresolved client decisions are approved.” Each default is cheap to change (registry/data edits). |
+
+## P4-2. Validation (this commit)
+
+| Check | Result |
+|---|---|
+| Content fidelity | 372 / 372 approved 01 units found; 475 English strings, 0 undeclared; 22 derived/draft strings + 170 UI strings listed for D-18 |
+| `content:check` | Structure OK. New gates verified with deliberate breakage: review paths, status claims, SEO lengths. |
+| Unit tests | 37 / 37, including relations evidence, aliases, scenes ↔ approved copy ↔ storyboard document, ICU in en/ar/zh |
+| Homepage | HTML token-identical to the approved build (hashes aside); CSS byte-identical; reduced-motion render 0 px different in en/ar/zh at 390 and 1440 |

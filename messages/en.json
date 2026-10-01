@@ -85,5 +85,163 @@
     "images": "Image slots show placeholders until real photography is delivered",
     "sections": "Projects and Partners are hidden in production until real data exists",
     "close": "Close"
+  },
+  "solution": {
+    "capabilities": "Capabilities",
+    "lifecycleTitle": "Delivered through our lifecycle",
+    "related": "Related",
+    "relatedIndustries": "Industries",
+    "relatedCategories": "Product categories",
+    "relatedProjects": "Projects",
+    "otherSolutions": "Other solutions",
+    "acrossEnvironments": "Applies across environments",
+    "ctaTitle": "Discuss your {solution} requirements."
+  },
+  "scene": {
+    "stepsLabel": "{name}: steps",
+    "progress": "Step {current} of {total}",
+    "skip": "Skip to the next section"
+  },
+  "industries": {
+    "indexLabel": "Industries",
+    "relatedSolutions": "Related solutions",
+    "relatedProjects": "Related projects"
+  },
+  "services": {
+    "stages": "Stages:"
+  },
+  "products": {
+    "askCategory": "Ask about this category",
+    "relatedSolution": "Related solution",
+    "brands": "Brands we supply"
+  },
+  "projects": {
+    "filters": {
+      "label": "Filter projects",
+      "sector": "Sector",
+      "solution": "Solution",
+      "country": "Country",
+      "all": "All",
+      "reset": "Reset filters"
+    },
+    "count": "{count, plural, one {# project} other {# projects}}",
+    "empty": {
+      "title": "No projects match these filters.",
+      "action": "Show all projects"
+    },
+    "facts": "Project facts",
+    "gallery": {
+      "label": "Project gallery",
+      "open": "Open image {n} of {total}",
+      "previous": "Previous image",
+      "next": "Next image",
+      "close": "Close gallery"
+    },
+    "nextProject": "Next project"
+  },
+  "about": {
+    "onThisPage": "On this page"
+  },
+  "form": {
+    "title": "Send an inquiry",
+    "type": {
+      "label": "Inquiry type",
+      "consultation": "Request a consultation",
+      "product": "Product inquiry",
+      "general": "General inquiry",
+      "partnership": "Become a partner"
+    },
+    "name": {
+      "label": "Full name"
+    },
+    "company": {
+      "label": "Company / organization"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "phone": {
+      "label": "Phone",
+      "hint": "Include the country code, for example +974."
+    },
+    "location": {
+      "label": "Project location",
+      "qatar": "Qatar",
+      "egypt": "Egypt",
+      "other": "Other"
+    },
+    "industry": {
+      "label": "Industry",
+      "other": "Other"
+    },
+    "solution": {
+      "label": "Solution of interest",
+      "services": "Professional services",
+      "notSure": "Not sure yet"
+    },
+    "category": {
+      "label": "Product category"
+    },
+    "message": {
+      "label": "Message",
+      "hint": "Tell us about the site, the requirement and any timeline."
+    },
+    "consent": {
+      "label": "I agree that VISION PLUS may use these details to respond to my inquiry, as described in the <privacy>privacy policy</privacy>."
+    },
+    "optional": "Optional",
+    "submit": "Send inquiry",
+    "sending": "Sending…",
+    "errors": {
+      "summary": "Please correct {count, plural, one {# field} other {# fields}} below.",
+      "required": "This field is required.",
+      "nameLength": "Enter between 2 and 100 characters.",
+      "companyLength": "Enter up to 120 characters.",
+      "email": "Enter a valid email address.",
+      "phone": "Use digits, spaces or dashes, with an optional leading +.",
+      "messageLength": "Enter between 10 and 3,000 characters.",
+      "messageLinks": "Please include no more than 3 links.",
+      "consent": "Please confirm before sending.",
+      "verification": "We couldn’t verify the submission. Please try again.",
+      "rateLimited": "Too many inquiries were sent from this connection. Please try again later, or contact us by email or phone.",
+      "network": "We couldn’t send your inquiry. Your message is still here — please try again, or contact us by email or phone."
+    },
+    "success": {
+      "title": "Thank you — we’ve received your inquiry.",
+      "reference": "Reference: {ref}",
+      "next": "Our team will review it and reply by email.",
+      "contacts": "For anything urgent, contact our offices directly."
+    },
+    "noscript": "This form needs JavaScript. You can also contact us directly:"
+  },
+  "contact": {
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Business hours",
+    "getDirections": "Get directions",
+    "loadMap": "Load map",
+    "mapNotice": "The map is provided by Google Maps and loads only when you choose."
+  },
+  "companyProfile": {
+    "load": "Load presentation",
+    "loadNotice": "The presentation is hosted by Canva and loads only when you choose.",
+    "download": "Download PDF",
+    "fallback": "If the presentation doesn’t load, contact us for a copy."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you’re looking for doesn’t exist or has moved.",
+    "home": "Go to the homepage",
+    "links": "Popular sections"
+  },
+  "legal": {
+    "contents": "Contents"
+  },
+  "pending": {
+    "category": "Category description — pending client (D-09)",
+    "privacy": "Privacy policy text — pending client (D-16)",
+    "companyProfile": "Company profile presentation — pending client (D-06)",
+    "map": "Map — pending client (D-03)"
   }
 }
