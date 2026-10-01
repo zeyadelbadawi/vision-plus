@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/content-check.mjs && node scripts/assets-check.mjs && node scripts/images.mjs && node scripts/fonts.mjs && next build",
+    "build": "node scripts/content-check.mjs && node scripts/assets-check.mjs && node scripts/images.mjs && node scripts/fonts.mjs && next build && node scripts/postbuild.mjs",
     "serve": "node scripts/serve-static.mjs",
     "lint": "eslint . && node scripts/brand-check.mjs",
     "typecheck": "tsc --noEmit",
@@ -18,7 +18,14 @@
     "content:check": "node scripts/content-check.mjs",
     "assets:check": "node scripts/assets-check.mjs",
     "images": "node scripts/images.mjs",
-    "manifest:sync": "node scripts/sync-image-manifest.mjs"
+    "manifest:sync": "node scripts/sync-image-manifest.mjs",
+    "worker:dev": "wrangler dev --local --port 8787",
+    "worker:check": "wrangler deploy --dry-run --outdir .wrangler/dry-run && wrangler deploy --dry-run --env production --outdir .wrangler/dry-run-production",
+    "worker:smoke": "node scripts/worker-smoke.mjs",
+    "deploy:preview": "node scripts/deploy-preview.mjs",
+    "deploy:production": "wrangler deploy --env production",
+    "budget": "node scripts/budget.mjs",
+    "lhci": "lhci autorun"
   },
   "dependencies": {
     "@fontsource-variable/ibm-plex-sans": "^5.3.0",
@@ -31,6 +38,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@lhci/cli": "0.15.1",
     "@playwright/test": "1.56.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "^22.20.4",
@@ -40,8 +48,10 @@
     "eslint-config-next": "16.3.6",
     "postcss": "^8.5.28",
     "sharp": "^0.35.4",
+    "subset-font": "2.9.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
-    "vitest": "5.0.2"
+    "vitest": "5.0.2",
+    "wrangler": "^4.145.0"
   }
 }

@@ -12,7 +12,8 @@
     "playLogos": "تشغيل حركة الشعارات",
     "footerNav": "تذييل الصفحة",
     "solutionsDiagram": "ثماني قدرات مترابطة كمنظومة واحدة",
-    "approachProgress": "مراحل دورة الحياة"
+    "approachProgress": "مراحل دورة الحياة",
+    "breadcrumb": "مسار التنقل"
   },
   "nav": {
     "solutions": "الحلول",

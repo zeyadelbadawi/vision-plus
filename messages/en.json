@@ -12,7 +12,8 @@
     "playLogos": "Play logo movement",
     "footerNav": "Footer",
     "solutionsDiagram": "Eight capabilities connected as one system",
-    "approachProgress": "Lifecycle steps"
+    "approachProgress": "Lifecycle steps",
+    "breadcrumb": "Breadcrumb"
   },
   "nav": {
     "solutions": "Solutions",

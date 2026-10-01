@@ -12,7 +12,8 @@
     "playLogos": "播放标志滚动",
     "footerNav": "页脚",
     "solutionsDiagram": "八项能力，连接为一个系统",
-    "approachProgress": "生命周期步骤"
+    "approachProgress": "生命周期步骤",
+    "breadcrumb": "面包屑导航"
   },
   "nav": {
     "solutions": "解决方案",

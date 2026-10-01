@@ -111,7 +111,7 @@ Everything runs on free services. **You own the accounts, and we are added as co
 |---|---|---|---|
 | D-07 | **Domain and DNS** | The domain name, and who manages its DNS (registrar or DNS host). There is no purchase, because you already own it. Free Cloudflare hosting needs the domain's **nameservers moved to Cloudflare** (also free). Existing records, **including company email (MX)**, are copied over first and checked with your IT before the switch (plan §42.3). We need someone who can change nameservers at the registrar on the agreed day. | 🔴 |
 | D-14 | **Google account** | The company Google account (Google Workspace preferred) that will **own the inquiries spreadsheet** and the small script that writes to it and sends the email. We never need its password; you share access with us. | 🔴 |
-| D-22 | **Cloudflare account** (Free plan) | Created with a company email you control, with us invited as members. It hosts the website, the form's anti-spam and the DNS. No card is needed. | 🔴 |
+| D-22 | **Cloudflare account** (Free plan) | Created with a company email you control, with us invited as members. It hosts the website, the form's anti-spam and the DNS. No card is needed. **To switch on preview deployments we need:** (1) the member invitation, (2) a workers.dev subdomain chosen in Workers & Pages, (3) an API token from the **"Edit Cloudflare Workers"** template, scoped to this account, and (4) the Account ID. Items 3 and 4 are stored only as GitHub secrets (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`). Step by step: `docs/DEPLOYMENT.md` §2. | 🔴 |
 | D-23 | **Analytics** *(if Q-18 = yes)* | Cloudflare Web Analytics (free, no cookies), switched on in the same account | 🟢 |
 
 ## J. Approvals during the project

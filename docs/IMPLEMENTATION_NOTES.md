@@ -96,3 +96,80 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e
 CONTENT_MODE=production pnpm build   # demonstrates the publication gates (fails until client inputs arrive)
 node scripts/dev/shoot.mjs en,ar,zh 390,1440   # review screenshots → tests/screenshots/ (git-ignored)
 ```
+
+---
+
+# Implementation Notes — Phase P3: Engineering Foundation
+
+**Scope delivered:**
+- Cloudflare Worker foundation (`worker/`, `wrangler.jsonc`): root locale negotiation, health route, security headers.
+- Generated `_headers` (CSP, security headers, cache rules).
+- CI and deploy workflows (`.github/workflows/`).
+- Platform checks: Worker dry-run and smoke test, performance budget, Lighthouse CI.
+- Font subsetting for `/zh`.
+- The shared `Breadcrumbs` component, used from P5.
+
+Setup steps and the client access needed are in `docs/DEPLOYMENT.md`.
+
+**Not done (by instruction):** no deployment (blocked on D-22), no P4+ work. The approved homepage is unchanged: a reduced-motion render is pixel-identical to the approved build (see §P3-4).
+
+## P3-1. Decisions
+
+| # | Topic | Decision | Why |
+|---|---|---|---|
+| P3-01 | Worker scope | `run_worker_first: ["/", "/api/*"]`. Every other request is a static-asset hit and never invokes the Worker. | Free-plan request limits are only spent on `/` and the API. The pages stay a static export. |
+| P3-02 | Root `/` | 302 to `/{locale}`, chosen by `NEXT_LOCALE` cookie → `Accept-Language` (q-values; any `zh-*` → `zh`) → `en`. The response carries `Vary: Accept-Language, Cookie` and `private, no-store`. | Plan §15.4. A 302, not a 301, so the choice is never cached as permanent. A malformed cookie falls through to the header, and is unit-tested. |
+| P3-03 | Health route | `/api/contact/health`: `GET`/`HEAD` return 200 JSON, other methods return 405 with `Allow`. | The path the P6 contact endpoint lives under. It lets uptime checks and CI probe the Worker without touching the form. |
+| P3-04 | Two Workers | Top level = `vision-plus-web-preview` (noindex, branch preview aliases); `env.production` = `vision-plus-web`. | A preview build (placeholders, draft translations) can never be served from the production Worker. Previews don't touch production versions. |
+| P3-05 | Headers | `scripts/postbuild.mjs` writes `out/_headers` per `CONTENT_MODE`. The Worker sets the same baseline on its own responses, because `_headers` only applies to asset responses. HSTS is set **without** `includeSubDomains` until the client's subdomains are audited (P11). | Plan §39. The CSP keeps `'unsafe-inline'` for scripts (Next static-export bootstrap); hash-based CSP is evaluated in P10. |
+| P3-06 | Production deploys | `workflow_dispatch` only, with typed confirmation and the GitHub `production` environment. | The production gates fail by design until the launch blockers arrive. Nothing ships by accident before P11. |
+| P3-07 | Preview without credentials | The deploy workflow **skips with a notice** when the secrets are missing, and `pnpm deploy:preview` exits 2 with an explanation. | No invented credentials. CI stays green until D-22 is supplied. |
+| P3-08 | Chinese font | **Build-time subset** of Noto Sans SC to the CJK characters in `src/content/copy/zh/**` and `messages/zh.json`: 477 glyphs, **152 KB in 15 files (was 922 KB)**, with a 6 KB stylesheet (was ~100 KB). Same typeface, variable `wght` axis kept. | The full slice set made `/zh` the heaviest page by far. Characters added later are picked up on the next build; anything outside the subset falls back to the system CJK stack, exactly as before. **Verified pixel-identical** (P3-4). |
+| P3-09 | Lighthouse CI | **Errors:** a11y = 100, best practices ≥ 0.95, CLS ≤ 0.05, the individual SEO audits, and a performance floor ≥ 0.60. **Warnings:** the plan targets, performance ≥ 0.95 and LCP ≤ 2.5 s. | Preview is noindex, so the SEO *category* is capped at 0.63 by `is-crawlable` alone. Lantern scores for an identical build varied by up to ±0.1 between runs. The ≥ 95 target is closed in P10 (see P3-5). |
+| P3-10 | `experimental.inlineCss` | **Tried and rejected.** | Next also embeds the CSS in the RSC payload, so HTML grew by about 36 KB gz per page, with no measurable score gain (within run-to-run noise). |
+| P3-11 | Content validation | TypeScript `satisfies` + `content:check` parity and status gates; **Zod is not added**. | The content is static JSON checked at build time. Zod would add a dependency for no extra guarantee. Revisit if a runtime input (the P6 form) needs schema validation; that is the Worker side. |
+| P3-12 | Breadcrumbs | Shared component (`components/layout/breadcrumbs.tsx`): `nav[aria-label]` > `ol`, `aria-current="page"`, and a directional chevron mirrored in RTL. | Plan §16. It is **not** rendered on the homepage. Its first use is the P5 templates. |
+
+## P3-2. Budget (gzip, `pnpm budget`)
+
+| Page | JS (module) | CSS | HTML | Budget |
+|---|---|---|---|---|
+| `/en` | 142.8 KB | 12.3 KB | 22.9 KB | JS 160 · CSS 30 · HTML 40 |
+| `/ar` | 142.8 KB | 12.3 KB | 25.1 KB | |
+| `/zh` | 142.8 KB | 12.3 KB | 24.5 KB | (+ 152 KB of subset CJK font, only on `/zh`) |
+
+## P3-3. Lighthouse (mobile emulation, Lantern, median-score run of 3, local static server with brotli, final P3 build)
+
+| Page | Perf | A11y | Best practices | SEO* | FCP | LCP | TBT | CLS |
+|---|---|---|---|---|---|---|---|---|
+| `/en` | 0.96 | 1.00 | 0.96 | 0.63 | 1.05 s | 2.85 s | 51 ms | 0 |
+| `/ar` | 0.93 | 1.00 | 0.96 | 0.63 | 1.35 s | 3.15 s | 108 ms | 0.002 |
+| `/zh` | 0.75 | 1.00 | 0.96 | 0.63 | 2.41 s | 4.25 s | 300 ms | 0 |
+
+\* SEO is capped by the intentional preview `noindex`. Every other SEO audit asserted passes.
+
+The LCP element is the hero banner on every locale. Its time is almost entirely **render delay** from main-thread style and layout work under 4× CPU throttling (about 1.9 s on `/zh`), not network time. The observed, unthrottled LCP is about 0.26 s. Closing the gap to ≥ 0.95 on `/ar` and `/zh` is P10 work. It touches the approved homepage's DOM, motion and type rendering, so it needs its own approval.
+
+## P3-4. Visual regression check (homepage unchanged)
+
+The approved commit (`54008fd`) was built in a separate worktree, then both builds were screenshotted under identical settings (Chromium, full page, 390 and 1440, en/ar/zh).
+
+| Mode | Result |
+|---|---|
+| Reduced motion (deterministic) | **0 differing pixels** in all 6 locale × width pairs |
+| Motion | 1.4k–53k px. The same build differs by up to 30k px from run to run (continuous marquee and signal animations), so this is animation timing, not a change. |
+| Font subset vs the full upstream font on `/zh` | **0 differing pixels** at 390 and 1440. Chrome reports the same platform fonts per node. |
+
+## P3-5. Known issues
+
+- **`/zh` and `/ar` Lighthouse performance is below the 0.95 target** (P3-3). Reported as a CI warning. Proposed for P10.
+- **Some CJK glyphs render with the system fallback (pre-existing, also in the approved baseline).** In the zh positioning statement, 5 of 35 glyphs (visibly 的) are drawn by the system CJK font instead of Noto Sans SC, so they look slightly lighter. It is identical before and after P3, and was not changed here because the homepage is approved. Proposed for the P8 CJK typography review.
+- Preview deployment is **not exercised end-to-end** (no Cloudflare account yet). The Worker, configuration and bundle are validated locally with `wrangler deploy --dry-run` (both environments) and `wrangler dev --local` (smoke test).
+
+## P3-6. How to run
+
+```bash
+pnpm build && pnpm budget
+pnpm worker:check && pnpm worker:smoke
+pnpm lhci                      # CHROME_PATH=… if Chrome isn't on PATH
+```
