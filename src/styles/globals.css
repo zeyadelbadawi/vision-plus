@@ -1,4 +1,11 @@
 @import 'tailwindcss';
+/* Only application code is scanned for class names: words in docs, client materials, scripts or tests
+   must never generate CSS (e.g. the word "shadow" in a document once produced an unused .shadow utility). */
+@source not '../../docs';
+@source not '../../client-materials';
+@source not '../../scripts';
+@source not '../../tests';
+@source not '../../worker';
 @import './header.css' layer(components);
 @import './home.css' layer(components);
 
