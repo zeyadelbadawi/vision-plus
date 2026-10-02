@@ -52,6 +52,7 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 | GitHub E2E matrix, [run 37004469407](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37004469407) | `e137ea6` (`main`) | same | **285 passed, 15 skipped, 0 failed** (10.1 min). `main` has 12 fewer tests per run (no 2026-10-02 decision or Mobile NVR revision work) |
 | Previous matrix, run 36998058056 (for comparison) | `123c73e` | same | 288 passed, 22 skipped: the Route tests did not run in Firefox/WebKit |
 | Local, Chromium projects | `8fe760c` | `pnpm test:e2e` | 118 passed, 6 skipped |
+| GitHub E2E matrix, [run 37008405786](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37008405786) | `db7a3ea` (working branch, Mobile NVR animation revision) | same | **315 passed, 15 skipped, 0 failed** (9.4 min). 63 passed / 3 skipped per project |
 | Local, Chromium projects | working branch, Mobile NVR animation revision | `pnpm test:e2e` | 126 passed, 6 skipped (the skips are the same layout-only ones) |
 | Local, Chromium projects (`main` candidate: `main` + this change) | `ab86f47` | `pnpm test:e2e` | 114 passed, 6 skipped. `main` has fewer tests because it does not contain the 2026-10-02 decision and Mobile NVR revision work. |
 

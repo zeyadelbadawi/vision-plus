@@ -531,7 +531,14 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 
 ### 9.6 Branch matrix and `main`
 
-(Filled in after the push; see below.)
+- **Pushed to the working branch:** `fdb3468` (code and tests) and `db7a3ea` (evidence and documentation).
+- **CI** [run 37008403699](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37008403699) on `db7a3ea`: success.
+- **E2E matrix** [run 37008405786](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37008405786) on `db7a3ea`, five projects: **315 passed, 15 skipped, 0 failed** (9.4 min). That is 63 passed and 3 skipped per project. The skips are the same layout-only ones (`docs/E2E_COVERAGE.md`). The new On board and Route data-flow tests pass in Chromium, Firefox and WebKit.
+- **Preview deploy workflow:** it ran on push and skipped every step. The Cloudflare credentials are not set (D-22). Nothing was deployed.
+- **`main` is unchanged at `e137ea6`.**
+  - The only change authorised for `main` is the Route test coverage. It is already there (`ab86f47`, `e137ea6`).
+  - On `main` it passes CI (run 17) and the matrix ([run 37004469407](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37004469407): 285 passed, 15 skipped, 0 failed).
+  - The Mobile NVR revision is not accepted yet, so it stays off `main`.
 
 ### 9.7 Ziad's visual acceptance checklist
 
