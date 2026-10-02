@@ -66,6 +66,35 @@ test('Products is hidden (Q-02): not built, not linked from the navigation', asy
   await expect(page.locator('a[href$="/products"], a[href*="/products#"]')).toHaveCount(0);
 });
 
+// React #418 root cause (2026-10-02): <head> must hydrate from inline data. The boot script used to be exported from
+// the 'use client' motion controller, so it reached the client as a reference to that module's JS chunk. When the
+// chunk arrived mid-hydration React re-entered <head>, resumed <body> at <meta charset> and threw #418, re-rendering
+// <html> without motion-ok (static fallback, no motion). Checked on the served payload, so it never depends on timing.
+for (const route of ['', MNVR, '/solutions/cctv-security-systems']) {
+  test(`/en${route}: <head> hydrates without waiting on a JS chunk and the motion controller starts`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.goto(`/en${route}`);
+    const head = await page.evaluate(() => {
+      const flight = [...document.scripts]
+        .map((s) => s.text.match(/^self\.__next_f\.push\((.*)\)$/s)?.[1])
+        .filter((json): json is string => !!json)
+        .map((json) => JSON.parse(json) as [number, string?])
+        .filter(([type]) => type === 1)
+        .map(([, text]) => text)
+        .join('');
+      const at = flight.indexOf('["$","head",null,');
+      return at < 0 ? '' : flight.slice(at, flight.indexOf('["$","body",null,', at));
+    });
+    expect(head).toContain(`"dangerouslySetInnerHTML":{"__html":"(function(){`);
+    // no reference to another row (a client module, a lazy element or an outlined value) inside <head>
+    expect(head).not.toMatch(/"\$L?[0-9a-f]+"/);
+    await expect(page.locator('html')).toHaveClass(/(^|\s)motion-ok(\s|$)/);
+    if (route === MNVR) await expect(page.locator('.sys')).toHaveAttribute('data-live', '');
+    expect(errors).toEqual([]);
+  });
+}
+
 test('illustrative samples are labelled on every rendering (Q-12, D-01/D-02)', async ({ page }) => {
   for (const l of ['en', 'ar', 'zh']) {
     await page.goto(`/${l}`);
