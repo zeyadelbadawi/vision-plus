@@ -7,6 +7,13 @@ import { ART, DEPOT, MASTS, NODE, PRIMARY, ROADS, SECONDARY, TRAIL, ZONE, pointA
  * Every layer is driven only by the inherited custom properties --b1…--b6 (scenes.css), so the same
  * markup serves the pinned stage, each stepped frame and the static (reduced-motion / no-JS) state.
  * Labels are approved terms passed in already localized; no data (speeds, counts, times) is drawn.
+ *
+ * Data flow (revised after Ziad's review, 2026-10-02): short gold pulses travel along the connections that already
+ * exist in the artwork (`.ra-flow`, pathLength 1) — the uplink from the route to the management node (beat 4) and the
+ * fleet links into it (beat 6) — while position markers ping (beat 2), mast links carry dots and arcs radiate
+ * (beat 3) and the attention zone's outline runs (beat 5). They play only for the reader's current beat (the scene
+ * root's data-current, MotionController [data-steps]), a few times, then rest; each sits under its beat's --bN so
+ * nothing pulses along a connection that has not been drawn yet. No new components, routes or links.
  */
 export interface RouteLabels {
   cameras: string;
@@ -77,6 +84,11 @@ export function MnvrRouteArt({ labels, rtl, viewBox }: { labels: RouteLabels; rt
           {LINKS.map((d) => (
             <path key={d} d={d} pathLength={1} className="ra-draw ra-link" />
           ))}
+          <g className="ra-flows ra-flows--fleet">
+            {LINKS.map((d, i) => (
+              <path key={d} d={d} pathLength={1} className="ra-flow" style={{ '--i': i } as CSSProperties} />
+            ))}
+          </g>
           <g className="ra-fleet-vehicles">
             <Vehicle at={SECONDARY[0]!.at(-1)} />
             <Vehicle at={SECONDARY[1]!.at(-1)} rotate={90} />
@@ -89,20 +101,20 @@ export function MnvrRouteArt({ labels, rtl, viewBox }: { labels: RouteLabels; rt
 
         {/* beat 2: location markers */}
         <g className="ra-trail">
-          {TRAIL.map((f) => {
+          {TRAIL.map((f, i) => {
             const [x, y] = pointAt(PRIMARY, f);
-            return <circle key={f} cx={x} cy={y} r={4.5} style={{ '--f': f } as CSSProperties} />;
+            return <circle key={f} cx={x} cy={y} r={4.5} style={{ '--f': f, '--i': i } as CSSProperties} />;
           })}
         </g>
 
         {/* beat 3: network points and signal arcs */}
         <g className="ra-masts">
-          {MASTS.map((m) => {
+          {MASTS.map((m, i) => {
             const [px, py] = pointAt(PRIMARY, m.at);
             const x = px + m.dx;
             const y = py + m.dy;
             return (
-              <g key={m.at} style={{ '--f': m.at } as CSSProperties}>
+              <g key={m.at} style={{ '--f': m.at, '--i': i } as CSSProperties}>
                 <path d={`M${px} ${py} L${x} ${y}`} className="ra-uplink-dots" />
                 <path d={`M${x} ${y - 14} V${y + 14} M${x - 9} ${y + 14} H${x + 9}`} className="ra-mast" />
                 <path d={`M${x - 14} ${y - 22} A 18 18 0 0 1 ${x + 14} ${y - 22} M${x - 24} ${y - 30} A 30 30 0 0 1 ${x + 24} ${y - 30}`} className="ra-arc" />
@@ -124,6 +136,9 @@ export function MnvrRouteArt({ labels, rtl, viewBox }: { labels: RouteLabels; rt
           </g>
         </g>
         <path d={UPLINK} pathLength={1} className="ra-draw ra-uplink" />
+        <g className="ra-flows ra-flows--uplink">
+          <path d={UPLINK} pathLength={1} className="ra-flow" style={{ '--i': 0 } as CSSProperties} />
+        </g>
 
         {/* the vehicle (symmetric glyph, never mirrored separately) with its four coverage wedges */}
         <g className="ra-vehicle" style={{ offsetPath: `path('${PRIMARY_PATH}')` }}>

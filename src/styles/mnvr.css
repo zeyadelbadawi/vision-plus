@@ -1,10 +1,10 @@
 /* ==========================================================================
-   Mobile NVR dedicated page (P2 revision, client decision 2026-10-02).
-   Imported only by that page. The "On board" diagram is scroll-TRIGGERED, not scrubbed: each step sets
-   data-inview once (MotionController [data-reveal]) and :has() lights the matching part of the diagram.
-   The complete diagram is the default; the "not yet" state exists only under .motion-ok in browsers with
-   :has(), so reduced motion, no JavaScript and older browsers always see everything. Only opacity,
-   transform, stroke-dashoffset and offset-distance animate. No loops, no flashing.
+   Mobile NVR dedicated page (P2 revision, client decision 2026-10-02; scene animation revised after Ziad's
+   review, 2026-10-02). Imported only by that page. The "On board" diagram follows the reader's current step
+   (MotionController [data-steps] → data-current / data-reached, forwards and backwards). The complete diagram is
+   the default; the step states exist only under [data-live], which is set only when motion is allowed, so reduced
+   motion and no JavaScript always see everything. Only opacity, transform, fill-opacity and stroke-dashoffset
+   animate. Time-based pulses are finite (a few iterations) and never flash.
    ========================================================================== */
 @layer components {
   /* 1. Hero */
@@ -21,7 +21,11 @@
     .mnvr-hero__band { margin-block-start: 96px; }
   }
 
-  /* 2. On board — system diagram + steps */
+  /* 2. On board — step-synchronised system diagram (revised after Ziad's review, 2026-10-02)
+     Static by default: the complete diagram, compact steps, no motion (reduced motion, no JavaScript).
+     With [data-live] (MotionController, motion allowed) the diagram follows the current step in both directions:
+     unreached parts wait as a faint outline, reached parts are built and stay lit, and only the current step runs
+     its data-flow pulses, a few times, then rests. Only opacity, transform and stroke-dashoffset change. */
   .mnvr-system { background: var(--bg); color: var(--fg); }
   .sys { margin-block-start: 40px; display: grid; }
   .sys__stage {
@@ -31,10 +35,23 @@
     background: var(--bg);
     padding-block: 12px;
     border-block-end: 1px solid var(--line);
+    /* the header can be shorter than --header-h once condensed: keep scrolled text from showing above the stage */
+    box-shadow: 0 calc(-1 * var(--header-h)) 0 var(--bg);
   }
   .sys__steps { display: grid; }
-  .sys__step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding-block: 28px; min-height: 34svh; }
+  .sys__step { position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding-block: 28px; }
   .sys__step + .sys__step { border-block-start: 1px solid var(--line); }
+  .sys__step::before {
+    /* current-step marker (the text itself is never dimmed or hidden) */
+    content: '';
+    position: absolute;
+    inset-inline-start: -16px;
+    inset-block: 28px;
+    width: 2px;
+    background: var(--color-gold);
+    opacity: 0;
+    transition: opacity var(--dur-panel) var(--ease-precise);
+  }
   .sys__n {
     display: grid;
     place-items: center;
@@ -45,15 +62,22 @@
     background: var(--color-charcoal);
     color: var(--color-white);
     border: 1px solid var(--color-charcoal);
+    transition: background-color var(--dur-panel), color var(--dur-panel), border-color var(--dur-panel);
   }
   .sys__tags { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-block-start: 12px; }
   .sys__tags li { font-size: var(--fs-caption); line-height: 1.4; padding: 3px 10px; border: 1px solid var(--line-strong); }
+  /* Scroll room for each step only when the diagram will follow the scroll. Keyed to .motion-ok (set before first
+     paint) rather than [data-live] (set after hydration) so the layout never shifts when the controller starts. */
+  .motion-ok .sys__step { min-height: 40svh; }
+  .motion-ok .sys__step:last-child { min-height: 0; }
   @media (min-width: 1024px) {
     .sys { margin-block-start: 64px; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
     .sys__steps { grid-column: 1 / span 5; grid-row: 1; }
-    .sys__stage { grid-column: 7 / span 6; grid-row: 1; inset-block-start: calc(var(--header-h) + 12svh); padding: 0; border: 0; background: none; }
-    .sys__step { min-height: 44svh; padding-block: 40px; }
-    .sys__step:last-child { min-height: 0; }
+    .sys__stage { grid-column: 7 / span 6; grid-row: 1; inset-block-start: calc(var(--header-h) + 12svh); padding: 0; border: 0; background: none; box-shadow: none; }
+    .sys__step { padding-block: 40px; }
+    .sys__step::before { inset-block: 40px; }
+    .motion-ok .sys__step { min-height: 32svh; }
+    .motion-ok .sys__step:last-child { min-height: 0; }
   }
 
   .sys-art { display: block; width: 100%; height: auto; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -61,51 +85,99 @@
   .sys-base { stroke: var(--scene-line); stroke-width: 1; }
   .sys-body { stroke: var(--fg); stroke-width: 1.5; fill: var(--bg-raised); }
   .sys-device { stroke: var(--fg); stroke-width: 1.5; fill: var(--bg-raised); }
-  .sys-wedge { fill: color-mix(in srgb, var(--color-gold) 16%, transparent); stroke: var(--color-gold); stroke-width: 1; }
+  .sys-wedge { fill: color-mix(in srgb, var(--color-gold) 16%, transparent); stroke: var(--color-gold); stroke-width: 1; transform-box: fill-box; }
+  .sys-wedge[data-dir='fwd'] { transform-origin: 0% 50%; }
+  .sys-wedge[data-dir='back'] { transform-origin: 100% 50%; }
+  .sys-wedge[data-dir='down'] { transform-origin: 50% 0%; }
+  .sys-cam, .sys-recorder { transform-box: fill-box; transform-origin: 50% 50%; }
   .sys-cable { stroke: var(--color-gold); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .sys-flow { stroke: var(--color-gold); stroke-width: 4; stroke-dasharray: 0.08 2; stroke-dashoffset: 0.08; opacity: 0; }
   .sys-store { fill: var(--color-gold); transform-box: fill-box; transform-origin: 0 50%; }
   .sys-pin { fill: var(--color-gold); }
-  .sys-ring { stroke: var(--color-gold); stroke-width: 1; stroke-dasharray: 3 5; }
+  .sys-ring { stroke: var(--color-gold); stroke-width: 1; stroke-dasharray: 3 5; transform-box: fill-box; transform-origin: 50% 50%; }
   .sys-arc { stroke: var(--color-gold); stroke-width: 1.5; }
-  .sys-pane { stroke: var(--scene-line); stroke-width: 1; }
-  .sys-signal { fill: var(--color-gold); offset-path: path('M380 118 Q464 62 544 124'); offset-rotate: 0deg; offset-distance: 100%; }
-  .sys-callout circle { fill: var(--color-charcoal); }
-  .sys-callout text { fill: var(--color-white); font-size: 12px; font-weight: 600; }
+  .sys-pane { stroke: var(--scene-line); stroke-width: 1; fill: var(--color-gold); fill-opacity: 0.14; }
+  .sys-callout circle { fill: var(--color-charcoal); transition: fill var(--dur-panel); }
+  .sys-callout text { fill: var(--color-white); font-size: 12px; font-weight: 600; transition: fill var(--dur-panel); }
 
-  @supports selector(:has(*)) {
-    .motion-ok .sys-layer,
-    .motion-ok .sys-callout { transition: opacity var(--dur-reveal) var(--ease-precise); }
-    .motion-ok .sys-cable { transition: stroke-dashoffset 900ms var(--ease-precise) 120ms; }
-    .motion-ok .sys-store { transition: transform var(--dur-reveal) var(--ease-precise) 600ms; }
-    .motion-ok .sys-signal { transition: offset-distance 1200ms linear 300ms, opacity var(--dur-quick); }
-    .motion-ok .sys__n { transition: background-color var(--dur-panel), color var(--dur-panel), border-color var(--dur-panel); }
-    .motion-ok .sys__step:not([data-inview]) .sys__n { background: transparent; color: var(--fg-muted); border-color: var(--line-strong); }
-    /* Generated for steps 1–5 */
-    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) .sys-layer[data-layer='1'] { opacity: 0.14; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) .sys-callout[data-layer='1'] { opacity: 0.3; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) [data-layer='1'] .sys-cable { stroke-dashoffset: 1; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) [data-layer='1'] .sys-store { transform: scaleX(0); }
-    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) [data-layer='1'] .sys-signal { offset-distance: 0%; opacity: 0; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) .sys-layer[data-layer='2'] { opacity: 0.14; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) .sys-callout[data-layer='2'] { opacity: 0.3; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) [data-layer='2'] .sys-cable { stroke-dashoffset: 1; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) [data-layer='2'] .sys-store { transform: scaleX(0); }
-    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) [data-layer='2'] .sys-signal { offset-distance: 0%; opacity: 0; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) .sys-layer[data-layer='3'] { opacity: 0.14; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) .sys-callout[data-layer='3'] { opacity: 0.3; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) [data-layer='3'] .sys-cable { stroke-dashoffset: 1; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) [data-layer='3'] .sys-store { transform: scaleX(0); }
-    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) [data-layer='3'] .sys-signal { offset-distance: 0%; opacity: 0; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) .sys-layer[data-layer='4'] { opacity: 0.14; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) .sys-callout[data-layer='4'] { opacity: 0.3; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) [data-layer='4'] .sys-cable { stroke-dashoffset: 1; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) [data-layer='4'] .sys-store { transform: scaleX(0); }
-    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) [data-layer='4'] .sys-signal { offset-distance: 0%; opacity: 0; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) .sys-layer[data-layer='5'] { opacity: 0.14; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) .sys-callout[data-layer='5'] { opacity: 0.3; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) [data-layer='5'] .sys-cable { stroke-dashoffset: 1; }
-    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) [data-layer='5'] .sys-store { transform: scaleX(0); }
-    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) [data-layer='5'] .sys-signal { offset-distance: 0%; opacity: 0; }
+  /* Step-by-step state (only with [data-live]) */
+  .sys[data-live] .sys-layer, .sys[data-live] .sys-callout { opacity: 0.12; transition: opacity 600ms var(--ease-precise); }
+  .sys[data-live] .sys__n { background: transparent; color: var(--fg-muted); border-color: var(--line-strong); }
+  .sys[data-live] .sys-cable { stroke-dashoffset: 1; transition: stroke-dashoffset 800ms var(--ease-precise) 150ms; }
+  .sys[data-live] .sys-cam { transform: scale(0.5); transition: transform 500ms var(--ease-precise); }
+  .sys[data-live] .sys-wedge { transform: scale(0.15); transition: transform 700ms var(--ease-precise) 250ms; }
+  .sys[data-live] .sys-recorder { transform: scale(0.85); transition: transform 600ms var(--ease-precise) 500ms; }
+  .sys[data-live] .sys-store { transform: scaleX(0); transition: transform 500ms var(--ease-precise) calc(900ms + var(--i) * 160ms); }
+  .sys[data-live] .sys-pin-drop { transform: translateY(-16px); opacity: 0; transition: transform 600ms var(--ease-precise) 450ms, opacity 300ms 450ms; }
+  .sys[data-live] .sys-pane { fill-opacity: 0; transition: fill-opacity 500ms var(--ease-precise) calc(700ms + var(--i) * 150ms); }
+  .sys[data-reached~='1'] .sys-layer[data-layer='1'], .sys[data-reached~='1'] .sys-callout[data-layer='1'] { opacity: 1; }
+  .sys[data-reached~='2'] .sys-layer[data-layer='2'], .sys[data-reached~='2'] .sys-callout[data-layer='2'] { opacity: 1; }
+  .sys[data-reached~='3'] .sys-layer[data-layer='3'], .sys[data-reached~='3'] .sys-callout[data-layer='3'] { opacity: 1; }
+  .sys[data-reached~='4'] .sys-layer[data-layer='4'], .sys[data-reached~='4'] .sys-callout[data-layer='4'] { opacity: 1; }
+  .sys[data-reached~='5'] .sys-layer[data-layer='5'], .sys[data-reached~='5'] .sys-callout[data-layer='5'] { opacity: 1; }
+  .sys[data-reached~='1'] [data-layer='1'] .sys-cable { stroke-dashoffset: 0; }
+  .sys[data-reached~='2'] [data-layer='2'] .sys-cable { stroke-dashoffset: 0; }
+  .sys[data-reached~='3'] [data-layer='3'] .sys-cable { stroke-dashoffset: 0; }
+  .sys[data-reached~='4'] [data-layer='4'] .sys-cable { stroke-dashoffset: 0; }
+  .sys[data-reached~='5'] [data-layer='5'] .sys-cable { stroke-dashoffset: 0; }
+  .sys[data-reached~='1'] .sys-cam, .sys[data-reached~='1'] .sys-wedge, .sys[data-reached~='2'] .sys-recorder { transform: none; }
+  .sys[data-reached~='2'] .sys-store { transform: none; }
+  .sys[data-reached~='3'] .sys-pin-drop { transform: none; opacity: 1; }
+  .sys[data-reached~='5'] .sys-pane { fill-opacity: 0.14; }
+  .sys[data-reached~='1'] .sys__step[data-step='1'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
+  .sys[data-reached~='2'] .sys__step[data-step='2'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
+  .sys[data-reached~='3'] .sys__step[data-step='3'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
+  .sys[data-reached~='4'] .sys__step[data-step='4'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
+  .sys[data-reached~='5'] .sys__step[data-step='5'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
+  .sys[data-current='1'] .sys__step[data-step='1'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='1'] .sys__step[data-step='1']::before { opacity: 1; }
+  .sys[data-current='1'] .sys-callout[data-layer='1'] circle { fill: var(--color-gold); }
+  .sys[data-current='1'] .sys-callout[data-layer='1'] text { fill: var(--color-charcoal); }
+  .sys[data-current='2'] .sys__step[data-step='2'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='2'] .sys__step[data-step='2']::before { opacity: 1; }
+  .sys[data-current='2'] .sys-callout[data-layer='2'] circle { fill: var(--color-gold); }
+  .sys[data-current='2'] .sys-callout[data-layer='2'] text { fill: var(--color-charcoal); }
+  .sys[data-current='3'] .sys__step[data-step='3'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='3'] .sys__step[data-step='3']::before { opacity: 1; }
+  .sys[data-current='3'] .sys-callout[data-layer='3'] circle { fill: var(--color-gold); }
+  .sys[data-current='3'] .sys-callout[data-layer='3'] text { fill: var(--color-charcoal); }
+  .sys[data-current='4'] .sys__step[data-step='4'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='4'] .sys__step[data-step='4']::before { opacity: 1; }
+  .sys[data-current='4'] .sys-callout[data-layer='4'] circle { fill: var(--color-gold); }
+  .sys[data-current='4'] .sys-callout[data-layer='4'] text { fill: var(--color-charcoal); }
+  .sys[data-current='5'] .sys__step[data-step='5'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='5'] .sys__step[data-step='5']::before { opacity: 1; }
+  .sys[data-current='5'] .sys-callout[data-layer='5'] circle { fill: var(--color-gold); }
+  .sys[data-current='5'] .sys-callout[data-layer='5'] text { fill: var(--color-charcoal); }
+
+  /* Current step only: what the step does, shown a few times, then at rest (no endless motion) */
+  .sys[data-current='1'] .sys-wedge { animation: sys-scan 1.6s var(--ease-precise) 1s 2; }
+  .sys[data-current='2'] [data-layer='2'] .sys-flow { animation: sys-flow 1.3s linear calc(1s + var(--i) * 0.22s) 3 both; }
+  .sys[data-current='3'] .sys-ring { animation: sys-ping 1.6s ease-out 1s 3; }
+  .sys[data-current='4'] .sys-arc { animation: sys-radiate 1.2s ease-in-out calc(0.6s + var(--i) * 0.2s) 3; }
+  .sys[data-current='4'] [data-layer='4'] .sys-flow { animation: sys-flow 1.4s linear 1s 3 both; }
+  .sys[data-current='5'] [data-layer='5'] .sys-flow { animation: sys-flow 0.9s linear 0.8s 3 both; }
+
+  @keyframes sys-flow {
+    0% { stroke-dashoffset: 0.08; opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+  @keyframes sys-scan {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.82); }
+  }
+  @keyframes sys-ping {
+    0% { transform: scale(0.6); opacity: 1; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+  @keyframes sys-radiate {
+    0%, 100% { opacity: 0.3; }
+    45% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sys *, .sys *::before { animation: none !important; transition: none !important; }
   }
 
   /* 4. Capabilities — numbered */

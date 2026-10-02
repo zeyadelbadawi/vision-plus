@@ -141,13 +141,45 @@
   .route-art .ra-arc { fill: none; stroke: var(--color-gold); stroke-width: 2; opacity: clamp(0, calc((var(--travel) - var(--f) + 0.02) * 12), 1); }
   .route-art .ra-zone { fill: none; stroke: var(--color-gold); stroke-width: 2; stroke-dasharray: 10 8; opacity: var(--b5); }
   .route-art .ra-node-base { fill: var(--bg); stroke: var(--fg-muted); stroke-width: 1.5; }
-  .route-art .ra-node-on { fill: none; stroke: var(--color-gold); stroke-width: 2; opacity: var(--b4); }
+  /* the node fills as the uplink (beat 4) and then the fleet links (beat 6) reach it */
+  .route-art .ra-node-on { fill: var(--color-gold); fill-opacity: calc(0.06 + var(--b6) * 0.08); stroke: var(--color-gold); stroke-width: 2; opacity: var(--b4); }
   .route-art .ra-frame { fill: none; stroke: var(--fg); stroke-width: 1.5; opacity: var(--b4); }
   .route-art .ra-vehicle { offset-distance: calc(var(--travel) * 100%); offset-rotate: auto; opacity: clamp(0, calc(var(--b1) * 3), 1); }
   .route-art .ra-vehicle-body { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
   .route-art .ra-vehicle-line { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
   .route-art .ra-fleet-vehicles .ra-vehicle-body { stroke: var(--fg-muted); }
   .route-art .ra-wedges path { fill: var(--color-gray-400); fill-opacity: 0.1; stroke: var(--color-gold); stroke-width: 1.5; stroke-linejoin: round; opacity: var(--b1); }
+  /* Data-flow pulses along existing connections (revised after Ziad's review, 2026-10-02). Hidden at rest; each group
+     is gated by its beat so a pulse never runs along a connection that is not drawn yet. */
+  .route-art .ra-flow { fill: none; stroke: var(--color-gold); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 0.06 2; stroke-dashoffset: 0.06; opacity: 0; }
+  .route-art .ra-flows--uplink { opacity: var(--b4); }
+  .route-art .ra-flows--fleet { opacity: var(--b6); }
+  .route-art .ra-trail circle { transform-box: fill-box; transform-origin: 50% 50%; }
+  /* Current beat only, a few iterations, then at rest. Never without JS or with reduced motion ([data-live]). */
+  .scene[data-live][data-current='2'] .ra-trail circle { animation: ra-ping 1.2s var(--ease-precise) calc(0.4s + var(--i) * 0.18s) 2; }
+  .scene[data-live][data-current='3'] .ra-uplink-dots { animation: ra-dots 0.9s linear calc(0.3s + var(--i) * 0.35s) 4; }
+  .scene[data-live][data-current='3'] .ra-arc { animation: ra-radiate 1.2s ease-in-out calc(0.5s + var(--i) * 0.35s) 3; }
+  .scene[data-live][data-current='4'] .ra-flows--uplink .ra-flow { animation: ra-flow 1.5s linear 0.9s 3 both; }
+  .scene[data-live][data-current='5'] .ra-zone { animation: ra-march 1.1s linear 0.4s 3; }
+  .scene[data-live][data-current='6'] .ra-flow { animation: ra-flow 1.5s linear calc(0.9s + var(--i) * 0.25s) 3 both; }
+  @keyframes ra-flow {
+    0% { stroke-dashoffset: 0.06; opacity: 0; }
+    12%, 88% { opacity: 1; }
+    100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+  @keyframes ra-ping {
+    0%, 100% { transform: scale(1); }
+    40% { transform: scale(1.9); }
+  }
+  @keyframes ra-dots { to { stroke-dashoffset: -24; } }
+  @keyframes ra-radiate {
+    0%, 100% { stroke-opacity: 1; }
+    50% { stroke-opacity: 0.25; }
+  }
+  @keyframes ra-march { to { stroke-dashoffset: -36; } }
+  @media (prefers-reduced-motion: reduce) {
+    .route-art * { animation: none !important; }
+  }
   .route-art .ra-label {
     font-family: var(--font-script, var(--font-plex)), var(--font-plex), sans-serif; font-size: 24px; font-weight: 500;
     fill: var(--fg); opacity: var(--o, 1); paint-order: stroke; stroke: var(--bg); stroke-width: 8px; stroke-linejoin: round;

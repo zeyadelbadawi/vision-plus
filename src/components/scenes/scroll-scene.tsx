@@ -10,7 +10,9 @@ import { textAttrs } from '@/lib/text-attrs';
  *  - stepped (mobile/tablet, and desktop on save-data / low-memory devices): each step shows its own
  *    cropped frame of the same artwork, which plays its beat once when it enters view.
  *  - static (reduced motion / no JS): every --bN keeps its registered initial value 1 → final state.
- * The step list is the real HTML text (approved copy) for screen readers and search engines; all
+ * The root is also a [data-steps] container: the MotionController marks the reader's current beat (data-current) so a
+ * scene can play short, finite emphasis for that beat only (both scroll directions; none without JS or with reduced
+ * motion). The step list is the real HTML text (approved copy) for screen readers and search engines; all
  * artwork is aria-hidden.
  */
 export interface SceneBeat {
@@ -42,7 +44,13 @@ export function ScrollScene({
 }) {
   const n = beats.length;
   return (
-    <div className={['scene', className].filter(Boolean).join(' ')} data-scene={id} data-progress="follow" style={{ '--beats': n } as CSSProperties}>
+    <div
+      className={['scene', className].filter(Boolean).join(' ')}
+      data-scene={id}
+      data-progress="follow"
+      data-steps=""
+      style={{ '--beats': n } as CSSProperties}
+    >
       <script dangerouslySetInnerHTML={{ __html: lowPowerScript }} />
       <ol className="scene__ticks" aria-hidden="true">
         {beats.map((b, i) => (

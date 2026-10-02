@@ -35,8 +35,9 @@ export const SYSTEM_STEPS = [
 /**
  * Dedicated Mobile NVR & Mobile Surveillance page (client decision 2026-10-02, P2 revision): the generic solution
  * template is replaced by a page built around the product. It opens on a charcoal hero, explains the system with a
- * small scroll-triggered diagram (each step lights its part of the vehicle as it scrolls into view), then widens to
- * fleet level with the approved Route scene (D-20), followed by capabilities, applications and the consultation CTA.
+ * scroll-driven diagram (the current step builds its part of the system on the vehicle, forwards and backwards; see
+ * mnvr-system-art.tsx), then widens to fleet level with the Route scene (D-20), followed by capabilities,
+ * applications and the consultation CTA.
  * No motion is needed to understand it: reduced motion, no JavaScript and old browsers get the complete diagram.
  */
 export async function MnvrPage({ locale }: { locale: Locale }) {
@@ -95,7 +96,7 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
         </div>
       </header>
 
-      {/* 2. On board — the small scroll-triggered system diagram */}
+      {/* 2. On board — the step-synchronised system diagram (data-steps: MotionController sets data-current / data-reached) */}
       <section aria-labelledby="system-title" className="mnvr-system section-y">
         <div className="container-vp">
           <div className="max-w-[46rem]" data-reveal="">
@@ -104,13 +105,13 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
               {copy.body[3]}
             </h2>
           </div>
-          <div className="sys">
+          <div className="sys" data-steps="">
             <div className="sys__stage">
               <MnvrSystemArt rtl={locale === 'ar'} />
             </div>
             <ol className="sys__steps">
               {steps.map((s, i) => (
-                <li key={s.title} className="sys__step" data-step={i + 1} data-reveal="">
+                <li key={s.title} className="sys__step" data-step={i + 1}>
                   <span className="sys__n t-num" aria-hidden="true">
                     {i + 1}
                   </span>
@@ -138,7 +139,7 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 3. Fleet level — the approved Route scene (D-20), unchanged */}
+      {/* 3. Fleet level — the Route scene (D-20 storyboard; data-flow motion added after Ziad's review, 2026-10-02) */}
       <section aria-labelledby="fleet-title" className="theme-dark bg-bg text-fg section-y">
         <div className="container-vp">
           <div className="max-w-[52rem]" data-reveal="">

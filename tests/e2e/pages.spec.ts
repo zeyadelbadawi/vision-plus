@@ -77,18 +77,40 @@ test('illustrative samples are labelled on every rendering (Q-12, D-01/D-02)', a
   }
 });
 
-test.describe('Mobile NVR page — On board system diagram (P2 revision)', () => {
+test.describe('Mobile NVR page — On board system diagram (P2 revision; animation revised 2026-10-02)', () => {
   const layerOpacity = (page: import('@playwright/test').Page, n: number) =>
     page.locator(`.sys-layer[data-layer="${n}"]`).evaluate((el) => Number(getComputedStyle(el).opacity));
+  // Put a step's top at 40 % of the viewport (above the 60 % line where it becomes current), as a reader would.
+  const readStep = async (page: import('@playwright/test').Page, n: number) => {
+    await page.evaluate((step) => {
+      const el = document.querySelector(`.sys__step[data-step="${step}"]`)!;
+      window.scrollTo(0, window.scrollY + el.getBoundingClientRect().top - window.innerHeight * 0.4);
+    }, n);
+    await expect(page.locator('.sys')).toHaveAttribute('data-current', String(n));
+    await page.waitForTimeout(900); // the layer's opacity transition (600 ms)
+  };
 
   test('steps light their part of the vehicle as they scroll into view', async ({ page }) => {
     await page.goto(`/en${MNVR}`);
     await page.locator('.sys').scrollIntoViewIfNeeded();
     await page.waitForTimeout(900);
     expect(await layerOpacity(page, 5)).toBeLessThan(0.5); // later steps are still waiting
-    for (const n of [1, 2, 3, 4, 5]) await page.locator(`.sys__step[data-step="${n}"]`).scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1200);
+    for (const n of [1, 2, 3, 4, 5]) {
+      await readStep(page, n);
+      expect(await layerOpacity(page, n), `layer ${n} at step ${n}`).toBe(1);
+      if (n < 5) expect(await layerOpacity(page, n + 1), `layer ${n + 1} at step ${n}`).toBeLessThan(0.5);
+    }
     for (const n of [1, 2, 3, 4, 5]) expect(await layerOpacity(page, n), `layer ${n}`).toBe(1);
+    await expect(page.locator('.sys')).toHaveAttribute('data-reached', '1 2 3 4 5');
+  });
+
+  test('scrolling back returns the diagram to the earlier step', async ({ page }) => {
+    await page.goto(`/en${MNVR}`);
+    await readStep(page, 5);
+    await readStep(page, 2);
+    await expect(page.locator('.sys')).toHaveAttribute('data-reached', '1 2');
+    expect(await layerOpacity(page, 2)).toBe(1);
+    for (const n of [3, 4, 5]) expect(await layerOpacity(page, n), `layer ${n}`).toBeLessThan(0.5);
   });
 
   test('reduced motion: the complete diagram, no waiting states', async ({ browser }) => {
@@ -96,6 +118,16 @@ test.describe('Mobile NVR page — On board system diagram (P2 revision)', () =>
     const page = await ctx.newPage();
     await page.goto(`/en${MNVR}`);
     for (const n of [1, 2, 3, 4, 5]) expect(await layerOpacity(page, n), `layer ${n}`).toBe(1);
+    await expect(page.locator('.sys')).not.toHaveAttribute('data-live', /.*/);
+    await ctx.close();
+  });
+
+  test('without JavaScript: the complete diagram and every step', async ({ browser }) => {
+    const ctx = await browser.newContext({ javaScriptEnabled: false });
+    const page = await ctx.newPage();
+    await page.goto(`/en${MNVR}`);
+    for (const n of [1, 2, 3, 4, 5]) expect(await layerOpacity(page, n), `layer ${n}`).toBe(1);
+    await expect(page.locator('.sys__step h3')).toHaveCount(5);
     await ctx.close();
   });
 
@@ -168,5 +200,43 @@ test.describe('Mobile NVR Route scene (P2 first cut)', () => {
     expect(labelParent).toBe('svg');
     // Stepped frames crop the mirrored artwork: frame 1 is FRAMES[0] (20 300 480 600) mirrored across the 1440 artboard.
     if (!isDesktop(info)) expect(await page.locator(`${art} .route-art`).getAttribute('viewBox')).toBe('940 300 480 600');
+  });
+});
+
+test.describe('Mobile NVR Route scene — data flow (revised 2026-10-02)', () => {
+  const LG = 1024;
+  const artFor = (info: TestInfo, beat: number) => ((info.project.use.viewport?.width ?? 0) >= LG ? '.scene__stage' : `.scene__frame[data-frame="${beat}"]`);
+  const readBeat = (page: import('@playwright/test').Page, n: number) =>
+    page.evaluate((step) => {
+      const el = document.querySelector(`.scene__step[data-step="${step}"]`)!;
+      window.scrollTo(0, window.scrollY + el.getBoundingClientRect().top - window.innerHeight * 0.4);
+    }, n);
+  const running = (page: import('@playwright/test').Page, selector: string) =>
+    page.locator(selector).evaluateAll((els) => els.reduce((n, el) => n + el.getAnimations().filter((a) => a.playState === 'running').length, 0));
+
+  test('data pulses run only along the current beat’s existing connection, in both scroll directions', async ({ page }, info) => {
+    await page.goto(`/en${MNVR}`);
+    await readBeat(page, 4);
+    await expect(page.locator('.scene')).toHaveAttribute('data-current', '4');
+    const uplink = `${artFor(info, 4)} .ra-flows--uplink .ra-flow`;
+    await expect.poll(() => running(page, uplink)).toBeGreaterThan(0);
+    expect(await running(page, `${artFor(info, 4)} .ra-flows--fleet .ra-flow`)).toBe(0); // beat 6 not reached
+    await readBeat(page, 6);
+    await expect(page.locator('.scene')).toHaveAttribute('data-current', '6');
+    await expect.poll(() => running(page, `${artFor(info, 6)} .ra-flows--fleet .ra-flow`)).toBeGreaterThan(0);
+    await readBeat(page, 2);
+    await expect(page.locator('.scene')).toHaveAttribute('data-current', '2');
+    expect(await running(page, `${artFor(info, 2)} .ra-flow`)).toBe(0);
+  });
+
+  test('reduced motion: no pulses, no step state', async ({ browser }, info) => {
+    const ctx = await browser.newContext({ ...info.project.use, reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto(`/en${MNVR}`);
+    await readBeat(page, 4);
+    await page.waitForTimeout(600);
+    await expect(page.locator('.scene')).not.toHaveAttribute('data-live', /.*/);
+    expect(await running(page, '.route-art *')).toBe(0);
+    await ctx.close();
   });
 });
