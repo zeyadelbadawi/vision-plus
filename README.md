@@ -2,7 +2,7 @@
 
 Trilingual (English, Arabic RTL and Simplified Chinese) corporate website for **VISION PLUS**, which provides Integrated Technology & Systems Solutions in Qatar and Egypt.
 
-**Status (2026-10-02):** the client decisions of 2026-10-02 are applied (`docs/CLIENT_DECISIONS.md`). P2 is approved except the Mobile NVR page, whose dedicated revision is **PENDING — ZIAD'S PERSONAL VERIFICATION**. P3 is accepted with open items. P4 is approved. P5 has not started and is not authorised. Every route other than the homepage and the Mobile NVR page is a P3 empty template, and Products is hidden. Nothing is deployed yet (Cloudflare account pending, D-22). Phase-by-phase evidence: [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md).
+**Status (2026-10-02):** the client decisions of 2026-10-02 are applied (`docs/CLIENT_DECISIONS.md`). P2 is approved except the Mobile NVR page: Ziad's review did not approve its two animation scenes, and the revised scenes are **IMPLEMENTED (ANIMATION REVISION 2026-10-02) — AWAITING ZIAD'S VISUAL ACCEPTANCE**. P2 stays open until then. P3 is accepted with open items. P4 is approved. P5 has not started and is not authorised. Every route other than the homepage and the Mobile NVR page is a P3 empty template, and Products is hidden. Nothing is deployed yet (Cloudflare account pending, D-22). Phase-by-phase evidence: [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md).
 
 | Document | Purpose |
 |---|---|

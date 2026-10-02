@@ -1,6 +1,6 @@
 # VISION PLUS — Repository Audit & Pre-P5 Handoff (2026-10-02)
 
-> **Mobile NVR revision (`7acdfff`): PENDING — ZIAD'S PERSONAL VERIFICATION.**
+> **Mobile NVR page (`7acdfff`):** Ziad's review did not approve the two animation scenes. Revised scenes: **IMPLEMENTED (ANIMATION REVISION 2026-10-02) — AWAITING ZIAD'S VISUAL ACCEPTANCE** (§9).
 > **P2 is open. P5 has not started and is not authorised.** Nothing is merged, deployed or approved by this audit.
 
 The audit was run on `claude/confident-cori-lahb3k` at `6859835`. This document is documentation-only.
@@ -470,4 +470,75 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 - **Not integrated into `main`:** `3496899`, `7acdfff`, `6859835`, `979d263`, `123c73e`, `1f4dba5` and `05a4f3c`. These contain the client-decision changes, the pending Mobile NVR revision and the production gate.
   - `main` therefore does **not** yet contain the `site:check` production gate. The working branch does.
   - Merging the rest is Ziad's decision.
+
+## 9. Mobile NVR animation revision (2026-10-02, after Ziad's review)
+
+**Status: **IMPLEMENTED (ANIMATION REVISION 2026-10-02) — AWAITING ZIAD'S VISUAL ACCEPTANCE**.** P2 stays open: its remaining acceptance criterion is Ziad's (then the client's, as applicable) visual acceptance of these scenes, and passing tests do not replace it. Nothing from this revision is on `main`. Nothing was deployed. No P5 work was started.
+
+### 9.1 Review outcome and scope
+
+- **On board scene (§2a):** not accepted because it mainly moved the illustration alongside the five steps. Revised so that the scene builds the system on the vehicle step by step, in sync with the step being read, forwards and backwards.
+- **System diagram (read as the Route scene, §2):** described as static. Revised with data flow along the connections it already contains.
+- Both revisions keep the layout, typography, palette and approved copy. No component, device, route, link, label, capability or claim was added (`docs/SCENE_STORYBOARDS.md` §2, §2a list exactly what moves).
+- **Interpretation to confirm:**
+  - "The second Mobile NVR diagram" was taken to be the Route scene, the only other diagram on the page.
+  - The instruction not to modify the Route scene (Part B) was read as applying to the Route **test** integration. The existing Route test assertions are unchanged; the new Route behaviour has its own tests.
+  - Beat 3 of the D-20 storyboard said "Signal (no pulsing)". The mast arcs now radiate three times, because motion in the connectivity indicators was requested. Ziad to confirm.
+
+### 9.2 What changed (working branch only)
+
+| File | Change |
+|---|---|
+| `src/components/motion/motion-controller.tsx` | New `[data-steps]` mode. It sets `data-current` (the last step whose top has passed 60 % of the viewport) and `data-reached`, in both scroll directions, plus `data-live` while it runs. It does nothing with reduced motion and clears the state if reduced motion is switched on. No new dependency. |
+| `src/components/scenes/mnvr-system-art.tsx` | The same artwork, regrouped into five step layers. Flow overlays were added on the existing cable, uplink and screen-link paths; the arcs and screen panes were split so they can light in turn. |
+| `src/components/sections/solution/mnvr-page.tsx` | The diagram container is `[data-steps]`. The steps no longer use the one-shot reveal. |
+| `src/styles/mnvr.css` | The On board block was rewritten. Static by default; the step state applies only under `[data-live]`. Step scroll room is keyed to `.motion-ok`, which is set before first paint, so it causes no layout shift. The current step gets a gold badge and bar (its text is never dimmed). Time-based emphasis is finite. |
+| `src/components/scenes/mnvr-route-art.tsx`, `scroll-scene.tsx`, `src/styles/scenes.css` | The Route scene root is also `[data-steps]`. Flow pulses run on the existing uplink and fleet links. The trail markers ping, the mast links carry dots, the arcs radiate and the zone outline runs, each for the current beat only and each hidden until its connection is drawn. The node fills as the uplink and fleet links reach it. |
+| `tests/e2e/pages.spec.ts` | On board tests: the current step stays in sync, scrolling back un-builds, reduced motion and no JavaScript show the complete diagram, RTL. New Route data-flow tests: pulses only for the current beat in both directions, and none with reduced motion. Existing Route test assertions are unchanged. |
+| `scripts/dev/review-shots.mjs` | Covers both scenes in en/ar/zh on desktop and mobile. |
+
+### 9.3 Accessibility, motion and localisation
+
+- **Reduced motion and no JavaScript:** the complete diagrams with compact steps, and no animation (e2e-tested).
+- **Screen readers:** the artwork stays `aria-hidden`; the steps are the real ordered text. Keyboard use is unaffected: nothing is focusable in the art, and scrolling by keyboard drives the same state.
+- **Animated properties:** opacity, transform, fill-opacity and stroke-dashoffset only.
+- **Time-based emphasis:** 2–4 iterations per step (a few seconds), then at rest. No loops, flashing or red.
+- **Layout and performance:** Lighthouse CLS is 0, and the budgets pass (Mobile NVR JS 142.0 / 160 KB gz).
+- **RTL:** the art mirrors; step numbers, callouts and labels do not.
+- **Arabic and Chinese step and beat copy:** still the English placeholder. No reviewed translation exists (P8, D-12/D-13) and none was invented. `src/content/copy/{ar,zh}/solutions.json` are `placeholder`, so the production content gate continues to block them (`content:check` production: 40 items).
+
+### 9.4 Evidence (`docs/review/p2-mnvr-revision-2/`)
+
+| Files | What |
+|---|---|
+| `onboard-{en,ar,zh}-{1440,390}-step-{1..5}.webp` | On board scene with motion, each step current; taken while its emphasis plays |
+| `route-{en,ar,zh}-{1440,390}-beat-{1..6}.webp` | Route scene with motion, each beat current: the pinned stage on desktop, the stepped frames on mobile |
+| `mnvr-{en,ar,zh}-{390,768,1440,1920}.webp` | Full page with reduced motion (the static, complete state) |
+| `compare-*.webp` | Before (left, `docs/review/p2-mnvr-revision/`) and after (right) at matching steps and beats |
+
+### 9.5 Verification
+
+- **Local, working branch:**
+  - lint, format, typecheck: pass. Unit tests: 58/58.
+  - Content, fidelity, assets and `site:check` (60 pages, 0 errors): pass. Worker smoke: 25/25. Budgets: pass.
+  - E2E Chromium: 126 passed, 6 skipped (layout-only skips).
+  - Homepage vs the pre-revision build: 0 differing pixels in en/ar/zh at 390/768/1440/1920.
+  - Lighthouse, Mobile NVR page: 0.98, CLS 0.
+  - Details: `docs/PHASE_STATUS.md` verification log.
+- **Production gates:** blocking as intended (content: 40 items; assets: 16 items).
+- **`main`:** matrix run 37004469407 on `e137ea6` passed (285 passed, 15 skipped, 0 failed).
+- **Branch matrix and CI:** recorded in §9.6.
+
+### 9.6 Branch matrix and `main`
+
+(Filled in after the push; see below.)
+
+### 9.7 Ziad's visual acceptance checklist
+
+- [ ] On board: each step builds its own part of the system and nothing else, and the active step and the diagram always agree.
+- [ ] On board: scrolling back un-builds cleanly; no jumps, no excess whitespace (desktop and mobile).
+- [ ] Route: the data flow reads as relationships (vehicle → masts → node; fleet → node), not decoration.
+- [ ] Beat 3 arcs radiating (previously "no pulsing"): acceptable?
+- [ ] Reduced motion: complete, calm diagrams.
+- [ ] RTL and Chinese layouts. Ar/zh copy remains placeholder until P8.
 
