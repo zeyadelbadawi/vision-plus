@@ -9,7 +9,9 @@
 
   /* ---------- shared step list ---------- */
   .cx, .axw { margin-block-start: 40px; display: grid; }
-  .cx__stage, .ax__stage { position: sticky; inset-block-start: var(--header-h); z-index: 1; background: var(--bg); padding-block: 10px; box-shadow: 0 calc(-1 * var(--header-h)) 0 var(--bg); border-block-end: 1px solid var(--line); }
+  /* Sticks under the compact header (64 px, header.css .site-header--compact): the stage only sticks once the page
+     has scrolled, when the header is compact, so nothing shows between them and nothing covers the heading above. */
+  .cx__stage, .ax__stage { position: sticky; inset-block-start: 64px; z-index: 1; background: var(--bg); padding-block: 10px; border-block-end: 1px solid var(--line); }
   .cx__steps, .ax__steps { display: grid; }
   .cx__step, .ax__step { position: relative; padding-block: 28px; }
   .cx__step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; }
@@ -25,7 +27,7 @@
   @media (min-width: 1024px) {
     .cx, .axw { margin-block-start: 64px; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
     .cx__steps, .ax__steps { grid-column: 1 / span 4; grid-row: 1; }
-    .cx__stage, .ax__stage { grid-column: 5 / span 8; grid-row: 1; inset-block-start: calc(var(--header-h) + 8svh); padding: 0; border: 0; box-shadow: none; background: none; }
+    .cx__stage, .ax__stage { grid-column: 5 / span 8; grid-row: 1; inset-block-start: calc(var(--header-h) + 8svh); padding: 0; border: 0; background: none; }
     .cx__step, .ax__step { padding-block: 40px; }
     .cx__step::before, .ax__step::before { inset-block: 40px; }
     .motion-ok .cx__step, .motion-ok .ax__step { min-height: 34svh; }

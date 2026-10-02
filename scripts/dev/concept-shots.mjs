@@ -54,9 +54,17 @@ for (const [locale, width] of SETS) {
   await p2.goto(`${BASE}/${locale}/_lab/mnvr-concepts`, { waitUntil: 'networkidle' });
   for (const [key, sel] of [
     ['a', width < 1024 ? '.concept-a' : '.cx__stage'],
-    ['b', width < 1024 ? '.ax__step[data-step="6"] .ax__frame' : '.ax__stage'],
+    ['b', width < 1024 ? '.concept-b' : '.ax__stage'],
   ]) {
-    await save(await p2.locator(sel).first().screenshot(), `${key}-${locale}-${width}-static`, width);
+    // full-page capture clipped to the element, so the fixed header is not stamped into tall sections
+    const box = await p2
+      .locator(sel)
+      .first()
+      .evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left, y: r.top + window.scrollY, width: r.width, height: r.height };
+      });
+    await save(await p2.screenshot({ fullPage: true, clip: box }), `${key}-${locale}-${width}-static`, width);
   }
   await rm.close();
 }

@@ -73,7 +73,7 @@ const WALL = { x0: 11.2, x1: 15.4, y: -10.2, z0: 4.6, z1: 7.2 };
 /** Per-step view: centre (LTR artboard) and zoom. 0 = overall view (also the static view). */
 export const CUT_VIEWS: Record<0 | 1 | 2 | 3 | 4 | 5, [number, number, number]> = {
   0: [CUT.w / 2, CUT.h / 2, 1],
-  1: [380, 385, 1.12],
+  1: [360, 400, 1.2], // the vehicle and its coverage only: the monitoring wall stays out of frame until it matters
   2: [455, 400, 1.55],
   3: [395, 345, 1.3],
   4: [470, 300, 1.08],

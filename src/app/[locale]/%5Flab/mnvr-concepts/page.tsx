@@ -132,7 +132,7 @@ export default async function MnvrConceptsPage({ params }: { params: Promise<{ l
               {beats.map((b, i) => (
                 <li key={b.title} className="ax__step" data-step={i + 1}>
                   <div className="ax__frame" aria-hidden="true">
-                    <SystemArchitecture rtl={rtl} terms={terms} viewBox={ARCH_FRAMES[i]} frame={i + 1} />
+                    <SystemArchitecture rtl={rtl} terms={terms} layout="tall" viewBox={ARCH_FRAMES[i]} frame={i + 1} />
                   </div>
                   <span className="ax__n t-num" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
