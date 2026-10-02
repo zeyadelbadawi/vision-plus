@@ -137,6 +137,11 @@
     .scene-steps__n { inset-block-start: 24px; }
   }
 
+  /* Localized 404 (§26.13): typographic, charcoal, under the fixed header */
+  .not-found { min-height: 100svh; }
+  .not-found__body { display: grid; gap: 32px; justify-items: start; padding-block: calc(var(--header-h) + 96px) var(--space-section); }
+  .not-found__links { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-block-start: 16px; }
+
   /* Solution detail hero (§26.2 #1): on mobile the image comes first, then the text */
   .solution-hero { display: flex; flex-direction: column; }
   @media (max-width: 767px) {

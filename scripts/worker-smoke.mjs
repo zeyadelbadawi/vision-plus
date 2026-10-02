@@ -88,6 +88,24 @@ try {
   r = await get('/en/does-not-exist');
   const nf = await r.text();
   check('unknown page → 404 with the site 404 page', r.status === 404 && nf.includes('Page not found'), String(r.status));
+  // P5A-03: "404-page" serves the NEAREST 404.html, so unknown paths under a locale get that locale's 404 page
+  check('unknown page under /en → the English 404 page', r.status === 404 && /<html lang="en"/.test(nf) && nf.includes('Popular sections'), String(r.status));
+  r = await get('/ar/does-not-exist');
+  const nfAr = await r.text();
+  check(
+    'unknown page under /ar → 404, Arabic RTL 404 page',
+    r.status === 404 && /<html lang="ar" dir="rtl"/.test(nfAr) && nfAr.includes('الصفحة غير موجودة'),
+    String(r.status),
+  );
+  r = await get('/zh/solutions/does-not-exist');
+  const nfZh = await r.text();
+  check(
+    'unknown nested page under /zh → 404, Chinese 404 page',
+    r.status === 404 && /<html lang="zh-Hans"/.test(nfZh) && nfZh.includes('页面未找到'),
+    String(r.status),
+  );
+  r = await get('/does-not-exist');
+  check('unknown page outside a locale → 404, trilingual root page', r.status === 404 && (await r.text()).includes('返回首页'), String(r.status));
 
   const html = await (await get('/en')).text();
   const asset = html.match(/\/_next\/static\/[^"]+\.js/)?.[0];

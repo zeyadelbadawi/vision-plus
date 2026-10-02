@@ -257,6 +257,37 @@ test.describe('Solution detail template (§26.2)', () => {
   });
 });
 
+// P5A-03 Localized 404 (MASTER_PROJECT_PLAN §26.13, §36): the nearest 404.html is served with a 404 status, as the
+// Worker's "404-page" handling does (verified in the Cloudflare runtime by scripts/worker-smoke.mjs).
+test.describe('Localized 404 (§26.13)', () => {
+  for (const l of LOCALES) {
+    test(`/${l.code}/… unknown: 404 status, ${l.code} page, key sections linked, no serious axe issues`, async ({ page }) => {
+      const res = await page.goto(`/${l.code}/does-not-exist`);
+      expect(res?.status()).toBe(404);
+      await expect(page.locator('html')).toHaveAttribute('lang', l.lang);
+      await expect(page.locator('html')).toHaveAttribute('dir', l.dir);
+      await expect(page.locator('main h1')).toHaveCount(1);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+      await expect(page.locator(`main a.btn--primary[href="/${l.code}"]`)).toBeVisible();
+      const links = await page.locator('.not-found__links a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(links).toEqual(['solutions', 'industries', 'services', 'about', 'contact'].map((x) => `/${l.code}/${x}`));
+      await expect(page.locator('main img, main picture')).toHaveCount(0);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow).toBeLessThanOrEqual(0);
+      const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).exclude('.wordmark__plus').analyze();
+      const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+      expect(serious.map((v) => `${v.id}: ${v.nodes.length} × ${v.help}`)).toEqual([]);
+    });
+  }
+
+  test('outside a locale the trilingual root 404 is served', async ({ page }) => {
+    const res = await page.goto('/does-not-exist');
+    expect(res?.status()).toBe(404);
+    await expect(page.locator('a[href="/ar"]')).toBeVisible();
+    await expect(page.locator('a[href="/zh"]')).toBeVisible();
+  });
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

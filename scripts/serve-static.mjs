@@ -34,8 +34,11 @@ createServer((req, res) => {
   const candidates = [join(ROOT, safe), join(ROOT, `${safe}.html`), join(ROOT, safe, 'index.html')];
   const file = candidates.find((p) => existsSync(p) && statSync(p).isFile());
   if (!file) {
+    // Like Cloudflare's not_found_handling "404-page": serve the NEAREST 404.html (so /ar/… gets the Arabic one).
+    const parts = safe.split('/').filter(Boolean);
+    const page = parts.map((_, i) => join(ROOT, ...parts.slice(0, parts.length - i), '404.html')).find((f) => existsSync(f)) ?? join(ROOT, '404.html');
     res.writeHead(404, { 'content-type': TYPES['.html'] });
-    return res.end(existsSync(join(ROOT, '404.html')) ? readFileSync(join(ROOT, '404.html')) : 'Not found');
+    return res.end(existsSync(page) ? readFileSync(page) : 'Not found');
   }
   const cache = file.includes('/_next/static/') ? 'public, max-age=31536000, immutable' : 'no-cache';
   const type = TYPES[extname(file)] ?? 'application/octet-stream';
