@@ -101,8 +101,8 @@ Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** clo
 | Task | Status | Commit | Validation |
 |---|---|---|---|
 | P5-00 Baseline (plan §55.2–55.3, documentation fixes) | Done | `011a873` | Docs only |
-| P5A-01 Shared section library | Started: `IndexList`, `ProcessTrack`, `StatementBand`, `CtaBand`, `HeroBand` | *P5A-01/02 commit* | Unit 7 tests; used by P5A-02 |
-| P5A-02 Solutions hub (§26.3) | Implemented, awaiting review | *P5A-01/02 commit* | Plan §55.3.5: local suite green; E2E 147/7; 0 px on 84 renders; markup unchanged elsewhere; CI and matrix pending |
+| P5A-01 Shared section library | Started: `IndexList`, `ProcessTrack`, `StatementBand`, `CtaBand`, `HeroBand` | `0573e0a` | Unit 7 tests; used by P5A-02 |
+| P5A-02 Solutions hub (§26.3) | Implemented, awaiting review | `0573e0a` | Plan §55.3.5: local suite green; E2E 147/7; 0 px on 84 renders; markup unchanged elsewhere; CI 37054589973 green; matrix 37054595279: 368 passed / 17 skipped / 0 failed |
 | Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); P5B-03… order and Smart Building view (E-6, E-7) | — | — |
 
 ## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*
