@@ -329,7 +329,7 @@ The plan sets no finer order for the P5A pages.
 |---|---|---|---|---|
 | Add `site:check` to the production deploy workflow | **Done** in `123c73e` (authorised remediation, §8) | Second line of defence against sample content | Needs Ziad's go-ahead; a one-line workflow change | `.github/workflows/deploy-production.yml` |
 | Gate the privacy and company-profile "pending client" ledes in production | **Gated** in `123c73e` (§8). The templates themselves are unchanged; replacing the lede remains P5A plus client content (D-06, D-16) | They would publish today if all other gates passed | Handle in the P5A Privacy/Company Profile PRs | `src/app/[locale]/{privacy,company-profile}/page.tsx` |
-| Run the browser matrix on the current head | Not run since `a48f2df` | Firefox/WebKit coverage of the new page | Trigger `e2e-matrix.yml` (manual dispatch) once Ziad agrees | `.github/workflows/e2e-matrix.yml` |
+| Run the browser matrix on the current head | **Done:** run 36998058056 on `123c73e`, 288 passed / 22 skipped / 0 failed (§8.3). New gap: the Route-scene tests skip in Firefox/WebKit; fixing that needs test changes (not authorised here) | Firefox/WebKit coverage of the new page | Trigger `e2e-matrix.yml` (manual dispatch) once Ziad agrees | `.github/workflows/e2e-matrix.yml` |
 | Mobile NVR technical fixes (#3, #4) | Proposed only | Static-mode gaps; legibility | Apply only if Ziad requests them | `src/styles/mnvr.css`, `mnvr-system-art.tsx` |
 
 ### B. Ziad: personal verification and decisions
@@ -425,7 +425,7 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 | `budget` | All within caps |
 | `pnpm test:e2e` (Chromium, desktop + mobile projects, axe) | **117 passed, 7 skipped**. The skips are by viewport design: drawer focus trap and drawer accordion on desktop; mega menu keyboard and language switcher on mobile; Route stepped mode on desktop; Route pinned mode and Route RTL on mobile |
 | `pnpm worker:smoke` (local workerd) | 25/25 |
-| **Firefox / WebKit matrix** (GitHub `e2e-matrix.yml`, workflow_dispatch on `claude/confident-cori-lahb3k`) | **In progress at the time of this commit** (run 36998058056 on `123c73e`); no result recorded yet. It will be added once the run completes. |
+| **Firefox / WebKit matrix** (GitHub `e2e-matrix.yml`, workflow_dispatch on `claude/confident-cori-lahb3k`) | **Success: 288 passed, 22 skipped, 0 failed** (11.9 min). Run 36998058056, job 110809215110, workflow_dispatch on `claude/confident-cori-lahb3k` @ `123c73e`, ubuntu-latest, Playwright projects `desktop` and `mobile` (Chromium), `firefox-desktop`, `webkit-desktop` and `webkit-mobile`. Per project: Chromium desktop 59 passed / 3 skipped; Chromium mobile 58 / 4; firefox-desktop 57 / 5; webkit-desktop 57 / 5; webkit-mobile 57 / 5. All skips are deliberate `test.skip` conditions: - Viewport: drawer tests skip on desktop projects; mega menu and language-switcher tests skip on mobile projects. - **Coverage gap:** the 3 Route-scene tests (desktop pinned, mobile stepped, RTL) are tied to the project names `desktop`/`mobile`, so they skip in every Firefox/WebKit project. Only the Route reduced-motion test runs there. The “On board” diagram tests (progressive reveal, reduced motion, RTL) ran and passed in all 5 projects. CI: run 13 (`123c73e`) was cancelled by the workflow's concurrency rule when `1f4dba5` was pushed; **run 14 on `1f4dba5` (same code plus docs) passed**. |
 
 ### 8.4 Security and public repository
 
