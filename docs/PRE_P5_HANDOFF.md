@@ -203,8 +203,8 @@ These can't be judged from screenshots; there's no preview URL until D-22.
 | ar/zh drafts | `/ar`, `/zh` | Present | Content gate (26 blockers) |
 | Image placeholders | Labelled boxes | Absent (`ImageSlot` returns null) | `assets:check` P0/P1 gate |
 | Interim header wordmark | Header | Present | BRAND-LOGO P0 gate |
-| Privacy / Company Profile "… — pending client (D-16/D-06)" lede | P3 templates | **Present, and no gate covers it** | **Gap:** a production build with every other input supplied would publish these lines. P5A templates must gate them. |
-| `site:check` sample guard | — | — | **Gap:** not in `.github/workflows/deploy-production.yml`, which runs lint, typecheck, test, build and budget only. It does run in `ci.yml`. |
+| Privacy / Company Profile "… — pending client (D-16/D-06)" lede | P3 templates | **Present, and no gate covers it** | **Gap:** a production build with every other input supplied would publish these lines. P5A templates must gate them. | *Remediated in `123c73e` (§8).*
+| `site:check` sample guard | — | — | **Gap:** not in `.github/workflows/deploy-production.yml`, which runs lint, typecheck, test, build and budget only. It does run in `ci.yml`. | *Remediated in `123c73e` (§8).*
 
 ---
 
@@ -327,8 +327,8 @@ The plan sets no finer order for the P5A pages.
 
 | Item | Status | Why | Next action | Where |
 |---|---|---|---|---|
-| Add `site:check` to the production deploy workflow | Not done (a CI change, outside this docs-only audit) | Second line of defence against sample content | Needs Ziad's go-ahead; a one-line workflow change | `.github/workflows/deploy-production.yml` |
-| Gate the privacy and company-profile "pending client" ledes in production | Not done (P5A scope) | They would publish today if all other gates passed | Handle in the P5A Privacy/Company Profile PRs | `src/app/[locale]/{privacy,company-profile}/page.tsx` |
+| Add `site:check` to the production deploy workflow | **Done** in `123c73e` (authorised remediation, §8) | Second line of defence against sample content | Needs Ziad's go-ahead; a one-line workflow change | `.github/workflows/deploy-production.yml` |
+| Gate the privacy and company-profile "pending client" ledes in production | **Gated** in `123c73e` (§8). The templates themselves are unchanged; replacing the lede remains P5A plus client content (D-06, D-16) | They would publish today if all other gates passed | Handle in the P5A Privacy/Company Profile PRs | `src/app/[locale]/{privacy,company-profile}/page.tsx` |
 | Run the browser matrix on the current head | Not run since `a48f2df` | Firefox/WebKit coverage of the new page | Trigger `e2e-matrix.yml` (manual dispatch) once Ziad agrees | `.github/workflows/e2e-matrix.yml` |
 | Mobile NVR technical fixes (#3, #4) | Proposed only | Static-mode gaps; legibility | Apply only if Ziad requests them | `src/styles/mnvr.css`, `mnvr-system-art.tsx` |
 
@@ -373,3 +373,85 @@ The plan sets no finer order for the P5A pages.
 1. Ziad's personal verification of the Mobile NVR revision.
 2. P2 closed (client approval as applicable).
 3. Ziad's explicit authorisation to start P5.
+
+---
+
+## 8. Authorised audit remediation (2026-10-02)
+
+Scope authorised by Ziad: security gates, documentation and verification only.
+- Branch: `claude/confident-cori-lahb3k`, start `979d263`.
+- Gate commit: **`123c73e`**.
+- Not touched: no P5 work, no deployment, no merge, no PR, nothing pushed to `main`, no default-branch change. The Mobile NVR page, the homepage and the footer logo are unchanged.
+
+### 8.1 Production deployment gate
+
+- **`.github/workflows/deploy-production.yml` lines 50–53:** new step `Site check (production output gate)` → `run: pnpm site:check`. It runs after `pnpm build` (line 49) and before `pnpm budget` and `pnpm deploy:production`.
+  - Steps run sequentially without `continue-on-error`, so a failure stops the job.
+  - The manual dispatch, the `confirm == 'deploy'` condition, `environment: production`, `CONTENT_MODE: production` and `permissions: contents: read` are unchanged.
+- **Test:** `tests/unit/production-gates.test.ts` (*production deploy workflow*) asserts:
+  - the step order build → site:check → deploy;
+  - no `continue-on-error`, step `if:` or masked exit code;
+  - the manual-only trigger and production restrictions are intact.
+- **Mutation check (verified, run):** changing the step to `pnpm site:check || true` makes 2 of these tests fail. The file was restored afterwards.
+
+### 8.2 Pending-client content protection
+
+**Finding:** `src/app/[locale]/privacy/page.tsx` and `src/app/[locale]/company-profile/page.tsx` pass `pending.privacy` / `pending.companyProfile` ("… — pending client (D-16/D-06)") as their lede, with no preview guard. Those strings live in `messages/*.json`, which is approved (D-18), so no status gate caught them.
+
+**Fix (gates only):** the templates were not changed. Replacing the lede needs the client's content and the P5A templates.
+1. **`scripts/content-check.mjs`:** in production, every route that renders the `pending` messages namespace is a publication blocker. That is exactly these two routes; production blockers go from 38 to 40.
+2. **`scripts/site-check.mjs`:** in production, any deployable HTML page **or RSC payload (`.txt`)** containing a distinctive `pending`, `placeholder` or `preview` message string, in any locale, fails the check.
+   - Only distinctive strings are used (≥ 20 characters, no ICU arguments), so generic labels can't cause false positives.
+   - `SITE_OUT` allows fixture tests.
+
+**Evidence (verified, run):**
+- **Unit tests** (*site:check production output gate*, *content:check production gate*, real scripts): pending text in HTML (en, ar) fails; pending text only in an RSC payload fails; sample content fails; a clean page passes; preview builds are unaffected; the content gate lists both routes.
+- **Local production-mode render** (gates bypassed, not deployed): `site:check` exits 1 with **24 errors**, which is exactly the 2 ledes × 3 locales × 4 deployable files (`.html`, `.txt`, `__PAGE__.txt`, `_full.txt`). No other errors. The preview build still passes with 0 errors.
+
+**Remaining dependency:** the pages stay unpublishable until D-16 (a legally reviewed policy) and D-06 (the Canva profile) are supplied and their P5A templates are built. This is intended.
+
+### 8.3 Verification
+
+Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
+
+| Command | Result |
+|---|---|
+| `pnpm lint` · `format:check` · `typecheck` | Pass |
+| `pnpm test` | **58/58** (48 existing + 10 new) |
+| `pnpm content:check` | Pass (preview); 40 production blockers |
+| `content:fidelity` | 371/371, 0 undeclared |
+| `assets:check` | Pass (preview); 16 production blockers |
+| `site:check` | 60 pages, 6,516 links, 99 redirects, 0 errors |
+| `budget` | All within caps |
+| `pnpm test:e2e` (Chromium, desktop + mobile projects, axe) | **117 passed, 7 skipped**. The skips are by viewport design: drawer focus trap and drawer accordion on desktop; mega menu keyboard and language switcher on mobile; Route stepped mode on desktop; Route pinned mode and Route RTL on mobile |
+| `pnpm worker:smoke` (local workerd) | 25/25 |
+| **Firefox / WebKit matrix** (GitHub `e2e-matrix.yml`, workflow_dispatch on `claude/confident-cori-lahb3k`) | **In progress at the time of this commit** (run 36998058056 on `123c73e`); no result recorded yet. It will be added once the run completes. |
+
+### 8.4 Security and public repository
+
+- **Secret scan (verified, run):** the full git history (`git log -p --all`) was scanned for:
+  - AWS keys, GitHub tokens, Google API keys, Slack tokens;
+  - private-key blocks and JWTs;
+  - assigned `api_key` / `secret` / `token` / `password` literals;
+  - Cloudflare token assignments.
+
+  Result: **0 matches** for every pattern. The only tracked env file is `.env.example`, with two non-secret settings (`CONTENT_MODE`, `NEXT_PUBLIC_SITE_URL`). No values were printed.
+- **Publicly readable client-facing paths** (the repository is public; contents not reproduced here):
+
+  | Path | What it is |
+  |---|---|
+  | `client-materials/00_README_AND_SOURCE_MANIFEST.md`, `client-materials/PACKAGE_README.md` | Client package manifests |
+  | `client-materials/01_Vision_Plus_Approved_Content.txt` | Approved website copy |
+  | `client-materials/02_Vision_Plus_Strategy_and_Brand.pdf` | Strategy and brand document (includes market research) |
+  | `client-materials/04_Vision_Plus_Color_Palette_Option_B.jpg` | Palette |
+  | `client-materials/_extracted/` (README + 3 PNG extracts of PDF pages 5–7) | Extracts from the PDF |
+  | `client-materials/brand/logo-package-v1-2026-10-01/` (REVIEW.md, 2 contact sheets, 13 as-received logo/icon files) | Unreleased logo package |
+  | `public/images/home/home-hero.jpg`, `home-hero-mobile.jpg` | Client banner (intended for the public site) |
+  | `public/images/brand/vision-plus-logo-stacked-white.svg` | Client logo (intended for the public site) |
+  | `docs/review/p2/` (36), `docs/review/p2-mnvr-revision/` (39) | Review screenshots, including sample data |
+  | `docs/i18n/translations.xlsx` | Translation workbook |
+  | `docs/*.md` (plan, decisions, checklist, review sheets, manifests, notes) | Internal decisions, open questions and client status |
+
+  Visibility is unchanged and nothing was moved or deleted. The decision is Ziad's.
+- **`vision-plus-gamma.vercel.app`** (repository homepage field): **unverified**. It was not visited in this task.
+
