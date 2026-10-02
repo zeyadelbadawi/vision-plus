@@ -14,6 +14,45 @@ Legend:
 
 ---
 
+## Status after the client decisions of 2026-10-02
+
+Full record (answer → action → status): **`docs/CLIENT_DECISIONS.md`**. The tables below this section are the original requests, kept unchanged.
+
+**Decided:**
+- Q-01: approved content first, sitemap mapped.
+- Q-02: Products hidden.
+- Q-08: 12 industries.
+- Q-09: Site Survey goes in the Understand stage; Supply & Procurement once its text is approved.
+- Q-12: preview shows 4 illustrative sample projects.
+- Q-05 / Q-07: covered by D-13 and D-24.
+- **P2:** approved except the Mobile NVR page (revision submitted).
+- **P3:** accepted with open items.
+- **P4:** approved (D-18, D-19, D-20).
+- Git: `main` created and the reviewed work merged.
+
+**Still needed from you:**
+
+| Item | What is still needed | Priority |
+|---|---|---|
+| Q-03 | The exact menu order of Solutions, Products and Industries (the proposed order was not accepted). | 🟠 |
+| Q-04 | The exact Vision, Mission and Core Values wording (the proposed content was not accepted). | 🟠 |
+| Review | Revised Mobile NVR page (`docs/review/p2-mnvr-revision/`): P2 closes and P5 can start only after your approval. | 🔴 |
+| Review | New wording since the English sign-off: Real Estate & Property Development summary, the Understand-stage sentence with Site Survey, the Supply & Procurement description, the industry order, and the 4 sample projects (`CLIENT_DECISIONS.md` §5). | 🟠 |
+| D-01, D-02, D-03 | Verified office details and map links. Labelled dummy data is shown in preview until then. | 🔴 |
+| D-04 | Inquiry notification email. | 🔴 |
+| D-05 | Missing logo variants: horizontal lock-up (light and dark), monogram, favicon and app icons. The footer already uses your stacked logo; the header needs the horizontal one. | 🔴 |
+| D-06, D-27, Q-06 | Canva profile, and whether Chinese visitors are in mainland China (decides canva.cn or PDF). | 🟠 |
+| D-07, D-14, D-22 | Domain/DNS access, Google account, Cloudflare account. **D-22 blocks the preview link.** | 🔴 |
+| D-08, D-09, D-10 | Verified partners, product data and real projects (samples are replaced before launch). | 🟠 |
+| D-11, D-21, D-26 | Images and optional footage. Placeholders show the exact sizes until then. | 🔴 for P1 slots |
+| D-12, D-13 | Names of the human reviewers for the Arabic and Chinese drafts. | 🔴 before launch |
+| D-15, D-16, D-17 | Legal entity names, a legally reviewed privacy policy, social links. | 🔴 / 🔴 / 🟢 |
+| D-23, Q-18 | Analytics decision (disabled until approved). | 🟢 |
+| D-25 | `05_Vision_Plus_Reference_Image.jpg` (never received) and `03_…Sitemap.png` (the copy in the PDF is used). | 🟢 |
+| Q-10, Q-11, Q-13–Q-23 | Not answered yet. | as listed below |
+
+---
+
 ## A. Decisions we need from you first (short meeting, ~45 min)
 
 These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §53.
@@ -118,8 +157,8 @@ Everything runs on free services. **You own the accounts, and we are added as co
 
 | ID | Item | When |
 |---|---|---|
-| D-20 | Storyboards of the solution-page animations (one frame per step). **Ready for review:** `docs/SCENE_STORYBOARDS.md` (approval log in §11) | Phase 4 |
+| D-20 | Storyboards of the solution-page animations. **Approved 2026-10-02.** The new Mobile NVR “On board” diagram (§2a) is pending review. | Phase 4 |
 | — | Design direction proof (live style guide + homepage hero + one solution page). **Ready for review:** homepage (approval relayed), Mobile NVR page with the Route scene first cut, and the style guide — screenshots in `docs/review/p2/`; a live preview link needs D-22 | Phase 2 |
-| — | English copy lock | Before translation |
+| — | English copy lock: **done (D-18, 2026-10-02)**; later additions are reviewed separately | Before translation |
 | — | Arabic and Chinese review by native speakers on the staging site | Phase 8 |
 | — | Final launch approval | Phase 11 |

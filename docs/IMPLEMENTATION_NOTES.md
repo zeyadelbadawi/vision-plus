@@ -235,6 +235,10 @@ pnpm lhci                      # CHROME_PATH=… if Chrome isn't on PATH
 | 2026-10-01 | `c4bd119`–`77137b3` | P4 content, storyboards, review docs | Nothing new rendered (by design) |
 | 2026-10-01 | `6932552` | **Remediation:** P2 completed; P3 empty templates; site check; e2e for new pages | Brings P2/P3 outputs in line with §49.1 |
 | 2026-10-01 | `9d04cf8` | **Remediation:** Zod, Prettier, nightly browser matrix, scene-page budget/Lighthouse/smoke | Closes §40/§51 gaps |
+| 2026-10-01 | `1c80910`, `a48f2df` | Tailwind scan limited to app code; phase status and plan amendments | — |
+| 2026-10-02 | `b4b386c` (main) | `main` created and the reviewed work merged | Client decision (Part 5) |
+| 2026-10-02 | `3496899` | Client decisions applied to content and code | Client decisions |
+| 2026-10-02 | `7acdfff` | Dedicated Mobile NVR page (P2 revision) | Client decision (P2 exception) |
 
 ## R-2. Root causes (confirmed by evidence)
 
@@ -271,3 +275,28 @@ pnpm lhci                      # CHROME_PATH=… if Chrome isn't on PATH
 ## R-5. Homepage protection
 
 Reduced-motion renders compared with the approved build `c7e5c0e`: **0 differing pixels** in en/ar/zh at 390, 768, 1440 and 1920 (Chromium), after the P2/P3 work and again after formatting. All 63 built pages are byte-identical before and after the Prettier change (build hashes aside). Limitations: Chromium only; animated states and open menus are verified functionally (e2e), not pixel-for-pixel.
+
+---
+
+# Client decisions of 2026-10-02 — implementation
+
+Source and per-decision status: `docs/CLIENT_DECISIONS.md`. Amendments: plan §55 A-14 to A-23.
+
+| # | Decision | What was done | Why this way |
+|---|---|---|---|
+| C-1 | Git: create `main` after review, then merge | Branch reviewed at `a48f2df` (CI, E2E matrix, secret scan, `pnpm audit --prod`, `git fsck`). `main` created at `dd6b24d`; `--no-ff` merge `b4b386c` (tree = `a48f2df`). CI green on `main`. | A merge commit records the review point. `main` starts from the client-materials baseline, not from a work-in-progress commit. |
+| C-2 | Q-02: hide Products | `pageVisibility.products = false`. The page calls `notFound()`; postbuild removes the exported files of hidden routes (and of `/_lab` in production). | **Defect found:** a static export still writes a `notFound()` page as `products.html` with the 404 markup, so Cloudflare would answer **200** (soft 404). Removing the files makes the host return a real 404 and keeps alias redirects to the page switched off. |
+| C-3 | Q-08: 12 industries | New slug `real-estate-property-development`; `residential` slug kept, name changed. No relation for the new industry. | Keeping the slug avoids churn in anchors and aliases. D-19 approved only the relations that existed, so a new link needs a new review. |
+| C-4 | Q-09: Site Survey in Understand | The 01 sentence is extended. `content:fidelity` has an `AMENDED` list for 01 text the client has changed by decision. | The fidelity rule ("every approved sentence verbatim") stays strict; the one deliberate change is declared, not silenced. |
+| C-5 | D-18 approved | Review entries get `"approved": "D-18"`; files whose entries are all approved return to status `approved`; new status `withheld` (Q-04). `content:check` rejects an `approved` file with pending entries. | Keeps one mechanism for "approved at sign-off" vs "added later, pending" vs "never publish", enforced by CI. |
+| C-6 | Q-12 / D-01 / D-02: samples | `data/samples.ts` + `copy/*/samples.json`. Preview only, visibly labelled, `data-sample` marker, and `site:check` fails a production build that contains it. Dummy phones are all-zero subscriber numbers; emails use `example.com`; plain text only. | Temporary content stays centralised and replaceable. It can never be dialled, mailed or published by mistake. |
+| C-7 | D-05: existing logos, unaltered | Footer uses the stacked white SVG (byte-identical copy, sha256 checked). Header keeps the interim wordmark. | A stacked logo in the 32 px header would make the wordmark ~9 px and the tagline ~1 px. The horizontal variant is one of the "missing variants" the decision waits for. |
+| C-8 | D-11: sizes on placeholders | Compact 64 px thumbnails now show the delivery size. | Full placeholders already showed ID, size and ratio. |
+| C-9 | P2 exception: Mobile NVR | Dedicated page + “On board” diagram (`7acdfff`); Route scene kept unchanged. | Scroll-triggered (one-shot reveals + `:has()`), not scrubbed: small-scale, no new JavaScript, and the complete diagram is the fallback everywhere. |
+
+### Homepage protection (2026-10-02)
+
+The decisions change five homepage regions: the desktop header (Products removed), Approach, Industries, Projects and the footer.
+
+The other **8 sections were checked against the approved build at identical document offsets**: 0 differing pixels in en/ar/zh at 390/768/1440/1920, and byte-identical markup. A first attempt using element screenshots reported false differences. Element screenshots are not deterministic here: the baseline compared with itself also differed, because of sticky and scroll effects and tile seams. The method was replaced (`scripts/dev/home-unchanged-diff.mjs`).
+

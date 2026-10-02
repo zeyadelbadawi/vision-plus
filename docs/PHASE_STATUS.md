@@ -1,6 +1,6 @@
 # VISION PLUS — Phase Status & Acceptance Evidence (P1–P4)
 
-**As of:** 2026-10-01 · **Branch:** `claude/confident-cori-lahb3k` (the remote has no `main` branch) · **Authority:** MASTER_PROJECT_PLAN §49.1 (scope, outputs, acceptance), §50 (deliverables), §51 (Definition of Done). Deviations: plan §55.
+**As of:** 2026-10-02 · **Branches:** `main` (created 2026-10-02, merge `b4b386c` = reviewed `a48f2df`) and the working branch `claude/confident-cori-lahb3k` (ahead of `main` by the 2026-10-02 work, to be merged after review) · **Client decisions:** `docs/CLIENT_DECISIONS.md` · **Authority:** MASTER_PROJECT_PLAN §49.1 (scope, outputs, acceptance), §50 (deliverables), §51 (Definition of Done). Deviations: plan §55.
 
 Evidence is code and command output, not reports. **Verified** = run and passed in this repository; **local** = verified locally / in CI but not on a deployed environment; **blocked** = needs an external input.
 
@@ -11,16 +11,19 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Area | What exists | Since |
 |---|---|---|
 | Homepage `/en` `/ar` `/zh` | The approved homepage (11 sections), header + mega menus, mobile drawer, language switcher, footer | `9f90b5d`, `c7e5c0e` |
-| Mobile NVR solution page | Full §26.2 template with the Route scene first cut (pinned desktop, stepped mobile, static reduced-motion), 3 locales | `6932552` |
+| Mobile NVR solution page | **Dedicated page (P2 revision, pending client review):** charcoal hero, the scroll-triggered “On board” system diagram, the approved Route scene, capabilities, applications, related, CTA, in 3 locales. The earlier generic version (`6932552`) was not accepted. | `7acdfff` |
 | Style guide `/{locale}/_lab` | Tokens, type scale × 3 scripts, buttons, form controls, image slots, motion samples (preview only) | `6932552` |
-| Every other sitemap route | P3 empty templates: breadcrumb, h1, approved lede, section anchors — **bodies are P5** | `6932552` |
-| Links and redirects | 0 broken internal links or anchors across 63 pages; 96 sitemap-alias 301s active | `6932552` |
+| Every other sitemap route | P3 empty templates: breadcrumb, h1, approved lede, section anchors — **bodies are P5**. Products is **hidden** (Q-02): not built, not linked. | `6932552`, `3496899` |
+| Client decisions in the build | 12 industries (Q-08), Site Survey in Understand (Q-09), V/M/V withheld (Q-04), illustrative sample projects and dummy offices labelled and preview-only (Q-12, D-01/D-02), client stacked logo in the footer (D-05), sizes on every placeholder (D-11) | `3496899` |
+| Links and redirects | 0 broken internal links or anchors across 60 pages; 99 sitemap-alias 301s active | `3496899` |
 | Content | Approved English everywhere it renders; Arabic/Chinese are draft machine translations (homepage UI) or English placeholders (new page copy) — preview only | P4 |
 | Not yet | Page bodies for hubs/about/services/industries/products/projects/partners/contact (P5); 7 more solution scenes (P5B); contact form (P6); SEO metadata beyond titles/descriptions (P7); real translations (P8); client assets (P9); any deployment (D-22) | — |
 
 ---
 
-## P1 — Client Decisions & Input Kickoff · **Blocked on client (not complete)**
+## P1 — Client Decisions & Input Kickoff · **Partially answered (2026-10-02)**
+
+Q-01, Q-02, Q-08, Q-09 and Q-12 are decided; Q-03 and Q-04 were rejected without a replacement (unresolved); Q-05/Q-07 are answered via D-13/D-24; the rest are pending. Data items D-01–D-27 have instructions (`CLIENT_DECISIONS.md` §2). The table below is the 2026-10-01 assessment, kept for history.
 
 | Requirement (§49.1) | Status | Evidence |
 |---|---|---|
@@ -29,7 +32,9 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Send checklist; collect D-05, D-07, D-14, D-22, D-25 | Partially | Checklist `dd6b24d`; banner received (`c7e5c0e`); logo v1 received and rejected (`54008fd`); D-07, D-14, D-22, D-25 outstanding |
 | Acceptance: "before P2" questions answered or default accepted | **Not met** | Defaults applied are recorded as pending (`docs/P4_CLIENT_REVIEW.md` §4) |
 
-## P2 — Design Direction Proof · **Implemented — awaiting client approval (not accepted)**
+## P2 — Design Direction Proof · **Approved except the Mobile NVR page — open (2026-10-02)**
+
+Client decision: the homepage baseline, style guide, design direction, typography and motion are approved. The Mobile NVR page was **not accepted**; a dedicated page with a small purposeful scroll-triggered animation was requested. Revision: `7acdfff`, screenshots `docs/review/p2-mnvr-revision/`. **P2 closes only when the client approves the revised page.** The table below is the 2026-10-01 evidence, kept for history (rows about the Mobile NVR page describe the rejected version).
 
 | Requirement (§49.1) | Status | Evidence |
 |---|---|---|
@@ -44,7 +49,13 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Validation: scene performance trace on throttled mobile | **Verified (local, Lighthouse)** | Mobile NVR page: performance 0.98, LCP 2.2 s, TBT 68 ms, CLS 0; no added JS (budget: 141.8 KB) |
 | Acceptance: written client approval of direction, type and motion | **Pending** | Homepage approval relayed by the owner in session (not a written client record); Mobile NVR page, Route scene and style guide not yet reviewed by the client |
 
-## P3 — Engineering Foundation · **Implemented and verified locally; not closed**
+## P3 — Engineering Foundation · **Accepted with open items (2026-10-02)**
+
+Client decision: accepted as the current engineering implementation. Open items stay tracked:
+- the preview environment and Cloudflare access (D-22);
+- `/ar` and `/zh` Lighthouse below 95 (P10).
+
+Git integration is resolved (`main`, `b4b386c`). No production deployment or launch is approved.
 
 | Requirement (§49.1) | Status | Evidence |
 |---|---|---|
@@ -63,9 +74,11 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Output: deployable preview with **empty templates in 3 locales** | **Templates verified (`6932552`)**; deployment blocked (D-22) | `site:check`: 63 pages, 0 errors |
 | Validation: Lighthouse baseline ≥ 95 | **Not met for `/ar` `/zh`** | `/en` 0.95–0.98, `/ar` 0.88, `/zh` 0.75 (§55 A-09, P10) |
 | Acceptance: §51 checklist; preview URL shared | Partially / blocked | No preview link (D-22) |
-| Done when merged to `main` | **Not possible yet** | No `main` branch (§55 A-14) |
+| Done when merged to `main` | **Done** | `main` created, reviewed work merged as `b4b386c`; CI run 8 on `main` green |
 
-## P4 — Content Encoding & Scene Storyboards · **Ready for Acceptance — not accepted**
+## P4 — Content Encoding & Scene Storyboards · **Approved (2026-10-02)**
+
+D-18, D-19 and D-20 are approved (`P4_CLIENT_REVIEW.md` §6). Text added after the sign-off is listed as pending in `CONTENT_FIDELITY_REPORT.md`.
 
 | Requirement (§49.1) | Status | Evidence |
 |---|---|---|
@@ -74,12 +87,35 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Draft microcopy and SEO strings | Verified | `messages/*.json` (ICU test), `copy/*/seo.json` (Zod budgets) |
 | Translation workbook export | Verified — **prepared, not released** until D-18 | `docs/i18n/translations.xlsx` |
 | Storyboards (8 solutions + home) | Verified as documents; the Route scene is now also built (first cut) | `docs/SCENE_STORYBOARDS.md` |
-| Acceptance: D-18, D-19, D-20 | **Pending client** | `docs/P4_CLIENT_REVIEW.md` §6 |
-| Done when English locked and workbook sent | Not met | Needs D-18 |
+| Acceptance: D-18, D-19, D-20 | **Approved 2026-10-02** | `docs/P4_CLIENT_REVIEW.md` §6 |
+| Done when English locked and workbook sent | English locked (D-18). Translation is drafted by Claude in P8 with human review (D-12/D-13) | `docs/i18n/translations.xlsx` |
+
+## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met**
+
+| Entry condition (client, 2026-10-02) | State |
+|---|---|
+| P2 closed (revised Mobile NVR page approved) | ☐ Open — submitted 2026-10-02 |
+| P3 acceptance recorded with open items | ☑ |
+| P4 approvals recorded (D-18, D-19, D-20) | ☑ |
+| Explicit instruction to start P5 | ☐ |
 
 ---
 
-## Verification log (this remediation)
+## Verification log (2026-10-02, after the client decisions)
+
+| Check | Result |
+|---|---|
+| `pnpm lint` · `typecheck` · `format:check` | Pass |
+| Unit (`pnpm test`) | 48 / 48 |
+| `content:check` · `content:fidelity` · `assets:check` | Pass (preview). Fidelity: 371/371 approved `01` units, 1 client amendment (Q-09), 0 undeclared strings |
+| `pnpm site:check` | 60 pages, 6,516 internal links, 99 redirects, 0 errors |
+| E2E Chromium (`pnpm test:e2e`) | 117 passed, 7 skipped by viewport design |
+| Homepage vs approved build | Changed by decision: desktop header (Products removed), Approach (Q-09), Industries (Q-08), Projects (Q-12), footer (D-01/D-02/D-05). **All 8 other sections: 0 differing pixels**, en/ar/zh × 390/768/1440/1920 (`scripts/dev/home-unchanged-diff.mjs`); their markup is byte-identical |
+| Budget | Home JS 142.8 KB; Mobile NVR page JS 141.8 / CSS 15.6 / HTML ≤ 24.4 KB gz |
+| Lighthouse (mobile, median of 3, local) | `/en` 0.97 · `/ar` 0.89 · `/zh` 0.75 · Mobile NVR page 0.96 (LCP 2.56 s, just above the 2.5 s warning; TBT 109 ms; CLS 0) — accessibility 1.00 on all four; best practices 0.96 |
+| GitHub CI | `main` `b4b386c` run 8 green; `3496899` run 9 green |
+
+## Verification log (2026-10-01 remediation, superseded)
 
 | Check | Result |
 |---|---|

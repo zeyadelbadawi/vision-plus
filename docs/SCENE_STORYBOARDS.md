@@ -43,13 +43,13 @@ Per the plan's working rule, the storyboards are text, not images. Each frame be
 |---|---|---|---|---|---|---|
 | 1 | Integration System | Home | Signature | in-view / stepped / stepped | 8 nodes | **Built and approved with the homepage**: documented as built, no change |
 | 2 | Route | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | **First cut built in P2** (`6932552`, on the Mobile NVR page; screenshots `docs/review/p2/route-*`). Storyboard still awaiting D-20 |
-| 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Awaiting D-20 |
-| 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Awaiting D-20 |
-| 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Awaiting D-20 |
-| 6 | Who · Where · When | Access Control | Moderate | stepped (sticky art on D) | 3 + coda | Awaiting D-20 |
-| 7 | Critical Sequence | Fire Alarm Systems | Moderate, restrained | in-view sequence | 4 + coda | Awaiting D-20 |
-| 8 | Topology | Networking & ICT | Subtle | in-view, scrubbed in its own height | 3 phases + caption | Awaiting D-20 |
-| 9 | Disappear | Audio Visual | Subtle | in-view, scrubbed in its own height | 2 phases + caption | Awaiting D-20 |
+| 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Approved (D-20, 2026-10-02) |
+| 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Approved (D-20, 2026-10-02) |
+| 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Approved (D-20, 2026-10-02) |
+| 6 | Who · Where · When | Access Control | Moderate | stepped (sticky art on D) | 3 + coda | Approved (D-20, 2026-10-02) |
+| 7 | Critical Sequence | Fire Alarm Systems | Moderate, restrained | in-view sequence | 4 + coda | Approved (D-20, 2026-10-02) |
+| 8 | Topology | Networking & ICT | Subtle | in-view, scrubbed in its own height | 3 phases + caption | Approved (D-20, 2026-10-02) |
+| 9 | Disappear | Audio Visual | Subtle | in-view, scrubbed in its own height | 2 phases + caption | Approved (D-20, 2026-10-02) |
 
 ---
 
@@ -122,6 +122,32 @@ D composition (1440 × 900)            ┌────────────�
 - **Questions for the client:**
   - Beats 1 and 2 add one approved capability label each (cameras, GPS), which the plan left unlabelled. Keep them?
   - Is a generic symmetric vehicle glyph acceptable (bus or van silhouette), or should it be abstract (a rounded rectangle)?
+
+---
+
+## 2a. On board — Mobile NVR system diagram (added 2026-10-02, **pending client review**)
+
+Added for the P2 revision. The client did not accept the generic Mobile NVR page and asked for "a real, purposeful, small-scale scroll-triggered animation" that explains the solution. This is a new scene, **not** covered by the D-20 approval, and is submitted for review with the revised page (`docs/CLIENT_DECISIONS.md` §5 R-5). Built in `7acdfff`.
+
+| | |
+|---|---|
+| **Approved concept** | “Our approach brings together video, location, connectivity, data, and intelligent monitoring within one coordinated mobile security environment.” (`01` §07), shown as the system on one vehicle. |
+| **Placement** | Section 2 of the dedicated Mobile NVR page, before the Route scene (which shows the same idea at fleet level). |
+| **Modes** | **Scroll-triggered, not scrubbed.** Each step reveals once as it enters the viewport, and the matching part of the diagram lights. D: sticky diagram in 6 columns beside the steps. T/M: a compact sticky diagram above the steps. RM / no JS / no `:has()`: the complete diagram. |
+| **Artwork** | Side elevation of a generic, unbranded vehicle (640 × 350). Hairlines, Option B tokens only, gold = active. No text in the art: numbered callouts only, never mirrored. |
+| **Budget** | Inline SVG of about 3 KB; no JavaScript (uses the existing MotionController reveal). |
+
+| Step | DOM text (approved key) | Lights | Motion |
+|---|---|---|---|
+| 1 | “Multi-Channel HD/IP Vehicle Cameras” · pillar Video text (`capabilities.items.1`, `fleet.pillars.0`) | Four cameras and their coverage wedges | Activate |
+| 2 | “Mobile Network Video Recorders” + tag “Secure Local Video Storage” · `body.2` | Cabling to the on-board recorder; storage bars fill | Draw → fill |
+| 3 | “GPS Tracking & Positioning” · pillar Location text | Roof GPS antenna and position marker | Activate |
+| 4 | “4G/5G Connectivity” + tags “Wi-Fi Communication”, “Real-Time Video Transmission” · pillar Connectivity text | Antenna arcs; uplink draws to the network mast; one signal travels once | Draw → signal |
+| 5 | “Remote Live Viewing” + tags “Remote Video Playback”, “Centralized Management Platforms” · pillar Monitoring text | An **empty** outlined screen (no imagery, no fake footage, D-26) linked from the mast | Draw → activate |
+
+- **RTL:** the art mirrors (the flow runs from the inline end); step numbers and text do not.
+- **Must not show:** branding, plates, people, places, times, device counts, footage or alarms.
+- **Tests:** `tests/unit/mnvr-page.test.ts` (copy references) and `tests/e2e/pages.spec.ts` (progressive reveal, reduced motion, RTL, axe).
 
 ---
 
@@ -336,11 +362,11 @@ Tick one box per scene, or add comments. Changes are made here first, then in `s
 | # | Scene | Decision | Comments | Who / date |
 |---|---|---|---|---|
 | 1 | Integration System (home) | Approved with the homepage | — | Client, homepage approval |
-| 2 | Route — Mobile NVR | ☐ Approved ☐ Changes | | |
-| 3 | Responsive Space — Smart Building | ☐ Approved ☐ Changes · Photography upgrade (D-21): ☐ yes ☐ no | | |
-| 4 | One Infrastructure — ELV | ☐ Approved ☐ Changes | | |
-| 5 | See · Know · Respond — CCTV | ☐ Approved ☐ Changes | | |
-| 6 | Who · Where · When — Access Control | ☐ Approved ☐ Changes · Phrase titles (D-18): ☐ yes ☐ full sentence only | | |
-| 7 | Critical Sequence — Fire Alarm | ☐ Approved ☐ Changes | | |
-| 8 | Topology — Networking & ICT | ☐ Approved ☐ Changes | | |
-| 9 | Disappear — Audio Visual | ☐ Approved ☐ Changes | | |
+| 2 | Route — Mobile NVR | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
+| 3 | Responsive Space — Smart Building | ☑ Approved · Photography upgrade (D-21): placeholders with exact sizes until images are supplied | — | Client (relayed by the owner), 2026-10-02 |
+| 4 | One Infrastructure — ELV | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
+| 5 | See · Know · Respond — CCTV | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
+| 6 | Who · Where · When — Access Control | ☑ Approved · Phrase titles approved with D-18 | — | Client (relayed by the owner), 2026-10-02 |
+| 7 | Critical Sequence — Fire Alarm | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
+| 8 | Topology — Networking & ICT | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
+| 9 | Disappear — Audio Visual | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |

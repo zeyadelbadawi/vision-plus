@@ -4,6 +4,12 @@
 **Status:** Planning baseline v1.0 (2026-09-25). Dimensions are derived from the layout system in `MASTER_PROJECT_PLAN.md` §20 and §25. If a layout changes during implementation, this file and `image-asset-manifest.csv` must be regenerated in the same change.
 **Machine-readable copy:** [`image-asset-manifest.csv`](./image-asset-manifest.csv). The designer can track progress in it.
 
+**Update 2026-10-02 (client decisions, `docs/CLIENT_DECISIONS.md`):**
+- **Q-08:** new slot `IND-REALESTATE` (Real Estate & Property Development, 1080 × 1350, 4:5, P1). `IND-RESIDENTIAL` now serves “Residential & Communities”. 74 slots in total.
+- **D-11 / D-21 / D-26:** every placeholder displays its exact delivery size from this manifest. Compact thumbnails now show the size too. Placeholders are never replaced by stock, generated or sample footage presented as real.
+- **D-05:** the footer uses the client's stacked white logo from logo package v1, unaltered. `BRAND-LOGO` (horizontal lock-up, light and dark, monogram, favicon, icons) is still outstanding and still blocks production.
+- **Q-02:** the Products page is hidden, so its slots are not rendered until it is re-enabled.
+
 ---
 
 ## 1. Ground rules
@@ -71,7 +77,7 @@ Every slot is already built into the layout with its final aspect ratio. Until t
   Mobile 1080 × 1350 · 4:5
   ```
 - **Behaviour by mode:**
-  - When `CONTENT_MODE=preview` (local, staging), the label is visible.
+  - When `CONTENT_MODE=preview` (local, staging), the label is visible. Compact thumbnails (e.g. the 64 px mobile industry thumbnails) show the delivery size only (`1080×1350`), D-11.
   - When `CONTENT_MODE=production`, the label is hidden and the slot falls back as listed in the "Placeholder / fallback" column. Most in-body images fall back to a text-only layout variant, so production never shows "unfinished" boxes.
   - `pnpm assets:check` fails the production build if any **P0/P1** asset for a published page is missing.
 - **Accessibility:** placeholders are `aria-hidden="true"`. They never carry alt text that claims to be a real image.
@@ -373,7 +379,8 @@ Each group lists the slots in a table. Expand "Art direction…" under a group f
 | `IND-RETAIL` | Industry: Retail | Retail environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
 | `IND-EDUCATION` | Industry: Education | Education environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
 | `IND-HEALTHCARE` | Industry: Healthcare | Healthcare environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
-| `IND-RESIDENTIAL` | Industry: Residential | Residential environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
+| `IND-REALESTATE` | Industry: Real Estate & Property Development | Real estate / property development environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
+| `IND-RESIDENTIAL` | Industry: Residential & Communities | Residential & communities environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
 | `IND-LOGISTICS` | Industry: Logistics & Warehousing | Logistics & Warehousing environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
 | `IND-INDUSTRIAL` | Industry: Industrial & Manufacturing | Industrial & Manufacturing environment image | F5 | 1080×1350 | 4:5 | same file | 4:5 | P1 |
 
@@ -415,6 +422,8 @@ Each group lists the slots in a table. Expand "Art direction…" under a group f
   *Focal/crop:* Subject center; safe area central 80%  
   *Format:* JPG (sRGB, q≥90) · *Fallback:* Placeholder (preview) / panel without image (production)  
   *File:* `public/images/industries/ind-healthcare.jpg`
+- **`IND-REALESTATE`** — Real property-development environment (e.g. a building or site under development or a completed development), ideally showing installed technology in context. No identifiable project unless verified (Q-08, Q-12).  
+  *Path:* `public/images/industries/ind-real-estate.jpg`
 - **`IND-RESIDENTIAL`** — Real residential environment, ideally showing installed technology in context.  
   *Focal/crop:* Subject center; safe area central 80%  
   *Format:* JPG (sRGB, q≥90) · *Fallback:* Placeholder (preview) / panel without image (production)  

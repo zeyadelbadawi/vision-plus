@@ -101,6 +101,25 @@ Arabic needs a professional human translator (Q-05, D-13); Simplified Chinese co
 
 ## 6. Sign-off record
 
+**Recorded 2026-10-02** from the consolidated client decisions relayed by the project owner (`docs/CLIENT_DECISIONS.md` §3). P4 is **approved**.
+
+| Item | What was reviewed | Decision | Who / date |
+|---|---|---|---|
+| D-18 English sign-off | §1 above, the review tables in `docs/CONTENT_FIDELITY_REPORT.md` and the *Interface* sheet of `docs/i18n/translations.xlsx` | ☑ **Approved** as presented | Client (relayed by the project owner), 2026-10-02 |
+| D-19 Relations | §2 above (industry → solution, service → approach steps, product category → solution) | ☑ **Approved as is** | Client (relayed by the project owner), 2026-10-02 |
+| D-20 Storyboards | `docs/SCENE_STORYBOARDS.md` §11 | ☑ **All scenes approved** | Client (relayed by the project owner), 2026-10-02 |
+
+Consequences:
+- Every reviewed copy entry now carries `"approved": "D-18"`.
+- The relations carry `status: 'approved'`.
+- Text added after the sign-off (Q-08, Q-09, the illustrative samples) is listed as *pending* in `docs/CONTENT_FIDELITY_REPORT.md` and goes back to the client (`docs/CLIENT_DECISIONS.md` §5).
+- The open questions in §4 are updated by the same decisions: Q-02, Q-08 and Q-09 are decided; Q-04 is unresolved; Q-05 and Q-07 are answered via D-13 and D-24. The rest stay pending.
+
+The blank form that was used for the review is kept below for history.
+
+### 6a. Sign-off form (as issued 2026-10-01)
+
+
 P4 closes when these three items are signed off. Until then, each stays pending.
 
 | Item | What to review | Decision | Who / date |

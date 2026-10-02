@@ -2263,6 +2263,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Done when:** the decision log is committed.
 - **Risks:** late answers delay P2 and P4 (R-02).
 - **Status (2026-10-01):** **Not complete — blocked on client input.** No decision is recorded in §53.3; the checklist exists (`docs/CLIENT_INPUT_CHECKLIST.md`) but its sending is not recorded in the repository. Received so far: the hero banner (2026-09-29) and logo package v1 (rejected, `client-materials/brand/logo-package-v1-2026-10-01/REVIEW.md`). Work proceeded on the documented defaults (see §55); none of them is a client decision.
+- **Status (2026-10-02):** **Partially answered.** The client answered Q-01, Q-02, Q-03 (rejected, no replacement), Q-04 (rejected, no replacement), Q-08, Q-09 and Q-12 and gave instructions for D-01–D-27 (`docs/CLIENT_DECISIONS.md`). Q-03 and Q-04 are unresolved; Q-06, Q-10, Q-11 and Q-13–Q-23 are still pending.
 
 **P2: Design Direction Proof** (a coded proof, cheaper and more truthful than static mockups)
 - **Objective:** lock the visual language ("Engineered Light") in all 3 scripts before production.
@@ -2283,6 +2284,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Done when:** approved, with adjustments logged.
 - **Risks:** subjective iteration loops. Mitigation: a maximum of 2 revision rounds, with feedback collected as a single consolidated list.
 - **Status (2026-10-01):** **Implemented — awaiting client approval of the direction (not accepted).** The homepage slice (hero, Integration System, header/mega/drawer) was built as the full homepage in `9f90b5d`/`c7e5c0e`; its approval was relayed by the project owner in the working session (no written client record in the repository). The rest of P2 — live style guide (`/{locale}/_lab`), the full Mobile NVR solution page and the Route scene first cut in pinned, stepped and reduced-motion modes — was missing and was built in `6932552` (see §55 A-01). Review screenshots: `docs/review/p2/`. A preview URL needs D-22.
+- **Status (2026-10-02):** **Approved with one exception — open.** The client approved P2 except the Mobile NVR page, which was not accepted; a dedicated Mobile NVR page with a small purposeful scroll-triggered animation was requested. The revision was built in `7acdfff` and submitted for review (`docs/review/p2-mnvr-revision/`). P2 closes when the client approves it.
 
 **P3: Engineering Foundation**
 - **Objective:** a production-grade skeleton that every later phase builds on.
@@ -2302,6 +2304,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Done when:** merged to `main`.
 - **Risks:** static-export and i18n edge cases. Mitigation: verify early (this phase).
 - **Status (2026-10-01):** **Implemented and verified locally; acceptance criteria not all met (not closed).** The owner approved the P3 report in the working session on 2026-10-01. Open against §49.1: the preview URL (blocked, D-22); the Lighthouse ≥ 95 baseline on `/ar` and `/zh` (measured 0.88 / 0.75; moved to P10, §55 A-09); merge to `main` (the remote has no `main` branch — owner decision). The missing "empty templates in 3 locales" output was delivered in `6932552` and the missing Zod/Prettier checks in `9d04cf8` (§55 A-02, A-06, A-07).
+- **Status (2026-10-02):** **Accepted by the client as the current engineering implementation**, with the open items kept visible: preview URL (D-22), `/ar` `/zh` Lighthouse below 95 (P10), Cloudflare access (D-22). Git integration is resolved: `main` created and the reviewed work merged (`b4b386c`, §55 A-14). No production deployment or launch is approved.
 
 **P4: Content Encoding & Scene Storyboards**
 - **Objective:** all approved English content lives in typed content files; the scenes are storyboarded and approved.
@@ -2321,6 +2324,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Done when:** English is locked and the translation workbook has been sent.
 - **Risks:** copy churn after lock; handled with a change log.
 - **Status (2026-10-01):** Ready for Acceptance — **not accepted or closed**. Implemented and validated; acceptance waits on three separate client sign-offs, D-18, D-19 and D-20 (record: `docs/P4_CLIENT_REVIEW.md` §6). The ten P4-related open questions remain unanswered, with defaults pending confirmation (§4 of that file). The translation workbook is prepared but **not released** to translators until D-18 is approved. P5 has not started and needs its own approval.
+- **Status (2026-10-02):** **Approved.** D-18 (English copy), D-19 (relations, as is) and D-20 (all storyboards) were approved by the client (`docs/P4_CLIENT_REVIEW.md` §6). Later changes to the English or the storyboards are documented and submitted for review (`docs/CLIENT_DECISIONS.md` §5).
 
 **P5: Page Templates, Scene Engine & Solution Scenes**
 - **Objective:** build every page and section to spec, with placeholders, and every approved scene.
@@ -2333,6 +2337,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Acceptance:** a client walkthrough on preview.
 - **Done when:** all templates and scenes are merged and a QA pass has been logged.
 - **Risks:** R-09 and R-10 (scene scope and performance), mitigated by the classification and the budgets.
+- **Entry conditions (client, 2026-10-02):** start only after P2, P3 and P4 are explicitly closed: P2 needs the client's approval of the revised Mobile NVR page; P3 acceptance and P4 approvals are recorded. The dedicated Mobile NVR page stays in scope. **Status (2026-10-02): not started; entry conditions not met.**
 
 **P6: Contact Integration**
 - **Objective:** a secure, free, reliable Sheet + email pipeline.
@@ -2553,6 +2558,8 @@ Launch is approved only when **every** item is ✅.
 ### 53.3 Open questions (decision log)
 The client answers Q-01 to Q-14, Q-17, Q-18, Q-20 and Q-21 through `CLIENT_INPUT_CHECKLIST.md` §A. The rest are listed here.
 
+> **Decisions received 2026-10-02:** Q-01, Q-02 (Option B), Q-08, Q-09 and Q-12 are decided; Q-03 and Q-04 were rejected without a replacement (unresolved); Q-05 and Q-07 are answered through D-13 and D-24. The answers, actions and statuses are recorded in **`docs/CLIENT_DECISIONS.md`**. The table below is kept unchanged as the original question set and recommendations.
+
 | ID | Question | Recommendation | Needed before |
 |---|---|---|---|
 | Q-01 | Approved content or the sitemap as canonical IA? | Approved content, with the sitemap mapped | P2 |
@@ -2659,11 +2666,33 @@ It found no unresolved contradiction beyond those listed in §53.1, each of whic
 | A-09 | §49 P3 asks for a Lighthouse baseline ≥ 95, while §37 sets ≥ 90 per template. Measured (mobile, Lantern): `/en` 0.95–0.98, `/ar` 0.88–0.93, `/zh` 0.73–0.79, Mobile NVR page 0.98. The gap is font payload (Arabic 3 weights, Chinese 15 subset files) competing with the hero image on the throttled link; closing it touches the approved homepage. | T-seq | `.lighthouseci`, IMPLEMENTATION_NOTES P3-3 | Reported as CI warnings; resolution scheduled for **P10** (owner accepted in P3). The 90/95 inconsistency needs one number — recommend ≥ 95 for `/en` and ≥ 90 for `/ar` and `/zh` until P10. |
 | A-10 | Lighthouse skips its colour-contrast audit; contrast is enforced by axe on every template × locale × 2 viewports, excluding only the interim text wordmark (a logotype — WCAG 1.4.3 exemption). | T-impl | `lighthouserc.cjs`, `tests/e2e/pages.spec.ts` | The official logo (D-05) must provide a light-background variant. |
 | A-11 | Arabic/Chinese for the page copy added in P4 is an English placeholder (status `placeholder`), not machine translation; marked `lang="en" dir="ltr"` when rendered. | T-impl | P4-05, `src/lib/text-attrs.ts` | Refused by the production gate until D-12/D-13. |
-| A-12 | The Route scene first cut was built before its storyboard approval, as P2 intends ("working first cut"); the final scene follows D-20 in P5B. | T-seq | `6932552` | Awaiting **Client**: D-20. |
+| A-12 | The Route scene first cut was built before its storyboard approval, as P2 intends ("working first cut"); the final scene follows D-20 in P5B. | T-seq | `6932552` | D-20 approved by the client (2026-10-02); final production in P5B. |
 | A-13 | Production deployment is manual-only until launch (§42 allows CI deploys). | T-impl | `.github/workflows/deploy-production.yml` | Accepted with P3. |
-| A-14 | The repository has a single working branch and no `main`; P3 "done when merged to main" cannot be met. | — | `git ls-remote` | Needs an **owner** decision (create `main` / merge strategy). |
+| A-14 | The repository has a single working branch and no `main`; P3 "done when merged to main" cannot be met. | — | `git ls-remote` | **Resolved 2026-10-02** (client decision): `main` created at `dd6b24d`, reviewed work merged as `b4b386c` (tree = `a48f2df`), CI green on `main`. Default-branch setting is an owner action in GitHub. |
+| A-15 | Products page hidden (Q-02 Option B) instead of the recommended inquiry-led catalogue (A). | Client | `src/content/data/visibility.ts`, `3496899` | Hidden until D-09 data is supplied and publication approved. Hidden routes are removed from the static output (no soft 404). |
+| A-16 | 12 industries (Q-08): "Real Estate & Property Development" added, "Residential" renamed "Residential & Communities" — §9.2, §12.4 and the homepage industries list change accordingly. | Client | `3496899` | New summary and order pending client review (`CLIENT_DECISIONS.md` §5). No relation derived for the new industry. |
+| A-17 | Site Survey belongs to the Understand stage; Supply & Procurement becomes a service only once its description is approved (Q-09). | Client | `3496899` | Wordings pending review (§5 R-2, R-3). |
+| A-18 | Vision, Mission and Core Values from `01` are not accepted (Q-04): withheld from publication until the client supplies or approves the wording. | Client | `about.json` review `withheld` | Unresolved; about-page sections show labels only. |
+| A-19 | Illustrative sample projects and dummy office data are shown in preview (Q-12, D-01, D-02, D-10), reversing the plan's "never show fake projects" default for **preview only**. | Client | `src/content/data/samples.ts`, `site:check` | Production builds refuse any `[data-sample]` content. |
+| A-20 | Arabic and Chinese are drafted by Claude with human review before launch (D-12, D-13), replacing "professional translator / client-supplied, no machine translation" (§15, Q-05). | Client | status notes in `copy/ar`, `copy/zh`, `messages` | Drafting is scheduled in P8; the production gate still refuses unreviewed drafts. Human reviewers to be named. |
+| A-21 | The client's existing logo files are used unaltered until the missing variants arrive (D-05), superseding the 2026-10-01 hold on logo package v1. Only the stacked logo fits a slot today (footer); the header needs the horizontal variant. | Client | `public/images/brand/`, `3496899` | Horizontal lock-up, monogram, favicon and icons outstanding; BRAND-LOGO still blocks production. |
+| A-22 | The Mobile NVR page is a dedicated page rather than the §26.2 template, with an added "On board" scroll-triggered system diagram; the Route scene (D-20) is kept unchanged inside it. | Client | `7acdfff` | Awaiting the client's review (P2 exception). §26.2 remains the template for the other seven solutions. |
+| A-23 | P2/P3/P4 phase decisions recorded (P2 approved except the Mobile NVR page; P3 accepted with open items; P4 approved). | Client | `docs/CLIENT_DECISIONS.md` §3 | — |
 
-### 55.1 Phase status summary (2026-10-01)
+### 55.1 Phase status summary (2026-10-02)
+
+| Phase | Status | Next action |
+|---|---|---|
+| P0 | Complete | — |
+| P1 | Partially answered (2026-10-02); Q-03 and Q-04 unresolved; other questions pending | Exact navigation order (Q-03) and V/M/V wording (Q-04); remaining questions |
+| P2 | **Approved except the Mobile NVR page**; revision submitted (`7acdfff`) | Client review of `docs/review/p2-mnvr-revision/` |
+| P3 | **Accepted** with open items: preview URL (D-22), `/ar` `/zh` Lighthouse (P10) | D-22 |
+| P4 | **Approved** (D-18, D-19, D-20) | — |
+| P5 | Not started; entry conditions not met (P2 open) | Client approval of the Mobile NVR revision, then an explicit start instruction |
+
+The previous summary (2026-10-01) is kept below for history.
+
+### 55.1a Phase status summary (2026-10-01, superseded)
 
 | Phase | Status | Next action |
 |---|---|---|
