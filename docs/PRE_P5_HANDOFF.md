@@ -549,3 +549,26 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 - [ ] Reduced motion: complete, calm diagrams.
 - [ ] RTL and Chinese layouts. Ar/zh copy remains placeholder until P8.
 
+
+## 10. Mobile NVR visual concepts (2026-10-02, after Ziad's clarification) — AWAITING ZIAD'S DIRECTION CHOICE
+
+Ziad clarified that both Mobile NVR illustrations are to be **replaced** with new visual concepts, not animated. The §9 revision is therefore **superseded**. It is not proposed for acceptance, and it stays on the working branch only until a direction is chosen.
+
+- **Prototype:** `/{locale}/_lab/mnvr-concepts`, preview builds only. Like the rest of `/_lab`, it is removed from production builds (`scripts/postbuild.mjs`) and returns `notFound()` outside preview. The live Mobile NVR page, the Route scene and `main` are unchanged by it.
+- **Concept A — On board, isometric technical cutaway** (`src/components/scenes/concepts/onboard-cutaway.tsx`):
+  - A generic, unbranded coach with the near wall and roof cut away.
+  - Components shown: cameras (front, rear, cabin, side) with their coverage; the Mobile NVR cabinet with cabling from every camera; the roof GPS antenna with a ground position fix; the 4G/5G antenna, its uplink to a network mast and a backhaul to a remote monitoring wall (empty lit panes).
+  - Each step builds and activates its component and connection, and the view eases to it, forwards and backwards.
+  - Reduced motion and no JavaScript show the complete system.
+- **Concept B — system architecture schematic** (`system-architecture.tsx`):
+  - Dark, three zones: vehicle (cameras and GPS into the Mobile NVR and its local storage); networks (4G/5G, Wi-Fi); remote platform (live viewing, playback, alerts, fleet monitoring).
+  - The six approved beats light their zone and connection while data pulses travel the connections. Beat 6 adds further vehicles (symbolic count).
+  - Mobile uses one cropped frame per beat.
+  - Proposed as the replacement for the Route scene. **Replacing the Route scene needs Ziad's explicit scope approval.**
+- **Evidence:** `docs/review/p2-mnvr-concepts/` (78 images: each step and beat; en/ar/zh; 1440 and 390; motion and reduced motion), plus four `sheet-*.webp` contact sheets. Script: `scripts/dev/concept-shots.mjs`.
+- **Labels:** every in-art label is an approved capability term. Arabic and Chinese still show the English placeholders (P8).
+- **Known prototype gaps,** to fix in implementation once a direction is approved:
+  - Concept B's mobile frames for beats 1 and 3 clip label fragments at the frame edges.
+  - The beat 6 overview is small at 390 px.
+  - At step 1, the edge of the monitoring wall shows at the frame edge.
+- **Status:** P2 open; nothing pushed to `main`; nothing deployed; P5 not started.

@@ -1,0 +1,240 @@
+/* ==========================================================================
+   Mobile NVR visual CONCEPTS — preview prototype for Ziad's review (2026-10-02). Loaded only by /_lab/mnvr-concepts.
+   Both scenes use the MotionController [data-steps] state (data-live / data-current / data-reached). Without it
+   (reduced motion, no JavaScript) everything is shown complete and still. Only opacity, transform, fill and
+   stroke-dashoffset change; time-based emphasis runs a few iterations, then rests.
+   ========================================================================== */
+@layer components {
+  .concepts__intro { padding-block: calc(var(--header-h) + 40px) 8px; }
+
+  /* ---------- shared step list ---------- */
+  .cx, .axw { margin-block-start: 40px; display: grid; }
+  .cx__stage, .ax__stage { position: sticky; inset-block-start: var(--header-h); z-index: 1; background: var(--bg); padding-block: 10px; box-shadow: 0 calc(-1 * var(--header-h)) 0 var(--bg); border-block-end: 1px solid var(--line); }
+  .cx__steps, .ax__steps { display: grid; }
+  .cx__step, .ax__step { position: relative; padding-block: 28px; }
+  .cx__step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; }
+  .cx__step + .cx__step, .ax__step + .ax__step { border-block-start: 1px solid var(--line); }
+  .cx__step::before, .ax__step::before { content: ''; position: absolute; inset-inline-start: -16px; inset-block: 28px; width: 2px; background: var(--color-gold); opacity: 0; transition: opacity var(--dur-panel); }
+  .cx__n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; font-size: 13px; background: var(--color-charcoal); color: var(--color-white); transition: background-color var(--dur-panel), color var(--dur-panel); }
+  .cx__tags { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-block-start: 12px; }
+  .cx__tags li { font-size: var(--fs-caption); padding: 3px 10px; border: 1px solid var(--line-strong); }
+  .ax__n { color: var(--accent-fg); font-size: 13px; }
+  .motion-ok .cx__step, .motion-ok .ax__step { min-height: 40svh; }
+  .motion-ok .cx__step:last-child, .motion-ok .ax__step:last-child { min-height: 0; }
+  .cx[data-live] .cx__n { background: transparent; color: var(--fg-muted); box-shadow: inset 0 0 0 1px var(--line-strong); }
+  @media (min-width: 1024px) {
+    .cx, .axw { margin-block-start: 64px; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+    .cx__steps, .ax__steps { grid-column: 1 / span 4; grid-row: 1; }
+    .cx__stage, .ax__stage { grid-column: 5 / span 8; grid-row: 1; inset-block-start: calc(var(--header-h) + 8svh); padding: 0; border: 0; box-shadow: none; background: none; }
+    .cx__step, .ax__step { padding-block: 40px; }
+    .cx__step::before, .ax__step::before { inset-block: 40px; }
+    .motion-ok .cx__step, .motion-ok .ax__step { min-height: 34svh; }
+    .motion-ok .cx__step:last-child, .motion-ok .ax__step:last-child { min-height: 52svh; }
+  }
+
+  /* ---------- Concept A: isometric cutaway (light) ---------- */
+  .cut { display: block; width: 100%; height: auto; overflow: hidden; stroke-linejoin: round; stroke-linecap: round; }
+  @media (max-width: 1023px) { .cut { max-height: 34svh; } }
+  .cut-view { transform-box: view-box; transform-origin: 0 0; }
+  .cut-grid path { stroke: var(--color-gray-light); stroke-width: 1; fill: none; }
+  .cut-shadow { fill: var(--color-charcoal); opacity: 0.07; }
+  .cut-wall { fill: var(--color-white); stroke: var(--color-gray-400); stroke-width: 1; }
+  .cut-wall--rear { fill: color-mix(in srgb, var(--color-gray-light) 50%, var(--color-white)); }
+  .cut-window path { fill: var(--color-off-white); stroke: var(--color-gray-light); stroke-width: 1; }
+  .cut-face-top { fill: var(--color-white); stroke: var(--color-gray-400); stroke-width: 0.75; }
+  .cut-face-front { fill: var(--color-gray-light); stroke: var(--color-gray-400); stroke-width: 0.75; }
+  .cut-face-side { fill: color-mix(in srgb, var(--color-gray-light) 75%, var(--color-gray-400)); stroke: var(--color-gray-400); stroke-width: 0.75; }
+  .cut-seat .cut-face-top { fill: var(--color-off-white); }
+  .cut-section { fill: var(--color-gray-light); stroke: var(--color-charcoal); stroke-width: 1.25; }
+  .cut-section--edge { fill: var(--color-gray-400); }
+  .cut-ghost path { fill: none; stroke: var(--color-gray-400); stroke-width: 1; stroke-dasharray: 4 5; }
+  .cut-wheel path { fill: var(--color-charcoal); }
+  .cut-wheel .cut-hub { fill: var(--color-gray-400); }
+  .cut-dev-top { fill: var(--color-gray-dark); stroke: var(--color-charcoal); stroke-width: 0.75; transition: fill 500ms var(--ease-precise); }
+  .cut-dev-front { fill: var(--color-charcoal); stroke: var(--color-charcoal); stroke-width: 0.75; }
+  .cut-dev-side { fill: color-mix(in srgb, var(--color-charcoal) 60%, var(--color-gray-dark)); stroke: var(--color-charcoal); stroke-width: 0.75; }
+  .cut-bay { fill: var(--color-gold); transition: fill 400ms var(--ease-precise) calc(var(--i) * 150ms); }
+  .cut-cam, .cut-nvr, .cut-gps, .cut-cell, .cut-wall-unit { transform-box: fill-box; transform-origin: 50% 100%; }
+  .cut-cone { fill: var(--color-gold); fill-opacity: 0.16; stroke: var(--color-gold); stroke-width: 1; stroke-opacity: 0.7; }
+  .cut-cone--cabin { fill-opacity: 0.12; stroke-dasharray: 3 4; }
+  .cut-cable { fill: none; stroke: var(--color-gold); stroke-width: 1.6; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .cut-flow { fill: none; stroke: var(--color-gold); stroke-width: 4.5; stroke-dasharray: 0.07 2; stroke-dashoffset: 0.07; opacity: 0; }
+  .cut-fix { fill: var(--color-gold); fill-opacity: 0.05; stroke: var(--color-gold); stroke-width: 1.2; stroke-dasharray: 6 6; }
+  .cut-fix--inner { fill-opacity: 0.08; stroke-dasharray: none; }
+  .cut-cross { stroke: var(--color-gold); stroke-width: 1; stroke-opacity: 0.6; }
+  .cut-arc { fill: none; stroke: var(--color-gold); stroke-width: 1.6; }
+  .cut-link { fill: none; stroke: var(--color-gold); stroke-width: 1.6; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .cut-mast path { fill: none; stroke: var(--color-gray-mid); stroke-width: 1.4; }
+  .cut-stand { stroke: var(--color-charcoal); stroke-width: 3; }
+  .cut-pane { fill: var(--color-white); fill-opacity: 0.9; stroke: var(--color-gold); stroke-width: 0.75; transition: fill-opacity 500ms var(--ease-precise) calc(600ms + var(--i) * 140ms); }
+  .cut-callout circle { fill: var(--color-charcoal); transition: fill var(--dur-panel); }
+  .cut-callout__n { fill: var(--color-white); font-size: 12px; font-weight: 600; }
+  .cut-lens { fill: var(--color-gray-mid); stroke: var(--color-gray-400); stroke-width: 0.6; }
+  .cx:not([data-live]) .cx__caption { display: none; }
+  .cx__caption { min-height: 28px; margin-block-end: 4px; font-size: var(--fs-caption); font-weight: 600; }
+  .cx__caption > span { display: none; align-items: center; gap: 10px; }
+  .cx__caption b { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--color-gold); color: var(--color-charcoal); font-size: 12px; }
+  .cut-mast-panel .cut-dev-front { fill: var(--color-gray-dark); }
+
+  .cx[data-live] .cut-view { transform: var(--v0); transition: transform 1100ms var(--ease-precise); }
+  .cx[data-live] .cut-layer, .cx[data-live] .cut-callout { opacity: 0.1; transition: opacity 600ms var(--ease-precise); }
+  .cx[data-live] .cut-cable, .cx[data-live] .cut-link { stroke-dashoffset: 1; transition: stroke-dashoffset 900ms var(--ease-precise) 200ms; }
+  .cx[data-live] :is(.cut-cam, .cut-nvr, .cut-gps, .cut-cell, .cut-wall-unit) { opacity: 0.35; transition: opacity 500ms var(--ease-precise), transform 600ms var(--ease-precise); }
+  .cx[data-live] .cut-pane { fill-opacity: 0; }
+  .cx[data-live] .cut-bay { fill: var(--color-gray-mid); }
+
+  .cx[data-reached~='1'] [data-layer='1'] { opacity: 1; }
+  .cx[data-reached~='1'] [data-layer='1'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .cx[data-reached~='1'] .cut-cam { opacity: 1; }
+  .cx[data-reached~='1'] .cut-cam .cut-dev-top { fill: var(--color-gold); }
+  .cx[data-reached~='1'] .cx__step[data-step='1'] .cx__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .cx[data-current='1'] .cut-view { transform: var(--v1); }
+  .cx[data-current='1'] .cx__step[data-step='1'] .cx__n { background: var(--color-gold); color: var(--color-charcoal); }
+  .cx[data-current='1'] .cx__step[data-step='1']::before { opacity: 1; }
+  .cx[data-current='1'] .cut-callout[data-layer='1'] circle { fill: var(--color-gold); }
+  .cx[data-current='1'] .cx__caption > [data-layer='1'] { display: inline-flex; }
+  .cx[data-reached~='2'] [data-layer='2'] { opacity: 1; }
+  .cx[data-reached~='2'] [data-layer='2'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .cx[data-reached~='2'] .cut-nvr { opacity: 1; }
+  .cx[data-reached~='2'] .cut-nvr .cut-dev-top { fill: var(--color-gold); }
+  .cx[data-reached~='2'] .cx__step[data-step='2'] .cx__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .cx[data-current='2'] .cut-view { transform: var(--v2); }
+  .cx[data-current='2'] .cx__step[data-step='2'] .cx__n { background: var(--color-gold); color: var(--color-charcoal); }
+  .cx[data-current='2'] .cx__step[data-step='2']::before { opacity: 1; }
+  .cx[data-current='2'] .cut-callout[data-layer='2'] circle { fill: var(--color-gold); }
+  .cx[data-current='2'] .cx__caption > [data-layer='2'] { display: inline-flex; }
+  .cx[data-reached~='3'] [data-layer='3'] { opacity: 1; }
+  .cx[data-reached~='3'] [data-layer='3'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .cx[data-reached~='3'] .cut-gps { opacity: 1; }
+  .cx[data-reached~='3'] .cut-gps .cut-dev-top { fill: var(--color-gold); }
+  .cx[data-reached~='3'] .cx__step[data-step='3'] .cx__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .cx[data-current='3'] .cut-view { transform: var(--v3); }
+  .cx[data-current='3'] .cx__step[data-step='3'] .cx__n { background: var(--color-gold); color: var(--color-charcoal); }
+  .cx[data-current='3'] .cx__step[data-step='3']::before { opacity: 1; }
+  .cx[data-current='3'] .cut-callout[data-layer='3'] circle { fill: var(--color-gold); }
+  .cx[data-current='3'] .cx__caption > [data-layer='3'] { display: inline-flex; }
+  .cx[data-reached~='4'] [data-layer='4'] { opacity: 1; }
+  .cx[data-reached~='4'] [data-layer='4'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .cx[data-reached~='4'] .cut-cell { opacity: 1; }
+  .cx[data-reached~='4'] .cut-cell .cut-dev-top { fill: var(--color-gold); }
+  .cx[data-reached~='4'] .cx__step[data-step='4'] .cx__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .cx[data-current='4'] .cut-view { transform: var(--v4); }
+  .cx[data-current='4'] .cx__step[data-step='4'] .cx__n { background: var(--color-gold); color: var(--color-charcoal); }
+  .cx[data-current='4'] .cx__step[data-step='4']::before { opacity: 1; }
+  .cx[data-current='4'] .cut-callout[data-layer='4'] circle { fill: var(--color-gold); }
+  .cx[data-current='4'] .cx__caption > [data-layer='4'] { display: inline-flex; }
+  .cx[data-reached~='5'] [data-layer='5'] { opacity: 1; }
+  .cx[data-reached~='5'] [data-layer='5'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .cx[data-reached~='5'] .cut-wall-unit { opacity: 1; }
+  .cx[data-reached~='5'] .cx__step[data-step='5'] .cx__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .cx[data-current='5'] .cut-view { transform: var(--v5); }
+  .cx[data-current='5'] .cx__step[data-step='5'] .cx__n { background: var(--color-gold); color: var(--color-charcoal); }
+  .cx[data-current='5'] .cx__step[data-step='5']::before { opacity: 1; }
+  .cx[data-current='5'] .cut-callout[data-layer='5'] circle { fill: var(--color-gold); }
+  .cx[data-current='5'] .cx__caption > [data-layer='5'] { display: inline-flex; }
+  .cx[data-reached~='4'] .cut-mast path { stroke: var(--color-charcoal); }
+  .cx[data-reached~='2'] .cut-bay { fill: var(--color-gold); }
+  .cx[data-reached~='5'] .cut-pane { fill-opacity: 0.9; }
+  .cx[data-current='2'] .cut-nvr { transform: translateY(-10px); }
+  .cx[data-current='2'] [data-layer='2'] .cut-flow { animation: cx-flow 1.3s linear calc(0.9s + var(--i) * 0.22s) 3 both; }
+  .cx[data-current='1'] .cut-cone { animation: cx-sweep 1.6s var(--ease-precise) calc(0.6s + var(--i) * 0.15s) 2; }
+  .cx[data-current='3'] .cut-fix { animation: cx-ping 1.8s ease-out 0.8s 3; transform-box: fill-box; transform-origin: 50% 50%; }
+  .cx[data-current='4'] .cut-arc { animation: cx-radiate 1.2s ease-in-out calc(0.4s + var(--i) * 0.2s) 3; }
+  .cx[data-current='4'] [data-layer='4'] .cut-flow { animation: cx-flow 1.5s linear 1s 3 both; }
+  .cx[data-current='5'] [data-layer='5'] .cut-flow { animation: cx-flow 1.3s linear 0.9s 3 both; }
+  @keyframes cx-flow { 0% { stroke-dashoffset: 0.07; opacity: 0; } 12%, 88% { opacity: 1; } 100% { stroke-dashoffset: -1; opacity: 0; } }
+  @keyframes cx-sweep { 0%, 100% { fill-opacity: 0.16; } 50% { fill-opacity: 0.32; } }
+  @keyframes cx-ping { 0% { transform: scale(0.85); opacity: 1; } 100% { transform: scale(1.12); opacity: 0.35; } }
+  @keyframes cx-radiate { 0%, 100% { stroke-opacity: 1; } 50% { stroke-opacity: 0.2; } }
+
+  /* ---------- Concept B: architecture schematic (dark) ---------- */
+  svg.ax { display: block; width: 100%; height: auto; stroke-linejoin: round; stroke-linecap: round; }
+  .ax__frame { display: none; }
+  @media (max-width: 1023px) {
+    .ax__stage { display: none; }
+    .ax__frame { display: block; margin-block-end: 20px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  }
+  .ax-zone { fill: color-mix(in srgb, var(--color-white) 3%, transparent); stroke: var(--color-gray-dark); stroke-width: 1.5; }
+  .ax-zone--platform { fill: color-mix(in srgb, var(--color-white) 4%, transparent); }
+  .ax-zone--ghost { fill: none; stroke-dasharray: 6 6; }
+  .ax-node rect, .ax-node > circle { fill: var(--color-gray-dark); stroke: var(--color-gray-mid); stroke-width: 1.2; transition: stroke 500ms, fill 500ms; }
+  .ax-glyph { fill: none; stroke: var(--color-gray-400); stroke-width: 1.6; transition: stroke 500ms; }
+  .ax-node--nvr > rect { fill: color-mix(in srgb, var(--color-charcoal) 55%, var(--color-gray-dark)); }
+  .ax-nvr-face { stroke: var(--color-gray-mid); stroke-width: 1.2; }
+  .ax-led { fill: var(--color-gold); }
+  .ax-node .ax-bay { fill: var(--color-gold); stroke: none; transition: fill 400ms calc(var(--i) * 160ms); }
+  .ax-node .ax-pane { fill: color-mix(in srgb, var(--color-gold) 12%, var(--color-charcoal)); stroke: color-mix(in srgb, var(--color-gold) 60%, transparent); transition: fill 500ms calc(300ms + var(--i) * 140ms); }
+  .ax-track { stroke: var(--color-gray-mid); stroke-width: 2; }
+  .ax-track--on { stroke: var(--color-gold); stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .ax-row path { stroke: var(--color-gold); stroke-width: 6; }
+  .ax-ring { fill: none !important; stroke: var(--color-gold) !important; opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; }
+  .ax-wire { fill: none; stroke: var(--color-gold); stroke-width: 1.8; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .ax-wire--fleet { stroke-opacity: 0.6; }
+  .ax-flow { fill: none; stroke: var(--color-gold); stroke-width: 5; stroke-dasharray: 0.05 2; stroke-dashoffset: 0.05; opacity: 0; }
+  .ax-label { fill: var(--fg); font-size: 16px; font-weight: 500; }
+  .ax-label--strong { font-size: 17px; font-weight: 600; }
+  .ax-label--muted { fill: var(--fg-muted); font-size: 14px; }
+  .ax-node--alert > rect { stroke: var(--color-gold); }
+  .ax [data-beat] { transition: opacity 600ms var(--ease-precise); }
+
+  .ax[data-frame='1'] :is([data-beat='2'], [data-beat='3'], [data-beat='4'], [data-beat='5'], [data-beat='6']) { opacity: 0.14; }
+  .ax[data-frame='2'] :is([data-beat='3'], [data-beat='4'], [data-beat='5'], [data-beat='6']) { opacity: 0.14; }
+  .ax[data-frame='3'] :is([data-beat='4'], [data-beat='5'], [data-beat='6']) { opacity: 0.14; }
+  .ax[data-frame='4'] :is([data-beat='5'], [data-beat='6']) { opacity: 0.14; }
+  .ax[data-frame='5'] :is([data-beat='6']) { opacity: 0.14; }
+  .axw[data-live] .ax__stage [data-beat] { opacity: 0.14; }
+  .axw[data-live] .ax__stage .ax-wire { stroke-dashoffset: 1; transition: stroke-dashoffset 900ms var(--ease-precise) 200ms; }
+  .axw[data-live] .ax__stage .ax-bay { fill: var(--color-gray-mid); }
+  .axw[data-live] .ax__stage .ax-pane { fill: var(--color-charcoal); }
+  .axw[data-live] .ax__stage .ax-row path { stroke: var(--color-gray-mid); }
+  .axw[data-live] .ax__stage .ax-track--on { stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s linear 0.6s; }
+
+  .axw[data-reached~='1'] .ax__stage [data-beat='1'] { opacity: 1; }
+  .axw[data-reached~='1'] .ax__stage [data-beat='1'] .ax-wire { stroke-dashoffset: 0; }
+  .axw[data-current='1'] .ax__step[data-step='1']::before { opacity: 1; }
+  .axw[data-current='1'] :is(.ax__stage, .ax__step[data-step='1']) [data-beat='1'] .ax-flow { animation: ax-flow 1.4s linear calc(0.8s + var(--i) * 0.2s) 3 both; }
+  .axw[data-current='1'] :is(.ax__stage, .ax__step[data-step='1']) .ax-node[data-beat='1'] > :is(rect, circle) { stroke: var(--color-gold); }
+  .axw[data-current='1'] :is(.ax__stage, .ax__step[data-step='1']) .ax-node[data-beat='1'] .ax-glyph { stroke: var(--color-gold); }
+  .axw[data-reached~='2'] .ax__stage [data-beat='2'] { opacity: 1; }
+  .axw[data-reached~='2'] .ax__stage [data-beat='2'] .ax-wire { stroke-dashoffset: 0; }
+  .axw[data-current='2'] .ax__step[data-step='2']::before { opacity: 1; }
+  .axw[data-current='2'] :is(.ax__stage, .ax__step[data-step='2']) [data-beat='2'] .ax-flow { animation: ax-flow 1.4s linear calc(0.8s + var(--i) * 0.2s) 3 both; }
+  .axw[data-current='2'] :is(.ax__stage, .ax__step[data-step='2']) .ax-node[data-beat='2'] > :is(rect, circle) { stroke: var(--color-gold); }
+  .axw[data-current='2'] :is(.ax__stage, .ax__step[data-step='2']) .ax-node[data-beat='2'] .ax-glyph { stroke: var(--color-gold); }
+  .axw[data-reached~='3'] .ax__stage [data-beat='3'] { opacity: 1; }
+  .axw[data-reached~='3'] .ax__stage [data-beat='3'] .ax-wire { stroke-dashoffset: 0; }
+  .axw[data-current='3'] .ax__step[data-step='3']::before { opacity: 1; }
+  .axw[data-current='3'] :is(.ax__stage, .ax__step[data-step='3']) [data-beat='3'] .ax-flow { animation: ax-flow 1.4s linear calc(0.8s + var(--i) * 0.2s) 3 both; }
+  .axw[data-current='3'] :is(.ax__stage, .ax__step[data-step='3']) .ax-node[data-beat='3'] > :is(rect, circle) { stroke: var(--color-gold); }
+  .axw[data-current='3'] :is(.ax__stage, .ax__step[data-step='3']) .ax-node[data-beat='3'] .ax-glyph { stroke: var(--color-gold); }
+  .axw[data-reached~='4'] .ax__stage [data-beat='4'] { opacity: 1; }
+  .axw[data-reached~='4'] .ax__stage [data-beat='4'] .ax-wire { stroke-dashoffset: 0; }
+  .axw[data-current='4'] .ax__step[data-step='4']::before { opacity: 1; }
+  .axw[data-current='4'] :is(.ax__stage, .ax__step[data-step='4']) [data-beat='4'] .ax-flow { animation: ax-flow 1.4s linear calc(0.8s + var(--i) * 0.2s) 3 both; }
+  .axw[data-current='4'] :is(.ax__stage, .ax__step[data-step='4']) .ax-node[data-beat='4'] > :is(rect, circle) { stroke: var(--color-gold); }
+  .axw[data-current='4'] :is(.ax__stage, .ax__step[data-step='4']) .ax-node[data-beat='4'] .ax-glyph { stroke: var(--color-gold); }
+  .axw[data-reached~='5'] .ax__stage [data-beat='5'] { opacity: 1; }
+  .axw[data-reached~='5'] .ax__stage [data-beat='5'] .ax-wire { stroke-dashoffset: 0; }
+  .axw[data-current='5'] .ax__step[data-step='5']::before { opacity: 1; }
+  .axw[data-current='5'] :is(.ax__stage, .ax__step[data-step='5']) [data-beat='5'] .ax-flow { animation: ax-flow 1.4s linear calc(0.8s + var(--i) * 0.2s) 3 both; }
+  .axw[data-current='5'] :is(.ax__stage, .ax__step[data-step='5']) .ax-node[data-beat='5'] > :is(rect, circle) { stroke: var(--color-gold); }
+  .axw[data-current='5'] :is(.ax__stage, .ax__step[data-step='5']) .ax-node[data-beat='5'] .ax-glyph { stroke: var(--color-gold); }
+  .axw[data-reached~='6'] .ax__stage [data-beat='6'] { opacity: 1; }
+  .axw[data-reached~='6'] .ax__stage [data-beat='6'] .ax-wire { stroke-dashoffset: 0; }
+  .axw[data-current='6'] .ax__step[data-step='6']::before { opacity: 1; }
+  .axw[data-current='6'] :is(.ax__stage, .ax__step[data-step='6']) [data-beat='6'] .ax-flow { animation: ax-flow 1.4s linear calc(0.8s + var(--i) * 0.2s) 3 both; }
+  .axw[data-current='6'] :is(.ax__stage, .ax__step[data-step='6']) .ax-node[data-beat='6'] > :is(rect, circle) { stroke: var(--color-gold); }
+  .axw[data-current='6'] :is(.ax__stage, .ax__step[data-step='6']) .ax-node[data-beat='6'] .ax-glyph { stroke: var(--color-gold); }
+  .axw[data-reached~='1'] .ax__stage .ax-bay { fill: var(--color-gold); }
+  .axw[data-reached~='4'] .ax__stage .ax-pane { fill: color-mix(in srgb, var(--color-gold) 12%, var(--color-charcoal)); }
+  .axw[data-reached~='4'] .ax__stage .ax-track--on { stroke-dashoffset: 0; }
+  .axw[data-reached~='6'] .ax__stage .ax-row path { stroke: var(--color-gold); }
+  .axw[data-current='3'] .ax-ring { animation: ax-ring 1.6s ease-out 0.8s 3; }
+  @keyframes ax-flow { 0% { stroke-dashoffset: 0.05; opacity: 0; } 12%, 88% { opacity: 1; } 100% { stroke-dashoffset: -1; opacity: 0; } }
+  @keyframes ax-ring { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.5); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .concepts *, .concepts *::before { animation: none !important; transition: none !important; }
+  }
+}
+
