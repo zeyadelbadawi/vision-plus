@@ -102,6 +102,7 @@ test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
 
   test('each step builds its part of the system as it is read, and the artwork is visible', async ({ page }) => {
     await page.goto(`/en${MNVR}`);
+    await expect(page.locator('.sys')).toHaveAttribute('data-live', ''); // the step state exists only once the controller runs
     await page.locator('.sys').scrollIntoViewIfNeeded();
     await page.waitForTimeout(900);
     expect(await layerOpacity(page, 5)).toBeLessThan(0.5); // later steps are still waiting
@@ -205,12 +206,20 @@ test.describe('Mobile NVR Route scene (Concept B architecture)', () => {
   test('desktop pinned: scrolling builds the diagram forwards and unbuilds it backwards', async ({ page }, info) => {
     test.skip(!isDesktop(info), 'pinned mode exists only at ≥ 1024 px; the stepped frames are covered by the mobile tests');
     await page.goto(`/en${MNVR}`);
+    // Scroll only once the MotionController runs, and read the artwork only after it has processed each position.
+    // Before hydration the stage shows the complete no-JS state, and on start-up the controller holds --p at 0 until
+    // its first viewport update (≈ 0.3–0.7 s in WebKit, matrix runs 37016803278 / 37022617134); assertions made
+    // during those states pass or fail by chance.
+    await expect(page.locator('.scene')).toHaveAttribute('data-live', '');
     await centreBeat(page, 5);
+    await expect(page.locator('.scene')).toHaveAttribute('data-current', '5');
     await expect.poll(() => opacity(page, '.scene__stage .ax-node--alert')).toBeGreaterThan(0.95);
-    await expect.poll(() => opacity(page, '.scene__stage .ax-node--fleet')).toBeLessThan(0.5); // beat 6 still waiting
+    // beat 6 has only started at beat 5's centre (--b6 ≈ 0.4, opacity ≈ 0.49): not built
+    await expect.poll(() => opacity(page, '.scene__stage .ax-node--fleet')).toBeLessThan(0.9);
     await centreBeat(page, 2);
+    await expect(page.locator('.scene')).toHaveAttribute('data-current', '2');
     await expect.poll(() => opacity(page, '.scene__stage .ax-node--alert')).toBeLessThan(0.5);
-    expect(await opacity(page, '.scene__stage .ax-node[data-beat="2"]')).toBeGreaterThan(0.95); // GPS stays built
+    await expect.poll(() => opacity(page, '.scene__stage .ax-node[data-beat="2"]')).toBeGreaterThan(0.95); // GPS stays built
   });
 
   test('mobile stepped: one full-width frame per beat, each showing its own beat built', async ({ page }, info) => {
