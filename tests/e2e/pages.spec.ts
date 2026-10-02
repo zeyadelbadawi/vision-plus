@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type TestInfo } from '@playwright/test';
 
 // Inner pages (P2 Mobile NVR page + style guide, P3 empty templates) in every locale and at both
 // viewports (the desktop/mobile Playwright projects). §40: axe on every template × locale × 2 viewports.
@@ -60,8 +60,14 @@ test('every navigation anchor lands on a section of its page', async ({ page }) 
 });
 
 test.describe('Mobile NVR Route scene (P2 first cut)', () => {
-  test('desktop pinned: --p drives the beats (test hook, §40)', async ({ page, isMobile }, info) => {
-    test.skip(info.project.name !== 'desktop' || isMobile, 'pinned mode is desktop only');
+  // The scene's mode is chosen by the layout breakpoint (scenes.css: pinned stage at ≥ 1024 px, stepped frames below),
+  // not by the browser engine. Tests therefore select by the project's viewport, so every desktop project (Chromium,
+  // Firefox, WebKit) runs the pinned checks and every mobile project (Chromium, WebKit) runs the stepped checks.
+  const LG = 1024;
+  const isDesktop = (info: TestInfo) => (info.project.use.viewport?.width ?? 0) >= LG;
+
+  test('desktop pinned: --p drives the beats (test hook, §40)', async ({ page }, info) => {
+    test.skip(!isDesktop(info), 'pinned mode exists only at ≥ 1024 px; below that the page renders stepped frames (covered by the next test)');
     await page.goto(`/en${MNVR}`);
     const scene = page.locator('.scene');
     await scene.scrollIntoViewIfNeeded();
@@ -79,7 +85,7 @@ test.describe('Mobile NVR Route scene (P2 first cut)', () => {
   });
 
   test('mobile stepped: one frame per beat, no pinned stage', async ({ page }, info) => {
-    test.skip(info.project.name !== 'mobile', 'stepped mode is below lg');
+    test.skip(isDesktop(info), 'stepped frames exist only below 1024 px; at ≥ 1024 px the page renders the pinned stage (covered by the previous test)');
     await page.goto(`/en${MNVR}`);
     await expect(page.locator('.scene__stage')).toBeHidden();
     await expect(page.locator('.scene__frame')).toHaveCount(6);
@@ -93,20 +99,26 @@ test.describe('Mobile NVR Route scene (P2 first cut)', () => {
     expect(await page.evaluate(() => document.documentElement.classList.contains('motion-ok'))).toBe(false);
     const stepTexts = await page.locator('.scene__step h3').allTextContents();
     expect(stepTexts).toEqual(['Video', 'Location', 'Connectivity', 'Monitoring', 'Intelligence', 'Management']);
-    const zone = info.project.name === 'desktop' ? '.scene__stage .ra-zone' : '.scene__frame[data-frame="5"] .ra-zone';
+    // Check the zone in the artwork that is actually shown at this viewport (stage ≥ 1024 px, frame 5 below).
+    const zone = isDesktop(info) ? '.scene__stage .ra-zone' : '.scene__frame[data-frame="5"] .ra-zone';
+    await expect(page.locator(zone)).toBeVisible();
     expect(Number(await page.locator(zone).evaluate((el) => getComputedStyle(el).opacity))).toBe(1);
     await ctx.close();
   });
 
   test('RTL mirrors the route but never the text', async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop', 'checked once');
+    // Checked on the artwork shown at this viewport: the pinned stage (≥ 1024 px) or the stepped frames (below).
+    const art = isDesktop(info) ? '.scene__stage' : '.scene__frame[data-frame="1"]';
     await page.goto(`/ar${MNVR}`);
-    const mirrored = await page.locator('.scene__stage .route-art > g').first().getAttribute('transform');
+    await expect(page.locator(`${art} .route-art`)).toBeVisible();
+    const mirrored = await page.locator(`${art} .route-art > g`).first().getAttribute('transform');
     expect(mirrored).toBe('translate(1440 0) scale(-1 1)');
     const labelParent = await page
-      .locator('.scene__stage .ra-label')
+      .locator(`${art} .ra-label`)
       .first()
       .evaluate((el) => el.parentElement?.tagName.toLowerCase());
     expect(labelParent).toBe('svg');
+    // Stepped frames crop the mirrored artwork: frame 1 is FRAMES[0] (20 300 480 600) mirrored across the 1440 artboard.
+    if (!isDesktop(info)) expect(await page.locator(`${art} .route-art`).getAttribute('viewBox')).toBe('940 300 480 600');
   });
 });
