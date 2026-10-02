@@ -136,6 +136,20 @@ issues('src/content/data/locations.json', locationsSchema.safeParse(read('src/co
 issues('src/content/data/aliases.json', aliasesSchema.safeParse(read('src/content/data/aliases.json')));
 issues('src/content/media/images.json', finalImages.safeParse(read('src/content/media/images.json').assets));
 
+// Routes that still render placeholder text from the `pending` messages namespace (e.g. "Privacy policy text — pending
+// client (D-16)") cannot be published: they need the client's content (D-06, D-16, …) and their P5 template first.
+const routeFiles = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
+    d.isDirectory() ? routeFiles(`${dir}/${d.name}`) : d.name === 'page.tsx' ? [`${dir}/${d.name}`] : [],
+  );
+for (const file of routeFiles('src/app')) {
+  const src = readFileSync(file, 'utf8');
+  if (/namespace:\s*'pending'/.test(src)) {
+    const keys = [...src.matchAll(/\btp\('([a-zA-Z]+)'\)/g)].map((m) => `pending.${m[1]}`);
+    blockers.push(`${file}: renders pending-client placeholder text (${keys.join(', ') || 'pending.*'}) — needs the client's content and its template`);
+  }
+}
+
 const loc = read('src/content/data/locations.json');
 for (const o of loc.offices) {
   for (const k of ['address', 'phone', 'email', 'mapUrl', 'mapEmbedSrc']) if (!o[k]) blockers.push(`locations: ${o.key}.${k} pending client (D-01/D-02/D-03)`);

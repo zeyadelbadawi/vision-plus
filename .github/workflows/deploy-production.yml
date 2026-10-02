@@ -47,6 +47,10 @@ jobs:
       - run: pnpm lint && pnpm typecheck && pnpm test
       - name: Build with production gates
         run: pnpm build
+      # Output gate on the production build: links, anchors, h1/title/description, lang/dir, redirects, and no
+      # illustrative sample content or placeholder text in any deployable file. A failure stops the job before deploy.
+      - name: Site check (production output gate)
+        run: pnpm site:check
       - run: pnpm budget
       - name: Deploy production worker
         run: pnpm deploy:production
