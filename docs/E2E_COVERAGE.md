@@ -42,6 +42,18 @@ All run in all five projects.
 - No JavaScript shows the complete system and the 5 steps.
 - RTL mirrors the artwork, not the callouts.
 
+## Hydration regression tests (since `eb98ad5`)
+
+The Mobile NVR page, `/en/solutions/cctv-security-systems` and `/en`, in every project. Each test checks four things:
+- the served RSC payload carries the `<head>` boot script inline, with no reference to another row (client module, lazy element or outlined value);
+- `<html>` keeps `motion-ok`;
+- on the Mobile NVR page, the On board section reaches `data-live`;
+- no page error occurs.
+
+The check reads the payload, so it never depends on timing. Root cause: the boot script was exported from the `'use client'` motion controller, so `<head>` could wait on that chunk; React then replayed `<head>` in place, resumed `<body>` at `<meta charset>` and threw #418, dropping `motion-ok`. Unit guard: `tests/unit/motion-boot.test.ts`.
+
+The scroll test "scrolling builds the diagram forwards and unbuilds it backwards" waits for the controller (`data-live`, then `data-current`) instead of reading transient states (`a1d631e`).
+
 ## Other skips (unchanged)
 
 All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 and 87; the header switches at 1200 px). The behaviour does not exist at the other size.
@@ -63,6 +75,12 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 | Local, Chromium projects | `626c894` (Concepts A and B implemented) | `pnpm test:e2e` | 129 passed, 7 skipped (layout-only: the 4 navigation skips and 3 Route tests for the other layout) |
 | Local, Chromium projects (superseded) | working branch, Mobile NVR animation revision | `pnpm test:e2e` | 126 passed, 6 skipped (the skips are the same layout-only ones) |
 | Local, Chromium projects (`main` candidate: `main` + this change) | `ab86f47` | `pnpm test:e2e` | 114 passed, 6 skipped. `main` has fewer tests because it does not contain the 2026-10-02 decision and Mobile NVR revision work. |
+| GitHub E2E matrix, [run 37016803278](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37016803278) | `626c894` (Concepts A and B) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **1 failed** (webkit-desktop, Route scroll test: read transient states), 322 passed, 17 skipped |
+| GitHub E2E matrix, run 37022617134 | `c8327b3` (temporary diagnostic) | same | 326 passed, 19 skipped, 0 failed |
+| GitHub E2E matrix, run 37025609848 | `a1d631e` (test waits for the controller) | same | **1 failed** (firefox-desktop On board: controller never started; consistent with the React #418 found locally, not confirmed in CI because the trace could not be downloaded), 322 passed, 17 skipped |
+| GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
+| GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
+| Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
 
 Limitations:
 - Local runs cover Chromium only; Firefox and WebKit are not installed in the development container. They run on GitHub.

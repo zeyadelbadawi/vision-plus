@@ -37,6 +37,7 @@ The audit was run on `claude/confident-cori-lahb3k` at `6859835`. This document 
 **Verified (GitHub):**
 - The repository **default branch is still `claude/confident-cori-lahb3k`**, not `main`.
 - The repository is **public**. Client materials (`client-materials/`, including the strategy PDF and the logo package) are publicly readable.
+  - *Correction (2026-10-02, verified on GitHub): the repository is now **private**.*
 - No pull requests exist.
 - The repository's *homepage* field is `https://vision-plus-gamma.vercel.app`. The project documents record **no deployment** (D-22).
 - That URL could not be checked from this environment (the outbound proxy refused it, HTTP 403). **Unverified:** whether it serves this code, and since when.
@@ -255,6 +256,7 @@ The source of truth is MASTER_PROJECT_PLAN §49.1 P5, §26, §23.5–23.6, §37�
 | P3 acceptance recorded with open items visible | ☑ (`CLIENT_DECISIONS.md` §3) |
 | P4 approvals (D-18, D-19, D-20) recorded | ☑ (`P4_CLIENT_REVIEW.md` §6) |
 | **Ziad explicitly authorises P5** | ☐ Not given |
+| ↳ *Update 2026-10-02* | **Ziad authorised P5 to start while P2 is open** (plan §55 A-24). P2 is not closed and the two Mobile NVR conditions above stay open; scope and blocked tasks: plan §55.3 |
 
 ### 6.2 P5A — Templates
 
@@ -340,6 +342,7 @@ The plan sets no finer order for the P5A pages.
 | Merge path | Undecided | `main` lacks 3 commits | Open a PR, review, merge when ready (§1.6) | — |
 | Default branch → `main` | Not done (verified) | Scheduled workflows run on the default branch | GitHub → Settings → Branches | — |
 | Repository visibility | Public (verified) | Client materials are exposed | Decide public or private | GitHub settings |
+| ↳ *Update 2026-10-02* | **Private** (verified on GitHub) | — | None | — |
 | `vision-plus-gamma.vercel.app` | Unverified | Possible undocumented deployment (D-22 says none) | Confirm or remove | Repo homepage field |
 | Footer logo colours vs Option B | Open | Brand consistency | Accept as delivered, or ask the client for a `#D4AF37` version | CLIENT_DECISIONS D-05 |
 | Sample tag on the homepage | Open | New UI element on the approved homepage | Accept or request changes | §2.2 |
@@ -552,6 +555,8 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 
 ## 10. Mobile NVR visual concepts (2026-10-02, after Ziad's clarification) — AWAITING ZIAD'S DIRECTION CHOICE
 
+> **Status update (2026-10-02):** the direction was chosen. Ziad approved Concept A for On board and Concept B for the fleet scene, and both were implemented on the Mobile NVR page (`626c894`; hydration fix `eb98ad5`). The title above is kept for history. The implemented page awaits Ziad's review: §11.
+
 Ziad clarified that both Mobile NVR illustrations are to be **replaced** with new visual concepts, not animated. The §9 revision is therefore **superseded**. It is not proposed for acceptance, and it stays on the working branch only until a direction is chosen.
 
 - **Prototype:** `/{locale}/_lab/mnvr-concepts`, preview builds only. Like the rest of `/_lab`, it is removed from production builds (`scripts/postbuild.mjs`) and returns `notFound()` outside preview. The live Mobile NVR page, the Route scene and `main` are unchanged by it.
@@ -581,3 +586,24 @@ Ziad clarified that both Mobile NVR illustrations are to be **replaced** with ne
   Desktop sheets include the reduced-motion still state. Chinese images are in the same folder.
 - **To decide before implementation:** replacing the Route scene removes the `.route-art` markup that the Route E2E tests (on `main` and the branch) assert on. See the implementation note in the report.
 - **Status:** P2 open; nothing pushed to `main`; nothing deployed; P5 not started.
+
+---
+
+## 11. Mobile NVR implemented page — review checklist (Concepts A and B, 2026-10-02)
+
+This is the section that plan §49.1 P2 and `CLIENT_DECISIONS.md` §3 refer to. It replaces §3.5 for the **implemented** page. §3 describes the superseded artwork and is kept for history.
+
+- **What to review:** `/{en,ar,zh}/solutions/mobile-nvr-mobile-surveillance` at `626c894` + `eb98ad5` (also the code in PR #1). Screenshots: `docs/review/p2-mnvr-final/` (each step and beat; en/ar/zh; desktop and mobile; reduced motion; contact sheets).
+- **No preview URL** exists for review (D-22). The Vercel deployments are not a project review environment (plan §55 A-27).
+
+**Checklist (plan §55.2 B):**
+- [ ] B-1 Overall: the page reads as one dedicated Mobile NVR page. The On board scene (Concept A) explains the system step by step; the fleet scene (Concept B) explains the six approved beats.
+- [ ] B-3 Structure: keep or reinstate the §26.2 **Context** section (with `SOL-MNVR-DETAIL`) and the **"Delivered through our lifecycle"** section.
+- [ ] B-4 Mobile hero: text first (as built) or image first (§26.2 #1).
+- [ ] B-5 Two animations on one page: keep both, or move the fleet scene elsewhere.
+- [ ] E-1 / E-2 Fleet scene: are the vehicle-glyph and beat 1–2 label questions moot under Concept B, or should they go to the client?
+- [ ] Nothing implies a real deployment, real footage or an unapproved capability (D-26).
+- [ ] Arabic RTL mirroring acceptable (page copy is still the English placeholder until P8).
+- [ ] Outcome: ☐ verified, forward to the client (B-2) · ☐ changes requested (list).
+
+**Measurements still owed before the page can be called done:** B-6 (current LCP), B-7 (≥ 55 fps and CLS during a scroll-through, on a throttled mobile profile), B-9 (re-check the §3.2 items on the new artwork). They are part of P5B-02, which stays blocked until B-1 and B-2.

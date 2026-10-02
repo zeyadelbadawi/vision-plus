@@ -2,6 +2,7 @@
 
 **Project:** VISION PLUS corporate website, a trilingual (English / Arabic / Simplified Chinese) marketing platform
 **Document status:** v1.0, planning baseline, **awaiting client decisions** (see §45 and §53)
+**Current status (2026-10-02):** P5 started under exception A-24 while P2 is open. Verified state and outstanding items: **§55.2**; P5 baseline and tasks: **§55.3**. The line above is the original v1.0 status, kept as written.
 **Date:** 2026-09-25
 **Repository:** `zeyadelbadawi/vision-plus`
 **Companion documents:**
@@ -2287,6 +2288,12 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Status (2026-10-02):** **Approved with one exception — open.** The client approved P2 except the Mobile NVR page, which was not accepted; a dedicated Mobile NVR page with a small purposeful scroll-triggered animation was requested. The revision was built in `7acdfff` and submitted for review (`docs/review/p2-mnvr-revision/`). P2 closes when the client approves it.
 - **Status note (2026-10-02, audit):** per the owner's instruction, the revised Mobile NVR page is **PENDING — ZIAD'S PERSONAL VERIFICATION**. It goes to the client only after that, as applicable. P2 is not closed (`docs/PRE_P5_HANDOFF.md` §3).
 - **Status note (2026-10-02, after Ziad's review):** the two Mobile NVR animation scenes were not approved and have been revised (On board: step-synchronised build of the system; Route: data flow along existing connections). That revision was superseded the same day: Ziad replaced both visuals with new concepts and approved the direction. Concept A (isometric cutaway) is the On board scene, and Concept B (architecture schematic) replaces the Route scene's city map on the Mobile NVR page only. The implementation is **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE**. P2 stays open (`docs/PRE_P5_HANDOFF.md` §11).
+- **Status (2026-10-02, P5 baseline audit):** **OPEN — not closed.** Verified against the repository:
+  - The implemented Mobile NVR page (Concepts A and B, `626c894`; hydration fix `eb98ad5`) has **not** received Ziad's final visual approval, and the client has **not** given written approval. Both are still required by the acceptance criterion above. Tests and CI do not replace either.
+  - Review items still open on that page: §55.2 table B (page structure vs §26.2, mobile hero order, two animations on one page, the missing Context/`SOL-MNVR-DETAIL` and lifecycle sections, LCP, and mobile scene performance and CLS measurements, which have never been taken).
+  - The P2 outputs "preview URL" (D-22) and the validation "self-critique against §19" (no record found) are not met. For the current page, Lighthouse CI runs on every push: its hard gates (accessibility 100, best practices ≥ 0.95, load CLS ≤ 0.05, performance floor 0.6) passed on `eb98ad5`, but LCP and the ≥ 0.95 performance target are warnings whose values are not recorded in the repository. The last recorded lab LCP is 2.56 s, on `7acdfff`. The scene performance trace on throttled mobile (≥ 55 fps, CLS during a scroll-through) has never been measured.
+  - The risk rule "a maximum of 2 revision rounds" was exceeded for the Mobile NVR page (3 rounds: `7acdfff`, `fdb3468`, Concepts A/B); recorded retroactively as §55 A-25.
+  - The reference "`docs/PRE_P5_HANDOFF.md` §11" in the two notes above pointed to a section that did not exist; that section (the review checklist for the implemented page) was added on 2026-10-02 with this audit.
 
 **P3: Engineering Foundation**
 - **Objective:** a production-grade skeleton that every later phase builds on.
@@ -2307,6 +2314,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Risks:** static-export and i18n edge cases. Mitigation: verify early (this phase).
 - **Status (2026-10-01):** **Implemented and verified locally; acceptance criteria not all met (not closed).** The owner approved the P3 report in the working session on 2026-10-01. Open against §49.1: the preview URL (blocked, D-22); the Lighthouse ≥ 95 baseline on `/ar` and `/zh` (measured 0.88 / 0.75; moved to P10, §55 A-09); merge to `main` (the remote has no `main` branch — owner decision). The missing "empty templates in 3 locales" output was delivered in `6932552` and the missing Zod/Prettier checks in `9d04cf8` (§55 A-02, A-06, A-07).
 - **Status (2026-10-02):** **Accepted by the client as the current engineering implementation**, with the open items kept visible: preview URL (D-22), `/ar` `/zh` Lighthouse below 95 (P10), Cloudflare access (D-22). Git integration is resolved: `main` created and the reviewed work merged (`b4b386c`, §55 A-14). No production deployment or launch is approved.
+- **Status (2026-10-02, P5 baseline audit):** **Accepted with open items** (verified, `docs/CLIENT_DECISIONS.md` §3). Still open against the criteria above: the output "deployable preview" and the acceptance "preview URL is shared" (both blocked by D-22); the Lighthouse ≥ 95 baseline on `/ar` (0.88) and `/zh` (0.75), deferred to P10 (§55 A-09). "Done when merged to `main`" is met (`b4b386c`). The Vercel deployments discovered on 2026-10-02 are **not** the planned preview environment and do not satisfy this output (§55 A-27).
 
 **P4: Content Encoding & Scene Storyboards**
 - **Objective:** all approved English content lives in typed content files; the scenes are storyboarded and approved.
@@ -2327,6 +2335,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Risks:** copy churn after lock; handled with a change log.
 - **Status (2026-10-01):** Ready for Acceptance — **not accepted or closed**. Implemented and validated; acceptance waits on three separate client sign-offs, D-18, D-19 and D-20 (record: `docs/P4_CLIENT_REVIEW.md` §6). The ten P4-related open questions remain unanswered, with defaults pending confirmation (§4 of that file). The translation workbook is prepared but **not released** to translators until D-18 is approved. P5 has not started and needs its own approval.
 - **Status (2026-10-02):** **Approved.** D-18 (English copy), D-19 (relations, as is) and D-20 (all storyboards) were approved by the client (`docs/P4_CLIENT_REVIEW.md` §6). Later changes to the English or the storyboards are documented and submitted for review (`docs/CLIENT_DECISIONS.md` §5).
+- **Status (2026-10-02, P5 baseline audit):** **Approved** (acceptance met: D-18, D-19, D-20 recorded as client decisions relayed by Ziad). The "Done when" condition is **met only in part**: English is locked (D-18), but the translation workbook was **never sent**. The client's D-12/D-13 decisions (Claude drafts Arabic and Chinese, human review before launch) make sending it moot, and `docs/PHASE_STATUS.md` records that replacement, but no record amends this condition explicitly. It is recorded as a **proposed amendment, §55 A-26, pending Ziad's confirmation**; P4 is not described as closed on that point until then. Material changes made after the lock are pending client review (R-1 to R-4, R-6, R-7; §55.2 table D). The "On board" scene (storyboard §2a) is outside D-20.
 
 **P5: Page Templates, Scene Engine & Solution Scenes**
 - **Objective:** build every page and section to spec, with placeholders, and every approved scene.
@@ -2340,6 +2349,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Done when:** all templates and scenes are merged and a QA pass has been logged.
 - **Risks:** R-09 and R-10 (scene scope and performance), mitigated by the classification and the budgets.
 - **Entry conditions (client, 2026-10-02):** start only after P2, P3 and P4 are explicitly closed: P2 needs the client's approval of the revised Mobile NVR page; P3 acceptance and P4 approvals are recorded. The dedicated Mobile NVR page stays in scope. **Status (2026-10-02): not started; entry conditions not met.** *Audit 2026-10-02:* the conditions also include Ziad's personal verification of the revised Mobile NVR page (pending) and Ziad's explicit authorisation of P5 (not given). Boundary and checklist: `docs/PRE_P5_HANDOFF.md` §6.
+- **Authorisation (Ziad, 2026-10-02) — P5 started under a recorded exception.** Ziad explicitly authorised P5 to begin while P2 is still open. This is recorded as §55 A-24 and changes **only** the entry condition "P2 explicitly closed" for **eligible** P5 work. It does **not** close P2, does **not** claim client approval of the Mobile NVR page, and does not change any phase's acceptance criteria. Work that depends on the open P2 items stays blocked. Scope, limits, base branch and the task breakdown: **§55.3**.
 
 **P6: Contact Integration**
 - **Objective:** a secure, free, reliable Sheet + email pipeline.
@@ -2680,8 +2690,16 @@ It found no unresolved contradiction beyond those listed in §53.1, each of whic
 | A-21 | The client's existing logo files are used unaltered until the missing variants arrive (D-05), superseding the 2026-10-01 hold on logo package v1. Only the stacked logo fits a slot today (footer); the header needs the horizontal variant. | Client | `public/images/brand/`, `3496899` | Horizontal lock-up, monogram, favicon and icons outstanding; BRAND-LOGO still blocks production. |
 | A-22 | The Mobile NVR page is a dedicated page rather than the §26.2 template, with an added "On board" scroll-triggered system diagram; the Route scene (D-20) is kept unchanged inside it. | Client | `7acdfff` | **PENDING — ZIAD'S PERSONAL VERIFICATION**, then client review (P2 exception). §26.2 remains the template for the other seven solutions. Not on this page (audit 2026-10-02, to confirm): §26.2 #2 Context with `SOL-MNVR-DETAIL` and #6 lifecycle track. |
 | A-23 | P2/P3/P4 phase decisions recorded (P2 approved except the Mobile NVR page; P3 accepted with open items; P4 approved). | Client | `docs/CLIENT_DECISIONS.md` §3 | — |
+| A-24 | **P5 started while P2 is open.** §49.1 P5 and the client's entry rule (2026-10-02) require P2, P3 and P4 to be explicitly closed; working rule 1 (§49.3) says not to start a phase with open blocking questions. Ziad explicitly authorised P5 to begin on 2026-10-02 with P2 still open. | Owner exception | Ziad's instruction in the working session, 2026-10-02 (recorded here; no client document) | **Applied only as authorised:** eligible P5 work may proceed. P2 stays **open**; no client approval of the Mobile NVR page is implied; no acceptance criterion changes. Blocked tasks and limits: §55.3. |
+| A-25 | P2 risk rule "a maximum of 2 revision rounds" exceeded for the Mobile NVR page: 3 rounds (`7acdfff` dedicated page; `fdb3468` animation revision; Concepts A/B `626c894`). | T-seq (logged retroactively) | `git log`; `docs/PRE_P5_HANDOFF.md` §9–§10 | Recorded. The client's consolidated-feedback mitigation was not applied to Ziad's in-session reviews. |
+| A-26 | **Proposed:** P4 "Done when … the translation workbook has been sent" is replaced by D-12/D-13 (Claude drafts Arabic and Chinese in P8; human review before launch). The workbook stays available as the review aid. | Client-derived (proposed) | `docs/CLIENT_DECISIONS.md` D-12, D-13; `docs/PHASE_STATUS.md` P4 | **Pending Ziad's confirmation.** Not applied: P4 remains "Approved" with this one condition open. |
+| A-27 | **Vercel integration discovered** (2026-10-02). The Vercel GitHub app (team `tasks-projects-3d747251`, project `vision-plus`) deploys this private repository on push, outside the planned topology (§42.1 rules Vercel Hobby out for commercial use; T-07). Verified: a **Ready** deployment of `claude/mnvr-main-integration` (`d0bc8ff`, deployment `8C8tJ4ZFhDgHQeaykjGGbfnutGqL`), created by the branch push. Not verified (the session's network policy blocks `vercel.com`): other deployments, any production deployment (the repository's *Website* field is `vision-plus-gamma.vercel.app`) and URL visibility. Vercel builds in preview content mode and does not apply `_headers` / `_redirects`. | Owner decision | GitHub commit status `Vercel` on `d0bc8ff`; PR #1 bot comment; repository settings | **Ziad's decision (2026-10-02): leave Vercel as it is for now.** No setting, integration or deployment is changed by the project. It is **not** an approved hosting change: Cloudflare (§42) remains the plan, D-22 still blocks the planned preview, and Vercel URLs are not used as review links. Every push to any branch may create a Vercel deployment; merging to `main` may create a Vercel production deployment. |
+| A-28 | **P5 base branch:** P5 is built on `claude/confident-cori-lahb3k` (from `eb98ad5`), not on `main` and not on a new branch. | T-seq | §55.3.1 | Rationale in §55.3.1. `main` stays unchanged; PR #1 stays the selective path for the Mobile NVR page and the hydration fix. |
+| A-29 | Correction to A-22: the Route scene was **not** kept unchanged on the Mobile NVR page. Its city-map artwork was replaced by Concept B (architecture schematic), and the On board diagram by Concept A (`626c894`), on Ziad's instruction for that page only. The six beats and their approved texts are unchanged. | Correction | `626c894`; `SCENE_STORYBOARDS.md` §2.0, §2a | A-22 kept as written, for history. The §26.2 omissions noted in A-22 (#2 Context, #6 lifecycle) are still open (§55.2 B). |
 
 ### 55.1 Phase status summary (2026-10-02)
+
+> Superseded later the same day by **§55.2** (P5 baseline audit). Kept as written for history.
 
 | Phase | Status | Next action |
 |---|---|---|
@@ -2707,3 +2725,163 @@ The previous summary (2026-10-01) is kept below for history.
 
 The detailed evidence for each row is in `docs/PHASE_STATUS.md`.
 
+
+### 55.2 Verified project state and outstanding items (2026-10-02, P5 baseline audit)
+
+*Audited against the repository, GitHub and the decision records on 2026-10-02, after the readiness review. Every status below is one of:* **Approved** (confirmed and approved, with the record named) · **Awaiting review** (implemented, review not yet given) · **Ziad's decision** · **Client approval** · **Blocked** (by a named dependency) · **Deferred** (to a named phase) · **Not started**. *Client decisions are those relayed by Ziad on 2026-10-02 (`docs/CLIENT_DECISIONS.md`); the client's own decision document is not in the repository.*
+
+**A. Phases**
+
+| Phase | Status | Evidence / what is missing |
+|---|---|---|
+| P0 | **Approved** (complete) | — |
+| P1 | Partially answered | Q-03, Q-04 unresolved; Q-06, Q-10, Q-11, Q-13–Q-23 pending (`CLIENT_DECISIONS.md` §1) |
+| P2 | **Open.** Homepage, style guide, direction, type and motion: **Approved** (client). Mobile NVR page: **Awaiting review**, then **Client approval** | §49.1 P2 status (2026-10-02, P5 baseline audit); table B |
+| P3 | **Approved** with open items | Preview URL: **Blocked** (D-22). `/ar` `/zh` Lighthouse ≥ 95: **Deferred** (P10, A-09). Merged to `main`: done (`b4b386c`) |
+| P4 | **Approved** (D-18, D-19, D-20); one "Done when" condition open | Workbook not sent; replacement by D-12/D-13 proposed (A-26): **Ziad's decision** |
+| P5 | **Started under exception A-24** | §55.3 |
+| P6–P12 | **Not started** | — |
+
+**B. Mobile NVR page (P2), implemented `626c894` + `eb98ad5`: open review items**
+
+| # | Item | Status |
+|---|---|---|
+| B-1 | Ziad's final visual approval of the implemented page (Concepts A and B) | **Ziad's decision** (checklist: `PRE_P5_HANDOFF.md` §11) |
+| B-2 | Client's written approval of the page (closes P2) | **Client approval** — after B-1 |
+| B-3 | Page structure: a dedicated page instead of §26.2; the §26.2 **#2 Context with `SOL-MNVR-DETAIL`** and **#6 "Delivered through our lifecycle"** sections are absent (A-22, A-29); `SOL-MNVR-DETAIL` is unused | **Ziad's decision**: keep the omission (and update the manifest) or reinstate |
+| B-4 | Mobile hero order: §26.2 #1 says image first on mobile; the page shows text first | **Ziad's decision** |
+| B-5 | Animation coordination: two scenes on one page (On board + the pinned fleet scene) against the client's request for a "small-scale" animation | **Ziad's decision**, then **Client approval** |
+| B-6 | LCP: last recorded lab LCP 2.56 s (`7acdfff`), above the 2.5 s warning and the §37 2.0 s field target; current values not recorded (CI warnings only) | **Not started** (measure in P5B-02 or P10) |
+| B-7 | Mobile scene performance: ≥ 55 fps on the throttled mid-range profile and CLS during a scroll-through (§40 Motion, §51 scene DoD) have never been measured | **Not started** (P5B-02) |
+| B-8 | Real-device checks that need a running preview (iOS Safari sticky/`svh`, scroll feel, back/anchor navigation, save-data fallback, screen reader) | **Blocked** (D-22 preview) |
+| B-9 | Earlier review notes written for the superseded artwork (`PRE_P5_HANDOFF.md` §3.2 #3, #4, #8, #9) | **Not started**: re-check on the implemented page in P5B-02 |
+| B-10 | `SOL-MNVR-HERO` / `SOL-MNVR-FLEET` imagery (D-26) | **Blocked** (client assets; labelled placeholders in place) |
+
+**C. P3 and P4 open conditions**: listed in table A (D-22 preview; Lighthouse `/ar` `/zh` in P10; A-26 workbook).
+
+**D. Client reviews pending (submitted, not approved; `CLIENT_DECISIONS.md` §5)**
+
+| # | Item | Status | P5 effect |
+|---|---|---|---|
+| R-1 | Real Estate & Property Development summary (Q-08) | **Client approval** | Industries explorer shows it as pending in preview only |
+| R-2 | Understand stage with Site Survey (Q-09) | **Client approval** | Services lifecycle: wording pending |
+| R-3 | Supply & Procurement description (Q-09), not published | **Client approval** | Not built as a service until approved |
+| R-4 | Industry display order (Q-08) | **Client approval** | Order stays as implemented, marked pending |
+| R-6 | Four illustrative sample projects (Q-12) | **Client approval** | Projects templates use them in preview only |
+| R-7 | Footer logo usage (D-05); the delivered logo's colours are outside Option B | **Client approval** / **Ziad's decision** | No header logo until the horizontal variant arrives |
+| R-5 | Revised Mobile NVR page | See table B | P5B-02 blocked |
+
+**E. Storyboard questions and scene decisions affecting P5B**
+
+| # | Question | Status |
+|---|---|---|
+| E-1 | §2 Route: generic vehicle glyph or abstract shape (asked for the city map; Concept B shows schematic vehicle nodes) | **Ziad's decision**: confirm whether it is moot under Concept B |
+| E-2 | §2 Route: keep the capability labels on beats 1–2 | **Client approval** (Concept B labels the cameras and GPS) |
+| E-3 | The fleet-scene artwork changed after D-20 (city map → Concept B); D-20 approved the storyboard's beats and texts, not the new artwork | **Client approval**, as part of B-2 |
+| E-4 | §2a On board is outside D-20 | **Client approval**, as part of B-2 |
+| E-5 | §3 Smart Building: optional photography upgrade (D-21) | **Client approval**. Not blocking: the SVG v1 is the approved base |
+| E-6 | §3 Smart Building: section drawing or plan view | **Client approval** (blocks the start of P5B-04) |
+| E-7 | P5B order: §49.1 fixes "Mobile NVR (finish)" first, but it is blocked (table B). Continuing with Smart Building before it changes the order | **Ziad's decision** |
+
+**F. Branches, integration and PR #1 (verified 2026-10-02)**
+
+| Item | Fact | Status |
+|---|---|---|
+| `main` | `e137ea6`; contains P1–P4 work up to `a48f2df` plus the Route-test coverage. It lacks `3496899` (client decisions, 65 files), `123c73e` (production gates), the decision records (`6859835`, `979d263`, `1f4dba5`, `05a4f3c`, `aded2dc`, `db7a3ea`, `e3b56e2`, `eaa3e32`) and the Mobile NVR work | — |
+| Working branch | `claude/confident-cori-lahb3k` at `eb98ad5` (before this update); the GitHub default branch | Default branch → `main`: **Ziad's decision** |
+| PR #1 | `claude/mnvr-main-integration` (`d0bc8ff`) → `main`: hydration fix, Mobile NVR page, docs. **Open, not merged**, mergeable. CI run 37044228906 green; five-browser matrix run 37044232783: 343 passed / 17 skipped / 0 failed | **Ziad's decision**: (1) accept the extra `mnvr.css` link on the other seven solution pages (scoped selectors; 0 px difference); (2) merge timing relative to B-1/B-2; (3) a merge may trigger a Vercel production deployment (A-27). CodeRabbit skipped its review (base is not the default branch). |
+| How `3496899`, `123c73e` and the records reach `main` | Not decided. PR #1 excludes them by Ziad's instruction | **Ziad's decision** |
+| Repository | Private (verified). *Website* field: `vision-plus-gamma.vercel.app` | Field: **Ziad's decision** |
+| Vercel | A-27 | **Ziad's decision: leave as is** (recorded) |
+
+**G. Documentation inconsistencies found in the readiness review, and their resolution**
+
+| # | Inconsistency | Resolution (2026-10-02) |
+|---|---|---|
+| G-1 | Plan §49.1 P2 and `CLIENT_DECISIONS.md` §3 cite "`PRE_P5_HANDOFF.md` §11", which did not exist | §11 added to the handoff: the review checklist for the implemented page |
+| G-2 | `PRE_P5_HANDOFF.md` §10 is still titled "AWAITING ZIAD'S DIRECTION CHOICE" | Dated status note added: direction chosen and implemented |
+| G-3 | `PRE_P5_HANDOFF.md` §1.3 and §7 B say the repository is public | Dated correction added: private (verified) |
+| G-4 | `PRE_P5_HANDOFF.md` §3 review notes describe the superseded artwork | Kept as history; §11 is the current checklist (B-9 re-check) |
+| G-5 | `P4_CLIENT_REVIEW.md` header still says "not accepted or closed" | Dated status line added under it (approved; see §6) |
+| G-6 | Plan §55 A-22 says the Route scene is kept unchanged | Correction A-29 |
+| G-7 | `CLIENT_DECISIONS.md` R-5 evidence points to superseded screenshot sets | Dated note added: current evidence `docs/review/p2-mnvr-final/` |
+| G-8 | `docs/E2E_COVERAGE.md` on this branch lacks the `a1d631e` / `eb98ad5` results | Rows added |
+| G-9 | Plan header still reads "v1.0, planning baseline, awaiting client decisions" | Kept as the original status; the current status is §55.2 (pointer added) |
+
+**H. Outstanding content, assets, dependencies, test baselines and deliverables (P5 and later)**
+
+| Item | Status | Needed by |
+|---|---|---|
+| Q-03 navigation order | **Client approval** (unresolved) | P5A navigation finalisation (P5A-16) |
+| Q-04 Vision, Mission, Values wording | **Client approval** (unresolved; withheld, labels only) | P5A About (P5A-07, partial) |
+| Q-06 mainland China audience; D-27 | **Client approval** | P6, P9 |
+| Q-13 partner logo colour; Q-19 meaning of "Become a Partner" | **Client approval** | P5A Partners / Contact helper text |
+| Q-10, Q-11, Q-14–Q-18, Q-20–Q-23 | **Client approval** (pending) | P6–P11 |
+| D-01, D-02, D-03 offices and maps | **Blocked** (client); labelled samples in preview | P9 (Contact UI uses samples) |
+| D-04, D-14 recipient and Google account | **Blocked** (client) | P6 |
+| D-05 horizontal logo, monogram, favicon, icons | **Blocked** (client) | Header; OG cards with a logo; P9 |
+| D-06 Canva embed; D-16 privacy text; D-15 legal names; D-17 socials | **Blocked** (client) | P5A placeholders; P9 |
+| D-07 domain and DNS; D-22 Cloudflare | **Blocked** (client) | Preview URL (every §51 "preview link" item), P11 |
+| D-08 partners; D-09 products; D-10 projects; D-11 images; D-21; D-26 | **Blocked** (client); placeholders or samples allowed as recorded | P9 |
+| D-12 / D-13 human reviewers | **Client approval** (not named) | P8 |
+| D-25 reference image 05 | **Blocked** (missing) | — |
+| Visual regression baseline (§40: every template × 3 locales × 4 widths × default/reduced motion) | **Not started** | P5 deliverable (P5-T1) |
+| Component tests (§40: navigation disclosure, drawer, language switcher, form states, marquee, explorer, filters) | **Not started** | P5-T2, with each island |
+| Scene lab `/_lab/scenes` (§23.6, §50) | **Not started** | P5B-01 |
+| OG card generator (§36, §50) | **Not started** | P5A-14 |
+| Scene performance traces (§40 Motion) | **Not started** | P5B, per scene |
+| Lighthouse CI covers `/en`, `/ar`, `/zh` and the Mobile NVR page only | Partial | Extended per P5A template (§55.3.4) |
+| `docs/QA_MATRIX.md` | **Deferred** | P10 |
+
+### 55.3 P5 execution baseline (2026-10-02)
+
+#### 55.3.1 Base branch (A-28)
+P5 is implemented on **`claude/confident-cori-lahb3k`**, continuing from `eb98ad5`. Rationale:
+- It is the project's designated working branch, and the line on which every approved client decision is already implemented. P5A must follow those decisions: 12 industries (Q-08), Products hidden (Q-02), Vision/Mission/Values withheld (Q-04), labelled samples (Q-12, D-01, D-02) and their production gates (`123c73e`).
+- `main` lacks those commits. Building P5 there would mean importing them (not authorised) or building templates that contradict recorded decisions.
+- A new branch would add a third line of history for no benefit.
+- Nothing is imported or merged to establish this base. Items on the branch that are still pending client review (R-1 to R-7) stay marked pending and preview-only; P5 does not treat them as approved.
+- `main` and PR #1 are unchanged. How the branch reaches `main` is §55.2 F.
+
+#### 55.3.2 Scope and limits of the A-24 exception
+- **Eligible:** a P5 task whose inputs are approved, or are placeholders or samples that this plan or a recorded client decision explicitly permits, and that does not depend on an open P2 item, an unanswered question or a pending client review.
+- **Always blocked until the named condition is met:**
+  - any change to the Mobile NVR page or its scenes (P5B-02): B-1, then B-2;
+  - content pending client review (R-1 to R-7): it stays as implemented and marked pending, and no new copy is invented around it;
+  - Products (Q-02) and navigation order (Q-03).
+- **Never part of the exception:** closing P2, implying client approval, changing acceptance criteria, deploying anywhere (the Vercel integration stays untouched, A-27), merging any PR, or changing `main`.
+- **Approved homepage:** unchanged by P5. Every P5 commit is checked for 0 px difference on the homepage sections (`scripts/dev/home-unchanged-diff.mjs`, en/ar/zh × 390/768/1440/1920, reduced motion).
+
+#### 55.3.3 Task breakdown
+Order follows §49.3: **the shared section library first, then pages assembled from it**; one engine, then scenes in the fixed order. "Eligible" means it can start now under A-24.
+
+| ID | Task | Plan § | Status | Depends on / limited by | Acceptance (in addition to §51) |
+|---|---|---|---|---|---|
+| P5-00 | This baseline: verified state, exception, task breakdown | §55.2–55.3 | **Done** | Ziad's authorisation (A-24) | Recorded before any P5 code |
+| P5A-01 | Shared section library: `SectionHeading`, `PageHero`, `IndexList`, `SpecList`, `ProcessTrack`, `RelatedRail`, `CtaBand`, `StatementBand`, then `SplitEditorial`, `PillarStrip`, `Timeline` as pages need them. Server components, logical properties, token CSS, no copy inside | §20.8, §27 | **Eligible** | Approved P2 direction; homepage components are **not** refactored (approved baseline) | Used by at least one page; unit-tested markup; RTL and reduced motion verified |
+| P5A-02 | Solutions hub | §26.3 | **Eligible** | P5A-01; approved copy (`01` §06, §02); `SOL-HUB-HERO` and `SOL-*-CARD` labelled placeholders (D-11) | 8 index rows with approved summaries, Mobile NVR first and marked featured; card image revealed on hover/focus, always visible on mobile; integration statement + ELV teaser; approach teaser; CTA |
+| P5A-03 | Localized 404 | §26.13, §36 | **Eligible** | Serving a per-locale 404 for unknown paths needs the Worker (P6 / P10) | Typographic, localized, links to the key sections |
+| P5A-04 | Solution detail template for the 7 other solutions | §26.2 | **Eligible**, without scenes | P5A-01; scene section #3 shows the approved beat texts until each P5B scene lands; images are placeholders | All 8 §26.2 sections; approved copy only; relations D-19; product categories off (Q-02) |
+| P5A-05 | Services lifecycle | §26.5 | **Eligible**, limited | R-2 wording shown as pending; Supply & Procurement not built (R-3) | Sticky process track; 6 services; "Stages" markers (D-19) |
+| P5A-06 | Industries explorer | §26.4 | **Eligible**, limited | 12 industries (Q-08); R-1 and R-4 stay pending | Master–detail on desktop; 12 anchored sections without JS; component test |
+| P5A-07 | About | §26.8 | **Eligible**, partial | Vision, Mission, Values withheld: labels only (Q-04) | Withheld text never rendered |
+| P5A-08 | Projects list and detail | §26.7, §35 | **Eligible** (preview samples) | Q-12 samples, labelled, preview only; filters only at ≥ 6 projects | `site:check` production gate still refuses samples |
+| P5A-09 | Partners | §26.9, §34 | **Eligible** (placeholders) | D-08; Q-13; hidden from production navigation | No partner names or logos invented |
+| P5A-10 | Contact UI | §26.10, §30 | **Eligible**, UI only | Submission is P6 (D-04, D-14); sample offices (D-01, D-02); map placeholder (D-03); Q-19 helper text | Production build still fails on placeholder location values |
+| P5A-11 | Company Profile | §26.11, §33 | **Eligible** (placeholder) | No Canva URL (D-06); poster placeholder | No embed without a real URL; production gate stays |
+| P5A-12 | Privacy | §26.12 | **Eligible** (marked draft placeholder) | D-16; no invented policy | Production gate stays |
+| P5A-13 | Products | §26.6, §9.3 | **Blocked** | Hidden (Q-02) until D-09 and client approval | — |
+| P5A-14 | OG card generation | §36, §50 | **Eligible**, typographic | Logo variants (D-05) only if a logo is used | 1200 × 630 per locale |
+| P5A-15 | Home | §26.1 | **No work planned** | Approved baseline; decision-driven changes only | 0 px |
+| P5A-16 | Navigation finalisation (order) | §16 | **Blocked** | Q-03 | — |
+| P5-T1 | Visual regression baseline | §40, §50 | **Eligible** | Generated in the CI environment so that pixels match | Every template × 3 locales × 4 widths × default/reduced motion |
+| P5-T2 | Component tests | §40 | **Eligible**, with each island | — | Disclosure, drawer, language switcher, explorer, filters, form states |
+| P5B-01 | Harden the scene engine + scene lab `/_lab/scenes` | §23.5, §23.6 | **Eligible** | Must not change the Mobile NVR page's rendered output | Scrubbing slider, all modes, RTL, reduced motion; preview only |
+| P5B-02 | Mobile NVR (finish) | §23.6.1 | **Blocked** | B-1, then B-2; then B-3 to B-9 | §51 scene DoD incl. fps and CLS traces |
+| P5B-03 … P5B-10 | Smart Building, ELV, CCTV, Access Control, Fire Alarm, Networking, AV, Home Integration (final pass; the homepage scene is approved and built) | §23.6.2–23.6.9 | **Ziad's decision** (order, E-7); Smart Building also E-6 | Approved storyboards (D-20); P5B-01 | §51 scene DoD |
+
+#### 55.3.4 Validation for every P5 task
+- §51 for a PR: lint (including the logical-property and Option A rules), Prettier, TypeScript; unit and component tests; `content:check`, `assets:check`; checked in en/ar/zh at 390/768/1440/1920, with reduced motion and keyboard only; axe 0 on the affected templates (e2e × 3 locales × 2 viewports); Lighthouse budgets not regressed (the template's URL is added to Lighthouse CI when it lands); no hard-coded copy, no secrets, no placeholder presented as real.
+- Not available yet, recorded as gaps rather than claimed: **visual snapshots** (until P5-T1) and the **preview deployment link** (D-22).
+- Also: the homepage 0 px check (§55.3.2); `site:check` and `budget`; the five-browser matrix before a P5 increment is reported; production-mode content gate unchanged.
+- Results are recorded in `docs/PHASE_STATUS.md` (P5 section) and in this table's status column.

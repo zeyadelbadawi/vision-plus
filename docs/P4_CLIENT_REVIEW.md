@@ -2,6 +2,8 @@
 
 **Phase status:** Ready for Acceptance — **not accepted or closed**. Nothing in this document is approved until it is signed off in §6.
 
+**Status update (2026-10-02):** **approved**: D-18, D-19 and D-20 are signed off in §6. One plan condition ("translation workbook sent") is open, with a proposed replacement by D-12/D-13 (plan §55 A-26, pending Ziad). The line above is the original status, kept for history.
+
 **For:** the Vision Plus team. **What we need:** three sign-offs (D-18, D-19, D-20) and answers to the open questions in §4.
 Nothing below adds new company information. All website text comes from your approved content (`01`), except the few items clearly marked *derived* or *draft*.
 

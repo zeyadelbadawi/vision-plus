@@ -111,6 +111,7 @@ The one exception is two questions that ask exactly what a data item (D-xx) answ
 | P3 acceptance recorded, open items visible | ☑ Recorded (this file, `PHASE_STATUS.md`) |
 | P4 approvals D-18, D-19, D-20 recorded | ☑ Recorded |
 | Ziad explicitly authorises P5 | ☐ Not given — **P5 not started, not authorised** |
+| ↳ *Update 2026-10-02* | **Ziad authorised P5 to start while P2 is open** (plan §55 A-24). This is the owner's authorisation, not a client decision; P2 stays open and the Mobile NVR page is not client-approved |
 
 ## 4. Source files (D-25)
 
@@ -138,5 +139,7 @@ These items exist because of the 2026-10-02 decisions. None is treated as approv
 | R-5 | Revised Mobile NVR page (P2) — both scenes replaced with the approved Concepts A and B, **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE**, before it goes to the client | Dedicated page with the "On board" diagram. The Route scene is kept further down. If the client prefers a single animation on this page, the Route scene can move to the fleet context only. | `docs/review/p2-mnvr-revision-2/` (revision; the first set is `docs/review/p2-mnvr-revision/`) |
 | R-6 | Four illustrative sample projects (Q-12) | Names and scopes in `copy/en/samples.json` | Homepage preview |
 | R-7 | Footer logo usage (D-05) | Stacked white logo in the footer; interim wordmark in the header until the horizontal variant arrives | Footer |
+
+*Note (2026-10-02):* for R-5, the current evidence is `docs/review/p2-mnvr-final/` (the implemented Concepts A and B, `626c894`). The sets named in the R-5 row are superseded. Review checklist: `PRE_P5_HANDOFF.md` §11.
 
 R-3 is a neutral draft built on the approved "Select" stage wording. It makes no claims about suppliers, scale or delivery capability.

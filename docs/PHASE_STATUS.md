@@ -2,6 +2,8 @@
 
 **As of:** 2026-10-02 · **Branches:** `main` (created 2026-10-02, merge `b4b386c` = reviewed `a48f2df`) and the working branch `claude/confident-cori-lahb3k` at `6859835`. The branches have **diverged**: 3 commits ahead (`3496899`, `7acdfff`, `6859835`) and 1 behind (the merge commit `b4b386c`, whose tree equals the merge base `a48f2df`). A dry-run merge is conflict-free; not merged. GitHub default branch: still the working branch. Audit: `docs/PRE_P5_HANDOFF.md` · **Client decisions:** `docs/CLIENT_DECISIONS.md` · **Authority:** MASTER_PROJECT_PLAN §49.1 (scope, outputs, acceptance), §50 (deliverables), §51 (Definition of Done). Deviations: plan §55.
 
+**Update (2026-10-02, P5 baseline):** the working branch is at `eb98ad5` plus the P5 commits recorded below; `main` is unchanged at `e137ea6`; PR #1 (`claude/mnvr-main-integration` → `main`) is open and not merged. The current verified state is MASTER_PROJECT_PLAN **§55.2**. The branch facts in the line above are as of `6859835`, kept for history.
+
 Evidence is code and command output, not reports. **Verified** = run and passed in this repository; **local** = verified locally / in CI but not on a deployed environment; **blocked** = needs an external input.
 
 ---
@@ -92,7 +94,18 @@ D-18, D-19 and D-20 are approved (`P4_CLIENT_REVIEW.md` §6). Text added after t
 | Acceptance: D-18, D-19, D-20 | **Approved 2026-10-02** | `docs/P4_CLIENT_REVIEW.md` §6 |
 | Done when English locked and workbook sent | English locked (D-18). Translation is drafted by Claude in P8 with human review (D-12/D-13) | `docs/i18n/translations.xlsx` |
 
-## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met**
+## P5 — Page Templates, Scene Engine & Solution Scenes · **Started 2026-10-02 under exception A-24 (P2 still open)**
+
+Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** closed, and the Mobile NVR page is **not** client-approved. Base branch: `claude/confident-cori-lahb3k` (A-28). Task breakdown, eligibility and blocked tasks: plan **§55.3**.
+
+| Task | Status | Commit | Validation |
+|---|---|---|---|
+| P5-00 Baseline (plan §55.2–55.3, documentation fixes) | Done | *this baseline commit* | Docs only |
+| P5A-01 Shared section library | In progress | — | — |
+| P5A-02 Solutions hub | In progress | — | — |
+| Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); P5B-03… order and Smart Building view (E-6, E-7) | — | — |
+
+## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*
 
 | Entry condition (client, 2026-10-02) | State |
 |---|---|
