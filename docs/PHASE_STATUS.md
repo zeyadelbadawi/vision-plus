@@ -106,7 +106,7 @@ Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** clo
 | P5A-04 Solution detail template (7 solutions, no scenes) | Implemented, awaiting review | `c1d7370` | Plan §55.3.5–55.3.6 |
 | P5A-03 Localized 404 | Implemented, awaiting review | `fce167f` | Plan §55.3.5; `worker:smoke` 29/29 |
 | P5A-05 Services lifecycle (§26.5) | Implemented, awaiting review; R-2 wording still pending client review | `667ac58` | Plan §55.3.5, §55.3.7 |
-| P5A-06 Industries explorer (§26.4) | Implemented, awaiting review; R-1 summary and R-4 order still pending client review | *this commit* | Plan §55.3.5, §55.3.8 |
+| P5A-06 Industries explorer (§26.4) | Implemented, awaiting review; R-1 summary and R-4 order still pending client review | `52e9338` | Plan §55.3.5, §55.3.8 |
 | Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); P5B-03… order and Smart Building view (E-6, E-7) | — | — |
 
 ## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*

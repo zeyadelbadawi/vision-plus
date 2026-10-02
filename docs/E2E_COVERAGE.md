@@ -62,6 +62,8 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 |---|---|---|
 | Mobile navigation: drawer focus trap; accordion `aria-expanded` | Desktop projects (1440 px) | The drawer exists only below 1200 px; desktop uses the mega menu |
 | Desktop navigation: mega menu keyboard; language switcher | Mobile projects (390 px) | The mega menu and desktop switcher exist only at ≥ 1200 px; mobile uses the drawer |
+| Industries master–detail: selection, focus, hash, header menu, back/forward | Mobile projects (390 px) | The explorer is master–detail only at ≥ 1024 px; below it the stacked sections are tested instead |
+| Industries stacked layout with chip index | Desktop projects (1440 px) | The stacked layout is the < 1024 px and no-JavaScript view (no-JS is tested separately at 1440 px) |
 
 ## Results
 
@@ -81,6 +83,7 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 | GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
 | GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
 | Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
+| Local, Chromium projects | `52e9338` (P5A-03 to P5A-06: 404, solution template, Services, Industries) | `pnpm test:e2e` | 232 passed, 10 skipped, 0 failed (2.9 min). The 3 new skips are layout-only: the Industries master–detail tests on the mobile project and the stacked-layout test on the desktop project |
 
 Limitations:
 - Local runs cover Chromium only; Firefox and WebKit are not installed in the development container. They run on GitHub.
