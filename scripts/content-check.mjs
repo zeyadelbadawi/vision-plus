@@ -67,7 +67,9 @@ for (const f of [...readdirSync('src/content/copy/en').map((x) => `copy/en/${x}`
     if (!entry?.source) errors.push(`${f}: _meta.review "${path}" needs a source`);
     if (entry?.approved && entry.status === 'withheld') errors.push(`${f}: _meta.review "${path}" cannot be both withheld and approved`);
   }
-  const pending = Object.values(review).filter((e) => !e?.approved);
+  // messages `preview.*` are review-build notes rendered only when isPreview (never production copy): listed for
+  // transparency but they do not stop a file from being approved.
+  const pending = Object.entries(review).filter(([path, e]) => !e?.approved && !(f === 'messages/en.json' && path.startsWith('preview.')));
   if (pending.length && data._meta.status === 'approved') errors.push(`${f}: has ${pending.length} pending review item(s) but claims status "approved"`);
 }
 

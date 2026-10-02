@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Mobile NVR dedicated page (P2 revision, client decision 2026-10-02).
+   Imported only by that page. The "On board" diagram is scroll-TRIGGERED, not scrubbed: each step sets
+   data-inview once (MotionController [data-reveal]) and :has() lights the matching part of the diagram.
+   The complete diagram is the default; the "not yet" state exists only under .motion-ok in browsers with
+   :has(), so reduced motion, no JavaScript and older browsers always see everything. Only opacity,
+   transform, stroke-dashoffset and offset-distance animate. No loops, no flashing.
+   ========================================================================== */
+@layer components {
+  /* 1. Hero */
+  .mnvr-hero { padding-block: calc(var(--header-h) + 32px) 0; }
+  .mnvr-hero__body { padding-block: 48px 0; }
+  .mnvr-hero__name { color: var(--accent-fg); }
+  .mnvr-hero__headline { margin-block-start: 20px; max-width: 14ch; }
+  .mnvr-hero__lede { margin-block-start: 40px; max-width: 36rem; }
+  .mnvr-hero__band { margin-block-start: 64px; }
+  @media (min-width: 1024px) {
+    .mnvr-hero { padding-block-start: calc(var(--header-h) + 48px); }
+    .mnvr-hero__body { padding-block-start: 72px; }
+    .mnvr-hero__lede { margin-inline-start: auto; margin-block-start: 56px; }
+    .mnvr-hero__band { margin-block-start: 96px; }
+  }
+
+  /* 2. On board — system diagram + steps */
+  .mnvr-system { background: var(--bg); color: var(--fg); }
+  .sys { margin-block-start: 40px; display: grid; }
+  .sys__stage {
+    position: sticky;
+    inset-block-start: var(--header-h);
+    z-index: 1;
+    background: var(--bg);
+    padding-block: 12px;
+    border-block-end: 1px solid var(--line);
+  }
+  .sys__steps { display: grid; }
+  .sys__step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding-block: 28px; min-height: 34svh; }
+  .sys__step + .sys__step { border-block-start: 1px solid var(--line); }
+  .sys__n {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 13px;
+    background: var(--color-charcoal);
+    color: var(--color-white);
+    border: 1px solid var(--color-charcoal);
+  }
+  .sys__tags { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-block-start: 12px; }
+  .sys__tags li { font-size: var(--fs-caption); line-height: 1.4; padding: 3px 10px; border: 1px solid var(--line-strong); }
+  @media (min-width: 1024px) {
+    .sys { margin-block-start: 64px; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+    .sys__steps { grid-column: 1 / span 5; grid-row: 1; }
+    .sys__stage { grid-column: 7 / span 6; grid-row: 1; inset-block-start: calc(var(--header-h) + 12svh); padding: 0; border: 0; background: none; }
+    .sys__step { min-height: 44svh; padding-block: 40px; }
+    .sys__step:last-child { min-height: 0; }
+  }
+
+  .sys-art { display: block; width: 100%; height: auto; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  @media (max-width: 1023px) { .sys-art { max-height: 30svh; } }
+  .sys-base { stroke: var(--scene-line); stroke-width: 1; }
+  .sys-body { stroke: var(--fg); stroke-width: 1.5; fill: var(--bg-raised); }
+  .sys-device { stroke: var(--fg); stroke-width: 1.5; fill: var(--bg-raised); }
+  .sys-wedge { fill: color-mix(in srgb, var(--color-gold) 16%, transparent); stroke: var(--color-gold); stroke-width: 1; }
+  .sys-cable { stroke: var(--color-gold); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .sys-store { fill: var(--color-gold); transform-box: fill-box; transform-origin: 0 50%; }
+  .sys-pin { fill: var(--color-gold); }
+  .sys-ring { stroke: var(--color-gold); stroke-width: 1; stroke-dasharray: 3 5; }
+  .sys-arc { stroke: var(--color-gold); stroke-width: 1.5; }
+  .sys-pane { stroke: var(--scene-line); stroke-width: 1; }
+  .sys-signal { fill: var(--color-gold); offset-path: path('M380 118 Q464 62 544 124'); offset-rotate: 0deg; offset-distance: 100%; }
+  .sys-callout circle { fill: var(--color-charcoal); }
+  .sys-callout text { fill: var(--color-white); font-size: 12px; font-weight: 600; }
+
+  @supports selector(:has(*)) {
+    .motion-ok .sys-layer,
+    .motion-ok .sys-callout { transition: opacity var(--dur-reveal) var(--ease-precise); }
+    .motion-ok .sys-cable { transition: stroke-dashoffset 900ms var(--ease-precise) 120ms; }
+    .motion-ok .sys-store { transition: transform var(--dur-reveal) var(--ease-precise) 600ms; }
+    .motion-ok .sys-signal { transition: offset-distance 1200ms linear 300ms, opacity var(--dur-quick); }
+    .motion-ok .sys__n { transition: background-color var(--dur-panel), color var(--dur-panel), border-color var(--dur-panel); }
+    .motion-ok .sys__step:not([data-inview]) .sys__n { background: transparent; color: var(--fg-muted); border-color: var(--line-strong); }
+    /* Generated for steps 1–5 */
+    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) .sys-layer[data-layer='1'] { opacity: 0.14; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) .sys-callout[data-layer='1'] { opacity: 0.3; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) [data-layer='1'] .sys-cable { stroke-dashoffset: 1; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) [data-layer='1'] .sys-store { transform: scaleX(0); }
+    .motion-ok .sys:not(:has(.sys__step[data-step='1'][data-inview])) [data-layer='1'] .sys-signal { offset-distance: 0%; opacity: 0; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) .sys-layer[data-layer='2'] { opacity: 0.14; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) .sys-callout[data-layer='2'] { opacity: 0.3; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) [data-layer='2'] .sys-cable { stroke-dashoffset: 1; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) [data-layer='2'] .sys-store { transform: scaleX(0); }
+    .motion-ok .sys:not(:has(.sys__step[data-step='2'][data-inview])) [data-layer='2'] .sys-signal { offset-distance: 0%; opacity: 0; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) .sys-layer[data-layer='3'] { opacity: 0.14; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) .sys-callout[data-layer='3'] { opacity: 0.3; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) [data-layer='3'] .sys-cable { stroke-dashoffset: 1; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) [data-layer='3'] .sys-store { transform: scaleX(0); }
+    .motion-ok .sys:not(:has(.sys__step[data-step='3'][data-inview])) [data-layer='3'] .sys-signal { offset-distance: 0%; opacity: 0; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) .sys-layer[data-layer='4'] { opacity: 0.14; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) .sys-callout[data-layer='4'] { opacity: 0.3; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) [data-layer='4'] .sys-cable { stroke-dashoffset: 1; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) [data-layer='4'] .sys-store { transform: scaleX(0); }
+    .motion-ok .sys:not(:has(.sys__step[data-step='4'][data-inview])) [data-layer='4'] .sys-signal { offset-distance: 0%; opacity: 0; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) .sys-layer[data-layer='5'] { opacity: 0.14; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) .sys-callout[data-layer='5'] { opacity: 0.3; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) [data-layer='5'] .sys-cable { stroke-dashoffset: 1; }
+    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) [data-layer='5'] .sys-store { transform: scaleX(0); }
+    .motion-ok .sys:not(:has(.sys__step[data-step='5'][data-inview])) [data-layer='5'] .sys-signal { offset-distance: 0%; opacity: 0; }
+  }
+
+  /* 4. Capabilities — numbered */
+  .mnvr-caps { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: var(--gutter); }
+  .mnvr-caps li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); padding-block: 16px; border-block-start: 1px solid var(--line); font-size: var(--fs-body); }
+  .mnvr-caps .t-num { color: var(--fg-muted); font-size: var(--fs-caption); padding-block-start: 3px; }
+  @media (min-width: 768px) { .mnvr-caps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .mnvr-caps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* 5. Applications */
+  .mnvr-apps { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: var(--gutter); }
+  .mnvr-apps li { padding-block: 14px; border-block-start: 1px solid var(--line); font-size: var(--fs-body); }
+  @media (min-width: 768px) { .mnvr-apps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .mnvr-apps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+}

@@ -77,6 +77,36 @@ test('illustrative samples are labelled on every rendering (Q-12, D-01/D-02)', a
   }
 });
 
+test.describe('Mobile NVR page — On board system diagram (P2 revision)', () => {
+  const layerOpacity = (page: import('@playwright/test').Page, n: number) =>
+    page.locator(`.sys-layer[data-layer="${n}"]`).evaluate((el) => Number(getComputedStyle(el).opacity));
+
+  test('steps light their part of the vehicle as they scroll into view', async ({ page }) => {
+    await page.goto(`/en${MNVR}`);
+    await page.locator('.sys').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(900);
+    expect(await layerOpacity(page, 5)).toBeLessThan(0.5); // later steps are still waiting
+    for (const n of [1, 2, 3, 4, 5]) await page.locator(`.sys__step[data-step="${n}"]`).scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1200);
+    for (const n of [1, 2, 3, 4, 5]) expect(await layerOpacity(page, n), `layer ${n}`).toBe(1);
+  });
+
+  test('reduced motion: the complete diagram, no waiting states', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto(`/en${MNVR}`);
+    for (const n of [1, 2, 3, 4, 5]) expect(await layerOpacity(page, n), `layer ${n}`).toBe(1);
+    await ctx.close();
+  });
+
+  test('RTL mirrors the diagram but never the step numbers', async ({ page }) => {
+    await page.goto(`/ar${MNVR}`);
+    await expect(page.locator('.sys-art > g').first()).toHaveAttribute('transform', /scale\(-1 1\)/);
+    await expect(page.locator('.sys-callout').first()).not.toHaveAttribute('transform', /scale/);
+    await expect(page.locator('.sys__step')).toHaveCount(5);
+  });
+});
+
 test.describe('Mobile NVR Route scene (P2 first cut)', () => {
   test('desktop pinned: --p drives the beats (test hook, §40)', async ({ page, isMobile }, info) => {
     test.skip(info.project.name !== 'desktop' || isMobile, 'pinned mode is desktop only');
