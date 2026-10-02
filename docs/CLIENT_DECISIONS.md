@@ -42,7 +42,7 @@ The one exception is two questions that ask exactly what a data item (D-xx) answ
 | D-02 | Egypt office | Same as D-01. | Same (`+20 00 0000 0000`, `egypt.office@example.com`). No city is invented. | Placeholder in place; **verified data outstanding** |
 | D-03 | Map locations | Labelled map placeholders; never point to unrelated real locations. | No map is rendered yet (contact page body is P5/P6). `locations.json` keeps `mapUrl`/`mapEmbedSrc` null; the contact template will show a labelled placeholder. | **Outstanding** |
 | D-04 | Inquiry email | The client provides it later. It must stay configurable, and real inquiries must not go to a dummy address. | Already configured through the Apps Script / environment (plan §31–32). Dummy office emails are never links and never routing targets. | **Outstanding** |
-| D-05 | Official logo | Use the existing uploaded logos, unaltered, until the missing variants are supplied. | Footer: the client's **stacked white logo**, a byte-identical copy of logo package v1 (sha256 checked), at `public/images/brand/`. Header: the missing **horizontal** variant is required (a stacked logo at header size would make the wordmark ~9 px), so the interim text wordmark stays there. Icons and favicon are not used, because the delivered files are the full stacked logo and are mis-sized. Nothing was recoloured, cropped or re-exported. | **Partially resolved** — horizontal lock-up, monogram, favicon and icons outstanding |
+| D-05 | Official logo | Use the existing uploaded logos, unaltered, until the missing variants are supplied. | Footer: the client's **stacked white logo**, a byte-identical copy of logo package v1 (sha256 checked), at `public/images/brand/`. Header: the missing **horizontal** variant is required (a stacked logo at header size would make the wordmark ~9 px), so the interim text wordmark stays there. Icons and favicon are not used, because the delivered files are the full stacked logo and are mis-sized. Nothing was recoloured, cropped or re-exported. | **Partially resolved** — horizontal lock-up, monogram, favicon and icons outstanding. *Audit note:* the delivered logo uses bronze `#c08f42` and a `#d3942c`→`#7f5421` gradient, outside the Option B palette. Because it must not be recoloured, this needs a brand decision (Ziad / client; `PRE_P5_HANDOFF.md` §2.2). |
 | D-06 | Canva profile | Later. | Section stays ready (plan §33). | Outstanding |
 | D-07 | Domain / DNS | Later; keep using development. | No change. | Outstanding |
 | D-08 | Partners | Labelled dummy entries; no implied partnership. | Neutral "Partner logo" placeholder cells (preview only); no names or logos. | Placeholder in place; outstanding |
@@ -67,7 +67,7 @@ The one exception is two questions that ask exactly what a data item (D-xx) answ
 
 | Phase | Client decision | Recorded status | Evidence / follow-up |
 |---|---|---|---|
-| **P2** | Approved, **except the Mobile NVR page**. Homepage stays the baseline; style guide, design direction, typography and motion accepted. A dedicated Mobile NVR page with a small purposeful scroll-triggered animation was requested. | **Approved with one exception — open.** Revision built and submitted for review (`7acdfff`). P2 closes when the client approves the revised page. | `docs/review/p2-mnvr-revision/` (full page en/ar/zh × 390/768/1440/1920; the five "On board" steps; the Route beats). |
+| **P2** | Approved, **except the Mobile NVR page**. Homepage stays the baseline; style guide, design direction, typography and motion accepted. A dedicated Mobile NVR page with a small purposeful scroll-triggered animation was requested. | **Approved with one exception — open.** Revision built (`7acdfff`). **Revised Mobile NVR page: PENDING — ZIAD'S PERSONAL VERIFICATION** (2026-10-02 owner instruction), then client approval as applicable. P2 closes only after that. Review notes: `docs/PRE_P5_HANDOFF.md` §3. | `docs/review/p2-mnvr-revision/` (full page en/ar/zh × 390/768/1440/1920; the five "On board" steps; the Route beats). |
 | **P3** | Accepted as the current engineering implementation; open items tracked. | **Accepted (2026-10-02) with open items:** preview environment (D-22), `/ar` `/zh` Lighthouse below 95 (P10), Cloudflare access (D-22). Git integration is now done (§3.1). No production deployment or launch is approved. | `docs/PHASE_STATUS.md`. |
 | **P4** | D-18 English copy **approved**; D-19 relations **approved as is**; D-20 storyboards **all approved**. | **Approved (2026-10-02).** English and storyboard baselines locked: later material changes are documented and submitted for review (the Q-08/Q-09 drafts are the first such items, §5). | `docs/P4_CLIENT_REVIEW.md` §6; `SCENE_STORYBOARDS.md` §11; per-entry `"approved": "D-18"` markers in the copy files. |
 | **P5** | Start only after the P2, P3 and P4 conditions are explicitly closed. | **Not started. Entry conditions not met.** P2 is open until the revised Mobile NVR page is approved. | §3.2. |
@@ -90,15 +90,23 @@ The one exception is two questions that ask exactly what a data item (D-xx) answ
 - **Note:** `main` was first pushed at `dd6b24d` because an initial merge command failed. The merge was then pushed as a normal fast-forward. No force push, no history rewrite.
 - **Since then:** later work (`3496899`, `7acdfff` and this record) is on `claude/confident-cori-lahb3k` and is not yet on `main`. It reaches `main` by the same review-then-merge step.
 - **Owner action:** set `main` as the repository's default branch in GitHub settings. This was not changed here.
+- **Audit 2026-10-02 (verified):**
+  - `main` = `b4b386c`; working branch = `6859835`; merge base = `a48f2df`.
+  - The branches have **diverged**: 3 ahead / 1 behind. The 1 commit on `main` is the merge commit `b4b386c`, whose tree is identical to `a48f2df`.
+  - A dry-run merge (`git merge-tree`) is conflict-free and yields exactly the working-branch tree.
+  - The GitHub default branch is still `claude/confident-cori-lahb3k`.
+  - No PR exists.
+  - The merge decision is Ziad's (`docs/PRE_P5_HANDOFF.md` §1).
 
 ### 3.2 P5 entry conditions
 
 | Condition | State |
 |---|---|
-| P2 closed — revised Mobile NVR page reviewed and approved by the client | ☐ **Open** (submitted 2026-10-02) |
+| Revised Mobile NVR page verified by Ziad personally | ☐ **PENDING — ZIAD'S PERSONAL VERIFICATION** |
+| P2 closed — revised Mobile NVR page approved (client, as applicable) | ☐ **Open** |
 | P3 acceptance recorded, open items visible | ☑ Recorded (this file, `PHASE_STATUS.md`) |
 | P4 approvals D-18, D-19, D-20 recorded | ☑ Recorded |
-| Explicit instruction to start P5 | ☐ Not given |
+| Ziad explicitly authorises P5 | ☐ Not given — **P5 not started, not authorised** |
 
 ## 4. Source files (D-25)
 
@@ -123,7 +131,7 @@ These items exist because of the 2026-10-02 decisions. None is treated as approv
 | R-2 | Understand stage with Site Survey (Q-09) | “We begin with the objective, environment, users, and operational requirements, including a site survey.” (01: “…operational requirements.”) | `catalog.json` `approach.0.text` |
 | R-3 | Supply & Procurement service description (Q-09) — **not published** | “We source and supply the technologies each project requires, selected for suitability, compatibility, reliability, and lifecycle value, and coordinated with the design, installation, and support of the complete system.” | This file only, until approved |
 | R-4 | Industry display order (Q-08) | Approved `01` order, with Real Estate placed before Residential & Communities. Alternative: the order of the client's numbered list. | `registry.ts` |
-| R-5 | Revised Mobile NVR page (P2) | Dedicated page with the "On board" diagram. The Route scene is kept further down. If the client prefers a single animation on this page, the Route scene can move to the fleet context only. | `docs/review/p2-mnvr-revision/` |
+| R-5 | Revised Mobile NVR page (P2) — **PENDING — ZIAD'S PERSONAL VERIFICATION** before it goes to the client | Dedicated page with the "On board" diagram. The Route scene is kept further down. If the client prefers a single animation on this page, the Route scene can move to the fleet context only. | `docs/review/p2-mnvr-revision/` |
 | R-6 | Four illustrative sample projects (Q-12) | Names and scopes in `copy/en/samples.json` | Homepage preview |
 | R-7 | Footer logo usage (D-05) | Stacked white logo in the footer; interim wordmark in the header until the horizontal variant arrives | Footer |
 

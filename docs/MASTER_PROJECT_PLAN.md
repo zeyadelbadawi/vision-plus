@@ -2285,6 +2285,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Risks:** subjective iteration loops. Mitigation: a maximum of 2 revision rounds, with feedback collected as a single consolidated list.
 - **Status (2026-10-01):** **Implemented — awaiting client approval of the direction (not accepted).** The homepage slice (hero, Integration System, header/mega/drawer) was built as the full homepage in `9f90b5d`/`c7e5c0e`; its approval was relayed by the project owner in the working session (no written client record in the repository). The rest of P2 — live style guide (`/{locale}/_lab`), the full Mobile NVR solution page and the Route scene first cut in pinned, stepped and reduced-motion modes — was missing and was built in `6932552` (see §55 A-01). Review screenshots: `docs/review/p2/`. A preview URL needs D-22.
 - **Status (2026-10-02):** **Approved with one exception — open.** The client approved P2 except the Mobile NVR page, which was not accepted; a dedicated Mobile NVR page with a small purposeful scroll-triggered animation was requested. The revision was built in `7acdfff` and submitted for review (`docs/review/p2-mnvr-revision/`). P2 closes when the client approves it.
+- **Status note (2026-10-02, audit):** per the owner's instruction, the revised Mobile NVR page is **PENDING — ZIAD'S PERSONAL VERIFICATION**. It goes to the client only after that, as applicable. P2 is not closed (`docs/PRE_P5_HANDOFF.md` §3).
 
 **P3: Engineering Foundation**
 - **Objective:** a production-grade skeleton that every later phase builds on.
@@ -2337,7 +2338,7 @@ Each phase lists its objective, scope, inputs, outputs, dependencies, expected f
 - **Acceptance:** a client walkthrough on preview.
 - **Done when:** all templates and scenes are merged and a QA pass has been logged.
 - **Risks:** R-09 and R-10 (scene scope and performance), mitigated by the classification and the budgets.
-- **Entry conditions (client, 2026-10-02):** start only after P2, P3 and P4 are explicitly closed: P2 needs the client's approval of the revised Mobile NVR page; P3 acceptance and P4 approvals are recorded. The dedicated Mobile NVR page stays in scope. **Status (2026-10-02): not started; entry conditions not met.**
+- **Entry conditions (client, 2026-10-02):** start only after P2, P3 and P4 are explicitly closed: P2 needs the client's approval of the revised Mobile NVR page; P3 acceptance and P4 approvals are recorded. The dedicated Mobile NVR page stays in scope. **Status (2026-10-02): not started; entry conditions not met.** *Audit 2026-10-02:* the conditions also include Ziad's personal verification of the revised Mobile NVR page (pending) and Ziad's explicit authorisation of P5 (not given). Boundary and checklist: `docs/PRE_P5_HANDOFF.md` §6.
 
 **P6: Contact Integration**
 - **Objective:** a secure, free, reliable Sheet + email pipeline.
@@ -2676,7 +2677,7 @@ It found no unresolved contradiction beyond those listed in §53.1, each of whic
 | A-19 | Illustrative sample projects and dummy office data are shown in preview (Q-12, D-01, D-02, D-10), reversing the plan's "never show fake projects" default for **preview only**. | Client | `src/content/data/samples.ts`, `site:check` | Production builds refuse any `[data-sample]` content. |
 | A-20 | Arabic and Chinese are drafted by Claude with human review before launch (D-12, D-13), replacing "professional translator / client-supplied, no machine translation" (§15, Q-05). | Client | status notes in `copy/ar`, `copy/zh`, `messages` | Drafting is scheduled in P8; the production gate still refuses unreviewed drafts. Human reviewers to be named. |
 | A-21 | The client's existing logo files are used unaltered until the missing variants arrive (D-05), superseding the 2026-10-01 hold on logo package v1. Only the stacked logo fits a slot today (footer); the header needs the horizontal variant. | Client | `public/images/brand/`, `3496899` | Horizontal lock-up, monogram, favicon and icons outstanding; BRAND-LOGO still blocks production. |
-| A-22 | The Mobile NVR page is a dedicated page rather than the §26.2 template, with an added "On board" scroll-triggered system diagram; the Route scene (D-20) is kept unchanged inside it. | Client | `7acdfff` | Awaiting the client's review (P2 exception). §26.2 remains the template for the other seven solutions. |
+| A-22 | The Mobile NVR page is a dedicated page rather than the §26.2 template, with an added "On board" scroll-triggered system diagram; the Route scene (D-20) is kept unchanged inside it. | Client | `7acdfff` | **PENDING — ZIAD'S PERSONAL VERIFICATION**, then client review (P2 exception). §26.2 remains the template for the other seven solutions. Not on this page (audit 2026-10-02, to confirm): §26.2 #2 Context with `SOL-MNVR-DETAIL` and #6 lifecycle track. |
 | A-23 | P2/P3/P4 phase decisions recorded (P2 approved except the Mobile NVR page; P3 accepted with open items; P4 approved). | Client | `docs/CLIENT_DECISIONS.md` §3 | — |
 
 ### 55.1 Phase status summary (2026-10-02)
@@ -2685,10 +2686,10 @@ It found no unresolved contradiction beyond those listed in §53.1, each of whic
 |---|---|---|
 | P0 | Complete | — |
 | P1 | Partially answered (2026-10-02); Q-03 and Q-04 unresolved; other questions pending | Exact navigation order (Q-03) and V/M/V wording (Q-04); remaining questions |
-| P2 | **Approved except the Mobile NVR page**; revision submitted (`7acdfff`) | Client review of `docs/review/p2-mnvr-revision/` |
+| P2 | **Approved except the Mobile NVR page**; revision built (`7acdfff`), **PENDING — ZIAD'S PERSONAL VERIFICATION** | Ziad verifies `docs/review/p2-mnvr-revision/` (`docs/PRE_P5_HANDOFF.md` §3.5), then client review as applicable |
 | P3 | **Accepted** with open items: preview URL (D-22), `/ar` `/zh` Lighthouse (P10) | D-22 |
 | P4 | **Approved** (D-18, D-19, D-20) | — |
-| P5 | Not started; entry conditions not met (P2 open) | Client approval of the Mobile NVR revision, then an explicit start instruction |
+| P5 | Not started; **not authorised**; entry conditions not met (P2 open) | Ziad's verification, then client approval of the Mobile NVR revision, then Ziad's explicit authorisation |
 
 The previous summary (2026-10-01) is kept below for history.
 

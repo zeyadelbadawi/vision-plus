@@ -1,6 +1,6 @@
 # VISION PLUS — Scene Storyboards
 
-**Phase:** P4 · **For client approval:** D-20 (one decision per scene, logged in §11).
+**Phase:** P4 · **Client approval:** D-20 — scenes 1–9 **approved 2026-10-02** (log in §11). **§2a “On board” was added afterwards and is PENDING — ZIAD'S PERSONAL VERIFICATION** (then client approval as applicable); it is not covered by D-20.
 **Spec:** MASTER_PROJECT_PLAN §23.5 (engine) and §23.6 (per-solution concepts). **Built in:** P5B (artwork and code), only after approval. Exception, as the plan specifies: the Mobile NVR Route scene has a P2 *first cut* for direction review (built 2026-10-01); its final version still follows D-20.
 **Machine-readable twin:** `src/content/data/scenes.ts`. Every word a scene shows is a reference into the approved copy; `tests/unit/scenes.test.ts` fails the build if a label is not approved text.
 
@@ -42,7 +42,8 @@ Per the plan's working rule, the storyboards are text, not images. Each frame be
 | # | Scene | Page | Class | D / T / M | Beats | Status |
 |---|---|---|---|---|---|---|
 | 1 | Integration System | Home | Signature | in-view / stepped / stepped | 8 nodes | **Built and approved with the homepage**: documented as built, no change |
-| 2 | Route | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | **First cut built in P2** (`6932552`, on the Mobile NVR page; screenshots `docs/review/p2/route-*`). Storyboard still awaiting D-20 |
+| 2 | Route | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | **First cut built in P2** (`6932552`; screenshots `docs/review/p2/route-*`). Storyboard **approved (D-20, 2026-10-02)**; kept unchanged on the revised Mobile NVR page (`7acdfff`, screenshots `docs/review/p2-mnvr-revision/route-*`) |
+| 2a | On board | Mobile NVR & Mobile Surveillance | Small, scroll-triggered | sticky / sticky / sticky (static in RM) | 5 | Built in `7acdfff` for the P2 revision. **PENDING — ZIAD'S PERSONAL VERIFICATION**; not covered by D-20 |
 | 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Approved (D-20, 2026-10-02) |
 | 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Approved (D-20, 2026-10-02) |
 | 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Approved (D-20, 2026-10-02) |
@@ -125,7 +126,7 @@ D composition (1440 × 900)            ┌────────────�
 
 ---
 
-## 2a. On board — Mobile NVR system diagram (added 2026-10-02, **pending client review**)
+## 2a. On board — Mobile NVR system diagram (added 2026-10-02, **PENDING — ZIAD'S PERSONAL VERIFICATION**, then client approval as applicable)
 
 Added for the P2 revision. The client did not accept the generic Mobile NVR page and asked for "a real, purposeful, small-scale scroll-triggered animation" that explains the solution. This is a new scene, **not** covered by the D-20 approval, and is submitted for review with the revised page (`docs/CLIENT_DECISIONS.md` §5 R-5). Built in `7acdfff`.
 
@@ -370,3 +371,11 @@ Tick one box per scene, or add comments. Changes are made here first, then in `s
 | 7 | Critical Sequence — Fire Alarm | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
 | 8 | Topology — Networking & ICT | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
 | 9 | Disappear — Audio Visual | ☑ Approved | — | Client (relayed by the owner), 2026-10-02 |
+
+**Audit note (2026-10-02):**
+- The D-20 decision approved "all reviewed scenes" (1–9) without answering the per-scene "Questions for the client" individually. These remain **open**:
+  - §2 Route: generic vehicle glyph vs abstract shape; capability labels on beats 1–2.
+  - §3 Smart Building: photography upgrade; section vs plan view.
+- The Smart Building entry above reads "placeholders with exact sizes until images are supplied". That reflects the D-21 instruction (use placeholders), not an answer to whether the photographic upgrade is wanted.
+- §2a "On board" is outside D-20 and pending Ziad's verification.
+

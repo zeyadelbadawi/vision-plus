@@ -2,7 +2,7 @@
 
 Trilingual (English, Arabic RTL and Simplified Chinese) corporate website for **VISION PLUS**, which provides Integrated Technology & Systems Solutions in Qatar and Egypt.
 
-**Status (2026-10-02):** the client decisions of 2026-10-02 are applied (`docs/CLIENT_DECISIONS.md`). P2 is approved except the Mobile NVR page, whose dedicated revision is awaiting review. P3 is accepted with open items. P4 is approved. P5 has not started. Every route other than the homepage and the Mobile NVR page is a P3 empty template, and Products is hidden. Nothing is deployed yet (Cloudflare account pending, D-22). Phase-by-phase evidence: [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md).
+**Status (2026-10-02):** the client decisions of 2026-10-02 are applied (`docs/CLIENT_DECISIONS.md`). P2 is approved except the Mobile NVR page, whose dedicated revision is **PENDING — ZIAD'S PERSONAL VERIFICATION**. P3 is accepted with open items. P4 is approved. P5 has not started and is not authorised. Every route other than the homepage and the Mobile NVR page is a P3 empty template, and Products is hidden. Nothing is deployed yet (Cloudflare account pending, D-22). Phase-by-phase evidence: [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md).
 
 | Document | Purpose |
 |---|---|
@@ -11,6 +11,7 @@ Trilingual (English, Arabic RTL and Simplified Chinese) corporate website for **
 | [`docs/CLIENT_INPUT_CHECKLIST.md`](docs/CLIENT_INPUT_CHECKLIST.md) | Decisions and inputs still needed from the client |
 | [`docs/IMPLEMENTATION_NOTES.md`](docs/IMPLEMENTATION_NOTES.md) | Decisions, validation results and how to run the current build |
 | [`docs/PHASE_STATUS.md`](docs/PHASE_STATUS.md) | What is built, verified, blocked and awaiting approval, per phase |
+| [`docs/PRE_P5_HANDOFF.md`](docs/PRE_P5_HANDOFF.md) | Repository/branch audit, homepage and Mobile NVR review notes, leak and gate checks, P5 boundary, handoff checklist |
 | [`docs/CLIENT_DECISIONS.md`](docs/CLIENT_DECISIONS.md) | Client decisions (2026-10-02): answer, action, status, evidence; items submitted for review |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Cloudflare setup, CI/CD and the access needed (D-22) |
 | [`client-materials/`](client-materials/) | Client source package (the source of truth; do not edit) |

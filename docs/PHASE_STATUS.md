@@ -1,6 +1,6 @@
 # VISION PLUS — Phase Status & Acceptance Evidence (P1–P4)
 
-**As of:** 2026-10-02 · **Branches:** `main` (created 2026-10-02, merge `b4b386c` = reviewed `a48f2df`) and the working branch `claude/confident-cori-lahb3k` (ahead of `main` by the 2026-10-02 work, to be merged after review) · **Client decisions:** `docs/CLIENT_DECISIONS.md` · **Authority:** MASTER_PROJECT_PLAN §49.1 (scope, outputs, acceptance), §50 (deliverables), §51 (Definition of Done). Deviations: plan §55.
+**As of:** 2026-10-02 · **Branches:** `main` (created 2026-10-02, merge `b4b386c` = reviewed `a48f2df`) and the working branch `claude/confident-cori-lahb3k` at `6859835`. The branches have **diverged**: 3 commits ahead (`3496899`, `7acdfff`, `6859835`) and 1 behind (the merge commit `b4b386c`, whose tree equals the merge base `a48f2df`). A dry-run merge is conflict-free; not merged. GitHub default branch: still the working branch. Audit: `docs/PRE_P5_HANDOFF.md` · **Client decisions:** `docs/CLIENT_DECISIONS.md` · **Authority:** MASTER_PROJECT_PLAN §49.1 (scope, outputs, acceptance), §50 (deliverables), §51 (Definition of Done). Deviations: plan §55.
 
 Evidence is code and command output, not reports. **Verified** = run and passed in this repository; **local** = verified locally / in CI but not on a deployed environment; **blocked** = needs an external input.
 
@@ -11,7 +11,7 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Area | What exists | Since |
 |---|---|---|
 | Homepage `/en` `/ar` `/zh` | The approved homepage (11 sections), header + mega menus, mobile drawer, language switcher, footer | `9f90b5d`, `c7e5c0e` |
-| Mobile NVR solution page | **Dedicated page (P2 revision, pending client review):** charcoal hero, the scroll-triggered “On board” system diagram, the approved Route scene, capabilities, applications, related, CTA, in 3 locales. The earlier generic version (`6932552`) was not accepted. | `7acdfff` |
+| Mobile NVR solution page | **Dedicated page (P2 revision) — PENDING — ZIAD'S PERSONAL VERIFICATION, then client approval as applicable:** charcoal hero, the scroll-triggered “On board” system diagram, the approved Route scene, capabilities, applications, related, CTA, in 3 locales. The earlier generic version (`6932552`) was not accepted. | `7acdfff` |
 | Style guide `/{locale}/_lab` | Tokens, type scale × 3 scripts, buttons, form controls, image slots, motion samples (preview only) | `6932552` |
 | Every other sitemap route | P3 empty templates: breadcrumb, h1, approved lede, section anchors — **bodies are P5**. Products is **hidden** (Q-02): not built, not linked. | `6932552`, `3496899` |
 | Client decisions in the build | 12 industries (Q-08), Site Survey in Understand (Q-09), V/M/V withheld (Q-04), illustrative sample projects and dummy offices labelled and preview-only (Q-12, D-01/D-02), client stacked logo in the footer (D-05), sizes on every placeholder (D-11) | `3496899` |
@@ -34,7 +34,7 @@ Q-01, Q-02, Q-08, Q-09 and Q-12 are decided; Q-03 and Q-04 were rejected without
 
 ## P2 — Design Direction Proof · **Approved except the Mobile NVR page — open (2026-10-02)**
 
-Client decision: the homepage baseline, style guide, design direction, typography and motion are approved. The Mobile NVR page was **not accepted**; a dedicated page with a small purposeful scroll-triggered animation was requested. Revision: `7acdfff`, screenshots `docs/review/p2-mnvr-revision/`. **P2 closes only when the client approves the revised page.** The table below is the 2026-10-01 evidence, kept for history (rows about the Mobile NVR page describe the rejected version).
+Client decision: the homepage baseline, style guide, design direction, typography and motion are approved. The Mobile NVR page was **not accepted**; a dedicated page with a small purposeful scroll-triggered animation was requested. Revision: `7acdfff`, screenshots `docs/review/p2-mnvr-revision/`. **Revised page: PENDING — ZIAD'S PERSONAL VERIFICATION** (owner instruction, 2026-10-02), then client approval as applicable. **P2 is not closed.** Review notes: `docs/PRE_P5_HANDOFF.md` §3. The table below is the 2026-10-01 evidence, kept for history (rows about the Mobile NVR page describe the rejected version).
 
 | Requirement (§49.1) | Status | Evidence |
 |---|---|---|
@@ -56,6 +56,8 @@ Client decision: accepted as the current engineering implementation. Open items 
 - `/ar` and `/zh` Lighthouse below 95 (P10).
 
 Git integration is resolved (`main`, `b4b386c`). No production deployment or launch is approved.
+
+Acceptance covers the implementation only. The §49.1 P3 **output “deployable preview” is not met** (no preview URL; D-22), and the §51 “preview link attached” item cannot be met until D-22 is resolved.
 
 | Requirement (§49.1) | Status | Evidence |
 |---|---|---|
@@ -94,10 +96,11 @@ D-18, D-19 and D-20 are approved (`P4_CLIENT_REVIEW.md` §6). Text added after t
 
 | Entry condition (client, 2026-10-02) | State |
 |---|---|
-| P2 closed (revised Mobile NVR page approved) | ☐ Open — submitted 2026-10-02 |
+| Revised Mobile NVR page verified by Ziad personally | ☐ **PENDING — ZIAD'S PERSONAL VERIFICATION** |
+| P2 closed (revised page approved, client as applicable) | ☐ Open |
 | P3 acceptance recorded with open items | ☑ |
 | P4 approvals recorded (D-18, D-19, D-20) | ☑ |
-| Explicit instruction to start P5 | ☐ |
+| Ziad explicitly authorises P5 | ☐ Not given — P5 not started, not authorised |
 
 ---
 
@@ -113,7 +116,8 @@ D-18, D-19 and D-20 are approved (`P4_CLIENT_REVIEW.md` §6). Text added after t
 | Homepage vs approved build | Changed by decision: desktop header (Products removed), Approach (Q-09), Industries (Q-08), Projects (Q-12), footer (D-01/D-02/D-05). **All 8 other sections: 0 differing pixels**, en/ar/zh × 390/768/1440/1920 (`scripts/dev/home-unchanged-diff.mjs`); their markup is byte-identical |
 | Budget | Home JS 142.8 KB; Mobile NVR page JS 141.8 / CSS 15.6 / HTML ≤ 24.4 KB gz |
 | Lighthouse (mobile, median of 3, local) | `/en` 0.97 · `/ar` 0.89 · `/zh` 0.75 · Mobile NVR page 0.96 (LCP 2.56 s, just above the 2.5 s warning; TBT 109 ms; CLS 0) — accessibility 1.00 on all four; best practices 0.96 |
-| GitHub CI | `main` `b4b386c` run 8 green; `3496899` run 9 green |
+| GitHub CI | `main` `b4b386c` run 8 green; `3496899` run 9, `7acdfff` run 10, `6859835` run 11 green |
+| **Audit re-run on `6859835`** | lint, format, typecheck, unit 48/48, content/fidelity/assets, `site:check` (60 pages, 0 errors), e2e 117 passed / 7 skipped, worker smoke 25/25, budgets, homepage protection (8 sections: byte-identical markup and 0 px, en/ar/zh × 4 widths): all pass. Production gates fail as intended (content 38, assets 16). Firefox/WebKit matrix **not run** since `a48f2df`. Lighthouse not re-run (the row above is from 09:14 UTC on `7acdfff` code); `/ar` 0.89 and `/zh` 0.75 are below the §37 target of ≥ 90. |
 
 ## Verification log (2026-10-01 remediation, superseded)
 
