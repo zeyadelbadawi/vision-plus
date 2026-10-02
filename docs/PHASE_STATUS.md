@@ -12,6 +12,7 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 |---|---|---|
 | Homepage `/en` `/ar` `/zh` | The approved homepage (11 sections), header + mega menus, mobile drawer, language switcher, footer | `9f90b5d`, `c7e5c0e` |
 | Mobile NVR solution page | Full §26.2 template with the Route scene first cut (pinned desktop, stepped mobile, static reduced-motion), 3 locales | `6932552` |
+| Mobile NVR solution page (since `885b397`, supersedes the row above) | Dedicated page: On board scene (Concept A cutaway) and fleet scene (Concept B architecture), pinned desktop, stepped mobile, static reduced motion and no-JS, 3 locales. **Awaiting Ziad's review of the implemented page, then the client's written approval** | `885b397` |
 | Style guide `/{locale}/_lab` | Tokens, type scale × 3 scripts, buttons, form controls, image slots, motion samples (preview only) | `6932552` |
 | Every other sitemap route | P3 empty templates: breadcrumb, h1, approved lede, section anchors — **bodies are P5** | `6932552` |
 | Links and redirects | 0 broken internal links or anchors across 63 pages; 96 sitemap-alias 301s active | `6932552` |
@@ -43,6 +44,7 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Validation: contrast checks | Verified | axe 0 serious/critical (logotype excluded, §55 A-10) |
 | Validation: scene performance trace on throttled mobile | **Verified (local, Lighthouse)** | Mobile NVR page: performance 0.98, LCP 2.2 s, TBT 68 ms, CLS 0; no added JS (budget: 141.8 KB) |
 | Acceptance: written client approval of direction, type and motion | **Pending** | Homepage approval relayed by the owner in session (not a written client record); Mobile NVR page, Route scene and style guide not yet reviewed by the client |
+| Mobile NVR dedicated page with Concept A (On board) and Concept B (fleet scene) — supersedes the Mobile NVR page and Route scene rows above on `main` | **Implemented (local + CI); P2 still open** | `885b397`, ported from `claude/confident-cori-lahb3k` at `eb98ad5`. Ziad approved Concepts A and B as the direction on 2026-10-02; the implemented page awaits his review and then the client's written approval. Tests: `docs/E2E_COVERAGE.md` |
 
 ## P3 — Engineering Foundation · **Implemented and verified locally; not closed**
 
@@ -95,5 +97,18 @@ Evidence is code and command output, not reports. **Verified** = run and passed 
 | Lighthouse (mobile, median of 3) | `/en` 0.98 · `/ar` 0.88 · `/zh` 0.75 · Mobile NVR 0.98 — a11y 1.00, best practices 0.96, CLS ≤ 0.002 |
 | Homepage vs approved build `c7e5c0e` | **0 differing pixels** (re-checked after the CSS scan fix), en/ar/zh × 390/768/1440/1920, reduced motion (Chromium) |
 | Formatting change | All 63 built pages identical before/after (build hashes aside) |
+
+---
+
+## Mobile NVR integration and hydration fix (2026-10-02)
+
+Selective integration of the reviewed work from `claude/confident-cori-lahb3k` (`eb98ad5`) into `main` at `e137ea6`, on `claude/mnvr-main-integration`, for review as a pull request. Code and unit tests are byte-identical to `eb98ad5`.
+
+| Commit | What | Evidence |
+|---|---|---|
+| `76d5850` | **Hydration fix (all pages).** The `<head>` boot script moved out of the `'use client'` motion controller (`src/components/motion/motion-boot.ts`). It reached the client as a client-module reference, so `<head>` could suspend during hydration; when React replayed it in place it resumed `<body>` at `<meta charset>`, threw #418 and dropped `motion-ok` (static fallback, no motion). Reproduced on `main` and on the working branch; rendered markup unchanged | `tests/unit/motion-boot.test.ts`; hydration tests in `tests/e2e/pages.spec.ts` |
+| `885b397` | **Mobile NVR dedicated page** with the On board scene (Concept A) and the fleet scene (Concept B, replacing the city-map Route artwork); motion controller `[data-steps]` | `tests/unit/mnvr-page.test.ts`, `scene-engine.test.ts`; e2e (`docs/E2E_COVERAGE.md`) |
+
+Not included: the 2026-10-02 client-decision changes (`3496899` and its records), the production gates (`123c73e`), concept prototypes, diagnostics and review screenshots. They stay on `claude/confident-cori-lahb3k`. P2 stays open; P5A/P5B have not started.
 
 **Not verified:** anything on a deployed Cloudflare environment (D-22); Safari/Firefox on real devices (covered by Playwright WebKit/Firefox engines in the GitHub matrix only); motion states pixel-for-pixel (animation timing varies by run); real Arabic/Chinese copy (none supplied).
