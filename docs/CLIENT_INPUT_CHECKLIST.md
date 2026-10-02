@@ -36,7 +36,7 @@ Full record (answer → action → status): **`docs/CLIENT_DECISIONS.md`**. The 
 |---|---|---|
 | Q-03 | The exact menu order of Solutions, Products and Industries (the proposed order was not accepted). | 🟠 |
 | Q-04 | The exact Vision, Mission and Core Values wording (the proposed content was not accepted). | 🟠 |
-| Review | Revised Mobile NVR page: Ziad's review did not approve the first animation scenes; the revised scenes (`docs/review/p2-mnvr-revision-2/`) are **IMPLEMENTED (ANIMATION REVISION 2026-10-02) — AWAITING ZIAD'S VISUAL ACCEPTANCE**, then client review as applicable. P2 closes only after approval; P5 also needs Ziad's explicit authorisation. | 🔴 |
+| Review | Revised Mobile NVR page: both scenes replaced with the approved Concepts A and B (`docs/review/p2-mnvr-final/`), **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE**, then client review as applicable. P2 closes only after approval; P5 also needs Ziad's explicit authorisation. | 🔴 |
 | Review | New wording since the English sign-off: Real Estate & Property Development summary, the Understand-stage sentence with Site Survey, the Supply & Procurement description, the industry order, and the 4 sample projects (`CLIENT_DECISIONS.md` §5). | 🟠 |
 | D-01, D-02, D-03 | Verified office details and map links. Labelled dummy data is shown in preview until then. | 🔴 |
 | D-04 | Inquiry notification email. | 🔴 |

@@ -1,6 +1,6 @@
 # VISION PLUS — Repository Audit & Pre-P5 Handoff (2026-10-02)
 
-> **Mobile NVR page (`7acdfff`):** Ziad's review did not approve the two animation scenes. Revised scenes: **IMPLEMENTED (ANIMATION REVISION 2026-10-02) — AWAITING ZIAD'S VISUAL ACCEPTANCE** (§9).
+> **Mobile NVR page (`7acdfff`):** both scenes were replaced by the approved Concepts A and B. Implementation: **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE** (§11). The §9 animation revision is superseded.
 > **P2 is open. P5 has not started and is not authorised.** Nothing is merged, deployed or approved by this audit.
 
 The audit was run on `claude/confident-cori-lahb3k` at `6859835`. This document is documentation-only.
@@ -473,7 +473,7 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 
 ## 9. Mobile NVR animation revision (2026-10-02, after Ziad's review)
 
-**Status: **IMPLEMENTED (ANIMATION REVISION 2026-10-02) — AWAITING ZIAD'S VISUAL ACCEPTANCE**.** P2 stays open: its remaining acceptance criterion is Ziad's (then the client's, as applicable) visual acceptance of these scenes, and passing tests do not replace it. Nothing from this revision is on `main`. Nothing was deployed. No P5 work was started.
+**Status: SUPERSEDED (2026-10-02)** by the concept replacement (§10, §11). The text below is kept as the record. At the time, P2 stayed open: its remaining acceptance criterion is Ziad's (then the client's, as applicable) visual acceptance of these scenes, and passing tests do not replace it. Nothing from this revision is on `main`. Nothing was deployed. No P5 work was started.
 
 ### 9.1 Review outcome and scope
 
