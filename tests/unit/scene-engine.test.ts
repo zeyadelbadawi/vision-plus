@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { FRAMES, PIN_SCALE, PRIMARY, beatProgress, length, mirrorFrame, pointAt } from '@/components/scenes/route-geometry';
+import { ARCH_FRAMES, TALL, WIDE } from '@/components/scenes/mnvr-architecture-art';
+import { PIN_SCALE, beatProgress } from '@/components/scenes/scene-progress';
 import { scenes } from '@/content/data/scenes';
 import { sceneText, sentences } from '@/content/scene-text';
 import { textAttrs } from '@/lib/text-attrs';
@@ -26,21 +27,39 @@ describe('scene progress maths (§40 "scene progress math")', () => {
   });
 });
 
-describe('route geometry', () => {
-  it('measures and walks the primary route', () => {
-    expect(length(PRIMARY)).toBe(1500);
-    expect(pointAt(PRIMARY, 0)).toEqual([180, 690]);
-    expect(pointAt(PRIMARY, 1)).toEqual([1140, 510]);
-    expect(pointAt(PRIMARY, 0.5)).toEqual([660, 420]); // 750 = 660 + 90 into the 4th segment
+describe('architecture scene geometry (Concept B)', () => {
+  it('crops one full-width band of the stacked layout per beat, so RTL frames need no separate crop', () => {
+    expect(ARCH_FRAMES).toHaveLength(6);
+    for (const [x, y, w, h] of ARCH_FRAMES) {
+      expect([x, w]).toEqual([0, TALL.w]);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y + h).toBeLessThanOrEqual(TALL.h);
+    }
   });
 
-  it('mirrors stepped-frame crops for RTL and keeps them on the artboard', () => {
-    for (const f of FRAMES) {
-      const [x, , w] = mirrorFrame(f);
-      expect(x).toBeGreaterThanOrEqual(0);
-      expect(x + w).toBeLessThanOrEqual(1440);
-      expect(mirrorFrame(mirrorFrame(f))).toEqual(f);
+  it('keeps every label anchor and node inside its artboard in both layouts', () => {
+    for (const G of [WIDE, TALL]) {
+      for (const l of Object.values(G.labels)) {
+        expect(l.x).toBeGreaterThan(0);
+        expect(l.x).toBeLessThan(G.w);
+        expect(l.y).toBeGreaterThan(0);
+        expect(l.y).toBeLessThan(G.h);
+      }
+      for (const b of [G.nvr, G.gps, G.play, G.alert, G.fleet, ...G.cams, ...G.panes]) {
+        expect(b.x).toBeGreaterThanOrEqual(0);
+        expect(b.x + b.w).toBeLessThanOrEqual(G.w);
+        expect(b.y + b.h).toBeLessThanOrEqual(G.h);
+      }
     }
+  });
+
+  it('frames each mobile beat around its own parts (beat 4: viewing panes; beat 5: alerts; beat 6: fleet monitoring)', () => {
+    const inside = (b: { y: number; h: number }, [, y, , h]: [number, number, number, number]) => b.y >= y && b.y + b.h <= y + h;
+    expect(TALL.cams.every((c) => inside(c, ARCH_FRAMES[0]!))).toBe(true);
+    expect(inside(TALL.gps, ARCH_FRAMES[1]!)).toBe(true);
+    expect(TALL.panes.every((p) => inside(p, ARCH_FRAMES[3]!))).toBe(true);
+    expect(inside(TALL.alert, ARCH_FRAMES[4]!)).toBe(true);
+    expect(inside(TALL.fleet, ARCH_FRAMES[5]!)).toBe(true);
   });
 });
 
