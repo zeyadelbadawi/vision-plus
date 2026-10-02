@@ -80,6 +80,3 @@ export function MotionController() {
   }, []);
   return null;
 }
-
-/** Runs before first paint: enables motion styles only when motion is allowed (and JS runs). */
-export const motionBootScript = `(function(){try{var d=document.documentElement;d.classList.add('js');if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion-ok');}catch(e){}})();`;

@@ -59,6 +59,34 @@ test('every navigation anchor lands on a section of its page', async ({ page }) 
   }
 });
 
+// React #418 root cause (2026-10-02): <head> must hydrate from inline data. The boot script used to be exported from
+// the 'use client' motion controller, so it reached the client as a reference to that module's JS chunk. When the
+// chunk arrived mid-hydration React re-entered <head>, resumed <body> at <meta charset> and threw #418, re-rendering
+// <html> without motion-ok (static fallback, no motion). Checked on the served payload, so it never depends on timing.
+for (const route of ['', MNVR, '/solutions/cctv-security-systems']) {
+  test(`/en${route}: <head> hydrates without waiting on a JS chunk and the motion controller starts`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.goto(`/en${route}`);
+    const head = await page.evaluate(() => {
+      const flight = [...document.scripts]
+        .map((s) => s.text.match(/^self\.__next_f\.push\((.*)\)$/s)?.[1])
+        .filter((json): json is string => !!json)
+        .map((json) => JSON.parse(json) as [number, string?])
+        .filter(([type]) => type === 1)
+        .map(([, text]) => text)
+        .join('');
+      const at = flight.indexOf('["$","head",null,');
+      return at < 0 ? '' : flight.slice(at, flight.indexOf('["$","body",null,', at));
+    });
+    expect(head).toContain(`"dangerouslySetInnerHTML":{"__html":"(function(){`);
+    // no reference to another row (a client module, a lazy element or an outlined value) inside <head>
+    expect(head).not.toMatch(/"\$L?[0-9a-f]+"/);
+    await expect(page.locator('html')).toHaveClass(/(^|\s)motion-ok(\s|$)/);
+    expect(errors).toEqual([]);
+  });
+}
+
 test.describe('Mobile NVR Route scene (P2 first cut)', () => {
   // The scene's mode is chosen by the layout breakpoint (scenes.css: pinned stage at ≥ 1024 px, stepped frames below),
   // not by the browser engine. Tests therefore select by the project's viewport, so every desktop project (Chromium,

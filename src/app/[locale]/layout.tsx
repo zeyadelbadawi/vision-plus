@@ -10,7 +10,8 @@ import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
 import { SkipLink } from '@/components/layout/skip-link';
 import { PreviewNotice } from '@/components/layout/preview-notice';
-import { MotionController, motionBootScript } from '@/components/motion/motion-controller';
+import { MotionController } from '@/components/motion/motion-controller';
+import { motionBootScript } from '@/components/motion/motion-boot';
 import { copyStatus, getCompany } from '@/content';
 import { isPreview } from '@/lib/env';
 
