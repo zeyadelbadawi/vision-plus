@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { getSolutionsCopy } from '../../src/content';
 import { SYSTEM_STEPS } from '../../src/components/sections/solution/mnvr-page';
-import { CALLOUTS, SYSTEM_ART } from '../../src/components/scenes/mnvr-system-art';
+import { ONBOARD_ART, ONBOARD_VIEWS, WALL_LEFT_X, calloutPoint, viewWindow } from '../../src/components/scenes/mnvr-onboard-art';
 
 // The "On board" steps reference approved copy by position. Pin the English so a reorder of solutions.json cannot
 // silently change what a step says, and check every locale resolves every reference.
@@ -43,12 +43,37 @@ describe('Mobile NVR page — On board steps', () => {
   });
 
   it('keeps one callout per step inside the artboard', () => {
-    expect(Object.keys(CALLOUTS)).toHaveLength(SYSTEM_STEPS.length);
-    for (const [x, y] of Object.values(CALLOUTS)) {
+    for (const n of [1, 2, 3, 4, 5] as const) {
+      const [x, y] = calloutPoint(n);
       expect(x).toBeGreaterThan(11);
-      expect(x).toBeLessThan(SYSTEM_ART.w - 11);
+      expect(x).toBeLessThan(ONBOARD_ART.w - 11);
       expect(y).toBeGreaterThan(10);
-      expect(y).toBeLessThan(SYSTEM_ART.h - 11);
+      expect(y).toBeLessThan(ONBOARD_ART.h - 11);
     }
+  });
+});
+
+describe('Mobile NVR page — On board views (Concept A)', () => {
+  it('has the overall view for the static state and step 5, and a gentle zoom for steps 1–4', () => {
+    expect(ONBOARD_VIEWS[0]).toEqual([ONBOARD_ART.w / 2, ONBOARD_ART.h / 2, 1]);
+    expect(ONBOARD_VIEWS[5]).toEqual(ONBOARD_VIEWS[0]);
+    for (const n of [1, 2, 3, 4] as const) {
+      const [, , s] = ONBOARD_VIEWS[n];
+      expect(s).toBeGreaterThan(1);
+      expect(s).toBeLessThanOrEqual(1.6);
+    }
+  });
+
+  it('shows each step its own component: the callout is inside the view, and step 1 keeps the monitoring wall out', () => {
+    for (const n of [1, 2, 3, 4, 5] as const) {
+      const [x0, x1, y0, y1] = viewWindow(n);
+      const [x, y] = calloutPoint(n);
+      expect(x).toBeGreaterThan(x0);
+      expect(x).toBeLessThan(x1);
+      expect(y).toBeGreaterThan(y0);
+      expect(y).toBeLessThan(y1);
+    }
+    expect(WALL_LEFT_X).toBeGreaterThan(viewWindow(1)[1]);
+    expect(WALL_LEFT_X).toBeLessThan(viewWindow(5)[1]);
   });
 });

@@ -7,11 +7,10 @@ import { industriesForSolution } from '@/content/data/relations';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { Section } from '@/components/layout/section';
 import { ImageSlot } from '@/components/media/image-slot';
-import { MnvrSystemArt } from '@/components/scenes/mnvr-system-art';
+import { MnvrOnboardArt } from '@/components/scenes/mnvr-onboard-art';
 import { LinkButton } from '@/components/ui/button';
 import { Equation } from '@/components/ui/equation';
 import { Link } from '@/i18n/navigation';
-import { isPreview } from '@/lib/env';
 import { textAttrs } from '@/lib/text-attrs';
 import { MnvrRouteScene } from './mnvr-route-scene';
 import '@/styles/pages.css';
@@ -35,8 +34,9 @@ export const SYSTEM_STEPS = [
 /**
  * Dedicated Mobile NVR & Mobile Surveillance page (client decision 2026-10-02, P2 revision): the generic solution
  * template is replaced by a page built around the product. It opens on a charcoal hero, explains the system with a
- * scroll-driven diagram (the current step builds its part of the system on the vehicle, forwards and backwards; see
- * mnvr-system-art.tsx), then widens to fleet level with the Route scene (D-20), followed by capabilities,
+ * scroll-driven technical cutaway (Concept A: the current step builds its part of the system on the vehicle, forwards
+ * and backwards; mnvr-onboard-art.tsx), then widens to fleet level with the architecture scene (Concept B, scene id
+ * mnvr-route; mnvr-architecture-art.tsx), followed by capabilities,
  * applications and the consultation CTA.
  * No motion is needed to understand it: reduced motion, no JavaScript and old browsers get the complete diagram.
  */
@@ -45,12 +45,11 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
   const copy = getSolutionsCopy(locale).items[SLUG];
   const name = catalog.solutions[SLUG].name;
   const caps = copy.capabilities.items;
-  const [tn, ta, ts, tc, tp] = await Promise.all([
+  const [tn, ta, ts, tc] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'a11y' }),
     getTranslations({ locale, namespace: 'solution' }),
     getTranslations({ locale, namespace: 'cta' }),
-    getTranslations({ locale, namespace: 'preview' }),
   ]);
   const tx = (t: string) => textAttrs(locale, t);
   const index = solutions.findIndex((s) => s.slug === SLUG);
@@ -96,7 +95,7 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
         </div>
       </header>
 
-      {/* 2. On board — the step-synchronised system diagram (data-steps: MotionController sets data-current / data-reached) */}
+      {/* 2. On board — Concept A cutaway (data-steps: MotionController sets data-current / data-reached) */}
       <section aria-labelledby="system-title" className="mnvr-system section-y">
         <div className="container-vp">
           <div className="max-w-[46rem]" data-reveal="">
@@ -107,7 +106,14 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
           </div>
           <div className="sys" data-steps="">
             <div className="sys__stage">
-              <MnvrSystemArt rtl={locale === 'ar'} />
+              <p className="sys__caption" aria-hidden="true">
+                {steps.map((s, i) => (
+                  <span key={s.title} data-layer={i + 1}>
+                    <b className="t-num">{i + 1}</b> <span {...tx(s.title)}>{s.title}</span>
+                  </span>
+                ))}
+              </p>
+              <MnvrOnboardArt rtl={locale === 'ar'} />
             </div>
             <ol className="sys__steps">
               {steps.map((s, i) => (
@@ -139,7 +145,7 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      {/* 3. Fleet level — the Route scene (D-20 storyboard; data-flow motion added after Ziad's review, 2026-10-02) */}
+      {/* 3. Fleet level — Concept B architecture scene on the scene engine (scene id mnvr-route) */}
       <section aria-labelledby="fleet-title" className="theme-dark bg-bg text-fg section-y">
         <div className="container-vp">
           <div className="max-w-[52rem]" data-reveal="">
@@ -162,7 +168,6 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
               {copy.fleet.body[2]}
             </p>
           </div>
-          {isPreview && <p className="solution__preview-note">{tp('sceneFirstCut')}</p>}
           <div className="mt-16 lg:mt-24">
             <MnvrRouteScene locale={locale} name={copy.fleet.title} />
           </div>

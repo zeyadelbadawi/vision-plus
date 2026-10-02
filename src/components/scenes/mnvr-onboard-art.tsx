@@ -2,7 +2,8 @@ import type { CSSProperties } from 'react';
 import { makeIso, type V3 } from './iso';
 
 /**
- * CONCEPT A — "On board" as an isometric technical cutaway (preview prototype for Ziad's review, 2026-10-02).
+ * Mobile NVR "On board" scene — Concept A, an isometric technical cutaway (direction approved by Ziad, 2026-10-02;
+ * docs/SCENE_STORYBOARDS.md §2a).
  * A generic, unbranded coach with its near wall and roof cut away. The five approved components sit where they are
  * installed: cameras (front, rear, cabin, side) with their ground coverage, the Mobile NVR in its cabinet behind the
  * driver with the cabling from every camera, the GPS antenna and the 4G/5G antenna on the roof, the network mast, and a
@@ -10,9 +11,15 @@ import { makeIso, type V3 } from './iso';
  * eases towards the component being read. Static / reduced motion / no JS: the complete system at the overall view.
  * No text is drawn: numbered callouts only (outside the mirrored group); the stage caption above it names the current step.
  */
-export const CUT = { w: 960, h: 600 } as const;
+export const ONBOARD_ART = { w: 960, h: 600 } as const;
 const iso = makeIso(30, 236, 300);
 const { p, poly, line, box, circle } = iso;
+/** Screen position of a callout (LTR artboard), for tests. */
+export const calloutPoint = (n: 1 | 2 | 3 | 4 | 5): [number, number] => {
+  const [at, dx, dy] = ONBOARD_CALLOUTS[n];
+  const [x, y] = p(at);
+  return [x + dx, y + dy];
+};
 
 const L = 12; // length (front at x = L)
 const W = 2.5; // width (near side at y = W)
@@ -70,17 +77,24 @@ const MAST = { at: [11.1, -4.6, 0] as V3, h: 6.2 };
 const MAST_TOP: V3 = [11.1, -4.6, 6.2];
 const WALL = { x0: 11.2, x1: 15.4, y: -10.2, z0: 4.6, z1: 7.2 };
 
+/** Leftmost screen x of the monitoring wall (LTR artboard), for tests: it must stay out of the step 1 view. */
+export const WALL_LEFT_X = Math.min(...[WALL.z0, WALL.z1].map((z) => p([WALL.x0, WALL.y, z])[0]));
+/** The artboard window [x0, x1, y0, y1] a step's view shows. */
+export const viewWindow = (n: 0 | 1 | 2 | 3 | 4 | 5): [number, number, number, number] => {
+  const [cx, cy, s] = ONBOARD_VIEWS[n];
+  return [cx - ONBOARD_ART.w / 2 / s, cx + ONBOARD_ART.w / 2 / s, cy - ONBOARD_ART.h / 2 / s, cy + ONBOARD_ART.h / 2 / s];
+};
 /** Per-step view: centre (LTR artboard) and zoom. 0 = overall view (also the static view). */
-export const CUT_VIEWS: Record<0 | 1 | 2 | 3 | 4 | 5, [number, number, number]> = {
-  0: [CUT.w / 2, CUT.h / 2, 1],
+export const ONBOARD_VIEWS: Record<0 | 1 | 2 | 3 | 4 | 5, [number, number, number]> = {
+  0: [ONBOARD_ART.w / 2, ONBOARD_ART.h / 2, 1],
   1: [360, 400, 1.2], // the vehicle and its coverage only: the monitoring wall stays out of frame until it matters
   2: [455, 400, 1.55],
   3: [395, 345, 1.3],
   4: [470, 300, 1.08],
-  5: [CUT.w / 2, CUT.h / 2, 1],
+  5: [ONBOARD_ART.w / 2, ONBOARD_ART.h / 2, 1],
 };
 /** Callout anchors: a world point plus a screen offset. */
-const CALLOUT: Record<1 | 2 | 3 | 4 | 5, [V3, number, number]> = {
+export const ONBOARD_CALLOUTS: Record<1 | 2 | 3 | 4 | 5, [V3, number, number]> = {
   1: [[11.75, 1.25, 3.0], 20, -22],
   2: [[NVR.x1, NVR.y1, NVR.z1], 22, -16],
   3: [GPS, 0, -34],
@@ -88,15 +102,15 @@ const CALLOUT: Record<1 | 2 | 3 | 4 | 5, [V3, number, number]> = {
   5: [[WALL.x1, WALL.y, WALL.z1], 18, -6],
 };
 
-const viewTransform = (n: keyof typeof CUT_VIEWS, rtl: boolean) => {
-  const [cx0, cy, s] = CUT_VIEWS[n];
-  const cx = rtl ? CUT.w - cx0 : cx0;
-  return `translate(${CUT.w / 2 - cx * s}px, ${CUT.h / 2 - cy * s}px) scale(${s})`;
+const viewTransform = (n: keyof typeof ONBOARD_VIEWS, rtl: boolean) => {
+  const [cx0, cy, s] = ONBOARD_VIEWS[n];
+  const cx = rtl ? ONBOARD_ART.w - cx0 : cx0;
+  return `translate(${ONBOARD_ART.w / 2 - cx * s}px, ${ONBOARD_ART.h / 2 - cy * s}px) scale(${s})`;
 };
 
-export function OnboardCutaway({ rtl }: { rtl: boolean }) {
-  const mx = (x: number) => (rtl ? CUT.w - x : x);
-  const views = Object.fromEntries(Object.keys(CUT_VIEWS).map((k) => [`--v${k}`, viewTransform(Number(k) as 0, rtl)])) as CSSProperties;
+export function MnvrOnboardArt({ rtl }: { rtl: boolean }) {
+  const mx = (x: number) => (rtl ? ONBOARD_ART.w - x : x);
+  const views = Object.fromEntries(Object.keys(ONBOARD_VIEWS).map((k) => [`--v${k}`, viewTransform(Number(k) as 0, rtl)])) as CSSProperties;
   const seats = Array.from({ length: 6 }, (_, i) => 1.4 + i * 1.3);
   const bodyFar = poly([
     [0, 0, FLOOR],
@@ -176,9 +190,9 @@ export function OnboardCutaway({ rtl }: { rtl: boolean }) {
   );
 
   return (
-    <svg className="cut" viewBox={`0 0 ${CUT.w} ${CUT.h}`} aria-hidden="true" focusable="false" style={views}>
+    <svg className="cut" viewBox={`0 0 ${ONBOARD_ART.w} ${ONBOARD_ART.h}`} aria-hidden="true" focusable="false" style={views}>
       <g className="cut-view">
-        <g transform={rtl ? `translate(${CUT.w} 0) scale(-1 1)` : undefined}>
+        <g transform={rtl ? `translate(${ONBOARD_ART.w} 0) scale(-1 1)` : undefined}>
           {/* ground: a fine technical grid and the vehicle's contact shadow */}
           <g className="cut-grid">
             {Array.from({ length: 13 }, (_, i) => -4 + i * 2).map((x) => (
@@ -406,7 +420,7 @@ export function OnboardCutaway({ rtl }: { rtl: boolean }) {
 
         {/* step callouts and the current step's approved term (never mirrored) */}
         {([1, 2, 3, 4, 5] as const).map((n) => {
-          const [at, dx, dy] = CALLOUT[n];
+          const [at, dx, dy] = ONBOARD_CALLOUTS[n];
           const [x, y] = p(at);
           return (
             <g key={n} className="cut-callout" data-layer={n} transform={`translate(${mx(x + dx)} ${y + dy})`}>

@@ -21,161 +21,153 @@
     .mnvr-hero__band { margin-block-start: 96px; }
   }
 
-  /* 2. On board — step-synchronised system diagram (revised after Ziad's review, 2026-10-02)
-     Static by default: the complete diagram, compact steps, no motion (reduced motion, no JavaScript).
-     With [data-live] (MotionController, motion allowed) the diagram follows the current step in both directions:
-     unreached parts wait as a faint outline, reached parts are built and stay lit, and only the current step runs
-     its data-flow pulses, a few times, then rests. Only opacity, transform and stroke-dashoffset change. */
+  /* 2. On board — Concept A, the isometric technical cutaway (direction approved by Ziad, 2026-10-02; storyboard §2a)
+     Static by default: the complete system at the overall view, compact steps (reduced motion, no JavaScript).
+     With [data-live] (MotionController [data-steps], motion allowed) the scene follows the step being read, in both
+     directions: unreached parts wait faintly, reached parts are built and lit, the view eases to the current
+     component, and only the current step's emphasis runs (a few iterations, then rest). Step scroll room is keyed to
+     .motion-ok (set before first paint) so the layout never shifts when the controller starts. */
   .mnvr-system { background: var(--bg); color: var(--fg); }
+  /* ---------- shared step list ---------- */
   .sys { margin-block-start: 40px; display: grid; }
-  .sys__stage {
-    position: sticky;
-    inset-block-start: var(--header-h);
-    z-index: 1;
-    background: var(--bg);
-    padding-block: 12px;
-    border-block-end: 1px solid var(--line);
-    /* the header can be shorter than --header-h once condensed: keep scrolled text from showing above the stage */
-    box-shadow: 0 calc(-1 * var(--header-h)) 0 var(--bg);
-  }
+  /* Sticks under the compact header (64 px, header.css .site-header--compact): the stage only sticks once the page
+     has scrolled, when the header is compact, so nothing shows between them and nothing covers the heading above. */
+  .sys__stage { position: sticky; inset-block-start: 64px; z-index: 1; background: var(--bg); padding-block: 10px; border-block-end: 1px solid var(--line); }
   .sys__steps { display: grid; }
-  .sys__step { position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding-block: 28px; }
+  .sys__step { position: relative; padding-block: 28px; }
+  .sys__step { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; }
   .sys__step + .sys__step { border-block-start: 1px solid var(--line); }
-  .sys__step::before {
-    /* current-step marker (the text itself is never dimmed or hidden) */
-    content: '';
-    position: absolute;
-    inset-inline-start: -16px;
-    inset-block: 28px;
-    width: 2px;
-    background: var(--color-gold);
-    opacity: 0;
-    transition: opacity var(--dur-panel) var(--ease-precise);
-  }
-  .sys__n {
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: 13px;
-    background: var(--color-charcoal);
-    color: var(--color-white);
-    border: 1px solid var(--color-charcoal);
-    transition: background-color var(--dur-panel), color var(--dur-panel), border-color var(--dur-panel);
-  }
+  .sys__step::before { content: ''; position: absolute; inset-inline-start: -16px; inset-block: 28px; width: 2px; background: var(--color-gold); opacity: 0; transition: opacity var(--dur-panel); }
+  .sys__n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; font-size: 13px; background: var(--color-charcoal); color: var(--color-white); transition: background-color var(--dur-panel), color var(--dur-panel); }
   .sys__tags { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-block-start: 12px; }
-  .sys__tags li { font-size: var(--fs-caption); line-height: 1.4; padding: 3px 10px; border: 1px solid var(--line-strong); }
-  /* Scroll room for each step only when the diagram will follow the scroll. Keyed to .motion-ok (set before first
-     paint) rather than [data-live] (set after hydration) so the layout never shifts when the controller starts. */
+  .sys__tags li { font-size: var(--fs-caption); padding: 3px 10px; border: 1px solid var(--line-strong); }
   .motion-ok .sys__step { min-height: 40svh; }
   .motion-ok .sys__step:last-child { min-height: 0; }
+  .sys[data-live] .sys__n { background: transparent; color: var(--fg-muted); box-shadow: inset 0 0 0 1px var(--line-strong); }
   @media (min-width: 1024px) {
     .sys { margin-block-start: 64px; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
-    .sys__steps { grid-column: 1 / span 5; grid-row: 1; }
-    .sys__stage { grid-column: 7 / span 6; grid-row: 1; inset-block-start: calc(var(--header-h) + 12svh); padding: 0; border: 0; background: none; box-shadow: none; }
+    .sys__steps { grid-column: 1 / span 4; grid-row: 1; }
+    .sys__stage { grid-column: 5 / span 8; grid-row: 1; inset-block-start: calc(var(--header-h) + 8svh); padding: 0; border: 0; background: none; }
     .sys__step { padding-block: 40px; }
     .sys__step::before { inset-block: 40px; }
-    .motion-ok .sys__step { min-height: 32svh; }
-    .motion-ok .sys__step:last-child { min-height: 0; }
+    .motion-ok .sys__step { min-height: 34svh; }
+    .motion-ok .sys__step:last-child { min-height: 52svh; }
   }
 
-  .sys-art { display: block; width: 100%; height: auto; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-  @media (max-width: 1023px) { .sys-art { max-height: 30svh; } }
-  .sys-base { stroke: var(--scene-line); stroke-width: 1; }
-  .sys-body { stroke: var(--fg); stroke-width: 1.5; fill: var(--bg-raised); }
-  .sys-device { stroke: var(--fg); stroke-width: 1.5; fill: var(--bg-raised); }
-  .sys-wedge { fill: color-mix(in srgb, var(--color-gold) 16%, transparent); stroke: var(--color-gold); stroke-width: 1; transform-box: fill-box; }
-  .sys-wedge[data-dir='fwd'] { transform-origin: 0% 50%; }
-  .sys-wedge[data-dir='back'] { transform-origin: 100% 50%; }
-  .sys-wedge[data-dir='down'] { transform-origin: 50% 0%; }
-  .sys-cam, .sys-recorder { transform-box: fill-box; transform-origin: 50% 50%; }
-  .sys-cable { stroke: var(--color-gold); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 0; }
-  .sys-flow { stroke: var(--color-gold); stroke-width: 4; stroke-dasharray: 0.08 2; stroke-dashoffset: 0.08; opacity: 0; }
-  .sys-store { fill: var(--color-gold); transform-box: fill-box; transform-origin: 0 50%; }
-  .sys-pin { fill: var(--color-gold); }
-  .sys-ring { stroke: var(--color-gold); stroke-width: 1; stroke-dasharray: 3 5; transform-box: fill-box; transform-origin: 50% 50%; }
-  .sys-arc { stroke: var(--color-gold); stroke-width: 1.5; }
-  .sys-pane { stroke: var(--scene-line); stroke-width: 1; fill: var(--color-gold); fill-opacity: 0.14; }
-  .sys-callout circle { fill: var(--color-charcoal); transition: fill var(--dur-panel); }
-  .sys-callout text { fill: var(--color-white); font-size: 12px; font-weight: 600; transition: fill var(--dur-panel); }
+  /* Artwork (mnvr-onboard-art.tsx) */
+  .cut { display: block; width: 100%; height: auto; overflow: hidden; stroke-linejoin: round; stroke-linecap: round; }
+  @media (max-width: 1023px) { .cut { max-height: 34svh; } }
+  .cut-view { transform-box: view-box; transform-origin: 0 0; }
+  .cut-grid path { stroke: var(--color-gray-light); stroke-width: 1; fill: none; }
+  .cut-shadow { fill: var(--color-charcoal); opacity: 0.07; }
+  .cut-wall { fill: var(--color-white); stroke: var(--color-gray-400); stroke-width: 1; }
+  .cut-wall--rear { fill: color-mix(in srgb, var(--color-gray-light) 50%, var(--color-white)); }
+  .cut-window path { fill: var(--color-off-white); stroke: var(--color-gray-light); stroke-width: 1; }
+  .cut-face-top { fill: var(--color-white); stroke: var(--color-gray-400); stroke-width: 0.75; }
+  .cut-face-front { fill: var(--color-gray-light); stroke: var(--color-gray-400); stroke-width: 0.75; }
+  .cut-face-side { fill: color-mix(in srgb, var(--color-gray-light) 75%, var(--color-gray-400)); stroke: var(--color-gray-400); stroke-width: 0.75; }
+  .cut-seat .cut-face-top { fill: var(--color-off-white); }
+  .cut-section { fill: var(--color-gray-light); stroke: var(--color-charcoal); stroke-width: 1.25; }
+  .cut-section--edge { fill: var(--color-gray-400); }
+  .cut-ghost path { fill: none; stroke: var(--color-gray-400); stroke-width: 1; stroke-dasharray: 4 5; }
+  .cut-wheel path { fill: var(--color-charcoal); }
+  .cut-wheel .cut-hub { fill: var(--color-gray-400); }
+  .cut-dev-top { fill: var(--color-gray-dark); stroke: var(--color-charcoal); stroke-width: 0.75; transition: fill 500ms var(--ease-precise); }
+  .cut-dev-front { fill: var(--color-charcoal); stroke: var(--color-charcoal); stroke-width: 0.75; }
+  .cut-dev-side { fill: color-mix(in srgb, var(--color-charcoal) 60%, var(--color-gray-dark)); stroke: var(--color-charcoal); stroke-width: 0.75; }
+  .cut-bay { fill: var(--color-gold); transition: fill 400ms var(--ease-precise) calc(var(--i) * 150ms); }
+  .cut-cam, .cut-nvr, .cut-gps, .cut-cell, .cut-wall-unit { transform-box: fill-box; transform-origin: 50% 100%; }
+  .cut-cone { fill: var(--color-gold); fill-opacity: 0.16; stroke: var(--color-gold); stroke-width: 1; stroke-opacity: 0.7; }
+  .cut-cone--cabin { fill-opacity: 0.12; stroke-dasharray: 3 4; }
+  .cut-cable { fill: none; stroke: var(--color-gold); stroke-width: 1.6; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .cut-flow { fill: none; stroke: var(--color-gold); stroke-width: 4.5; stroke-dasharray: 0.07 2; stroke-dashoffset: 0.07; opacity: 0; }
+  .cut-fix { fill: var(--color-gold); fill-opacity: 0.05; stroke: var(--color-gold); stroke-width: 1.2; stroke-dasharray: 6 6; }
+  .cut-fix--inner { fill-opacity: 0.08; stroke-dasharray: none; }
+  .cut-cross { stroke: var(--color-gold); stroke-width: 1; stroke-opacity: 0.6; }
+  .cut-arc { fill: none; stroke: var(--color-gold); stroke-width: 1.6; }
+  .cut-link { fill: none; stroke: var(--color-gold); stroke-width: 1.6; stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .cut-mast path { fill: none; stroke: var(--color-gray-mid); stroke-width: 1.4; }
+  .cut-stand { stroke: var(--color-charcoal); stroke-width: 3; }
+  .cut-pane { fill: var(--color-white); fill-opacity: 0.9; stroke: var(--color-gold); stroke-width: 0.75; transition: fill-opacity 500ms var(--ease-precise) calc(600ms + var(--i) * 140ms); }
+  .cut-callout circle { fill: var(--color-charcoal); transition: fill var(--dur-panel); }
+  .cut-callout__n { fill: var(--color-white); font-size: 12px; font-weight: 600; }
+  .cut-lens { fill: var(--color-gray-mid); stroke: var(--color-gray-400); stroke-width: 0.6; }
+  .sys:not([data-live]) .sys__caption { display: none; }
+  .sys__caption { min-height: 28px; margin-block-end: 4px; font-size: var(--fs-caption); font-weight: 600; }
+  .sys__caption > span { display: none; align-items: center; gap: 10px; }
+  .sys__caption b { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--color-gold); color: var(--color-charcoal); font-size: 12px; }
+  .cut-mast-panel .cut-dev-front { fill: var(--color-gray-dark); }
 
-  /* Step-by-step state (only with [data-live]) */
-  .sys[data-live] .sys-layer, .sys[data-live] .sys-callout { opacity: 0.12; transition: opacity 600ms var(--ease-precise); }
-  .sys[data-live] .sys__n { background: transparent; color: var(--fg-muted); border-color: var(--line-strong); }
-  .sys[data-live] .sys-cable { stroke-dashoffset: 1; transition: stroke-dashoffset 800ms var(--ease-precise) 150ms; }
-  .sys[data-live] .sys-cam { transform: scale(0.5); transition: transform 500ms var(--ease-precise); }
-  .sys[data-live] .sys-wedge { transform: scale(0.15); transition: transform 700ms var(--ease-precise) 250ms; }
-  .sys[data-live] .sys-recorder { transform: scale(0.85); transition: transform 600ms var(--ease-precise) 500ms; }
-  .sys[data-live] .sys-store { transform: scaleX(0); transition: transform 500ms var(--ease-precise) calc(900ms + var(--i) * 160ms); }
-  .sys[data-live] .sys-pin-drop { transform: translateY(-16px); opacity: 0; transition: transform 600ms var(--ease-precise) 450ms, opacity 300ms 450ms; }
-  .sys[data-live] .sys-pane { fill-opacity: 0; transition: fill-opacity 500ms var(--ease-precise) calc(700ms + var(--i) * 150ms); }
-  .sys[data-reached~='1'] .sys-layer[data-layer='1'], .sys[data-reached~='1'] .sys-callout[data-layer='1'] { opacity: 1; }
-  .sys[data-reached~='2'] .sys-layer[data-layer='2'], .sys[data-reached~='2'] .sys-callout[data-layer='2'] { opacity: 1; }
-  .sys[data-reached~='3'] .sys-layer[data-layer='3'], .sys[data-reached~='3'] .sys-callout[data-layer='3'] { opacity: 1; }
-  .sys[data-reached~='4'] .sys-layer[data-layer='4'], .sys[data-reached~='4'] .sys-callout[data-layer='4'] { opacity: 1; }
-  .sys[data-reached~='5'] .sys-layer[data-layer='5'], .sys[data-reached~='5'] .sys-callout[data-layer='5'] { opacity: 1; }
-  .sys[data-reached~='1'] [data-layer='1'] .sys-cable { stroke-dashoffset: 0; }
-  .sys[data-reached~='2'] [data-layer='2'] .sys-cable { stroke-dashoffset: 0; }
-  .sys[data-reached~='3'] [data-layer='3'] .sys-cable { stroke-dashoffset: 0; }
-  .sys[data-reached~='4'] [data-layer='4'] .sys-cable { stroke-dashoffset: 0; }
-  .sys[data-reached~='5'] [data-layer='5'] .sys-cable { stroke-dashoffset: 0; }
-  .sys[data-reached~='1'] .sys-cam, .sys[data-reached~='1'] .sys-wedge, .sys[data-reached~='2'] .sys-recorder { transform: none; }
-  .sys[data-reached~='2'] .sys-store { transform: none; }
-  .sys[data-reached~='3'] .sys-pin-drop { transform: none; opacity: 1; }
-  .sys[data-reached~='5'] .sys-pane { fill-opacity: 0.14; }
-  .sys[data-reached~='1'] .sys__step[data-step='1'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
-  .sys[data-reached~='2'] .sys__step[data-step='2'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
-  .sys[data-reached~='3'] .sys__step[data-step='3'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
-  .sys[data-reached~='4'] .sys__step[data-step='4'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
-  .sys[data-reached~='5'] .sys__step[data-step='5'] .sys__n { background: var(--color-charcoal); color: var(--color-white); border-color: var(--color-charcoal); }
-  .sys[data-current='1'] .sys__step[data-step='1'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-live] .cut-view { transform: var(--v0); transition: transform 1100ms var(--ease-precise); }
+  .sys[data-live] .cut-layer, .sys[data-live] .cut-callout { opacity: 0.1; transition: opacity 600ms var(--ease-precise); }
+  .sys[data-live] .cut-cable, .sys[data-live] .cut-link { stroke-dashoffset: 1; transition: stroke-dashoffset 900ms var(--ease-precise) 200ms; }
+  .sys[data-live] :is(.cut-cam, .cut-nvr, .cut-gps, .cut-cell, .cut-wall-unit) { opacity: 0.35; transition: opacity 500ms var(--ease-precise), transform 600ms var(--ease-precise); }
+  .sys[data-live] .cut-pane { fill-opacity: 0; }
+  .sys[data-live] .cut-bay { fill: var(--color-gray-mid); }
+
+  .sys[data-reached~='1'] [data-layer='1'] { opacity: 1; }
+  .sys[data-reached~='1'] [data-layer='1'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .sys[data-reached~='1'] .cut-cam { opacity: 1; }
+  .sys[data-reached~='1'] .cut-cam .cut-dev-top { fill: var(--color-gold); }
+  .sys[data-reached~='1'] .sys__step[data-step='1'] .sys__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .sys[data-current='1'] .cut-view { transform: var(--v1); }
+  .sys[data-current='1'] .sys__step[data-step='1'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); }
   .sys[data-current='1'] .sys__step[data-step='1']::before { opacity: 1; }
-  .sys[data-current='1'] .sys-callout[data-layer='1'] circle { fill: var(--color-gold); }
-  .sys[data-current='1'] .sys-callout[data-layer='1'] text { fill: var(--color-charcoal); }
-  .sys[data-current='2'] .sys__step[data-step='2'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='1'] .cut-callout[data-layer='1'] circle { fill: var(--color-gold); }
+  .sys[data-current='1'] .sys__caption > [data-layer='1'] { display: inline-flex; }
+  .sys[data-reached~='2'] [data-layer='2'] { opacity: 1; }
+  .sys[data-reached~='2'] [data-layer='2'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .sys[data-reached~='2'] .cut-nvr { opacity: 1; }
+  .sys[data-reached~='2'] .cut-nvr .cut-dev-top { fill: var(--color-gold); }
+  .sys[data-reached~='2'] .sys__step[data-step='2'] .sys__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .sys[data-current='2'] .cut-view { transform: var(--v2); }
+  .sys[data-current='2'] .sys__step[data-step='2'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); }
   .sys[data-current='2'] .sys__step[data-step='2']::before { opacity: 1; }
-  .sys[data-current='2'] .sys-callout[data-layer='2'] circle { fill: var(--color-gold); }
-  .sys[data-current='2'] .sys-callout[data-layer='2'] text { fill: var(--color-charcoal); }
-  .sys[data-current='3'] .sys__step[data-step='3'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='2'] .cut-callout[data-layer='2'] circle { fill: var(--color-gold); }
+  .sys[data-current='2'] .sys__caption > [data-layer='2'] { display: inline-flex; }
+  .sys[data-reached~='3'] [data-layer='3'] { opacity: 1; }
+  .sys[data-reached~='3'] [data-layer='3'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .sys[data-reached~='3'] .cut-gps { opacity: 1; }
+  .sys[data-reached~='3'] .cut-gps .cut-dev-top { fill: var(--color-gold); }
+  .sys[data-reached~='3'] .sys__step[data-step='3'] .sys__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .sys[data-current='3'] .cut-view { transform: var(--v3); }
+  .sys[data-current='3'] .sys__step[data-step='3'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); }
   .sys[data-current='3'] .sys__step[data-step='3']::before { opacity: 1; }
-  .sys[data-current='3'] .sys-callout[data-layer='3'] circle { fill: var(--color-gold); }
-  .sys[data-current='3'] .sys-callout[data-layer='3'] text { fill: var(--color-charcoal); }
-  .sys[data-current='4'] .sys__step[data-step='4'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='3'] .cut-callout[data-layer='3'] circle { fill: var(--color-gold); }
+  .sys[data-current='3'] .sys__caption > [data-layer='3'] { display: inline-flex; }
+  .sys[data-reached~='4'] [data-layer='4'] { opacity: 1; }
+  .sys[data-reached~='4'] [data-layer='4'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .sys[data-reached~='4'] .cut-cell { opacity: 1; }
+  .sys[data-reached~='4'] .cut-cell .cut-dev-top { fill: var(--color-gold); }
+  .sys[data-reached~='4'] .sys__step[data-step='4'] .sys__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .sys[data-current='4'] .cut-view { transform: var(--v4); }
+  .sys[data-current='4'] .sys__step[data-step='4'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); }
   .sys[data-current='4'] .sys__step[data-step='4']::before { opacity: 1; }
-  .sys[data-current='4'] .sys-callout[data-layer='4'] circle { fill: var(--color-gold); }
-  .sys[data-current='4'] .sys-callout[data-layer='4'] text { fill: var(--color-charcoal); }
-  .sys[data-current='5'] .sys__step[data-step='5'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); border-color: var(--color-gold); }
+  .sys[data-current='4'] .cut-callout[data-layer='4'] circle { fill: var(--color-gold); }
+  .sys[data-current='4'] .sys__caption > [data-layer='4'] { display: inline-flex; }
+  .sys[data-reached~='5'] [data-layer='5'] { opacity: 1; }
+  .sys[data-reached~='5'] [data-layer='5'] :is(.cut-cable, .cut-link) { stroke-dashoffset: 0; }
+  .sys[data-reached~='5'] .cut-wall-unit { opacity: 1; }
+  .sys[data-reached~='5'] .sys__step[data-step='5'] .sys__n { background: var(--color-charcoal); color: var(--color-white); box-shadow: none; }
+  .sys[data-current='5'] .cut-view { transform: var(--v5); }
+  .sys[data-current='5'] .sys__step[data-step='5'] .sys__n { background: var(--color-gold); color: var(--color-charcoal); }
   .sys[data-current='5'] .sys__step[data-step='5']::before { opacity: 1; }
-  .sys[data-current='5'] .sys-callout[data-layer='5'] circle { fill: var(--color-gold); }
-  .sys[data-current='5'] .sys-callout[data-layer='5'] text { fill: var(--color-charcoal); }
-
-  /* Current step only: what the step does, shown a few times, then at rest (no endless motion) */
-  .sys[data-current='1'] .sys-wedge { animation: sys-scan 1.6s var(--ease-precise) 1s 2; }
-  .sys[data-current='2'] [data-layer='2'] .sys-flow { animation: sys-flow 1.3s linear calc(1s + var(--i) * 0.22s) 3 both; }
-  .sys[data-current='3'] .sys-ring { animation: sys-ping 1.6s ease-out 1s 3; }
-  .sys[data-current='4'] .sys-arc { animation: sys-radiate 1.2s ease-in-out calc(0.6s + var(--i) * 0.2s) 3; }
-  .sys[data-current='4'] [data-layer='4'] .sys-flow { animation: sys-flow 1.4s linear 1s 3 both; }
-  .sys[data-current='5'] [data-layer='5'] .sys-flow { animation: sys-flow 0.9s linear 0.8s 3 both; }
-
-  @keyframes sys-flow {
-    0% { stroke-dashoffset: 0.08; opacity: 0; }
-    12% { opacity: 1; }
-    88% { opacity: 1; }
-    100% { stroke-dashoffset: -1; opacity: 0; }
-  }
-  @keyframes sys-scan {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.82); }
-  }
-  @keyframes sys-ping {
-    0% { transform: scale(0.6); opacity: 1; }
-    100% { transform: scale(1.3); opacity: 0; }
-  }
-  @keyframes sys-radiate {
-    0%, 100% { opacity: 0.3; }
-    45% { opacity: 1; }
-  }
+  .sys[data-current='5'] .cut-callout[data-layer='5'] circle { fill: var(--color-gold); }
+  .sys[data-current='5'] .sys__caption > [data-layer='5'] { display: inline-flex; }
+  .sys[data-reached~='4'] .cut-mast path { stroke: var(--color-charcoal); }
+  .sys[data-reached~='2'] .cut-bay { fill: var(--color-gold); }
+  .sys[data-reached~='5'] .cut-pane { fill-opacity: 0.9; }
+  .sys[data-current='2'] .cut-nvr { transform: translateY(-10px); }
+  .sys[data-current='2'] [data-layer='2'] .cut-flow { animation: sys-flow 1.3s linear calc(0.9s + var(--i) * 0.22s) 3 both; }
+  .sys[data-current='1'] .cut-cone { animation: sys-sweep 1.6s var(--ease-precise) calc(0.6s + var(--i) * 0.15s) 2; }
+  .sys[data-current='3'] .cut-fix { animation: sys-ping 1.8s ease-out 0.8s 3; transform-box: fill-box; transform-origin: 50% 50%; }
+  .sys[data-current='4'] .cut-arc { animation: sys-radiate 1.2s ease-in-out calc(0.4s + var(--i) * 0.2s) 3; }
+  .sys[data-current='4'] [data-layer='4'] .cut-flow { animation: sys-flow 1.5s linear 1s 3 both; }
+  .sys[data-current='5'] [data-layer='5'] .cut-flow { animation: sys-flow 1.3s linear 0.9s 3 both; }
+  @keyframes sys-flow { 0% { stroke-dashoffset: 0.07; opacity: 0; } 12%, 88% { opacity: 1; } 100% { stroke-dashoffset: -1; opacity: 0; } }
+  @keyframes sys-sweep { 0%, 100% { fill-opacity: 0.16; } 50% { fill-opacity: 0.32; } }
+  @keyframes sys-ping { 0% { transform: scale(0.85); opacity: 1; } 100% { transform: scale(1.12); opacity: 0.35; } }
+  @keyframes sys-radiate { 0%, 100% { stroke-opacity: 1; } 50% { stroke-opacity: 0.2; } }
   @media (prefers-reduced-motion: reduce) {
     .sys *, .sys *::before { animation: none !important; transition: none !important; }
   }

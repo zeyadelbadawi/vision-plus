@@ -1,9 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react';
 
 /**
- * CONCEPT B — the system as an architecture schematic (preview prototype for Ziad's review, 2026-10-02).
- * Proposed replacement for the Mobile NVR page's second scene (the Route scene; scope authorised by Ziad for the
- * Mobile NVR revision only). Three zones read in the language direction: the vehicle (cameras and GPS feeding the
+ * Mobile NVR fleet-level scene ("Route", scene id mnvr-route) — Concept B, the system as an architecture schematic
+ * (direction approved by Ziad, 2026-10-02; replaces the earlier city-map artwork; docs/SCENE_STORYBOARDS.md §2). Three zones read in the language direction: the vehicle (cameras and GPS feeding the
  * Mobile NVR with its local storage), the networks (4G/5G and Wi-Fi), and the remote platform (live viewing,
  * playback, alerts, fleet monitoring). The six approved beats (Video, Location, Connectivity, Monitoring,
  * Intelligence, Management) light the zone and connection they describe, and data pulses travel the connections.
@@ -55,7 +54,7 @@ interface Geometry {
 
 const range = (n: number) => Array.from({ length: n }, (_, i) => i);
 
-const WIDE: Geometry = (() => {
+export const WIDE: Geometry = (() => {
   const nvr = { x: 190, y: 200, w: 180, h: 190 };
   const camY = [150, 214, 278, 342];
   return {
@@ -101,7 +100,7 @@ const WIDE: Geometry = (() => {
   };
 })();
 
-const TALL: Geometry = (() => {
+export const TALL: Geometry = (() => {
   const nvr = { x: 36, y: 190, w: 328, h: 130 };
   const camX = [36, 108, 180, 252];
   return {
@@ -200,7 +199,7 @@ function Glyph({ kind, x, y }: { kind: 'camera' | 'pin' | 'bars' | 'wifi' | 'pla
 
 const R = ({ b, rx, className }: { b: Box; rx: number; className?: string }) => <rect className={className} x={b.x} y={b.y} width={b.w} height={b.h} rx={rx} />;
 
-export function SystemArchitecture({
+export function MnvrArchitectureArt({
   rtl,
   terms,
   layout = 'wide',

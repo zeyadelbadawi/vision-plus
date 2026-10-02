@@ -3,6 +3,7 @@
 // Writes docs/review/p2/*.webp — final (reduced-motion) states plus the six pinned beats of the Route scene.
 // OUT=docs/review/p2-mnvr-revision ONLY=mnvr limits the set to the Mobile NVR page and adds the "On board" steps.
 // Motion shots are taken ~1.3 s after each step becomes current, i.e. while that step's finite pulses are playing.
+// OUT=docs/review/p2-mnvr-final ONLY=mnvr: the implemented Concept A (On board) and Concept B (fleet scene), 2026-10-02.
 import { mkdirSync } from 'node:fs';
 import { chromium } from '@playwright/test';
 import sharp from 'sharp';
@@ -33,6 +34,33 @@ for (const [slug, path] of [
       await save(await page.screenshot({ fullPage: true }), `${slug}-${locale}-${width}`, width);
       await ctx.close();
     }
+  }
+}
+
+// Reduced motion, each Mobile NVR scene on its own (the complete, still state): desktop and mobile, en and ar.
+// Full-page capture clipped to the section, so the fixed header is not stamped into tall sections.
+if (!ONLY || ONLY === 'mnvr') {
+  for (const [locale, width] of [
+    ['en', 1440],
+    ['ar', 1440],
+    ['en', 390],
+    ['ar', 390],
+  ]) {
+    const ctx = await browser.newContext({ viewport: { width, height: width < 768 ? 844 : 900 }, reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto(`${BASE}/${locale}/solutions/mobile-nvr-mobile-surveillance`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    for (const [name, sel] of [
+      ['onboard', '.mnvr-system'],
+      ['route', 'section[aria-labelledby="fleet-title"]'],
+    ]) {
+      const clip = await page.locator(sel).evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left, y: r.top + window.scrollY, width: r.width, height: r.height };
+      });
+      await save(await page.screenshot({ fullPage: true, clip }), `${name}-${locale}-${width}-static`, width);
+    }
+    await ctx.close();
   }
 }
 
