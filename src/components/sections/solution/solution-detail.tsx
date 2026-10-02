@@ -1,49 +1,51 @@
-import type { CSSProperties } from 'react';
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
 import { getCatalog, getSolutionsCopy } from '@/content';
 import { solutions, type SolutionSlug } from '@/content/data/registry';
 import { pageVisibility } from '@/content/data/visibility';
 import { categoriesForSolution, industriesForSolution, industrySolutions } from '@/content/data/relations';
+import { scenes } from '@/content/data/scenes';
 import { PageIntro } from '@/components/layout/page-intro';
 import { Section } from '@/components/layout/section';
-import { ImageSlot } from '@/components/media/image-slot';
+import { ImageSlot, slotVisible } from '@/components/media/image-slot';
+import { CtaBand } from '@/components/sections/shared/cta-band';
+import { HeroBand } from '@/components/sections/shared/hero-band';
+import { PillarStrip } from '@/components/sections/shared/pillar-strip';
+import { ProcessTrack } from '@/components/sections/shared/process-track';
+import { RelatedRail } from '@/components/sections/shared/related-rail';
+import { SceneSteps } from '@/components/sections/shared/scene-steps';
+import { SpecList } from '@/components/sections/shared/spec-list';
+import { StatementBand } from '@/components/sections/shared/statement-band';
 import { LinkButton } from '@/components/ui/button';
 import { ArrowEnd } from '@/components/ui/icons';
-import { Equation } from '@/components/ui/equation';
-import { Link } from '@/i18n/navigation';
 import { isPreview } from '@/lib/env';
 import { textAttrs } from '@/lib/text-attrs';
-import { MnvrRouteScene } from './mnvr-route-scene';
 import '@/styles/pages.css';
 
-const IMAGE: Record<SolutionSlug, string> = {
-  'mobile-nvr-mobile-surveillance': 'MNVR',
-  'cctv-security-systems': 'CCTV',
-  'access-control': 'ACCESS',
-  'networking-ict': 'ICT',
-  'elv-systems': 'ELV',
-  'audio-visual': 'AV',
-  'smart-building-home-automation': 'SMART',
-  'fire-alarm-systems': 'FIRE',
-};
+/** The seven solutions on the shared §26.2 template. Mobile NVR has its own dedicated page (A-22, A-29). */
+export type TemplateSolutionSlug = Exclude<SolutionSlug, 'mobile-nvr-mobile-surveillance'>;
 
 /**
- * Solution detail (MASTER_PROJECT_PLAN §26.2): hero → context → scene → capabilities → solution module →
- * lifecycle → related → CTA. Built in P2 for Mobile NVR only (the design-direction proof, §49.1 P2); the
- * same template serves the other seven solutions once P5 is approved. All copy is the approved text.
+ * Solution detail (MASTER_PROJECT_PLAN §26.2; P5A-04): hero → context → scene → capabilities → solution module →
+ * lifecycle → related → CTA. Every word is approved copy (`01` §09–§15) or approved microcopy (D-18).
+ * Sections without approved content collapse instead of being filled (§19.6 "real or nothing"):
+ * - Context (#2) only when the solution has body paragraphs beyond the opening one;
+ * - Scene (#3) shows the scene's approved beat texts until its artwork is built in P5B (§55.3); subtle scenes
+ *   without step texts (Networking, Audio Visual) have no section until then;
+ * - Capabilities (#4) only where an approved list exists (ELV's approved module is its four principles, shown as
+ *   its scene beats, so #5 is not repeated: §26.2 #5 "if not already covered in the scene").
  */
-export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: 'mobile-nvr-mobile-surveillance' }) {
+export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: TemplateSolutionSlug }) {
   const catalog = getCatalog(locale);
   const copy = getSolutionsCopy(locale).items[slug];
   const name = catalog.solutions[slug].name;
-  const code = IMAGE[slug];
-  const [tn, ta, ts, tc, tp] = await Promise.all([
+  const entry = solutions.find((s) => s.slug === slug)!;
+  const scene = scenes.find((s) => s.solution === slug);
+  const [tn, ta, ts, tc] = await Promise.all([
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'a11y' }),
     getTranslations({ locale, namespace: 'solution' }),
     getTranslations({ locale, namespace: 'cta' }),
-    getTranslations({ locale, namespace: 'preview' }),
   ]);
 
   // Relations were approved as is (D-19); product categories only while the Products page is visible (Q-02).
@@ -54,144 +56,122 @@ export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: '
   const neighbours = [solutions[(index + solutions.length - 1) % solutions.length]!, solutions[(index + 1) % solutions.length]!];
   const [opening, ...context] = copy.body;
   const tx = (t: string | undefined) => textAttrs(locale, t);
+  const detailId = entry.detail;
+  const hasSteps = scene?.beats.some((b) => b.title) ?? false;
 
   return (
     <main id="main" tabIndex={-1} className="solution">
-      {/* 1. Hero */}
-      <PageIntro
-        locale={locale}
-        crumbs={[{ label: tn('home'), href: '/' }, { label: tn('solutions'), href: '/solutions' }, { label: name }]}
-        crumbsLabel={ta('breadcrumb')}
-        title={name}
-      >
-        <p className="t-display solution__headline" {...tx(copy.headline)}>
-          {copy.headline}
-        </p>
-        <p className="t-lede mt-8 max-w-[40rem]" {...tx(opening)}>
-          {opening}
-        </p>
-      </PageIntro>
-      <div className="solution__band">
-        <ImageSlot id={`SOL-${code}-HERO`} locale={locale} sizes="100vw" priority />
+      {/* 1. Hero (on mobile the image comes first, §26.2 #1) */}
+      <div className="solution-hero">
+        <PageIntro
+          locale={locale}
+          crumbs={[{ label: tn('home'), href: '/' }, { label: tn('solutions'), href: '/solutions' }, { label: name }]}
+          crumbsLabel={ta('breadcrumb')}
+          title={name}
+        >
+          <p className="t-display solution__headline" {...tx(copy.headline)}>
+            {copy.headline}
+          </p>
+          {opening && (
+            <p className="t-lede mt-8 max-w-[40rem]" {...tx(opening)}>
+              {opening}
+            </p>
+          )}
+        </PageIntro>
+        <HeroBand locale={locale} id={entry.hero} />
       </div>
 
       {/* 2. Context */}
-      <Section tone="canvas" labelledBy="context-title" spacing="default">
-        <div className="container-vp grid-vp gap-y-12">
-          <div className="col-span-4 md:col-span-8 lg:col-span-6">
-            <h2 id="context-title" className="sr-only">
-              {name}
-            </h2>
-            <div className="grid gap-6">
-              {context.map((p) => (
-                <p key={p} className="t-body measure" {...tx(p)}>
-                  {p}
-                </p>
-              ))}
+      {context.length > 0 && (
+        <Section tone="canvas" labelledBy="context-title">
+          <div className="container-vp grid-vp gap-y-12">
+            <div className="col-span-4 md:col-span-8 lg:col-span-6">
+              <h2 id="context-title" className="sr-only" {...tx(name)}>
+                {name}
+              </h2>
+              <div className="grid gap-6">
+                {context.map((p) => (
+                  <p key={p} className="t-body measure" {...tx(p)}>
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </div>
+            {slotVisible(detailId) && (
+              <div className="col-span-4 md:col-span-8 lg:col-span-5 lg:col-start-8">
+                <ImageSlot id={detailId} locale={locale} sizes="(min-width: 1024px) 40vw, 100vw" />
+              </div>
+            )}
+          </div>
+        </Section>
+      )}
+
+      {/* 3. Scene: the approved beat texts (artwork follows in P5B) */}
+      {scene && hasSteps && (
+        <Section tone="raised" labelledBy="scene-title">
+          <div className="container-vp">
+            {'principles' in copy ? (
+              <div data-reveal="">
+                <span className="seam mb-6 w-12" aria-hidden="true" />
+                <h2 id="scene-title" className="t-h2" {...tx(copy.principles.intro)}>
+                  {copy.principles.intro}
+                </h2>
+              </div>
+            ) : (
+              <h2 id="scene-title" className="sr-only" {...tx(copy.headline)}>
+                {copy.headline}
+              </h2>
+            )}
+            <div className="mt-12">
+              <SceneSteps locale={locale} scene={scene} />
             </div>
           </div>
-          <div className="col-span-4 md:col-span-8 lg:col-span-5 lg:col-start-8">
-            <ImageSlot id={`SOL-${code}-DETAIL`} locale={locale} sizes="(min-width: 1024px) 40vw, 100vw" />
-          </div>
-        </div>
-      </Section>
-
-      {/* 3. Scene (Mobile Security & Fleet Intelligence, 01 §08) */}
-      <section aria-labelledby="fleet-title" className="theme-dark bg-bg text-fg section-y">
-        <div className="container-vp">
-          <div className="max-w-[52rem]" data-reveal="">
-            <span className="seam mb-6 w-12" aria-hidden="true" />
-            <p className="t-caption text-fg-muted mb-4" {...tx(copy.fleet.eyebrow)}>
-              {copy.fleet.eyebrow}
-            </p>
-            <h2 id="fleet-title" className="t-h1" {...tx(copy.fleet.title)}>
-              {copy.fleet.title}
-            </h2>
-          </div>
-          <div className="solution__insight">
-            <p className="t-body-sm text-fg-muted" {...tx(copy.fleet.body[0])}>
-              {copy.fleet.body[0]}
-            </p>
-            <p className="t-h4 mt-3" {...tx(copy.fleet.body[1])}>
-              {copy.fleet.body[1]}
-            </p>
-            <p className="t-body text-fg-muted mt-6 measure" {...tx(copy.fleet.body[2])}>
-              {copy.fleet.body[2]}
-            </p>
-          </div>
-          {isPreview && <p className="solution__preview-note">{tp('sceneFirstCut')}</p>}
-          <div className="mt-16 lg:mt-24">
-            <MnvrRouteScene locale={locale} name={copy.fleet.title} />
-          </div>
-          <div className="mt-16 lg:mt-24">
-            <Equation terms={copy.fleet.equation} />
-          </div>
-        </div>
-      </section>
+        </Section>
+      )}
 
       {/* 4. Capabilities */}
-      <Section tone="canvas" labelledBy="capabilities-title">
-        <div className="container-vp">
-          <div data-reveal="">
-            <span className="seam mb-6 w-12" aria-hidden="true" />
-            <h2 id="capabilities-title" className="t-h2" {...tx(copy.capabilities.intro)}>
-              {copy.capabilities.intro}
-            </h2>
+      {'capabilities' in copy && (
+        <Section tone="canvas" labelledBy="capabilities-title">
+          <div className="container-vp">
+            <div data-reveal="">
+              <span className="seam mb-6 w-12" aria-hidden="true" />
+              <h2 id="capabilities-title" className="t-h2" {...tx(copy.capabilities.intro)}>
+                {copy.capabilities.intro}
+              </h2>
+            </div>
+            <SpecList locale={locale} items={copy.capabilities.items} className="mt-12" />
           </div>
-          <ul className="spec-list mt-12">
-            {copy.capabilities.items.map((c) => (
-              <li key={c} {...tx(c)}>
-                {c}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
+        </Section>
+      )}
 
-      {/* 5. Solution module: applications + fleet band */}
-      <Section tone="raised" labelledBy="applications-title">
-        <div className="container-vp">
-          <h2 id="applications-title" className="t-h2" {...tx(copy.fleet.applicationsTitle)}>
-            {copy.fleet.applicationsTitle}
-          </h2>
-          <ul className="spec-list spec-list--plain mt-10">
-            {copy.fleet.applications.map((a) => (
-              <li key={a} {...tx(a)}>
-                {a}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="solution__band mt-16 lg:mt-24">
-          <ImageSlot id="SOL-MNVR-FLEET" locale={locale} sizes="100vw" />
-        </div>
-      </Section>
+      {/* 5. Solution-specific module (§26.2 #5) */}
+      {'values' in copy && (
+        <StatementBand locale={locale} id="module-title" statement={copy.closingLead} size="h2">
+          <PillarStrip locale={locale} items={copy.values} />
+        </StatementBand>
+      )}
+      {'closing' in copy && (
+        <StatementBand
+          locale={locale}
+          id="module-title"
+          statement={copy.closing}
+          size={'closingLead' in copy ? 'display' : 'h2'}
+          lead={'closingLead' in copy ? copy.closingLead : undefined}
+        />
+      )}
 
       {/* 6. Delivered through our lifecycle */}
       <Section tone="canvas" labelledBy="lifecycle-title">
         <div className="container-vp">
-          <h2 id="lifecycle-title" className="t-h2">
-            {ts('lifecycleTitle')}
-          </h2>
-          <ol
-            className="lifecycle lifecycle--compact mt-12"
-            aria-label={ta('approachProgress')}
-            data-progress="track"
-            style={{ '--n': catalog.approach.length } as CSSProperties}
-          >
-            {catalog.approach.map((s, i) => (
-              <li key={s.title} className="lifecycle__step" style={{ '--i': i } as CSSProperties}>
-                <span className="lifecycle__line" aria-hidden="true">
-                  <span className="lifecycle__fill" />
-                </span>
-                <span className="lifecycle__node" aria-hidden="true" />
-                <span className="lifecycle__n t-num" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3 className="t-h4">{s.title}</h3>
-              </li>
-            ))}
-          </ol>
+          <div data-reveal="">
+            <span className="seam mb-6 w-12" aria-hidden="true" />
+            <h2 id="lifecycle-title" className="t-h2">
+              {ts('lifecycleTitle')}
+            </h2>
+          </div>
+          <div className="mt-12">
+            <ProcessTrack locale={locale} steps={catalog.approach} label={ta('approachProgress')} />
+          </div>
           <div className="mt-12">
             <LinkButton href="/services#approach" variant="text">
               {tc('approach')}
@@ -201,68 +181,41 @@ export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: '
         </div>
       </Section>
 
-      {/* 7. Related */}
+      {/* 7. Related (projects appear once real projects are published, D-10) */}
       <Section tone="raised" labelledBy="related-title" spacing="sm">
         <div className="container-vp">
           <h2 id="related-title" className="t-h2">
             {ts('related')}
           </h2>
-          <div className="related mt-10">
-            {relatedIndustries.length > 0 && (
-              <div>
-                <h3 className="t-caption text-fg-muted">{ts('relatedIndustries')}</h3>
-                <ul className="related__list">
-                  {relatedIndustries.map((i) => (
-                    <li key={i}>
-                      <Link href={`/industries#${i}`} className="link-text">
-                        {catalog.industries[i].name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {relatedCategories.length > 0 && (
-              <div>
-                <h3 className="t-caption text-fg-muted">{ts('relatedCategories')}</h3>
-                <ul className="related__list">
-                  {relatedCategories.map((c) => (
-                    <li key={c}>
-                      <Link href={`/products#${c}`} className="link-text">
-                        {catalog.productCategories[c].name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <div>
-              <h3 className="t-caption text-fg-muted">{ts('otherSolutions')}</h3>
-              <ul className="related__list">
-                {neighbours.map((s) => (
-                  <li key={s.slug}>
-                    <Link href={`/solutions/${s.slug}`} className="link-text">
-                      {catalog.solutions[s.slug].name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="mt-10">
+            <RelatedRail
+              locale={locale}
+              groups={[
+                {
+                  title: ts('relatedIndustries'),
+                  links: relatedIndustries.map((i) => ({ href: `/industries#${i}`, label: catalog.industries[i].name })),
+                },
+                {
+                  title: ts('relatedCategories'),
+                  links: relatedCategories.map((c) => ({ href: `/products#${c}`, label: catalog.productCategories[c].name })),
+                },
+                {
+                  title: ts('otherSolutions'),
+                  links: neighbours.map((s) => ({ href: `/solutions/${s.slug}`, label: catalog.solutions[s.slug].name })),
+                },
+              ]}
+            />
           </div>
         </div>
       </Section>
 
-      {/* 8. CTA band */}
-      <section aria-labelledby="cta-title" className="theme-dark bg-bg text-fg section-y-sm">
-        <div className="container-vp flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <h2 id="cta-title" className="t-h2 max-w-[24ch]">
-            {ts('ctaTitle', { solution: name })}
-          </h2>
-          <LinkButton href={`/contact?type=consultation&solution=${slug}`} variant="primary">
-            {tc('consultation')}
-          </LinkButton>
-        </div>
-      </section>
+      {/* 8. CTA band, pre-filled with this solution */}
+      <CtaBand
+        locale={locale}
+        id="cta-title"
+        title={ts('ctaTitle', { solution: name })}
+        action={{ href: `/contact?type=consultation&solution=${slug}`, label: tc('consultation') }}
+      />
     </main>
   );
 }

@@ -113,6 +113,36 @@
   /* Statement band (§20.8) */
   .statement-band__text { margin-block-start: 40px; max-width: 20ch; }
   .statement-band__teaser { display: grid; justify-items: center; gap: 12px; margin-block-start: 48px; }
+  .statement-band__lead { margin-block-start: 40px; max-width: 44rem; }
+  .statement-band__lead + .statement-band__text { margin-block-start: 16px; }
+  .statement-band__text--long { max-width: 34ch; }
+
+  /* Pillar strip (§20.8): words joined by the gold seam; wraps, never numbered */
+  .pillar-strip { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 0; margin-block-start: 40px; }
+  .pillar-strip__item { display: inline-flex; align-items: center; }
+  .pillar-strip__item + .pillar-strip__item::before {
+    content: ''; display: inline-block; width: 28px; height: 2px; margin-inline: 16px; background: var(--color-gold);
+  }
+
+  /* Scene beat texts (§23.5 DOM text); the artwork joins them in P5B */
+  .scene-steps { display: grid; gap: 0; counter-reset: none; }
+  .scene-steps__beat { position: relative; padding-block: 28px; padding-inline-start: 56px; border-block-start: 1px solid var(--line); }
+  .scene-steps__beat:last-child { border-block-end: 1px solid var(--line); }
+  .scene-steps__n { position: absolute; inset-inline-start: 0; inset-block-start: 34px; font-size: var(--fs-caption); color: var(--fg-muted); }
+  .scene-steps__labels { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-block-start: 16px; font-size: var(--fs-body-sm); color: var(--fg-muted); }
+  @media (min-width: 1024px) {
+    .scene-steps { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .scene-steps__beat { padding-inline-start: 0; padding-block-start: 56px; }
+    .scene-steps__beat:last-child { border-block-end: 0; }
+    .scene-steps__n { inset-block-start: 24px; }
+  }
+
+  /* Solution detail hero (§26.2 #1): on mobile the image comes first, then the text */
+  .solution-hero { display: flex; flex-direction: column; }
+  @media (max-width: 767px) {
+    .solution-hero > .page-band { order: -1; margin-block-start: var(--header-h); }
+    .solution-hero > .page-intro { padding-block-start: 24px; }
+  }
 }
 
 /* Style guide (preview only) */

@@ -3,14 +3,14 @@
  * Copy lives in src/content/copy/<locale>/*.json and is keyed by these slugs.
  */
 export const solutions = [
-  { slug: 'mobile-nvr-mobile-surveillance', code: 'MNVR', image: 'SOL-MNVR-CARD', featured: true },
-  { slug: 'cctv-security-systems', code: 'CCTV', image: 'SOL-CCTV-CARD' },
-  { slug: 'access-control', code: 'ACCESS', image: 'SOL-ACCESS-CARD' },
-  { slug: 'networking-ict', code: 'ICT', image: 'SOL-ICT-CARD' },
-  { slug: 'elv-systems', code: 'ELV', image: 'SOL-ELV-CARD' },
-  { slug: 'audio-visual', code: 'AV', image: 'SOL-AV-CARD' },
-  { slug: 'smart-building-home-automation', code: 'SMART', image: 'SOL-SMART-CARD' },
-  { slug: 'fire-alarm-systems', code: 'FIRE', image: 'SOL-FIRE-CARD' },
+  { slug: 'mobile-nvr-mobile-surveillance', code: 'MNVR', image: 'SOL-MNVR-CARD', hero: 'SOL-MNVR-HERO', detail: 'SOL-MNVR-DETAIL', featured: true },
+  { slug: 'cctv-security-systems', code: 'CCTV', image: 'SOL-CCTV-CARD', hero: 'SOL-CCTV-HERO', detail: 'SOL-CCTV-DETAIL' },
+  { slug: 'access-control', code: 'ACCESS', image: 'SOL-ACCESS-CARD', hero: 'SOL-ACCESS-HERO', detail: 'SOL-ACCESS-DETAIL' },
+  { slug: 'networking-ict', code: 'ICT', image: 'SOL-ICT-CARD', hero: 'SOL-ICT-HERO', detail: 'SOL-ICT-DETAIL' },
+  { slug: 'elv-systems', code: 'ELV', image: 'SOL-ELV-CARD', hero: 'SOL-ELV-HERO', detail: 'SOL-ELV-DETAIL' },
+  { slug: 'audio-visual', code: 'AV', image: 'SOL-AV-CARD', hero: 'SOL-AV-HERO', detail: 'SOL-AV-DETAIL' },
+  { slug: 'smart-building-home-automation', code: 'SMART', image: 'SOL-SMART-CARD', hero: 'SOL-SMART-HERO', detail: 'SOL-SMART-DETAIL' },
+  { slug: 'fire-alarm-systems', code: 'FIRE', image: 'SOL-FIRE-CARD', hero: 'SOL-FIRE-HERO', detail: 'SOL-FIRE-DETAIL' },
 ] as const;
 export type SolutionSlug = (typeof solutions)[number]['slug'];
 

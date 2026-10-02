@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
-import { getCatalog, getSolutionsCopy } from '@/content';
 import { solutions, type SolutionSlug } from '@/content/data/registry';
 import { MnvrPage } from '@/components/sections/solution/mnvr-page';
-import { TemplatePage } from '@/components/layout/template-page';
+import { SolutionDetail } from '@/components/sections/solution/solution-detail';
 import { solutionMetadata } from '@/lib/metadata';
 
 export const dynamicParams = false;
@@ -17,7 +16,7 @@ export function generateStaticParams() {
 /**
  * Mobile NVR has its own dedicated page (client decision 2026-10-02: the P2 page built on the generic §26.2 template
  * was not accepted; a distinctive page with a small scroll-triggered animation was requested). The other seven
- * solutions keep the P3 empty template until P5, which will use the §26.2 template (solution-detail.tsx).
+ * solutions use the §26.2 template (solution-detail.tsx, P5A-04); their scenes follow in P5B.
  */
 const isSlug = (s: string): s is SolutionSlug => solutions.some((x) => x.slug === s);
 
@@ -32,15 +31,5 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
   setRequestLocale(locale);
   if (!isSlug(slug)) notFound();
   if (slug === 'mobile-nvr-mobile-surveillance') return <MnvrPage locale={locale} />;
-
-  const tn = await getTranslations({ locale, namespace: 'nav' });
-  const name = getCatalog(locale).solutions[slug].name;
-  return (
-    <TemplatePage
-      locale={locale}
-      crumbs={[{ label: tn('home'), href: '/' }, { label: tn('solutions'), href: '/solutions' }, { label: name }]}
-      title={name}
-      lede={getSolutionsCopy(locale).items[slug].headline}
-    />
-  );
+  return <SolutionDetail locale={locale} slug={slug} />;
 }

@@ -4,6 +4,11 @@ import { IndexList } from '@/components/sections/shared/index-list';
 import { ProcessTrack } from '@/components/sections/shared/process-track';
 import { StatementBand } from '@/components/sections/shared/statement-band';
 import { CtaBand } from '@/components/sections/shared/cta-band';
+import { SpecList } from '@/components/sections/shared/spec-list';
+import { RelatedRail } from '@/components/sections/shared/related-rail';
+import { PillarStrip } from '@/components/sections/shared/pillar-strip';
+import { SceneSteps } from '@/components/sections/shared/scene-steps';
+import { scenes } from '@/content/data/scenes';
 
 // Shared section library (MASTER_PROJECT_PLAN §20.8, §27; P5A-01): markup contracts the pages rely on.
 describe('IndexList', () => {
@@ -55,5 +60,52 @@ describe('StatementBand and CtaBand', () => {
     expect(html.match(/btn--primary/g)).toHaveLength(1);
     expect(html).toContain('href="/en/contact"');
     expect(html).toContain('<h2 id="c"');
+  });
+});
+
+describe('SpecList, RelatedRail and PillarStrip', () => {
+  it('spec list renders one item per approved entry, with the plain variant on request', () => {
+    const html = renderToStaticMarkup(<SpecList locale="en" items={['A', 'B', 'C']} plain />);
+    expect(html).toMatch(/^<ul class="spec-list spec-list--plain">/);
+    expect(html.match(/<li>/g)).toHaveLength(3);
+  });
+  it('related rail drops empty groups (unpublished relations do not appear)', () => {
+    const html = renderToStaticMarkup(
+      <RelatedRail
+        locale="en"
+        groups={[
+          { title: 'Industries', links: [{ href: '/industries#retail', label: 'Retail' }] },
+          { title: 'Product categories', links: [] },
+        ]}
+      />,
+    );
+    expect(html).toContain('Industries');
+    expect(html).not.toContain('Product categories');
+    expect(html).toMatch(/href="\/[a-z]{2}\/industries#retail"/);
+  });
+  it('pillar strip is an unnumbered list of the given words', () => {
+    const html = renderToStaticMarkup(<PillarStrip locale="en" items={['Comfort', 'Efficiency']} />);
+    expect(html).toMatch(/^<ul class="pillar-strip">/);
+    expect(html).not.toMatch(/<ol/);
+    expect(html.match(/pillar-strip__item/g)).toHaveLength(2);
+  });
+});
+
+describe('SceneSteps', () => {
+  const elv = scenes.find((s) => s.id === 'elv-one-infrastructure')!;
+  it('renders the approved beat titles and texts from the scene registry, in order', () => {
+    const html = renderToStaticMarkup(<SceneSteps locale="en" scene={elv} />);
+    expect(html.match(/<li class="scene-steps__beat">/g)).toHaveLength(4);
+    const titles = [...html.matchAll(/<h3 class="t-h3">([^<]+)<\/h3>/g)].map((m) => m[1]);
+    expect(titles).toEqual(['Coordination', 'Integration', 'Reliability', 'Scalability']);
+    expect(html).toContain('Infrastructure is engineered for dependable long-term operation.');
+  });
+  it('marks the English placeholder on /ar (copy not yet translated, A-11)', () => {
+    const html = renderToStaticMarkup(<SceneSteps locale="ar" scene={elv} />);
+    expect(html).toContain('lang="en" dir="ltr"');
+  });
+  it('skips beats without a step title (subtle scenes have none)', () => {
+    const av = scenes.find((s) => s.id === 'av-disappear')!;
+    expect(renderToStaticMarkup(<SceneSteps locale="en" scene={av} />)).toBe(`<ol class="scene-steps" data-scene="av-disappear"></ol>`);
   });
 });

@@ -21,8 +21,8 @@ if (readFileSync('src/content/media/manifest.generated.json', 'utf8') !== before
   errors.push('manifest.generated.json was stale — regenerated; commit the change');
 
 // 2. referenced slot IDs (string literals in source matching manifest ID shapes)
-const src = execSync(`grep -rhoE "(id|image)[=:] ?['\\"][A-Z][A-Z0-9{}-]+['\\"]" src || true`, { encoding: 'utf8' });
-const idsFromData = execSync(`grep -rhoE "image: '[A-Z0-9-]+'" src/content/data || true`, { encoding: 'utf8' });
+const src = execSync(`grep -rhoE "(id|image|hero|detail)[=:] ?['\\"][A-Z][A-Z0-9{}-]+['\\"]" src || true`, { encoding: 'utf8' });
+const idsFromData = execSync(`grep -rhoE "(image|hero|detail): '[A-Z0-9-]+'" src/content/data || true`, { encoding: 'utf8' });
 const referenced = new Set([...src.split('\n'), ...idsFromData.split('\n')].map((l) => l.match(/['"]([A-Z][A-Z0-9{}-]+)['"]/)?.[1]).filter(Boolean));
 for (const id of referenced) if (!manifest[id]) errors.push(`source references unknown slot "${id}"`);
 

@@ -12,6 +12,12 @@ const ROUTES = [
   '/solutions',
   '/solutions/mobile-nvr-mobile-surveillance',
   '/solutions/cctv-security-systems',
+  '/solutions/access-control',
+  '/solutions/networking-ict',
+  '/solutions/elv-systems',
+  '/solutions/audio-visual',
+  '/solutions/smart-building-home-automation',
+  '/solutions/fire-alarm-systems',
   '/industries',
   '/services',
   '/projects',
@@ -189,6 +195,65 @@ test.describe('Solutions hub (§26.3)', () => {
     const box = await row.boundingBox();
     // the text block starts at the inline start (the right edge in RTL)
     expect(Math.abs(box!.x + box!.width - (text!.x + text!.width))).toBeLessThan(box!.width / 2);
+  });
+});
+
+// P5A-04 Solution detail template (MASTER_PROJECT_PLAN §26.2, §55.3) for the seven solutions without a dedicated page.
+// Sections follow the approved copy: Context only with a second body paragraph, the scene beat texts only for scenes
+// with step texts, Capabilities only where an approved list exists.
+test.describe('Solution detail template (§26.2)', () => {
+  const PAGES = [
+    { slug: 'cctv-security-systems', context: true, beats: 3, capabilities: 10, module: true },
+    { slug: 'access-control', context: false, beats: 3, capabilities: 10, module: true },
+    { slug: 'networking-ict', context: true, beats: 0, capabilities: 9, module: true },
+    { slug: 'elv-systems', context: true, beats: 4, capabilities: 0, module: false },
+    { slug: 'audio-visual', context: false, beats: 0, capabilities: 10, module: true },
+    { slug: 'smart-building-home-automation', context: false, beats: 5, capabilities: 10, module: true },
+    { slug: 'fire-alarm-systems', context: false, beats: 4, capabilities: 8, module: true },
+  ];
+  for (const p of PAGES) {
+    test(`/en/solutions/${p.slug}: sections follow the approved copy, CTA pre-filled, related links resolve`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      const res = await page.goto(`/en/solutions/${p.slug}`);
+      expect(res?.status()).toBe(200);
+      await expect(page.locator('main h1')).toHaveCount(1);
+      await expect(page.locator('.solution__headline')).not.toBeEmpty();
+      await expect(page.locator('#context-title')).toHaveCount(p.context ? 1 : 0);
+      await expect(page.locator('.scene-steps__beat')).toHaveCount(p.beats);
+      await expect(page.locator('.spec-list > li')).toHaveCount(p.capabilities);
+      await expect(page.locator('#module-title')).toHaveCount(p.module ? 1 : 0);
+      await expect(page.locator('ol.lifecycle--compact > li')).toHaveCount(8);
+      await expect(page.locator(`main a.btn--primary[href="/en/contact?type=consultation&solution=${p.slug}"]`)).toBeVisible();
+      // related: two neighbouring solutions, no product categories while Products is hidden (Q-02)
+      const related = page.locator('.related a');
+      expect(await related.count()).toBeGreaterThanOrEqual(2);
+      await expect(page.locator('.related a[href*="/products"]')).toHaveCount(0);
+      for (const href of await related.evaluateAll((as) => as.map((a) => a.getAttribute('href')!))) {
+        const target = await page.request.get(href.split('#')[0]!);
+        expect(target.status(), href).toBe(200);
+      }
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('hero: on mobile the image comes first, on desktop the text (§26.2 #1)', async ({ page }, info) => {
+    await page.goto('/en/solutions/fire-alarm-systems');
+    const band = await page.locator('.solution-hero .page-band').boundingBox();
+    const title = await page.locator('main h1').boundingBox();
+    if ((info.project.use.viewport?.width ?? 0) < 768) expect(band!.y).toBeLessThan(title!.y);
+    else expect(band!.y).toBeGreaterThan(title!.y);
+  });
+
+  test('scene beat texts come from the approved copy, in order, also without JavaScript', async ({ browser }) => {
+    const ctx = await browser.newContext({ javaScriptEnabled: false });
+    const page = await ctx.newPage();
+    await page.goto('/en/solutions/elv-systems');
+    await expect(page.locator('.scene-steps__beat h3')).toHaveText(['Coordination', 'Integration', 'Reliability', 'Scalability']);
+    await page.goto('/en/solutions/smart-building-home-automation');
+    await expect(page.locator('.scene-steps__beat h3')).toHaveText(['Comfort', 'Efficiency', 'Control', 'Security', 'Experience']);
+    await expect(page.locator('.pillar-strip li')).toHaveText(['Comfort', 'Efficiency', 'Control', 'Security', 'Experience']);
+    await ctx.close();
   });
 });
 
