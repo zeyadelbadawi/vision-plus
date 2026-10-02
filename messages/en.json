@@ -1,5 +1,5 @@
 {
-  "_meta": { "status": "approved", "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)", "note": "Team-authored interface microcopy, approved with D-18. Strings added after D-18 are listed in _meta.review until the client reviews them.", "review": { "preview.sceneFirstCut": { "status": "draft", "source": "Preview-only review note, reworded after the D-20 approval (2026-10-02); never shown in production" }, "preview.pendingWording": { "status": "draft", "source": "Preview-only review note marking client-pending wording (R-2) on /services, added in P5A-05 (2026-10-02); never shown in production" } } },
+  "_meta": { "status": "approved", "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)", "note": "Team-authored interface microcopy, approved with D-18. Strings added after D-18 are listed in _meta.review until the client reviews them.", "review": { "preview.sceneFirstCut": { "status": "draft", "source": "Preview-only review note, reworded after the D-20 approval (2026-10-02); never shown in production" }, "preview.pendingWording": { "status": "draft", "source": "Preview-only review note marking client-pending wording (R-2) on /services, added in P5A-05 (2026-10-02); never shown in production" }, "preview.pendingOrder": { "status": "draft", "source": "Preview-only review note marking the client-pending industry order (R-4) on /industries, added in P5A-06 (2026-10-02); never shown in production" } } },
   "a11y": {
     "skipToContent": "Skip to content",
     "mainNav": "Main",
@@ -81,6 +81,7 @@
     "labTitle": "Style guide",
     "sceneFirstCut": "Route scene: first cut of the approved storyboard (D-20). Final production follows in Phase 5B.",
     "pendingWording": "Wording pending client review",
+    "pendingOrder": "Order pending client review",
     "sectionPending": "Section content: Phase 5",
     "templatePending": "Page template: the full page is built in Phase 5. It is shown here so that navigation works in preview.",
     "label": "Preview",

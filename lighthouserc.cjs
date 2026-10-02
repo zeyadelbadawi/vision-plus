@@ -23,6 +23,7 @@ module.exports = {
         'http://localhost:4173/en/solutions/mobile-nvr-mobile-surveillance',
         'http://localhost:4173/en/solutions',
         'http://localhost:4173/en/services',
+        'http://localhost:4173/en/industries',
       ],
       numberOfRuns: 3,
       // Colour contrast is enforced by the Playwright + axe suite on every template × locale × 2 viewports,

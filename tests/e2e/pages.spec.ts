@@ -56,6 +56,7 @@ test('every navigation anchor lands on a section of its page', async ({ page }) 
     ['/en/services', 'approach'],
     ['/en/services', 'system-design-consultancy'],
     ['/en/industries', 'banking-finance'],
+    ['/en/industries', 'industrial-manufacturing'],
     ['/en/about', 'why-vision-plus'],
     ['/en/contact', 'locations'],
   ] as const) {
@@ -388,6 +389,110 @@ test.describe('Services lifecycle (§26.5)', () => {
       await expect(page.locator('.services-flow > section.split')).toHaveCount(6);
       await ctx.close();
     }
+  });
+});
+
+// P5A-06 Industries explorer (MASTER_PROJECT_PLAN §26.4, §55.3.8): SSR anchored sections; master–detail on desktop.
+test.describe('Industries explorer (§26.4)', () => {
+  const ORDER = [
+    'transportation-fleet',
+    'government-public-sector',
+    'commercial-corporate',
+    'banking-finance',
+    'hospitality',
+    'retail',
+    'education',
+    'healthcare',
+    'real-estate-property-development',
+    'residential',
+    'logistics-warehousing',
+    'industrial-manufacturing',
+  ];
+  const isDesktop = (info: TestInfo) => (info.project.use.viewport?.width ?? 0) >= 1024;
+  const selectedId = (page: import('@playwright/test').Page) => page.evaluate(() => document.querySelector('.ix__slot[data-selected] section')?.id ?? null);
+
+  for (const l of LOCALES) {
+    test(`/${l.code}/industries: 12 industries in order with summary, related solutions and a pre-filled CTA`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(`/${l.code}/industries`);
+      const ids = await page.locator('.ix__panel').evaluateAll((els) => els.map((e) => e.id));
+      expect(ids).toEqual(ORDER);
+      const index = await page.locator('.ix__link').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(index).toEqual(ORDER.map((s) => `#${s}`));
+      for (const slug of ORDER) {
+        const panel = page.locator(`#${slug}`);
+        await expect(panel.locator('h3')).not.toBeEmpty();
+        await expect(panel.locator('p.t-lede')).not.toBeEmpty();
+        await expect(panel.locator(`a[href="/${l.code}/contact?type=consultation&industry=${slug}"]`)).toHaveCount(1);
+        await expect(panel.locator('[data-slot^="IND-"]')).toHaveCount(1);
+      }
+      // R-1: the drafted Real Estate summary is marked in preview and has no derived relation; R-4: the order is marked
+      await expect(page.locator('.ix__panel .pending-note')).toHaveCount(1);
+      await expect(page.locator('#real-estate-property-development .pending-note')).toHaveCount(1);
+      await expect(page.locator('#real-estate-property-development .related__list')).toHaveCount(0);
+      await expect(page.locator('#banking-finance .related__list a')).toHaveCount(3);
+      await expect(page.locator('.pending-note', { hasText: /./ })).toHaveCount(2);
+      const across = await page.locator('.ix__across a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(across).toEqual([`/${l.code}/solutions/elv-systems`, `/${l.code}/solutions/fire-alarm-systems`]);
+      await expect(page.locator('main a[href$="/contact?type=consultation"].btn--primary')).toBeVisible();
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('desktop: one panel at a time; selecting moves focus, updates the hash and adds no history entry', async ({ page }, info) => {
+    test.skip(!isDesktop(info), 'master–detail is desktop only');
+    await page.goto('/en/industries');
+    await expect(page.locator('.ix')).toHaveAttribute('data-live', '');
+    expect(await selectedId(page)).toBe('transportation-fleet');
+    await expect(page.locator('.ix__panel:visible')).toHaveCount(1);
+    const before = await page.evaluate(() => history.length);
+    await page.locator('.ix__link[href="#healthcare"]').click();
+    expect(await selectedId(page)).toBe('healthcare');
+    await expect(page).toHaveURL(/#healthcare$/);
+    await expect(page.locator('#healthcare-title')).toBeFocused();
+    await expect(page.locator('.ix__link[aria-current="true"]')).toHaveAttribute('href', '#healthcare');
+    expect(await page.evaluate(() => history.length)).toBe(before);
+    // keyboard: Enter on a link selects too
+    await page.locator('.ix__link[href="#retail"]').focus();
+    await page.keyboard.press('Enter');
+    await expect.poll(() => selectedId(page)).toBe('retail');
+  });
+
+  test('desktop: a hash on load, the header menu and back/forward select the industry and show the explorer', async ({ page }, info) => {
+    test.skip(!isDesktop(info), 'master–detail is desktop only');
+    await page.goto('/en/industries#banking-finance');
+    await expect.poll(() => selectedId(page)).toBe('banking-finance');
+    await expect(page.locator('#banking-finance-title')).toBeInViewport();
+    // same-page navigation through the header mega menu (Next pushState, no hashchange event)
+    await page.locator('header button', { hasText: 'Industries' }).click();
+    await page.locator('header a[href="/en/industries#education"]').first().click();
+    await expect.poll(() => selectedId(page)).toBe('education');
+    await expect(page.locator('#education-title')).toBeInViewport();
+    await page.goBack();
+    await expect.poll(() => selectedId(page)).toBe('banking-finance');
+  });
+
+  test('mobile: all industries stacked under a sticky chip index; a chip jumps to its section', async ({ page }, info) => {
+    test.skip(isDesktop(info), 'stacked layout below 1024 px');
+    await page.goto('/en/industries');
+    await expect(page.locator('.ix')).not.toHaveAttribute('data-live', /.*/);
+    await expect(page.locator('.ix__panel:visible')).toHaveCount(12);
+    await page.locator('.ix__link[href="#education"]').click();
+    await expect(page).toHaveURL(/#education$/);
+    const index = (await page.locator('.ix__index').boundingBox())!;
+    const title = (await page.locator('#education-title').boundingBox())!;
+    expect(title.y).toBeGreaterThanOrEqual(index.y + index.height);
+    await expect(page.locator('#education-title')).toBeInViewport();
+  });
+
+  test('without JavaScript every industry is a visible anchored section', async ({ browser }) => {
+    const ctx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1440, height: 900 } });
+    const page = await ctx.newPage();
+    await page.goto('/en/industries');
+    await expect(page.locator('.ix__panel:visible')).toHaveCount(12);
+    await expect(page.locator('.ix[data-live]')).toHaveCount(0);
+    await ctx.close();
   });
 });
 

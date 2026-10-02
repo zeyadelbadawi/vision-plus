@@ -81,6 +81,7 @@
     "labTitle": "设计规范",
     "sceneFirstCut": "路线场景：已批准分镜（D-20）的初版。最终制作在第 5B 阶段完成。",
     "pendingWording": "措辞待客户审核",
+    "pendingOrder": "排序待客户审核",
     "sectionPending": "栏目内容：第 5 阶段",
     "templatePending": "页面模板：完整页面将在第 5 阶段构建。此处显示仅为让预览中的导航可以正常使用。",
     "label": "预览",
