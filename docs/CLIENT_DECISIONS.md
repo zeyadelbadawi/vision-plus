@@ -97,6 +97,10 @@ The one exception is two questions that ask exactly what a data item (D-xx) answ
   - The GitHub default branch is still `claude/confident-cori-lahb3k`.
   - No PR exists.
   - The merge decision is Ziad's (`docs/PRE_P5_HANDOFF.md` §1).
+- **Integration 2026-10-02 (authorised: Route test coverage only):**
+  - `main` advanced by fast-forward from `b4b386c` to **`e137ea6`**: cherry-picks of `8fe760c` and `8e2d066` (`ab86f47`, `e137ea6`); test file and `docs/E2E_COVERAGE.md` only.
+  - The other working-branch commits (decision changes, the pending Mobile NVR revision, the production gate) are **not** on `main`; merging them is Ziad's decision.
+  - The default branch was not changed.
 
 ### 3.2 P5 entry conditions
 

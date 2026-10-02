@@ -329,7 +329,7 @@ The plan sets no finer order for the P5A pages.
 |---|---|---|---|---|
 | Add `site:check` to the production deploy workflow | **Done** in `123c73e` (authorised remediation, §8) | Second line of defence against sample content | Needs Ziad's go-ahead; a one-line workflow change | `.github/workflows/deploy-production.yml` |
 | Gate the privacy and company-profile "pending client" ledes in production | **Gated** in `123c73e` (§8). The templates themselves are unchanged; replacing the lede remains P5A plus client content (D-06, D-16) | They would publish today if all other gates passed | Handle in the P5A Privacy/Company Profile PRs | `src/app/[locale]/{privacy,company-profile}/page.tsx` |
-| Run the browser matrix on the current head | **Done:** run 36998058056 on `123c73e`, 288 passed / 22 skipped / 0 failed (§8.3). New gap: the Route-scene tests skip in Firefox/WebKit; fixing that needs test changes (not authorised here) | Firefox/WebKit coverage of the new page | Trigger `e2e-matrix.yml` (manual dispatch) once Ziad agrees | `.github/workflows/e2e-matrix.yml` |
+| Run the browser matrix on the current head | **Done:** run 36998058056 on `123c73e`, 288 passed / 22 skipped / 0 failed (§8.3). New gap: the Route-scene tests skip in Firefox/WebKit; fixing that needs test changes (not authorised here) | Firefox/WebKit coverage of the new page | Trigger `e2e-matrix.yml` (manual dispatch) once Ziad agrees | `.github/workflows/e2e-matrix.yml` **Resolved 2026-10-02** (`8fe760c`; on `main` as `ab86f47`): the Route tests now run in every applicable project. Matrix run 37002693260: 295 passed / 15 skipped / 0 failed (`docs/E2E_COVERAGE.md`). |
 | Mobile NVR technical fixes (#3, #4) | Proposed only | Static-mode gaps; legibility | Apply only if Ziad requests them | `src/styles/mnvr.css`, `mnvr-system-art.tsx` |
 
 ### B. Ziad: personal verification and decisions
@@ -454,4 +454,20 @@ Runs on `123c73e`, local container (Node v22.22.2, Playwright 1.56.1, Chromium):
 
   Visibility is unchanged and nothing was moved or deleted. The decision is Ziad's.
 - **`vision-plus-gamma.vercel.app`** (repository homepage field): **unverified**. It was not visited in this task.
+
+### 8.5 Route scene test coverage and `main` integration (2026-10-02, authorised)
+
+- **Tests (`8fe760c`, tests only).** The three Route scene tests in `tests/e2e/pages.spec.ts` now select by viewport (the scene's 1024 px breakpoint) instead of the Chromium project names.
+  - The pinned check runs in all desktop projects and the stepped check in all mobile projects.
+  - RTL now runs in all five projects (on mobile it checks the visible frame and its mirrored crop).
+  - The reduced-motion zone check now targets the artwork shown at the viewport.
+  - No assertion was removed.
+- **Matrix (run 37002693260, `8fe760c`):** 295 passed, 15 skipped, 0 failed; 59 passed / 3 skipped per project. The remaining skips are layout-only (`docs/E2E_COVERAGE.md`).
+- **`main` integration.** Only the Route coverage and its documentation went in, as instructed:
+  - `8fe760c` and `8e2d066` were cherry-picked (`-x`) onto `main` as `ab86f47` and `e137ea6`.
+  - It was a fast-forward push from `b4b386c` (no force, no history rewrite).
+  - `main` now differs from `b4b386c` only in `tests/e2e/pages.spec.ts` and `docs/E2E_COVERAGE.md`.
+- **Not integrated into `main`:** `3496899`, `7acdfff`, `6859835`, `979d263`, `123c73e`, `1f4dba5` and `05a4f3c`. These contain the client-decision changes, the pending Mobile NVR revision and the production gate.
+  - `main` therefore does **not** yet contain the `site:check` production gate. The working branch does.
+  - Merging the rest is Ziad's decision.
 
