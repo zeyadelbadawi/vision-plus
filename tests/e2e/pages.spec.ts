@@ -106,6 +106,92 @@ test('illustrative samples are labelled on every rendering (Q-12, D-01/D-02)', a
   }
 });
 
+// P5A-02 Solutions hub (MASTER_PROJECT_PLAN §26.3, §55.3): built from the shared section library.
+test.describe('Solutions hub (§26.3)', () => {
+  const ORDER = [
+    'mobile-nvr-mobile-surveillance',
+    'cctv-security-systems',
+    'access-control',
+    'networking-ict',
+    'elv-systems',
+    'audio-visual',
+    'smart-building-home-automation',
+    'fire-alarm-systems',
+  ];
+
+  for (const l of LOCALES) {
+    test(`/${l.code}/solutions: the 8 solutions in order, Mobile NVR first and featured, each linking to its page`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(`/${l.code}/solutions`);
+      const rows = page.locator('.index-list__item');
+      await expect(rows).toHaveCount(8);
+      const hrefs = await page.locator('.index-list__link').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(hrefs).toEqual(ORDER.map((s) => `/${l.code}/solutions/${s}`));
+      await expect(rows.first().locator('.index-list__marker')).toHaveCount(1);
+      await expect(page.locator('.index-list__marker')).toHaveCount(1);
+      // every row has its approved one-line summary and its card image slot
+      for (const r of await rows.all()) {
+        await expect(r.locator('.index-list__summary')).not.toBeEmpty();
+        await expect(r.locator('.index-list__media [data-slot$="-CARD"]')).toHaveCount(1);
+      }
+      await expect(page.locator('#integration-title')).not.toBeEmpty();
+      await expect(page.locator('.statement-band a[href$="/solutions/elv-systems"]')).toBeVisible();
+      await expect(page.locator('ol.lifecycle--compact > li')).toHaveCount(8);
+      await expect(page.locator('main a[href$="/services#approach"]')).toBeVisible();
+      await expect(page.locator('main a[href$="/contact?type=consultation"].btn--primary')).toBeVisible();
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('the card image is revealed on hover or keyboard focus at desktop width, and always visible on mobile', async ({ page }, info) => {
+    await page.goto('/en/solutions');
+    const row = page.locator('.index-list__item').nth(2);
+    const media = row.locator('.index-list__media');
+    await row.scrollIntoViewIfNeeded();
+    const opacity = () => media.evaluate((el) => Number(getComputedStyle(el).opacity));
+    if ((info.project.use.viewport?.width ?? 0) >= 1024) {
+      expect(await opacity()).toBe(0);
+      await row.hover();
+      await expect.poll(opacity).toBe(1);
+      await page.mouse.move(0, 0);
+      await expect.poll(opacity).toBe(0);
+      await row.locator('.index-list__link').focus();
+      await expect.poll(opacity).toBe(1);
+    } else {
+      expect(await opacity()).toBe(1);
+      await expect(media).toBeVisible();
+    }
+  });
+
+  test('reduced motion: everything is shown with no reveal transition', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto('/en/solutions');
+    await expect(page.locator('html')).not.toHaveClass(/(^|\s)motion-ok(\s|$)/);
+    await expect(page.locator('.index-list__item')).toHaveCount(8);
+    const transition = await page
+      .locator('.index-list__media')
+      .first()
+      .evaluate((el) => getComputedStyle(el).transitionDuration);
+    // the global reduced-motion rule makes every transition effectively instant (0.01 ms)
+    expect(transition.split(',').every((d) => parseFloat(d) * (d.trim().endsWith('ms') ? 1 : 1000) <= 0.01)).toBe(true);
+    // the process track shows every step complete
+    await expect(page.locator('ol.lifecycle--compact > li')).toHaveCount(8);
+    await ctx.close();
+  });
+
+  test('RTL: rows and arrows mirror, text order unchanged', async ({ page }) => {
+    await page.goto('/ar/solutions');
+    await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+    const row = page.locator('.index-list__item').first();
+    const text = await row.locator('.index-list__text').boundingBox();
+    const box = await row.boundingBox();
+    // the text block starts at the inline start (the right edge in RTL)
+    expect(Math.abs(box!.x + box!.width - (text!.x + text!.width))).toBeLessThan(box!.width / 2);
+  });
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

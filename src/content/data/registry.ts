@@ -3,14 +3,14 @@
  * Copy lives in src/content/copy/<locale>/*.json and is keyed by these slugs.
  */
 export const solutions = [
-  { slug: 'mobile-nvr-mobile-surveillance', code: 'MNVR', featured: true },
-  { slug: 'cctv-security-systems', code: 'CCTV' },
-  { slug: 'access-control', code: 'ACCESS' },
-  { slug: 'networking-ict', code: 'ICT' },
-  { slug: 'elv-systems', code: 'ELV' },
-  { slug: 'audio-visual', code: 'AV' },
-  { slug: 'smart-building-home-automation', code: 'SMART' },
-  { slug: 'fire-alarm-systems', code: 'FIRE' },
+  { slug: 'mobile-nvr-mobile-surveillance', code: 'MNVR', image: 'SOL-MNVR-CARD', featured: true },
+  { slug: 'cctv-security-systems', code: 'CCTV', image: 'SOL-CCTV-CARD' },
+  { slug: 'access-control', code: 'ACCESS', image: 'SOL-ACCESS-CARD' },
+  { slug: 'networking-ict', code: 'ICT', image: 'SOL-ICT-CARD' },
+  { slug: 'elv-systems', code: 'ELV', image: 'SOL-ELV-CARD' },
+  { slug: 'audio-visual', code: 'AV', image: 'SOL-AV-CARD' },
+  { slug: 'smart-building-home-automation', code: 'SMART', image: 'SOL-SMART-CARD' },
+  { slug: 'fire-alarm-systems', code: 'FIRE', image: 'SOL-FIRE-CARD' },
 ] as const;
 export type SolutionSlug = (typeof solutions)[number]['slug'];
 
