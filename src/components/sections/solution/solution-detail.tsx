@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
 import { getCatalog, getSolutionsCopy } from '@/content';
 import { solutions, type SolutionSlug } from '@/content/data/registry';
+import { pageVisibility } from '@/content/data/visibility';
 import { categoriesForSolution, industriesForSolution, industrySolutions } from '@/content/data/relations';
 import { PageIntro } from '@/components/layout/page-intro';
 import { Section } from '@/components/layout/section';
@@ -45,10 +46,10 @@ export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: '
     getTranslations({ locale, namespace: 'preview' }),
   ]);
 
-  // Relations are derived and await client confirmation (D-19): shown in preview, held back in production.
+  // Relations were approved as is (D-19); product categories only while the Products page is visible (Q-02).
   const showRelations = isPreview || industrySolutions.status === 'approved';
   const relatedIndustries = showRelations ? industriesForSolution(slug) : [];
-  const relatedCategories = showRelations ? categoriesForSolution(slug) : [];
+  const relatedCategories = showRelations && pageVisibility.products ? categoriesForSolution(slug) : [];
   const index = solutions.findIndex((s) => s.slug === slug);
   const neighbours = [solutions[(index + solutions.length - 1) % solutions.length]!, solutions[(index + 1) % solutions.length]!];
   const [opening, ...context] = copy.body;

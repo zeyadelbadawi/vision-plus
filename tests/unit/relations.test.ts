@@ -10,6 +10,7 @@ import {
   industriesForSolution,
   industrySolutions,
   serviceStages,
+  type IndustryLink,
 } from '@/content/data/relations';
 
 const solutionSlugs = new Set<string>(solutions.map((s) => s.slug));
@@ -18,8 +19,10 @@ const en = getCatalog('en');
 describe('relations (§12.4, §26.5, §9.2)', () => {
   it('links every industry only through words its approved sentence actually contains', () => {
     for (const { slug } of industries) {
-      const links = industrySolutions.map[slug];
-      expect(links.length, slug).toBeGreaterThan(0);
+      const links: IndustryLink[] = industrySolutions.map[slug];
+      // Q-08's new industry has no approved sentence yet, so it has no derived link (needs client review).
+      if (slug === 'real-estate-property-development') expect(links).toEqual([]);
+      else expect(links.length, slug).toBeGreaterThan(0);
       const sentence = en.industries[slug].summary.toLowerCase();
       for (const link of links) {
         expect(solutionSlugs.has(link.solution), `${slug} → ${link.solution}`).toBe(true);
@@ -59,8 +62,8 @@ describe('relations (§12.4, §26.5, §9.2)', () => {
     expect(getSolutionsCopy('en').items['access-control'].capabilities.items).toContain('Time & Attendance');
   });
 
-  it('keeps every relation marked derived until the client confirms it (Q-10, D-19)', () => {
-    for (const r of [industrySolutions, serviceStages, categorySolutions]) expect(r.status).toBe('derived');
+  it('records every relation as approved by the client (D-19, 2026-10-02)', () => {
+    for (const r of [industrySolutions, serviceStages, categorySolutions]) expect(r.status).toBe('approved');
   });
 
   it('has full detail copy for every registered solution', () => {
@@ -109,8 +112,9 @@ describe('sitemap aliases (§9.2, §11)', () => {
     }
   });
 
-  it('keeps the undecided sitemap items out until Q-08 / Q-09 are answered', () => {
-    expect(pendingAliases.map((p) => p.from)).toEqual(['/industries/real-estate-compounds', '/services/supply-procurement']);
+  it('keeps Supply & Procurement out until its description is approved (Q-09), and maps Real Estate (Q-08)', () => {
+    expect(pendingAliases.map((p) => p.from)).toEqual(['/services/supply-procurement']);
     for (const p of pendingAliases) expect(aliases.map((a) => a.from)).not.toContain(p.from);
+    expect(aliases.find((a) => a.from === '/industries/real-estate-compounds')?.to).toBe('/industries#real-estate-property-development');
   });
 });

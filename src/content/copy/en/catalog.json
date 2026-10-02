@@ -1,9 +1,13 @@
 {
   "_meta": {
-    "status": "derived",
+    "status": "draft",
+    "signoff": "D-18 — English copy approved by the client as presented (2026-10-02). Entries without `approved` were added after D-18 and need review.",
     "source": "01 §06 (solutions), §16 (services), §17 (approach), §18 (industries); product categories: 02 p6 sitemap",
     "review": {
-      "productCategories": { "status": "derived", "source": "The 7 category names are the client's sitemap items (02 p6), not 01 approved copy; confirm with D-18 (and Q-02 for the Products launch option)" }
+      "productCategories": { "status": "derived", "source": "The 7 category names are the client's sitemap items (02 p6), not 01 approved copy; confirm with D-18 (and Q-02 for the Products launch option)", "approved": "D-18" },
+      "industries.real-estate-property-development": { "status": "draft", "source": "Q-08 (client, 2026-10-02) supplied the name; the summary is drafted by the team as neutral description (no claimed experience) and needs client review" },
+      "industries.residential.name": { "status": "derived", "source": "Q-08 (client, 2026-10-02): the client-supplied industry name “Residential & Communities” replaces “Residential” (01 §18); the summary is unchanged 01 copy" },
+      "approach.0.text": { "status": "draft", "source": "Q-09 (client, 2026-10-02): Site Survey is included in the Understand stage; 01 §17 sentence extended by the team — wording needs client review" }
     }
   },
   "solutions": {
@@ -25,7 +29,7 @@
     "technical-training-support": { "name": "Technical Training & Support" }
   },
   "approach": [
-    { "title": "Understand", "text": "We begin with the objective, environment, users, and operational requirements." },
+    { "title": "Understand", "text": "We begin with the objective, environment, users, and operational requirements, including a site survey." },
     { "title": "Design", "text": "Requirements are translated into practical and scalable system architecture." },
     { "title": "Select", "text": "Technologies are evaluated for suitability, compatibility, reliability, and lifecycle value." },
     { "title": "Deliver", "text": "Projects are professionally coordinated, installed, managed, and documented." },
@@ -43,7 +47,8 @@
     "retail": { "name": "Retail", "summary": "Security, connectivity, digital communication, monitoring, analytics, and multi-site technology management." },
     "education": { "name": "Education", "summary": "Connected learning environments combining security, networking, access, communications, and transportation monitoring." },
     "healthcare": { "name": "Healthcare", "summary": "Reliable infrastructure supporting security, access, communications, networking, and critical operational environments." },
-    "residential": { "name": "Residential", "summary": "Integrated security, networking, entertainment, access, and smart home automation." },
+    "real-estate-property-development": { "name": "Real Estate & Property Development", "summary": "Security, access, networking, and building technologies coordinated across new and existing property developments." },
+    "residential": { "name": "Residential & Communities", "summary": "Integrated security, networking, entertainment, access, and smart home automation." },
     "logistics-warehousing": { "name": "Logistics & Warehousing", "summary": "Facility surveillance, access management, ICT infrastructure, fleet monitoring, mobile surveillance, and centralized control." },
     "industrial-manufacturing": { "name": "Industrial & Manufacturing", "summary": "Robust security, networking, communications, monitoring, and integrated technology infrastructure." }
   },

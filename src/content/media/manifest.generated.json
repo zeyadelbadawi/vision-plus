@@ -1021,11 +1021,31 @@
     "mobilePath": null,
     "templated": false
   },
+  "IND-REALESTATE": {
+    "id": "IND-REALESTATE",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Real Estate & Property Development",
+    "purpose": "Real estate / property development environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-real-estate.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
   "IND-RESIDENTIAL": {
     "id": "IND-RESIDENTIAL",
     "page": "Industries hub + Home industries index (hover preview)",
-    "section": "Industry: Residential",
-    "purpose": "Residential environment image",
+    "section": "Industry: Residential & Communities",
+    "purpose": "Residential & communities environment image",
     "family": "F5",
     "desktop": {
       "width": 1080,

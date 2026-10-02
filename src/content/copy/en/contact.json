@@ -1,11 +1,12 @@
 {
   "_meta": {
-    "status": "draft",
+    "status": "approved",
+    "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)",
     "source": "No contact copy exists in 01 (§24 lists only placeholders). Section labels are the client's own sitemap items (02 p6); the hero line is team microcopy. Office data lives in data/locations.json (D-01–D-03).",
     "review": {
-      "hero.title": { "status": "draft", "source": "Team microcopy (MASTER_PROJECT_PLAN §26.10), echoing 01 §19 “We start with what the client needs to achieve”" },
-      "contactInformation": { "status": "derived", "source": "02 p6 sitemap item “Contact Information”" },
-      "locations": { "status": "derived", "source": "02 p6 sitemap item “Our Locations”" }
+      "hero.title": { "status": "draft", "source": "Team microcopy (MASTER_PROJECT_PLAN §26.10), echoing 01 §19 “We start with what the client needs to achieve”", "approved": "D-18" },
+      "contactInformation": { "status": "derived", "source": "02 p6 sitemap item “Contact Information”", "approved": "D-18" },
+      "locations": { "status": "derived", "source": "02 p6 sitemap item “Our Locations”", "approved": "D-18" }
     }
   },
   "hero": {

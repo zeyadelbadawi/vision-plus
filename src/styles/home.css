@@ -363,6 +363,7 @@ html:lang(en) .hero__markets { text-transform: uppercase; letter-spacing: 0.14em
 }
 .project-slot__body { padding-block-start: 20px; }
 .project-slot__title { font-size: var(--fs-h4); font-weight: 500; color: var(--fg-muted); }
+.project-slot__title--sample { color: var(--fg); margin-block-start: 10px; }
 .project-slot__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px var(--gutter); margin-block-start: 16px; }
 .project-slot__facts div { border-block-start: 1px solid var(--line); padding-block-start: 10px; }
 .project-slot__facts dt { font-size: var(--fs-caption); color: var(--fg-muted); }

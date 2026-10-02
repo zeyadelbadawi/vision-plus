@@ -33,6 +33,9 @@ export const industries = [
   { slug: 'retail', image: 'IND-RETAIL' },
   { slug: 'education', image: 'IND-EDUCATION' },
   { slug: 'healthcare', image: 'IND-HEALTHCARE' },
+  // Q-08 (client, 2026-10-02): "Real Estate & Property Development" and "Residential & Communities" are separate
+  // industries. The slug `residential` is kept; its name is now "Residential & Communities".
+  { slug: 'real-estate-property-development', image: 'IND-REALESTATE' },
   { slug: 'residential', image: 'IND-RESIDENTIAL' },
   { slug: 'logistics-warehousing', image: 'IND-LOGISTICS' },
   { slug: 'industrial-manufacturing', image: 'IND-INDUSTRIAL' },

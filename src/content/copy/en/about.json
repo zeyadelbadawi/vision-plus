@@ -1,7 +1,12 @@
 {
   "_meta": {
-    "status": "approved",
-    "source": "01 §02 (About), §03 (Journey), §04 (Vision), §05 (Mission), §20 (Core Values), §23 (Philosophy) — verbatim, typographic normalisation only (title case for headings set in capitals in 01). Why Vision Plus (§19) lives in company.json."
+    "status": "draft",
+    "source": "01 §02 (About), §03 (Journey), §04 (Vision), §05 (Mission), §20 (Core Values), §23 (Philosophy) — verbatim, typographic normalisation only (title case for headings set in capitals in 01). Why Vision Plus (§19) lives in company.json.",
+    "review": {
+      "vision": { "status": "withheld", "source": "Q-04 (client, 2026-10-02): the proposed Vision was not accepted as presented. Kept as the 01 record only — do not publish; awaiting the client's exact wording" },
+      "mission": { "status": "withheld", "source": "Q-04 (client, 2026-10-02): the proposed Mission was not accepted as presented. Kept as the 01 record only — do not publish; awaiting the client's exact wording" },
+      "values": { "status": "withheld", "source": "Q-04 (client, 2026-10-02): the proposed Core Values were not accepted as presented. Kept as the 01 record only — do not publish; awaiting the client's exact wording" }
+    }
   },
   "whoWeAre": {
     "eyebrow": "About VISION PLUS",

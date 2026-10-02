@@ -1,5 +1,5 @@
 {
-  "_meta": { "status": "draft-mt", "note": "Draft Arabic for RTL layout review only — NOT client-approved (D-13)." },
+  "_meta": { "status": "draft-mt", "note": "Draft Arabic by Claude (D-13, 2026-10-02) — human review required before launch. Production build refuses draft-mt." },
   "positioning": {
     "title": "بُنينا على الخبرة. ويقودنا ما هو قادم.",
     "statement": "ما يميزنا ليس عدد التقنيات التي نقدمها، بل مدى فعاليتنا في جعلها تعمل معًا.",

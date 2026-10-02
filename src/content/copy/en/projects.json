@@ -1,9 +1,10 @@
 {
   "_meta": {
-    "status": "draft",
+    "status": "approved",
+    "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)",
     "source": "01 §22 (Projects & Experience) — verbatim. No project data exists yet (D-10); projects are added in data/projects/ when supplied.",
     "review": {
-      "confidentialClient": { "status": "draft", "source": "Team microcopy (MASTER_PROJECT_PLAN §26.7, C-14): shown instead of the client name when a project is confidential" }
+      "confidentialClient": { "status": "draft", "source": "Team microcopy (MASTER_PROJECT_PLAN §26.7, C-14): shown instead of the client name when a project is confidential", "approved": "D-18" }
     }
   },
   "hero": {

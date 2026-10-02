@@ -20,7 +20,19 @@ export const meta = z.object({
   status: z.enum(STATUSES),
   source: z.string().optional(),
   note: z.string().optional(),
-  review: z.record(z.string(), z.object({ status: z.enum(['derived', 'draft', 'placeholder']), source: z.string().min(3) })).optional(),
+  /** Client sign-off that approved this file's reviewed entries, e.g. "D-18 — … (2026-10-02)". */
+  signoff: z.string().min(3).optional(),
+  review: z
+    .record(
+      z.string(),
+      z.strictObject({
+        status: z.enum(['derived', 'draft', 'placeholder', 'withheld']),
+        source: z.string().min(3),
+        /** Sign-off ID that approved this entry (e.g. "D-18"); absent = pending client review. */
+        approved: z.string().min(3).optional(),
+      }),
+    )
+    .optional(),
 });
 
 /** Object with exactly these keys, each matching `value`. */

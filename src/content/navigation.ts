@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
 import { getCatalog, getHome } from '@/content';
 import { industries, productCategories, services, solutions } from '@/content/data/registry';
+import { pageVisibility } from '@/content/data/visibility';
 
 /** Serializable navigation model built on the server from the registries + localized copy (§16). */
 export interface NavLink {
@@ -48,17 +49,22 @@ export async function getNavigation(locale: Locale): Promise<NavItem[]> {
         ],
       },
     },
-    {
-      key: 'products',
-      label: t('products'),
-      href: '/products',
-      panel: {
-        kind: 'products',
-        intro: t('productsIntro'),
-        items: productCategories.map((slug) => ({ href: `/products#${slug}`, label: c.productCategories[slug].name })),
-        footer: [{ href: '/contact?type=product', label: t('askProducts') }],
-      },
-    },
+    // Hidden while the Products page is hidden (Q-02, visibility.ts).
+    ...(pageVisibility.products
+      ? [
+          {
+            key: 'products',
+            label: t('products'),
+            href: '/products',
+            panel: {
+              kind: 'products' as const,
+              intro: t('productsIntro'),
+              items: productCategories.map((slug) => ({ href: `/products#${slug}`, label: c.productCategories[slug].name })),
+              footer: [{ href: '/contact?type=product', label: t('askProducts') }],
+            },
+          },
+        ]
+      : []),
     {
       key: 'industries',
       label: t('industries'),

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "status": "placeholder",
-    "note": "English source text as a structural placeholder — awaiting the client-supplied Simplified Chinese (D-12) via the translation workbook. Production build refuses placeholder."
+    "note": "English source text as a structural placeholder — the Simplified Chinese is drafted by Claude in P8 (D-12, 2026-10-02) and reviewed by a human before launch. Production build refuses placeholder."
   },
   "hero": {
     "title": "Tell us what you need to achieve."

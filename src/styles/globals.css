@@ -415,6 +415,19 @@ body:has(main[data-hero='dark']) .site-header--top {
   margin-block: 4px;
 }
 
+/* Client stacked logo (D-05): offset the artboard padding (62/330 × 200 px, 60/320 × 194 px) so the drawing aligns */
+.footer-logo { display: block; width: 200px; height: auto; margin-inline-start: -38px; margin-block: -36px -28px; }
+
+/* Illustrative sample content (Q-12, D-01/D-02): always visibly labelled, preview builds only */
+.sample-tag {
+  display: inline-block;
+  font-size: var(--fs-caption);
+  line-height: 1.4;
+  color: var(--fg-muted);
+  border: 1px dashed var(--line-strong);
+  padding: 2px 8px;
+}
+
 /* Preview-build indicator */
 .preview-notice { position: fixed; inset-block-end: 16px; inset-inline-end: 16px; z-index: 45; font-size: 13px; line-height: 1.45; }
 .preview-notice__pill {
@@ -435,6 +448,15 @@ body:has(main[data-hero='dark']) .site-header--top {
 .vp-placeholder--compact .vp-crop--ts, .vp-placeholder--compact .vp-crop--bs { inset-inline-start: 6px; }
 .vp-placeholder--compact .vp-crop--te, .vp-placeholder--compact .vp-crop--be { inset-inline-end: 6px; }
 .vp-placeholder--compact .vp-placeholder__grid { background-size: 12px 12px; }
+.vp-placeholder__dims {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+}
 
 }
 

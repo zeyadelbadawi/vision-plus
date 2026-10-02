@@ -25,7 +25,7 @@ interface ImageSlotProps {
   className?: string;
   /** Where the spec label sits inside the placeholder. */
   labelAlign?: 'bottom-start' | 'top-end' | 'bottom-end';
-  /** Small thumbnails: crop marks only, no spec label. */
+  /** Small thumbnails: crop marks and the delivery size only (D-11: every placeholder shows its required size). */
   compact?: boolean;
 }
 
@@ -95,6 +95,11 @@ export function ImageSlot({ id, locale, sizes, fill, priority, maskReveal, class
       <span className="vp-crop vp-crop--te" />
       <span className="vp-crop vp-crop--bs" />
       <span className="vp-crop vp-crop--be" />
+      {compact && slot.desktop && (
+        <span className="vp-placeholder__dims t-num" dir="ltr">
+          {slot.desktop.width}×{slot.desktop.height}
+        </span>
+      )}
       {!compact && (
         <span className={cn('vp-placeholder__label t-num', `vp-placeholder__label--${labelAlign}`)} dir="ltr">
           <span className="vp-placeholder__id">{id}</span>

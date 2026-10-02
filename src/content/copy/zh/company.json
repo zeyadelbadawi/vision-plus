@@ -1,5 +1,5 @@
 {
-  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese for layout review only — NOT client-approved (D-12)." },
+  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese by Claude (D-12, 2026-10-02) — human review required before launch. Production build refuses draft-mt." },
   "name": "VISION PLUS",
   "tagline": ["以技术相连。", "以智能驱动。"],
   "descriptor": "一体化技术与系统解决方案",

@@ -1,7 +1,8 @@
 // Writes out/_headers for the static export (Cloudflare Workers Static Assets honours `_headers`
 // for asset responses only; the Worker sets the same baseline on its own responses — worker/headers.ts).
 // Mode-aware: preview builds are noindex; production adds HSTS and upgrade-insecure-requests.
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { pageVisibility } from '../src/content/data/visibility.ts';
 
 const production = process.env.CONTENT_MODE === 'production';
 if (!existsSync('out')) {
@@ -54,6 +55,15 @@ const body =
   '\n';
 writeFileSync('out/_headers', body);
 console.log(`postbuild: out/_headers written (${production ? 'production' : 'preview'}, ${rules.length} rules)`);
+
+// Hidden routes. A page that calls notFound() is still written by the static export (with the 404 markup), which the
+// host would serve as a 200 "soft 404". Remove those files so the request falls through to the real 404 response:
+// pages hidden by client decision (src/content/data/visibility.ts) and, in production, the preview-only style guide.
+const LOCALE_DIRS = ['en', 'ar', 'zh'];
+const hidden = [...Object.entries(pageVisibility).flatMap(([slug, visible]) => (visible ? [] : [`/${slug}`])), ...(production ? ['/_lab'] : [])];
+for (const l of LOCALE_DIRS)
+  for (const path of hidden) for (const f of [`out/${l}${path}.html`, `out/${l}${path}.txt`, `out/${l}${path}`]) rmSync(f, { recursive: true, force: true });
+console.log(`postbuild: hidden routes removed (${hidden.join(', ') || 'none'})`);
 
 // Sitemap alias 301s (MASTER_PROJECT_PLAN §9.2, §11) from src/content/data/aliases.json, for every locale.
 // A redirect is emitted only once its target page exists in this build, so aliases switch on automatically as

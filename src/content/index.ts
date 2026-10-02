@@ -35,6 +35,9 @@ import zhServices from './copy/zh/services.json';
 import enSolutions from './copy/en/solutions.json';
 import arSolutions from './copy/ar/solutions.json';
 import zhSolutions from './copy/zh/solutions.json';
+import enSamples from './copy/en/samples.json';
+import arSamples from './copy/ar/samples.json';
+import zhSamples from './copy/zh/samples.json';
 import locationsJson from './data/locations.json';
 
 export type ContentStatus = 'approved' | 'derived' | 'draft' | 'placeholder' | 'draft-mt';
@@ -53,6 +56,7 @@ export type ProjectsCopy = Shape<typeof enProjects>;
 export type SeoCopy = Shape<typeof enSeo>;
 export type ServicesCopy = Shape<typeof enServices>;
 export type SolutionsCopy = Shape<typeof enSolutions>;
+export type SamplesCopy = Shape<typeof enSamples>;
 
 // `satisfies` enforces key parity across locales at compile time; scripts/content-check.mjs
 // additionally checks array lengths and the content-status gate.
@@ -68,6 +72,7 @@ const projectsCopy = { en: enProjects, ar: arProjects, zh: zhProjects } satisfie
 const seoCopy = { en: enSeo, ar: arSeo, zh: zhSeo } satisfies Record<Locale, SeoCopy>;
 const servicesCopy = { en: enServices, ar: arServices, zh: zhServices } satisfies Record<Locale, ServicesCopy>;
 const solutionsCopy = { en: enSolutions, ar: arSolutions, zh: zhSolutions } satisfies Record<Locale, SolutionsCopy>;
+const samplesCopy = { en: enSamples, ar: arSamples, zh: zhSamples } satisfies Record<Locale, SamplesCopy>;
 
 export const getCatalog = (locale: Locale): CatalogCopy => catalog[locale];
 export const getCompany = (locale: Locale): CompanyCopy => company[locale];
@@ -82,6 +87,8 @@ export const getProjectsCopy = (locale: Locale): ProjectsCopy => projectsCopy[lo
 export const getSeoCopy = (locale: Locale): SeoCopy => seoCopy[locale];
 export const getServicesCopy = (locale: Locale): ServicesCopy => servicesCopy[locale];
 export const getSolutionsCopy = (locale: Locale): SolutionsCopy => solutionsCopy[locale];
+/** Illustrative sample content (Q-12, D-01, D-02) — preview builds only; see data/samples.ts. */
+export const getSamplesCopy = (locale: Locale): SamplesCopy => samplesCopy[locale];
 
 /** Aggregate status of the copy shown for a locale (drives the preview notice). */
 export function copyStatus(locale: Locale): ContentStatus {

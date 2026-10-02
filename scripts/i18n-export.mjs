@@ -150,25 +150,43 @@ const readme = [
   ],
   [],
   [{ value: 'What to fill in', fontWeight: 'bold' }],
-  [{ value: '• Arabic: the “Arabic (العربية)” column — by a professional human translator (Q-05, D-13).', wrap: true }],
-  [{ value: '• Simplified Chinese: the “Chinese (简体中文)” column — supplied by Vision Plus (D-12).', wrap: true }],
-  [{ value: '• Machine translation is not accepted for the final copy. The website build refuses machine-translated text.', wrap: true }],
+  [
+    {
+      value:
+        '• Arabic: the “Arabic (العربية)” column — drafted by Claude from the approved English, then reviewed by a human Arabic reviewer before launch (D-13, 2026-10-02).',
+      wrap: true,
+    },
+  ],
+  [
+    {
+      value:
+        '• Simplified Chinese: the “Chinese (简体中文)” column — drafted by Claude from the approved English, then reviewed by a human Chinese reviewer before launch (D-12, 2026-10-02).',
+      wrap: true,
+    },
+  ],
+  [{ value: '• No draft is final until a human reviewer approves it. The production build refuses any unreviewed (draft) translation.', wrap: true }],
   [],
   [{ value: 'Status', fontWeight: 'bold' }],
   [
     {
       value:
-        '• Prepared, NOT yet released for translation. This workbook is released to translators only after the English sign-off (D-18), so the English is locked first.',
+        '• English locked: the client approved the English copy (D-18, 2026-10-02). Rows added after that sign-off are marked draft or placeholder and may still change.',
       wrap: true,
     },
   ],
   [{ value: `• “approved” rows (${approved} of ${copyRows.length} page-copy rows) hold the client-approved English from the approved content.`, wrap: true }],
-  [{ value: '• “derived” and “draft” rows (page copy and all interface text) may still change through the English sign-off (D-18).', wrap: true }],
+  [
+    {
+      value: '• “derived” and “draft” rows were approved with D-18 unless the English source lists them as pending review (docs/CONTENT_FIDELITY_REPORT.md).',
+      wrap: true,
+    },
+  ],
   [],
   [{ value: 'Rules', fontWeight: 'bold' }],
   [
     {
-      value: '• Keep “VISION PLUS” in Latin capitals unless official Arabic / Chinese names are supplied (Q-07). See the Glossary sheet for technical terms.',
+      value:
+        '• The official company name is “Vision Plus” in English, Arabic and Chinese (D-24): keep it in Latin script, never translate or transliterate it. See the Glossary sheet for technical terms.',
       wrap: true,
     },
   ],

@@ -1,9 +1,10 @@
 {
   "_meta": {
-    "status": "derived",
+    "status": "approved",
+    "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)",
     "source": "01 §21 (Technology Partners). The 7 category names live in catalog.json (02 p6 sitemap). No approved category descriptions exist (D-09), so none are encoded.",
     "review": {
-      "hero.title": { "status": "derived", "source": "01 §21 closing line, reused as the Products hero (MASTER_PROJECT_PLAN §26.6) — needs D-18 approval for this placement" }
+      "hero.title": { "status": "derived", "source": "01 §21 closing line, reused as the Products hero (MASTER_PROJECT_PLAN §26.6) — needs D-18 approval for this placement", "approved": "D-18" }
     }
   },
   "hero": {

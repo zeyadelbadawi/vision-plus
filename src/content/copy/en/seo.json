@@ -1,18 +1,19 @@
 {
   "_meta": {
-    "status": "draft",
+    "status": "approved",
+    "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)",
     "source": "Per-page <title> and meta description (MASTER_PROJECT_PLAN §36). Rendered as “%s — VISION PLUS”, so titles stay ≤ 45 characters (≤ 60 rendered); descriptions ≤ 155. Selected verbatim from approved copy wherever possible; the homepage uses company.json. Every non-verbatim entry is listed in review.",
     "review": {
-      "products.title": { "status": "derived", "source": "02 p6 sitemap item “Products”" },
-      "partners.description": { "status": "derived", "source": "Selection of two approved 01 §21 lines (the full §21 sentences exceed 155 characters)" },
-      "companyProfile.title": { "status": "draft", "source": "Team microcopy (brief §06; the page is not in 01)" },
-      "companyProfile.description": { "status": "draft", "source": "Team microcopy" },
-      "contact.title": { "status": "derived", "source": "02 p6 sitemap item “Contact”" },
-      "contact.description": { "status": "draft", "source": "Team microcopy" },
-      "privacy.title": { "status": "draft", "source": "Team microcopy; the policy text itself comes from the client (D-16)" },
-      "privacy.description": { "status": "draft", "source": "Team microcopy" },
-      "notFound.title": { "status": "draft", "source": "Team microcopy" },
-      "notFound.description": { "status": "draft", "source": "Team microcopy" }
+      "products.title": { "status": "derived", "source": "02 p6 sitemap item “Products”", "approved": "D-18" },
+      "partners.description": { "status": "derived", "source": "Selection of two approved 01 §21 lines (the full §21 sentences exceed 155 characters)", "approved": "D-18" },
+      "companyProfile.title": { "status": "draft", "source": "Team microcopy (brief §06; the page is not in 01)", "approved": "D-18" },
+      "companyProfile.description": { "status": "draft", "source": "Team microcopy", "approved": "D-18" },
+      "contact.title": { "status": "derived", "source": "02 p6 sitemap item “Contact”", "approved": "D-18" },
+      "contact.description": { "status": "draft", "source": "Team microcopy", "approved": "D-18" },
+      "privacy.title": { "status": "draft", "source": "Team microcopy; the policy text itself comes from the client (D-16)", "approved": "D-18" },
+      "privacy.description": { "status": "draft", "source": "Team microcopy", "approved": "D-18" },
+      "notFound.title": { "status": "draft", "source": "Team microcopy", "approved": "D-18" },
+      "notFound.description": { "status": "draft", "source": "Team microcopy", "approved": "D-18" }
     }
   },
   "solutionsHub": {

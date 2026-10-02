@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "status": "placeholder",
+    "note": "ILLUSTRATIVE SAMPLE CONTENT — preview builds only (Q-12, D-01, D-02, D-10, 2026-10-02). Not Vision Plus facts. Replace with verified, client-approved data before launch, or keep the sections hidden.",
+    "review": {
+      "label": {
+        "status": "placeholder",
+        "source": "Sample marker shown on every sample element (Q-12)"
+      },
+      "dataLabel": {
+        "status": "placeholder",
+        "source": "Sample marker for dummy office details (D-01, D-02)"
+      },
+      "projectFacts": {
+        "status": "placeholder",
+        "source": "Neutral stand-ins for the approved project fields (01 §22): no real location, client or date may be invented (Q-12)"
+      },
+      "projects": {
+        "status": "placeholder",
+        "source": "Four illustrative sample projects requested by the client (Q-12, D-10); names and scopes drafted by the team as neutral examples"
+      },
+      "offices": {
+        "status": "placeholder",
+        "source": "Dummy office addresses requested by the client (D-01, D-02); no real building or street"
+      }
+    }
+  },
+  "label": "Illustrative sample",
+  "dataLabel": "Sample data — not verified",
+  "projectFacts": {
+    "location": "Sample location",
+    "client": "Sample client",
+    "year": "20XX"
+  },
+  "projects": {
+    "sample-fleet-surveillance": {
+      "name": "Fleet Mobile Surveillance",
+      "scope": "Illustrative scope: mobile surveillance for a vehicle fleet — system design, installation and commissioning, and maintenance."
+    },
+    "sample-corporate-workplace": {
+      "name": "Corporate Workplace Integration",
+      "scope": "Illustrative scope: integrated security, access control, network infrastructure, and meeting-room audiovisual systems for a corporate workplace."
+    },
+    "sample-hospitality-venue": {
+      "name": "Hospitality Guest Technology",
+      "scope": "Illustrative scope: surveillance, network infrastructure, and guest-area audiovisual systems for a hospitality venue."
+    },
+    "sample-logistics-site": {
+      "name": "Logistics Site Security and Connectivity",
+      "scope": "Illustrative scope: facility surveillance, access management, network infrastructure, and fleet monitoring for a logistics site."
+    }
+  },
+  "offices": {
+    "qatar": {
+      "address": "Sample Building 00, Sample Street, Qatar"
+    },
+    "egypt": {
+      "address": "Sample Building 00, Sample Street, Egypt"
+    }
+  }
+}

@@ -25,8 +25,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       sections={[
         { id: 'who-we-are', title: a.whoWeAre.eyebrow },
         { id: 'journey', title: a.journey.title },
-        { id: 'vision', title: a.vision.title },
-        { id: 'mission', title: a.mission.title },
+        // Q-04: the Vision, Mission and Core Values statements are withheld until the client supplies or approves their
+        // wording, so only their section labels appear.
+        { id: 'vision', title: a.vision.eyebrow },
+        { id: 'mission', title: a.mission.eyebrow },
         { id: 'values', title: a.values.eyebrow },
         { id: 'philosophy', title: a.philosophy.title },
         { id: 'why-vision-plus', title: getCompany(locale).why.title },

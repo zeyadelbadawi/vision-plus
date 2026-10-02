@@ -46,22 +46,29 @@ for (const set of sets) {
     const status = data._meta?.status;
     if (!STATUSES.has(status)) errors.push(`${file}: unknown or missing _meta.status "${status}"`);
     if (l !== 'en') compare(en, data, '$', file);
-    if (status !== 'approved') blockers.push(`${file}: status "${status}"`);
+    // samples.json is preview-only illustrative content (Q-12): it never blocks by status; instead site:check fails a
+    // production build that renders any [data-sample] element.
+    if (status !== 'approved' && set.name !== 'samples.json') blockers.push(`${file}: status "${status}"`);
   }
 }
 
-// _meta.review (MASTER_PROJECT_PLAN §12.3, §12.5): a file that is not fully client-approved lists every
-// derived / draft / placeholder entry with its source. Paths must resolve, and such a file cannot claim "approved".
+// _meta.review (MASTER_PROJECT_PLAN §12.3, §12.5): every English string that is not verbatim 01 copy is listed with its
+// status and source. An entry carrying `approved` (the sign-off ID, e.g. "D-18") has been approved by the client; any
+// other entry is pending, and a file with pending entries cannot claim "approved". `withheld` marks source text the
+// client has not accepted for publication (e.g. Q-04) — it must not be rendered until replaced or approved.
 const get = (obj, path) => path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
-for (const f of readdirSync('src/content/copy/en')) {
-  const data = read(`src/content/copy/en/${f}`);
+for (const f of [...readdirSync('src/content/copy/en').map((x) => `copy/en/${x}`), 'messages/en.json']) {
+  const data = read(f.startsWith('messages') ? f : `src/content/${f}`);
   const review = data._meta?.review ?? {};
   for (const [path, entry] of Object.entries(review)) {
-    if (get(data, path) === undefined) errors.push(`copy/en/${f}: _meta.review path "${path}" does not exist`);
-    if (!['derived', 'draft', 'placeholder'].includes(entry?.status)) errors.push(`copy/en/${f}: _meta.review "${path}" has invalid status "${entry?.status}"`);
-    if (!entry?.source) errors.push(`copy/en/${f}: _meta.review "${path}" needs a source`);
+    if (get(data, path) === undefined) errors.push(`${f}: _meta.review path "${path}" does not exist`);
+    if (!['derived', 'draft', 'placeholder', 'withheld'].includes(entry?.status))
+      errors.push(`${f}: _meta.review "${path}" has invalid status "${entry?.status}"`);
+    if (!entry?.source) errors.push(`${f}: _meta.review "${path}" needs a source`);
+    if (entry?.approved && entry.status === 'withheld') errors.push(`${f}: _meta.review "${path}" cannot be both withheld and approved`);
   }
-  if (Object.keys(review).length && data._meta.status === 'approved') errors.push(`copy/en/${f}: has pending review items but claims status "approved"`);
+  const pending = Object.values(review).filter((e) => !e?.approved);
+  if (pending.length && data._meta.status === 'approved') errors.push(`${f}: has ${pending.length} pending review item(s) but claims status "approved"`);
 }
 
 // SEO length budgets (§36): rendered "<title> — VISION PLUS" ≤ 60 characters, description ≤ 155.

@@ -3,8 +3,7 @@
     "status": "derived",
     "source": "MASTER_PROJECT_PLAN §9.2 / §11: the client's sitemap names (02 p6) → canonical routes and anchors. Emitted as 301s in out/_redirects for every locale once the target page exists (scripts/postbuild.mjs).",
     "pending": [
-      { "from": "/industries/real-estate-compounds", "reason": "No approved equivalent — Q-08 (fold into Residential + Commercial, or supply approved copy)" },
-      { "from": "/services/supply-procurement", "reason": "No approved copy — Q-09" }
+      { "from": "/services/supply-procurement", "reason": "Q-09 (2026-10-02): Supply & Procurement becomes a service only once its description is approved — draft submitted for review" }
     ]
   },
   "aliases": [
@@ -19,6 +18,7 @@
     { "from": "/services/product-selection", "to": "/services#approach", "sitemap": "Product Selection" },
     { "from": "/services/system-configuration", "to": "/services#installation-commissioning", "sitemap": "System & Configuration" },
 
+    { "from": "/industries/real-estate-compounds", "to": "/industries#real-estate-property-development", "sitemap": "Real Estate & Compounds" },
     { "from": "/industries/residential", "to": "/industries#residential", "sitemap": "Residential" },
     { "from": "/industries/commercial-corporate-offices", "to": "/industries#commercial-corporate", "sitemap": "Commercial / Corporate & Offices" },
     { "from": "/industries/retail", "to": "/industries#retail", "sitemap": "Retail" },

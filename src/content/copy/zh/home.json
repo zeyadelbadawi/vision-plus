@@ -1,5 +1,5 @@
 {
-  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese for layout review only — NOT client-approved (D-12)." },
+  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese by Claude (D-12, 2026-10-02) — human review required before launch. Production build refuses draft-mt." },
   "positioning": {
     "title": "以经验为基。以未来为向。",
     "statement": "定义我们的，不是我们提供多少种技术，而是我们让这些技术协同运作的成效。",

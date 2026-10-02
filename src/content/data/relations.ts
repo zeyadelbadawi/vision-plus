@@ -5,7 +5,8 @@
  *  - industry → solution links exist only where the approved industry sentence (01 §18, catalog.json)
  *    names the technology; `evidence` quotes those words and a unit test checks they really appear;
  *  - service → approach-step and product-category → solution links follow the plan's mapping.
- * All of them await client confirmation (Q-10 / D-19; Q-02 for products) before they count as approved.
+ * Client sign-off D-19 (2026-10-02) approved these relations as is: no relation may be added, removed or changed
+ * without a new client review. Product-category links stay unused while the Products page is hidden (Q-02).
  */
 import type { IndustrySlug, ProductCategorySlug, ServiceSlug, SolutionSlug } from './registry';
 
@@ -18,8 +19,8 @@ export interface IndustryLink {
 }
 
 export const industrySolutions = {
-  status: 'derived' as RelationStatus,
-  source: '01 §18 wording → MASTER_PROJECT_PLAN §12.4; awaiting client confirmation (Q-10, D-19)',
+  status: 'approved' as RelationStatus,
+  source: '01 §18 wording → MASTER_PROJECT_PLAN §12.4; approved by the client as is (D-19, 2026-10-02)',
   map: {
     'transportation-fleet': [{ solution: 'mobile-nvr-mobile-surveillance', evidence: ['Mobile NVR'] }],
     'government-public-sector': [
@@ -60,6 +61,9 @@ export const industrySolutions = {
       { solution: 'access-control', evidence: ['access'] },
       { solution: 'networking-ict', evidence: ['networking'] },
     ],
+    // Q-08 (2026-10-02): new industry with a drafted summary and no approved wording, so no relation is derived.
+    // Any link needs a client review (D-19 approved only the relations that existed then).
+    'real-estate-property-development': [],
     residential: [
       { solution: 'cctv-security-systems', evidence: ['security'] },
       { solution: 'networking-ict', evidence: ['networking'] },
@@ -90,10 +94,10 @@ export const acrossEnvironments: SolutionSlug[] = ['elv-systems', 'fire-alarm-sy
 export const approachSteps = ['understand', 'design', 'select', 'deliver', 'integrate', 'verify', 'enable', 'support'] as const;
 export type ApproachStep = (typeof approachSteps)[number];
 
-/** Service → approach stages shown as "Stages: …" on /services (§26.5). Derived; awaiting D-19. */
+/** Service → approach stages shown as "Stages: …" on /services (§26.5). Approved (D-19). */
 export const serviceStages = {
-  status: 'derived' as RelationStatus,
-  source: 'MASTER_PROJECT_PLAN §26.5; awaiting client confirmation (D-19)',
+  status: 'approved' as RelationStatus,
+  source: 'MASTER_PROJECT_PLAN §26.5; approved by the client as is (D-19, 2026-10-02)',
   map: {
     'system-design-consultancy': ['understand', 'design', 'select'],
     'project-management': ['deliver'],
@@ -110,10 +114,10 @@ export interface CategoryLink {
   basis: string;
 }
 
-/** Product category → related solution (§9.2). Derived; awaiting Q-02 / D-19. Empty = no approved link. */
+/** Product category → related solution (§9.2). Approved (D-19); unused while Products is hidden (Q-02). Empty = no link. */
 export const categorySolutions = {
-  status: 'derived' as RelationStatus,
-  source: 'MASTER_PROJECT_PLAN §9.2; awaiting client confirmation (Q-02, D-19)',
+  status: 'approved' as RelationStatus,
+  source: 'MASTER_PROJECT_PLAN §9.2; approved by the client as is (D-19, 2026-10-02)',
   map: {
     'cctv-surveillance': { solutions: ['cctv-security-systems'], basis: 'Same technology as the CCTV & Security Systems solution (01 §09)' },
     'access-control': { solutions: ['access-control'], basis: 'Same name as the Access Control solution (01 §10)' },

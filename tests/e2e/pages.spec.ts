@@ -12,7 +12,6 @@ const ROUTES = [
   '/solutions',
   '/solutions/mobile-nvr-mobile-surveillance',
   '/solutions/cctv-security-systems',
-  '/products',
   '/industries',
   '/services',
   '/projects',
@@ -51,11 +50,30 @@ test('every navigation anchor lands on a section of its page', async ({ page }) 
     ['/en/services', 'approach'],
     ['/en/industries', 'banking-finance'],
     ['/en/about', 'why-vision-plus'],
-    ['/en/products', 'access-control'],
     ['/en/contact', 'locations'],
   ] as const) {
     await page.goto(`${path}#${id}`);
     await expect(page.locator(`#${id}`)).toBeInViewport();
+  }
+});
+
+test('Products is hidden (Q-02): not built, not linked from the navigation', async ({ page }) => {
+  for (const l of ['en', 'ar', 'zh']) {
+    const res = await page.goto(`/${l}/products`);
+    expect(res?.status()).toBe(404);
+  }
+  await page.goto('/en');
+  await expect(page.locator('a[href$="/products"], a[href*="/products#"]')).toHaveCount(0);
+});
+
+test('illustrative samples are labelled on every rendering (Q-12, D-01/D-02)', async ({ page }) => {
+  for (const l of ['en', 'ar', 'zh']) {
+    await page.goto(`/${l}`);
+    const samples = page.locator('[data-sample]');
+    expect(await samples.count()).toBe(5); // 3 project cards + 2 office blocks
+    for (const el of await samples.all()) await expect(el.locator('.sample-tag')).toHaveCount(1);
+    // dummy contact details are never actionable (D-04)
+    await expect(page.locator('footer a[href^="tel:"], footer a[href^="mailto:"]')).toHaveCount(0);
   }
 });
 

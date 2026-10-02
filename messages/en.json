@@ -1,5 +1,5 @@
 {
-  "_meta": { "status": "draft", "note": "Team-authored interface microcopy — awaiting client approval (D-18)." },
+  "_meta": { "status": "approved", "signoff": "D-18 — English copy approved by the client as presented in the P4 review (2026-10-02)", "note": "Team-authored interface microcopy, approved with D-18. Strings added after D-18 are listed in _meta.review until the client reviews them." },
   "a11y": {
     "skipToContent": "Skip to content",
     "mainNav": "Main",

@@ -1,5 +1,5 @@
 {
-  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese UI strings — NOT client-approved (D-12, D-18)." },
+  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese UI strings by Claude (D-12, 2026-10-02) — human review required before launch. Production build refuses draft-mt." },
   "a11y": {
     "skipToContent": "跳至正文",
     "mainNav": "主导航",

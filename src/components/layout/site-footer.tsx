@@ -2,21 +2,25 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import { localeMeta, locales } from '@/i18n/locales';
-import { getCatalog, getCompany, offices } from '@/content';
+import { getCatalog, getCompany, getSamplesCopy, offices } from '@/content';
+import { sampleOffices } from '@/content/data/samples';
 import { solutions } from '@/content/data/registry';
-import { Wordmark } from '@/components/ui/wordmark';
 import { isPreview } from '@/lib/env';
 
-/** Footer (§16.4). Office details are placeholders until D-01/D-02 — never invented. */
+/**
+ * Footer (§16.4). Verified office details render only when the client supplies them (D-01/D-02). Until then, preview
+ * builds show the client-requested dummy details (data/samples.ts), labelled as sample data, as plain text (no
+ * tel:/mailto: links, D-04). Production renders nothing for a missing value.
+ */
 export async function SiteFooter({ locale }: { locale: Locale }) {
-  const [t, tn, ta, tp] = await Promise.all([
+  const [t, tn, ta] = await Promise.all([
     getTranslations({ locale, namespace: 'footer' }),
     getTranslations({ locale, namespace: 'nav' }),
     getTranslations({ locale, namespace: 'a11y' }),
-    getTranslations({ locale, namespace: 'placeholder' }),
   ]);
   const c = getCatalog(locale);
   const company = getCompany(locale);
+  const samples = getSamplesCopy(locale);
   const year = new Date().getFullYear();
 
   const companyLinks = [
@@ -33,7 +37,11 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
       <div className="container-vp">
         <div className="grid-vp gap-y-12 border-t border-line pt-16 pb-12 lg:pt-20">
           <div className="col-span-4 md:col-span-8 lg:col-span-4">
-            <Wordmark className="text-[1.5rem]" />
+            {/* Official stacked logo as delivered by the client (D-05, 2026-10-02: use the existing logo files, unaltered,
+                until the missing variants arrive). Byte-identical copy of logo package v1; its artboard has ~60 px of
+                built-in padding (330 × 320 around a 206 × 200 drawing), offset here so the drawing aligns with the column. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/brand/vision-plus-logo-stacked-white.svg" alt="Vision Plus" width={200} height={194} className="footer-logo" decoding="async" />
             <p className="t-body-sm mt-6 max-w-[22rem] text-fg-muted">
               {company.tagline.join(' ')}
               <br />
@@ -69,27 +77,42 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
             <div>
               <h2 className="t-caption mb-5 text-fg-muted">{t('offices')}</h2>
               <div className="grid gap-8">
-                {offices.map((o, i) => (
-                  <address key={o.key} className="not-italic">
-                    <p className="t-body-sm mb-2 font-medium">{company.markets[i]}</p>
-                    {/* Values render only when supplied by the client (D-01/D-02). */}
-                    {o.address ? <p className="t-body-sm text-fg-muted">{o.address}</p> : isPreview && <p className="footer-placeholder">{tp('address')}</p>}
-                    {o.phone ? (
-                      <a href={`tel:${o.phone.replace(/\s/g, '')}`} dir="ltr" className="footer-link t-body-sm">
-                        {o.phone}
-                      </a>
-                    ) : (
-                      isPreview && <p className="footer-placeholder">{tp('phone')}</p>
-                    )}
-                    {o.email ? (
-                      <a href={`mailto:${o.email}`} dir="ltr" className="footer-link t-body-sm">
-                        {o.email}
-                      </a>
-                    ) : (
-                      isPreview && <p className="footer-placeholder">{tp('email')}</p>
-                    )}
-                  </address>
-                ))}
+                {offices.map((o, i) => {
+                  const showSample = isPreview && !(o.address && o.phone && o.email);
+                  return (
+                    <address key={o.key} className="not-italic" data-sample={showSample ? '' : undefined}>
+                      <p className="t-body-sm mb-2 font-medium">{company.markets[i]}</p>
+                      {o.address ? (
+                        <p className="t-body-sm text-fg-muted">{o.address}</p>
+                      ) : (
+                        showSample && <p className="t-body-sm text-fg-muted">{samples.offices[o.key].address}</p>
+                      )}
+                      {o.phone ? (
+                        <a href={`tel:${o.phone.replace(/\s/g, '')}`} dir="ltr" className="footer-link t-body-sm">
+                          {o.phone}
+                        </a>
+                      ) : (
+                        showSample && (
+                          <p dir="ltr" className="t-body-sm text-fg-muted">
+                            {sampleOffices[o.key].phone}
+                          </p>
+                        )
+                      )}
+                      {o.email ? (
+                        <a href={`mailto:${o.email}`} dir="ltr" className="footer-link t-body-sm">
+                          {o.email}
+                        </a>
+                      ) : (
+                        showSample && (
+                          <p dir="ltr" className="t-body-sm text-fg-muted">
+                            {sampleOffices[o.key].email}
+                          </p>
+                        )
+                      )}
+                      {showSample && <p className="sample-tag mt-2">{samples.dataLabel}</p>}
+                    </address>
+                  );
+                })}
               </div>
             </div>
           </nav>
