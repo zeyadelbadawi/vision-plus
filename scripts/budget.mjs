@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
 const BUDGET = { jsKb: 160, cssKb: 30, htmlKb: 40 }; // home: JS 142.8 · CSS 12.4 · HTML 22.9–25.1; scene page measured in docs (gzip)
-const ROUTES = ['en', 'ar', 'zh', 'en/solutions/mobile-nvr-mobile-surveillance', 'ar/solutions/mobile-nvr-mobile-surveillance'];
+const ROUTES = ['en', 'ar', 'zh', 'en/solutions/mobile-nvr-mobile-surveillance', 'ar/solutions/mobile-nvr-mobile-surveillance', 'en/services'];
 let failed = false;
 for (const r of ROUTES) {
   const html = readFileSync(`out/${r}.html`, 'utf8');

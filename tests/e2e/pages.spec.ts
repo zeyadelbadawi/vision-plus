@@ -54,6 +54,7 @@ for (const l of LOCALES) {
 test('every navigation anchor lands on a section of its page', async ({ page }) => {
   for (const [path, id] of [
     ['/en/services', 'approach'],
+    ['/en/services', 'system-design-consultancy'],
     ['/en/industries', 'banking-finance'],
     ['/en/about', 'why-vision-plus'],
     ['/en/contact', 'locations'],
@@ -285,6 +286,108 @@ test.describe('Localized 404 (§26.13)', () => {
     expect(res?.status()).toBe(404);
     await expect(page.locator('a[href="/ar"]')).toBeVisible();
     await expect(page.locator('a[href="/zh"]')).toBeVisible();
+  });
+});
+
+// P5A-05 Services (MASTER_PROJECT_PLAN §26.5, §55.3.7): approach spine, 6 services with D-19 stages, sticky stage rail.
+test.describe('Services lifecycle (§26.5)', () => {
+  const SERVICES = [
+    'system-design-consultancy',
+    'project-management',
+    'installation-commissioning',
+    'testing-integration',
+    'maintenance-support',
+    'technical-training-support',
+  ];
+  const STAGES: Record<string, string[]> = {
+    'system-design-consultancy': ['understand', 'design', 'select'],
+    'project-management': ['deliver'],
+    'installation-commissioning': ['deliver'],
+    'testing-integration': ['integrate', 'verify'],
+    'maintenance-support': ['support'],
+    'technical-training-support': ['enable'],
+  };
+
+  for (const l of LOCALES) {
+    test(`/${l.code}/services: approach with 8 step texts, 6 services in order with their stages, closing and CTA`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(`/${l.code}/services`);
+      const steps = page.locator('#approach ol.lifecycle > li');
+      await expect(steps).toHaveCount(8);
+      for (const st of await steps.all()) await expect(st.locator('h3 + p')).not.toBeEmpty();
+      // R-2: only the Understand step text awaits client review, and the preview build says so
+      await expect(page.locator('#approach .pending-note')).toHaveCount(1);
+      await expect(page.locator('#step-understand .pending-note')).toHaveCount(1);
+      const ids = await page.locator('.services-flow > section.split').evaluateAll((els) => els.map((e) => e.id));
+      expect(ids).toEqual(SERVICES);
+      for (const slug of SERVICES) {
+        const section = page.locator(`#${slug}`);
+        await expect(section.locator('h2')).not.toBeEmpty();
+        await expect(section.locator('p.t-body')).toHaveCount(2);
+        await expect(section.locator('[data-slot^="SRV-"]')).toHaveCount(1);
+        const links = await section.locator('.service-stages a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+        expect(links).toEqual(STAGES[slug]!.map((k) => `/${l.code}/services#step-${k}`));
+        for (const k of STAGES[slug]!) await expect(page.locator(`#step-${k}`)).toHaveCount(1);
+      }
+      // R-3: Supply & Procurement is not built
+      await expect(page.locator('#supply-procurement')).toHaveCount(0);
+      await expect(page.locator('#closing-title')).not.toBeEmpty();
+      await expect(page.locator('main a[href$="/contact?type=consultation"].btn--primary')).toBeVisible();
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('the stage rail sticks on desktop and lights up the stages of the service in view; no rail on mobile', async ({ page }, info) => {
+    await page.goto('/en/services');
+    const rail = page.locator('.stage-rail');
+    if ((info.project.use.viewport?.width ?? 0) < 1024) {
+      await expect(rail).toBeHidden();
+      return;
+    }
+    await expect(page.locator('.services-flow')).toHaveAttribute('data-live', '');
+    const lit = () =>
+      page
+        .locator('.stage-rail__item')
+        .evaluateAll((els) =>
+          els.flatMap((e, i) =>
+            getComputedStyle(e).boxShadow.includes('inset') && !getComputedStyle(e).boxShadow.includes('rgba(0, 0, 0, 0)') ? [i + 1] : [],
+          ),
+        );
+    for (const [slug, expected] of [
+      ['system-design-consultancy', [1, 2, 3]],
+      ['testing-integration', [5, 6]],
+      ['technical-training-support', [7]],
+    ] as const) {
+      await page.evaluate((id) => scrollTo(0, document.getElementById(id)!.getBoundingClientRect().top + scrollY - 200), slug);
+      await expect.poll(lit).toEqual(expected);
+      if (slug === 'system-design-consultancy') continue; // the rail sits in flow until it reaches the header
+      const box = await rail.boundingBox();
+      expect(box?.y).toBeGreaterThanOrEqual(60);
+      expect(box?.y).toBeLessThanOrEqual(84);
+    }
+  });
+
+  test('a service anchor lands below the header and the stage rail', async ({ page }) => {
+    await page.goto('/en/services#installation-commissioning');
+    const heading = page.locator('#installation-commissioning-title');
+    await expect(heading).toBeInViewport();
+    const rail = await page.locator('.stage-rail').boundingBox();
+    const top = (await heading.boundingBox())!.y;
+    expect(top).toBeGreaterThan(rail ? rail.y + rail.height : 64);
+  });
+
+  test('reduced motion and no JavaScript: all stages shown, none highlighted, all content present', async ({ browser }) => {
+    for (const opts of [{ reducedMotion: 'reduce' as const }, { javaScriptEnabled: false }]) {
+      const ctx = await browser.newContext({ ...opts, viewport: { width: 1440, height: 900 } });
+      const page = await ctx.newPage();
+      await page.goto('/en/services');
+      await page.evaluate(() => scrollTo(0, document.getElementById('testing-integration')!.offsetTop));
+      await expect(page.locator('.services-flow')).not.toHaveAttribute('data-current', /./);
+      await expect(page.locator('.stage-rail__item')).toHaveCount(8);
+      await expect(page.locator('.services-flow > section.split')).toHaveCount(6);
+      await ctx.close();
+    }
   });
 });
 

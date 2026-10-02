@@ -24,6 +24,16 @@ export const services = [
 ] as const;
 export type ServiceSlug = (typeof services)[number];
 
+/** Services page section images (§26.5, F4, P2). Literal IDs so `assets:check` sees them. */
+export const serviceMedia = {
+  'system-design-consultancy': { image: 'SRV-DESIGN' },
+  'project-management': { image: 'SRV-PM' },
+  'installation-commissioning': { image: 'SRV-INSTALL' },
+  'testing-integration': { image: 'SRV-TEST' },
+  'maintenance-support': { image: 'SRV-MAINT' },
+  'technical-training-support': { image: 'SRV-TRAIN' },
+} as const satisfies Record<ServiceSlug, { image: string }>;
+
 export const industries = [
   { slug: 'transportation-fleet', image: 'IND-TRANSPORT' },
   { slug: 'government-public-sector', image: 'IND-GOV' },

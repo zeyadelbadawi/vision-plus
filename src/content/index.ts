@@ -90,6 +90,16 @@ export const getSolutionsCopy = (locale: Locale): SolutionsCopy => solutionsCopy
 /** Illustrative sample content (Q-12, D-01, D-02) — preview builds only; see data/samples.ts. */
 export const getSamplesCopy = (locale: Locale): SamplesCopy => samplesCopy[locale];
 
+/**
+ * Whether a catalog entry still awaits client review (`_meta.review` without `approved`, e.g. `approach.0.text`, R-2).
+ * Pages show a preview-only note on such entries; the production gate (`content:check`) blocks on them regardless.
+ */
+export function catalogPending(path: string): boolean {
+  const review = (enCatalog._meta as { review?: Record<string, { approved?: string }> }).review;
+  const entry = review?.[path];
+  return !!entry && !entry.approved;
+}
+
 /** Aggregate status of the copy shown for a locale (drives the preview notice). */
 export function copyStatus(locale: Locale): ContentStatus {
   return [catalog[locale], company[locale], home[locale]].some((c) => c._meta.status === 'draft-mt') ? 'draft-mt' : 'approved';

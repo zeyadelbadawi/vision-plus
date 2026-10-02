@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Inner pages (MASTER_PROJECT_PLAN §26): page intro, P3 template skeletons and the
-   solution detail template. Imported by those pages only — the homepage never loads it.
+   Inner pages (MASTER_PROJECT_PLAN §26): page intro, P3 template skeletons, the
+   solution detail template and the P5 inner pages. Imported by those pages only — the homepage never loads it.
    Logical properties throughout (RTL).
    ========================================================================== */
 @layer components {
@@ -147,6 +147,46 @@
   @media (max-width: 767px) {
     .solution-hero > .page-band { order: -1; margin-block-start: var(--header-h); }
     .solution-hero > .page-intro { padding-block-start: 24px; }
+  }
+
+  /* Preview-only note on wording that awaits client review (never rendered in production) */
+  .pending-note {
+    margin-block-start: 12px; padding-inline-start: 10px; border-inline-start: 2px solid var(--color-gold);
+    color: var(--fg-muted);
+  }
+
+  /* Split editorial (§20.8) */
+  .split + .split { border-block-start: 1px solid var(--line); }
+
+  /* Services (§26.5): "Stages" marker and the sticky stage rail (desktop) */
+  .service-stages__link { text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .service-stages__link:hover { text-decoration-color: currentColor; }
+  .stage-rail { display: none; }
+  @media (min-width: 1024px) {
+    .services-flow .split { scroll-margin-block-start: 56px; }
+    .stage-rail {
+      display: block; position: sticky; inset-block-start: 64px; z-index: 2;
+      background: var(--bg); border-block: 1px solid var(--line);
+    }
+    .stage-rail__list { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); column-gap: 12px; }
+    .stage-rail__item {
+      display: flex; gap: 8px; align-items: baseline; padding-block: 14px;
+      font-size: var(--fs-body-sm); color: var(--fg-muted);
+      box-shadow: inset 0 2px 0 transparent;
+      transition: color var(--dur-quick) var(--ease-precise), box-shadow var(--dur-quick) var(--ease-precise);
+    }
+    .stage-rail__n { font-size: var(--fs-caption); }
+    /* the service in view (data-current, motion controller) lights up its stages (D-19 mapping in data-for) */
+    .services-flow[data-current='1'] .stage-rail__item[data-for~='1'],
+    .services-flow[data-current='2'] .stage-rail__item[data-for~='2'],
+    .services-flow[data-current='3'] .stage-rail__item[data-for~='3'],
+    .services-flow[data-current='4'] .stage-rail__item[data-for~='4'],
+    .services-flow[data-current='5'] .stage-rail__item[data-for~='5'],
+    .services-flow[data-current='6'] .stage-rail__item[data-for~='6'],
+    .services-flow[data-current='7'] .stage-rail__item[data-for~='7'],
+    .services-flow[data-current='8'] .stage-rail__item[data-for~='8'] {
+      color: var(--fg); box-shadow: inset 0 2px 0 var(--color-gold);
+    }
   }
 }
 

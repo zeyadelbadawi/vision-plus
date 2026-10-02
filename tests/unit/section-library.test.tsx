@@ -8,6 +8,7 @@ import { SpecList } from '@/components/sections/shared/spec-list';
 import { RelatedRail } from '@/components/sections/shared/related-rail';
 import { PillarStrip } from '@/components/sections/shared/pillar-strip';
 import { SceneSteps } from '@/components/sections/shared/scene-steps';
+import { SplitEditorial } from '@/components/sections/shared/split-editorial';
 import { scenes } from '@/content/data/scenes';
 
 // Shared section library (MASTER_PROJECT_PLAN §20.8, §27; P5A-01): markup contracts the pages rely on.
@@ -46,6 +47,55 @@ describe('ProcessTrack', () => {
   it('numbers the steps (a real sequence) without exposing the numbers twice', () => {
     expect(html).toContain('<span class="lifecycle__n t-num" aria-hidden="true">01</span>');
     expect(html).toContain('<span class="lifecycle__n t-num" aria-hidden="true">02</span>');
+  });
+});
+
+describe('ProcessTrack (full variant)', () => {
+  const html = renderToStaticMarkup(
+    <ProcessTrack
+      locale="en"
+      label="Lifecycle steps"
+      variant="full"
+      steps={[
+        { title: 'Understand', text: 'Text one.', id: 'step-understand', pending: 'Wording pending client review' },
+        { title: 'Design', text: 'Text two.', id: 'step-design' },
+      ]}
+    />,
+  );
+  it('shows the step texts in the full track with an anchor per step', () => {
+    expect(html).toMatch(/^<ol class="lifecycle" aria-label="Lifecycle steps" data-progress="track"/);
+    expect(html).toContain('<li id="step-understand" class="lifecycle__step"');
+    expect(html).toContain('<h3 class="t-h3 lifecycle__title">Design</h3><p class="t-body-sm text-fg-muted">Text two.</p>');
+  });
+  it('carries the pending note only on the step that has one', () => {
+    expect(html.match(/class="pending-note t-caption"/g)).toHaveLength(1);
+    expect(html).toContain('Text one.</p><p class="pending-note t-caption">Wording pending client review</p>');
+  });
+  it('the compact track ignores texts, ids and notes', () => {
+    const compact = renderToStaticMarkup(<ProcessTrack locale="en" label="L" steps={[{ title: 'A', text: 'T', id: 'x', pending: 'P' }]} />);
+    expect(compact).not.toMatch(/id="x"|>T<|pending-note/);
+  });
+});
+
+describe('SplitEditorial', () => {
+  const render = (flip: boolean, image?: string) =>
+    renderToStaticMarkup(
+      <SplitEditorial locale="ar" id="svc" title="Service name" image={image} flip={flip} step>
+        <p>Body</p>
+      </SplitEditorial>,
+    );
+  it('is an anchored section labelled by its heading and marked as a step', () => {
+    const html = render(false, 'SRV-DESIGN');
+    expect(html).toMatch(/^<section id="svc" aria-labelledby="svc-title" class="split section-y" data-step="">/);
+    expect(html).toContain('<h2 id="svc-title" class="t-h2" lang="en" dir="ltr">Service name</h2>');
+    expect(html).toContain('data-slot="SRV-DESIGN"');
+  });
+  it('alternates the image side on desktop', () => {
+    expect(render(false, 'SRV-DESIGN')).toMatch(/split__media[^"]*lg:col-start-7/);
+    expect(render(true, 'SRV-DESIGN')).toMatch(/split__media[^"]*lg:col-start-1/);
+  });
+  it('without an image renders the text column only', () => {
+    expect(render(true)).not.toContain('split__media');
   });
 });
 
