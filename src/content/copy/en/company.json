@@ -1,0 +1,21 @@
+{
+  "_meta": { "status": "approved", "source": "01 §01 (cover), §19 (why), §21 (partners)" },
+  "name": "VISION PLUS",
+  "tagline": ["Connected by Technology.", "Driven by Intelligence."],
+  "descriptor": "Integrated Technology & Systems Solutions",
+  "markets": ["Qatar", "Egypt"],
+  "capabilityLine": ["Mobile Surveillance", "Security", "ICT", "ELV", "AV", "Automation", "Life Safety"],
+  "why": {
+    "title": "We Think Beyond the Equipment.",
+    "points": [
+      { "title": "Experience That Started in 2017", "text": "Our journey began in Qatar in 2017 and expanded into Egypt in 2021, giving VISION PLUS practical experience across different projects, operating environments, and technology requirements." },
+      { "title": "Engineering Before Equipment", "text": "We start with what the client needs to achieve and engineer the technology around that objective." },
+      { "title": "Mobile Technology Expertise", "text": "Our Mobile NVR & Mobile Surveillance capabilities extend conventional security beyond fixed facilities into vehicles, fleets, transportation, and mobile operations." },
+      { "title": "Multi-System Capability", "text": "Mobile Surveillance, Security, ICT, ELV, AV, Automation, and Fire Alarm technologies are brought together through one coordinated approach." },
+      { "title": "Integration by Design", "text": "We consider how technologies need to communicate from the beginning instead of attempting to connect independent systems after installation." },
+      { "title": "One Point of Responsibility", "text": "Consultancy, design, project management, installation, commissioning, integration, training, maintenance, and technical support." },
+      { "title": "Engineered for Real Life", "text": "Our systems consider actual users, operating conditions, maintenance, expansion, reliability, and long-term lifecycle requirements." },
+      { "title": "Beyond the Handover", "text": "Our relationship continues through maintenance, technical support, system optimization, and future upgrades." }
+    ]
+  }
+}

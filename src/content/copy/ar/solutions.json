@@ -1,0 +1,274 @@
+{
+  "_meta": {
+    "status": "placeholder",
+    "note": "English source text as a structural placeholder — awaiting the human Arabic translation (D-13) via the translation workbook. Production build refuses placeholder."
+  },
+  "hub": {
+    "eyebrow": "Our Solutions",
+    "title": "One Technology Partner. Multiple Capabilities.",
+    "lede": "Our portfolio brings together technologies that protect, connect, communicate, automate, and provide intelligence.",
+    "integrationStatement": "Make technology work intelligently, reliably, and as one."
+  },
+  "items": {
+    "mobile-nvr-mobile-surveillance": {
+      "headline": "Security That Moves With You.",
+      "body": [
+        "Security requirements do not stop when an asset leaves a building.",
+        "VISION PLUS provides specialized Mobile NVR & Mobile Surveillance Solutions designed for transportation networks, vehicle fleets, mobile operations, and valuable moving assets.",
+        "Unlike conventional CCTV environments, mobile surveillance must operate under constantly changing conditions — movement, vibration, changing network coverage, remote locations, and continuous operation.",
+        "Our approach brings together video, location, connectivity, data, and intelligent monitoring within one coordinated mobile security environment."
+      ],
+      "capabilities": {
+        "intro": "Core Capabilities",
+        "items": [
+          "Mobile Network Video Recorders",
+          "Multi-Channel HD/IP Vehicle Cameras",
+          "GPS Tracking & Positioning",
+          "4G/5G Connectivity",
+          "Wi-Fi Communication",
+          "Real-Time Video Transmission",
+          "Remote Live Viewing",
+          "Remote Video Playback",
+          "Centralized Fleet Monitoring",
+          "Emergency & Event Alerts",
+          "Driver Behavior Monitoring",
+          "Vehicle Status Information",
+          "Intelligent Video Analytics",
+          "Secure Local Video Storage",
+          "Centralized Management Platforms"
+        ]
+      },
+      "fleet": {
+        "eyebrow": "Mobile Security & Fleet Intelligence",
+        "title": "Beyond Vehicle Surveillance.",
+        "body": [
+          "Traditional vehicle surveillance tells you what happened.",
+          "An intelligent mobile security platform helps you understand what is happening, where it is happening, and when attention is required.",
+          "VISION PLUS integrates mobile video surveillance with connectivity, positioning, monitoring, and intelligent management to provide organizations with greater visibility over their mobile operations."
+        ],
+        "pillars": [
+          {
+            "key": "video",
+            "title": "Video",
+            "text": "Capture and record activity inside and around vehicles."
+          },
+          {
+            "key": "location",
+            "title": "Location",
+            "text": "Understand where each connected vehicle or mobile asset is operating."
+          },
+          {
+            "key": "connectivity",
+            "title": "Connectivity",
+            "text": "Maintain communication through mobile and wireless networks."
+          },
+          {
+            "key": "monitoring",
+            "title": "Monitoring",
+            "text": "Access live video, recorded footage, vehicle status, and events remotely."
+          },
+          {
+            "key": "intelligence",
+            "title": "Intelligence",
+            "text": "Use analytics and event information to identify situations requiring attention."
+          },
+          {
+            "key": "management",
+            "title": "Management",
+            "text": "Bring multiple vehicles, users, cameras, locations, and events into a centralized management environment."
+          }
+        ],
+        "applicationsTitle": "Applications",
+        "applications": [
+          "Public Transportation",
+          "School Buses",
+          "Corporate Fleets",
+          "Logistics & Delivery Vehicles",
+          "Emergency Vehicles",
+          "Government Fleets",
+          "Construction Fleets",
+          "Heavy Equipment",
+          "Specialized Mobile Operations"
+        ],
+        "equation": [
+          "Video",
+          "Location",
+          "Connectivity",
+          "Data",
+          "Intelligence"
+        ]
+      }
+    },
+    "cctv-security-systems": {
+      "headline": "See More. Know More. Respond Better.",
+      "body": [
+        "Modern security is no longer simply about recording video.",
+        "VISION PLUS designs intelligent surveillance environments that provide visibility, situational awareness, centralized management, and actionable information."
+      ],
+      "capabilities": {
+        "intro": "Our capabilities include:",
+        "items": [
+          "IP CCTV Systems",
+          "Video Management Systems",
+          "Network Video Recording",
+          "Centralized Monitoring",
+          "Intelligent Video Analytics",
+          "Remote Monitoring",
+          "Multi-Site Surveillance",
+          "Perimeter Surveillance",
+          "Video Storage Solutions",
+          "Security System Integration"
+        ]
+      },
+      "closing": "From individual facilities to complex multi-site environments, each solution is designed around the actual security requirements of the project rather than a standard equipment package."
+    },
+    "access-control": {
+      "headline": "Control Access. Protect What Matters.",
+      "body": [
+        "VISION PLUS develops intelligent access management solutions that help organizations protect people, property, information, and critical areas while maintaining efficient movement."
+      ],
+      "capabilities": {
+        "intro": "Solutions can incorporate:",
+        "items": [
+          "Card & Credential Access",
+          "Biometric Authentication",
+          "Mobile Credentials",
+          "Visitor Management",
+          "Time & Attendance",
+          "Turnstiles & Gates",
+          "Vehicle Barriers",
+          "Door Management",
+          "Centralized Access Management",
+          "CCTV Integration"
+        ]
+      },
+      "closing": "By connecting access control with other security technologies, organizations gain greater visibility and control over who enters, where they enter, and when."
+    },
+    "networking-ict": {
+      "headline": "The Infrastructure Behind Every Connected Environment.",
+      "body": [
+        "Every intelligent technology environment depends on the network behind it.",
+        "VISION PLUS designs and implements reliable, secure, and scalable ICT infrastructure capable of supporting business operations and connected systems."
+      ],
+      "capabilities": {
+        "intro": "Our capabilities include:",
+        "items": [
+          "Structured Cabling",
+          "LAN / WAN Infrastructure",
+          "Network Switching & Routing",
+          "Enterprise Wi-Fi",
+          "Fiber-Optic Infrastructure",
+          "Network Cabinets & Racks",
+          "Data Infrastructure",
+          "Network Management",
+          "Supporting ICT Infrastructure"
+        ]
+      },
+      "closing": "We design networks not only around today’s requirements, but around the technologies that may depend on them tomorrow."
+    },
+    "elv-systems": {
+      "headline": "Multiple Systems. One Infrastructure.",
+      "body": [
+        "Modern buildings depend on a growing number of Extra-Low Voltage technologies.",
+        "VISION PLUS coordinates these systems within one structured technology environment, reducing complexity and improving interoperability."
+      ],
+      "principles": {
+        "intro": "Our ELV approach is based on four principles:",
+        "items": [
+          {
+            "key": "coordination",
+            "title": "Coordination",
+            "text": "Systems are considered as part of the complete project rather than individual packages."
+          },
+          {
+            "key": "integration",
+            "title": "Integration",
+            "text": "Technologies communicate wherever meaningful operational value can be achieved."
+          },
+          {
+            "key": "reliability",
+            "title": "Reliability",
+            "text": "Infrastructure is engineered for dependable long-term operation."
+          },
+          {
+            "key": "scalability",
+            "title": "Scalability",
+            "text": "Systems remain capable of adapting to changing requirements and future expansion."
+          }
+        ]
+      }
+    },
+    "audio-visual": {
+      "headline": "Technology That Brings People Together.",
+      "body": [
+        "Our Audio Visual solutions create environments where communication, collaboration, presentation, and information become effortless."
+      ],
+      "capabilities": {
+        "intro": "Solutions include:",
+        "items": [
+          "Meeting Room Systems",
+          "Conference Room Solutions",
+          "Video Conferencing",
+          "Professional Displays",
+          "Digital Signage",
+          "Public Address Systems",
+          "Professional Audio",
+          "Presentation Systems",
+          "Control Systems",
+          "Integrated AV Environments"
+        ]
+      },
+      "closingLead": "From executive meeting rooms to commercial and public environments, our objective is simple:",
+      "closing": "Make the technology disappear into the experience."
+    },
+    "smart-building-home-automation": {
+      "headline": "Spaces That Understand How They Are Used.",
+      "body": [
+        "VISION PLUS connects building technologies into intelligent environments that are easier to control and more responsive to the people using them."
+      ],
+      "capabilities": {
+        "intro": "Solutions can integrate:",
+        "items": [
+          "Lighting Control",
+          "Climate Control",
+          "Curtains & Shading",
+          "Security Systems",
+          "Access Control",
+          "Audio Visual",
+          "Environmental Controls",
+          "Smart Interfaces",
+          "Mobile Applications",
+          "Centralized Management"
+        ]
+      },
+      "closingLead": "Instead of operating multiple independent systems, users gain one coordinated environment built around:",
+      "values": [
+        "Comfort",
+        "Efficiency",
+        "Control",
+        "Security",
+        "Experience"
+      ]
+    },
+    "fire-alarm-systems": {
+      "headline": "Technology with a Critical Purpose.",
+      "body": [
+        "Life-safety technology requires precision, reliability, and disciplined implementation."
+      ],
+      "capabilities": {
+        "intro": "VISION PLUS provides fire detection and alarm solutions covering:",
+        "items": [
+          "System Design",
+          "Fire Detection",
+          "Alarm & Notification",
+          "Equipment Installation",
+          "System Integration",
+          "Testing & Commissioning",
+          "Documentation",
+          "Preventive Maintenance"
+        ]
+      },
+      "closing": "Solutions are developed according to project requirements, approved specifications, manufacturer guidelines, applicable standards, and relevant authority requirements."
+    }
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "_meta": { "status": "draft-mt", "note": "Draft Simplified Chinese UI strings — NOT client-approved (D-12, D-18)." },
+  "a11y": {
+    "skipToContent": "跳至正文",
+    "mainNav": "主导航",
+    "mobileNav": "网站菜单",
+    "openMenu": "菜单",
+    "closeMenu": "关闭菜单",
+    "language": "语言",
+    "home": "VISION PLUS — 首页",
+    "pauseLogos": "暂停标志滚动",
+    "playLogos": "播放标志滚动",
+    "footerNav": "页脚",
+    "solutionsDiagram": "八项能力，连接为一个系统",
+    "approachProgress": "生命周期步骤",
+    "breadcrumb": "面包屑导航"
+  },
+  "nav": {
+    "home": "首页",
+    "solutions": "解决方案",
+    "products": "产品",
+    "industries": "行业",
+    "services": "服务",
+    "projects": "项目",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "featured": "重点能力",
+    "allSolutions": "全部解决方案",
+    "howWeWork": "我们的工作方式",
+    "allIndustries": "全部行业",
+    "allServices": "全部服务",
+    "ourApproach": "我们的方法",
+    "askProducts": "咨询产品",
+    "productsIntro": "我们供应并集成的技术类别。",
+    "aboutLinks": {
+      "whoWeAre": "公司简介",
+      "journey": "发展历程",
+      "visionMission": "愿景与使命",
+      "values": "核心价值观",
+      "why": "为什么选择 VISION PLUS",
+      "partners": "技术合作伙伴",
+      "companyProfile": "公司介绍"
+    }
+  },
+  "cta": {
+    "consultation": "预约咨询",
+    "exploreSolutions": "探索解决方案",
+    "exploreMnvr": "了解移动NVR",
+    "allIndustries": "探索行业",
+    "approach": "了解我们的工作方式",
+    "ourStory": "我们的故事",
+    "viewProjects": "查看项目",
+    "viewPartners": "技术合作伙伴",
+    "companyProfile": "查看公司介绍",
+    "learnMore": "了解更多"
+  },
+  "home": {
+    "capabilitiesLabel": "能力",
+    "marketsLabel": "市场",
+    "step": "第{n}步"
+  },
+  "footer": {
+    "solutions": "解决方案",
+    "company": "公司",
+    "offices": "办公室",
+    "rights": "© {year} VISION PLUS。保留所有权利。",
+    "privacy": "隐私政策",
+    "language": "语言"
+  },
+  "placeholder": {
+    "address": "办公地址 — 待客户提供",
+    "phone": "电话 — 待客户提供",
+    "email": "邮箱 — 待客户提供",
+    "projectPending": "等待客户提供项目资料",
+    "projectNote": "项目仅在具备真实资料并获得客户许可后发布。",
+    "partnerPending": "合作伙伴标志",
+    "partnerNote": "合作伙伴标志经 VISION PLUS 确认后展示。"
+  },
+  "preview": {
+    "labIntro": "用于评审的实时设计系统（仅限预览，不会发布）。",
+    "labTitle": "设计规范",
+    "sceneFirstCut": "路线场景首版，用于方向评审：分镜脚本待客户批准（D-20）。",
+    "sectionPending": "栏目内容：第 5 阶段",
+    "templatePending": "页面模板：完整页面将在第 5 阶段构建。此处显示仅为让预览中的导航可以正常使用。",
+    "label": "预览",
+    "title": "预览版本 — 不用于发布",
+    "copyStatus": "文案：{status}",
+    "statusApproved": "已批准的英文",
+    "statusDraftMt": "用于版式审阅的翻译草稿（未批准）",
+    "logo": "临时文字标志 — 正式标志待提供",
+    "images": "在真实摄影素材交付前，图片位置显示为占位图",
+    "sections": "在具备真实资料前，项目与合作伙伴栏目在正式版中隐藏",
+    "close": "关闭"
+  },
+  "solution": {
+    "capabilities": "核心能力",
+    "lifecycleTitle": "贯穿全生命周期的交付",
+    "related": "相关内容",
+    "relatedIndustries": "行业",
+    "relatedCategories": "产品类别",
+    "relatedProjects": "项目",
+    "otherSolutions": "其他解决方案",
+    "acrossEnvironments": "适用于各类环境",
+    "ctaTitle": "与我们探讨您的{solution}需求。"
+  },
+  "scene": {
+    "stepsLabel": "{name}：步骤",
+    "progress": "第 {current} 步，共 {total} 步",
+    "skip": "跳至下一部分"
+  },
+  "industries": {
+    "indexLabel": "行业",
+    "relatedSolutions": "相关解决方案",
+    "relatedProjects": "相关项目"
+  },
+  "services": {
+    "stages": "阶段："
+  },
+  "products": {
+    "askCategory": "咨询此类别",
+    "relatedSolution": "相关解决方案",
+    "brands": "我们供应的品牌"
+  },
+  "projects": {
+    "filters": {
+      "label": "筛选项目",
+      "sector": "行业",
+      "solution": "解决方案",
+      "country": "国家",
+      "all": "全部",
+      "reset": "重置筛选"
+    },
+    "count": "{count, plural, other {# 个项目}}",
+    "empty": {
+      "title": "没有符合筛选条件的项目。",
+      "action": "显示全部项目"
+    },
+    "facts": "项目概况",
+    "gallery": {
+      "label": "项目图集",
+      "open": "打开第 {n} 张图片，共 {total} 张",
+      "previous": "上一张",
+      "next": "下一张",
+      "close": "关闭图集"
+    },
+    "nextProject": "下一个项目"
+  },
+  "about": {
+    "onThisPage": "本页内容"
+  },
+  "form": {
+    "title": "提交咨询",
+    "type": {
+      "label": "咨询类型",
+      "consultation": "预约咨询",
+      "product": "产品咨询",
+      "general": "一般咨询",
+      "partnership": "成为合作伙伴"
+    },
+    "name": {
+      "label": "姓名"
+    },
+    "company": {
+      "label": "公司 / 机构"
+    },
+    "email": {
+      "label": "电子邮箱"
+    },
+    "phone": {
+      "label": "电话",
+      "hint": "请包含国家代码，例如 +974。"
+    },
+    "location": {
+      "label": "项目所在地",
+      "qatar": "卡塔尔",
+      "egypt": "埃及",
+      "other": "其他"
+    },
+    "industry": {
+      "label": "行业",
+      "other": "其他"
+    },
+    "solution": {
+      "label": "感兴趣的解决方案",
+      "services": "专业服务",
+      "notSure": "尚不确定"
+    },
+    "category": {
+      "label": "产品类别"
+    },
+    "message": {
+      "label": "留言",
+      "hint": "请介绍项目现场、需求及时间安排。"
+    },
+    "consent": {
+      "label": "我同意 VISION PLUS 按照<privacy>隐私政策</privacy>所述，使用上述信息回复我的咨询。"
+    },
+    "optional": "选填",
+    "submit": "提交咨询",
+    "sending": "正在提交…",
+    "errors": {
+      "summary": "{count, plural, other {请修正下方 # 个字段。}}",
+      "required": "此项为必填项。",
+      "nameLength": "请输入 2 至 100 个字符。",
+      "companyLength": "最多输入 120 个字符。",
+      "email": "请输入有效的电子邮箱地址。",
+      "phone": "请使用数字、空格或连字符，开头可加 +。",
+      "messageLength": "请输入 10 至 3,000 个字符。",
+      "messageLinks": "链接请勿超过 3 个。",
+      "consent": "提交前请确认。",
+      "verification": "无法验证本次提交，请重试。",
+      "rateLimited": "此网络连接提交的咨询过多。请稍后再试，或通过电子邮件或电话联系我们。",
+      "network": "咨询未能提交。您的留言仍保留在此——请重试，或通过电子邮件或电话联系我们。"
+    },
+    "success": {
+      "title": "谢谢——我们已收到您的咨询。",
+      "reference": "参考编号：{ref}",
+      "next": "我们的团队将进行审阅，并通过电子邮件回复您。",
+      "contacts": "如有紧急事项，请直接联系我们的办公室。"
+    },
+    "noscript": "此表单需要启用 JavaScript。您也可以直接联系我们："
+  },
+  "contact": {
+    "address": "地址",
+    "phone": "电话",
+    "email": "电子邮箱",
+    "hours": "营业时间",
+    "getDirections": "获取路线",
+    "loadMap": "加载地图",
+    "mapNotice": "地图由 Google 地图提供，仅在您选择后加载。"
+  },
+  "companyProfile": {
+    "load": "加载演示文稿",
+    "loadNotice": "演示文稿托管于 Canva，仅在您选择后加载。",
+    "download": "下载 PDF",
+    "fallback": "如演示文稿无法加载，请联系我们索取副本。"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "body": "您访问的页面不存在或已移动。",
+    "home": "返回首页",
+    "links": "常用栏目"
+  },
+  "legal": {
+    "contents": "目录"
+  },
+  "pending": {
+    "category": "类别说明 — 待客户提供（D-09）",
+    "privacy": "隐私政策正文 — 待客户提供（D-16）",
+    "companyProfile": "公司介绍演示文稿 — 待客户提供（D-06）",
+    "map": "地图 — 待客户提供（D-03）"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "status": "derived",
+    "source": "01 §21 (Technology Partners). The 7 category names live in catalog.json (02 p6 sitemap). No approved category descriptions exist (D-09), so none are encoded.",
+    "review": {
+      "hero.title": { "status": "derived", "source": "01 §21 closing line, reused as the Products hero (MASTER_PROJECT_PLAN §26.6) — needs D-18 approval for this placement" }
+    }
+  },
+  "hero": {
+    "title": "The Right Technology. For the Right Application."
+  },
+  "explanation": "Our technology-independent approach allows us to evaluate solutions according to the needs of each project rather than forcing every requirement into a single technology platform."
+}

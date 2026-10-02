@@ -1,0 +1,7 @@
+{
+  "_meta": { "status": "placeholder", "note": "All values pending client (D-01, D-02, D-03). Never invent addresses, phones, emails or map links." },
+  "offices": [
+    { "key": "qatar", "address": null, "phone": null, "email": null, "mapUrl": null, "mapEmbedSrc": null },
+    { "key": "egypt", "address": null, "phone": null, "email": null, "mapUrl": null, "mapEmbedSrc": null }
+  ]
+}

@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Inner pages (MASTER_PROJECT_PLAN §26): page intro, P3 template skeletons and the
+   solution detail template. Imported by those pages only — the homepage never loads it.
+   Logical properties throughout (RTL).
+   ========================================================================== */
+@layer components {
+  /* Inner pages open on a light surface below the fixed header */
+  .page-intro { padding-block: calc(var(--header-h) + 32px) 0; }
+  .page-intro__body { padding-block: 40px 0; }
+  @media (min-width: 1024px) {
+    .page-intro { padding-block-start: calc(var(--header-h) + 48px); }
+    .page-intro__body { padding-block-start: 64px; }
+  }
+
+  /* P3 empty templates */
+  .template-page { padding-block-end: var(--space-section); }
+  .template-page__body { display: grid; gap: 40px; padding-block-start: 56px; }
+  .template-page__notice {
+    max-width: 44rem; padding-inline-start: 14px; border-inline-start: 2px solid var(--color-gold);
+    font-size: var(--fs-body-sm); color: var(--fg-muted);
+  }
+  .template-page__links { display: grid; gap: 14px; }
+  @media (min-width: 768px) { .template-page__links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .template-page__section { padding-block-start: 24px; border-block-start: 1px solid var(--line); scroll-margin-block-start: calc(var(--header-h) + 24px); }
+
+  /* Solution detail (§26.2) */
+  .solution__headline { margin-block-start: 28px; max-width: 18ch; }
+  .solution__band { margin-block-start: 56px; }
+  @media (min-width: 1024px) { .solution__band { margin-block-start: 80px; } }
+  .solution__insight { margin-block-start: 40px; padding-inline-start: 20px; border-inline-start: 2px solid var(--color-gold); max-width: 52ch; }
+  .solution__preview-note { margin-block-start: 32px; max-width: 44rem; font-size: var(--fs-caption); color: var(--fg-muted); }
+
+  .spec-list { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: var(--gutter); }
+  .spec-list li { padding-block: 16px; border-block-start: 1px solid var(--line); font-size: var(--fs-body); }
+  @media (min-width: 768px) { .spec-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .spec-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .spec-list--plain li { font-size: var(--fs-body-sm); }
+
+  .lifecycle--compact .lifecycle__step { padding-block-end: 24px; }
+  @media (min-width: 1024px) {
+    .lifecycle--compact { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+    .lifecycle--compact .lifecycle__step:nth-child(4n) .lifecycle__line { display: block; }
+    .lifecycle--compact .lifecycle__step:last-child .lifecycle__line { display: none; }
+  }
+
+  .related { display: grid; gap: 40px; }
+  @media (min-width: 768px) { .related { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); } }
+  .related__list { display: grid; gap: 12px; margin-block-start: 16px; }
+}
+
+/* Style guide (preview only) */
+@layer components {
+  .lab__body { display: grid; gap: 96px; padding-block: 56px var(--space-section); }
+  .lab__swatches { display: grid; gap: 24px var(--gutter); margin-block-start: 32px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 1024px) { .lab__swatches { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .lab__swatches li { display: grid; gap: 6px; }
+  .lab__swatch { display: block; aspect-ratio: 16 / 9; border: 1px solid var(--line); }
+  .lab__surfaces { display: grid; gap: var(--gutter); margin-block-start: 32px; }
+  @media (min-width: 768px) { .lab__surfaces { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .lab__surface { padding: 32px; border: 1px solid var(--line); }
+  .lab__script { display: grid; gap: 16px; margin-block-start: 40px; padding-block-start: 24px; border-block-start: 1px solid var(--line); }
+  .lab__token { display: inline-block; min-width: 9em; font-family: var(--font-plex), monospace; font-size: 11px; color: var(--fg-muted); vertical-align: middle; }
+  .lab__row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-block-start: 24px; }
+  .lab__form { display: grid; gap: 24px; max-width: 40rem; margin-block-start: 32px; }
+  .lab__images { display: grid; gap: var(--gutter); margin-block-start: 32px; }
+  @media (min-width: 1024px) { .lab__images { grid-template-columns: 2fr 2fr 1.2fr 1fr; align-items: start; } }
+  .lab__images figcaption { margin-block-start: 8px; }
+  .lab__grid { margin-block-start: 24px; height: 96px; }
+  .lab__grid span { background: rgb(212 175 55 / 0.14); border-inline: 1px solid rgb(212 175 55 / 0.5); }
+}

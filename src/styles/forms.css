@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Form controls (MASTER_PROJECT_PLAN §20, §30.4): visible labels, hints and errors linked by
+   aria-describedby, 48 px targets, logical properties, LTR inputs (email/tel) inside RTL pages.
+   Shown in the P2 style guide; reused by the P6 contact form.
+   ========================================================================== */
+@layer components {
+  .field { display: grid; gap: 8px; }
+  .field__label { font-size: var(--fs-body-sm); font-weight: 500; }
+  .field__optional { font-weight: 400; color: var(--fg-muted); }
+  .field__hint { font-size: var(--fs-caption); color: var(--fg-muted); }
+  .field__error { display: flex; gap: 8px; font-size: var(--fs-caption); color: var(--fg); }
+  .field__error::before { content: ''; flex: none; width: 2px; background: var(--color-gold); }
+  .input, .select, .textarea {
+    width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: 2px;
+    background: var(--bg-raised); color: var(--fg); font: inherit; font-size: var(--fs-body);
+    transition: border-color var(--dur-quick) var(--ease-precise), box-shadow var(--dur-quick) var(--ease-precise);
+  }
+  .textarea { min-height: 144px; resize: vertical; line-height: var(--lh-body); }
+  .select { appearance: none; padding-inline-end: 40px; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+  [dir='rtl'] .select { background-position: 20px 50%, 15px 50%; }
+  .input:hover, .select:hover, .textarea:hover { border-color: var(--fg); }
+  .input:focus-visible, .select:focus-visible, .textarea:focus-visible { outline: none; border-color: var(--fg); box-shadow: 0 0 0 2px var(--focus); }
+  .input[aria-invalid='true'], .textarea[aria-invalid='true'] { border-color: var(--fg); box-shadow: inset 2px 0 0 var(--color-gold); }
+  [dir='rtl'] .input[aria-invalid='true'], [dir='rtl'] .textarea[aria-invalid='true'] { box-shadow: inset -2px 0 0 var(--color-gold); }
+  .check { display: flex; gap: 12px; align-items: flex-start; font-size: var(--fs-body-sm); }
+  .check input { flex: none; width: 20px; height: 20px; margin-block-start: 2px; accent-color: var(--color-charcoal); }
+  .segmented { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line-strong); border-radius: 2px; width: fit-content; }
+  .segmented label { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding-inline: 16px; font-size: var(--fs-body-sm); cursor: pointer; }
+  .segmented input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .segmented label:has(input:checked) { background: var(--fg); color: var(--bg); }
+  .segmented label:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+}

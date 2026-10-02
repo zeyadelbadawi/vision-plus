@@ -1,0 +1,113 @@
+# Quality gates on every push and pull request (MASTER_PROJECT_PLAN §40).
+# Needs no secrets, so it runs the same way on forks and before the client's Cloudflare account exists.
+name: CI
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CONTENT_MODE: preview
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  verify:
+    name: Lint · typecheck · unit · build · budget · worker
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6 # version from package.json "packageManager"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Lint (ESLint + RTL rule + brand colour check)
+        run: pnpm lint
+      - name: Formatting (Prettier)
+        run: pnpm format:check
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit tests
+        run: pnpm test
+      - name: Content fidelity (approved 01 copy ↔ English copy files)
+        run: pnpm content:fidelity
+      - name: Build (content + asset gates, image pipeline, fonts, static export, _headers)
+        run: pnpm build
+      - name: Site check (internal links, anchors, one h1, title/description, lang/dir, redirects)
+        run: pnpm site:check
+      - name: Performance budget (JS / CSS / HTML, gzip)
+        run: pnpm budget
+      - name: Worker config validation (wrangler dry-run, preview + production)
+        run: pnpm worker:check
+      - name: Worker smoke test (wrangler dev --local)
+        run: pnpm worker:smoke
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site-out
+          path: out/
+          retention-days: 7
+          include-hidden-files: true # keeps out/_headers
+
+  e2e:
+    name: E2E + axe (Playwright)
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v8
+        with:
+          name: site-out
+          path: out/
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7
+
+  lighthouse:
+    name: Lighthouse CI (en · ar · zh)
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v8
+        with:
+          name: site-out
+          path: out/
+      - run: pnpm lhci
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/reports/
+          retention-days: 14

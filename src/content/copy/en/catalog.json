@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "status": "derived",
+    "source": "01 §06 (solutions), §16 (services), §17 (approach), §18 (industries); product categories: 02 p6 sitemap",
+    "review": {
+      "productCategories": { "status": "derived", "source": "The 7 category names are the client's sitemap items (02 p6), not 01 approved copy; confirm with D-18 (and Q-02 for the Products launch option)" }
+    }
+  },
+  "solutions": {
+    "mobile-nvr-mobile-surveillance": { "name": "Mobile NVR & Mobile Surveillance", "summary": "Mobile video surveillance, vehicle monitoring, GPS, connectivity, remote monitoring, and fleet intelligence." },
+    "cctv-security-systems": { "name": "CCTV & Security Systems", "summary": "Advanced surveillance, intelligent video management, analytics, recording, and centralized security." },
+    "access-control": { "name": "Access Control", "summary": "Intelligent management of people, vehicles, visitors, and secured areas." },
+    "networking-ict": { "name": "Networking & ICT", "summary": "Reliable and scalable infrastructure connecting people, devices, systems, and information." },
+    "elv-systems": { "name": "ELV Systems", "summary": "Integrated Extra-Low Voltage infrastructure supporting modern connected environments." },
+    "audio-visual": { "name": "Audio Visual", "summary": "Professional communication, collaboration, presentation, digital signage, and audio solutions." },
+    "smart-building-home-automation": { "name": "Smart Building & Home Automation", "summary": "Connected environments providing intelligent control of building and residential technologies." },
+    "fire-alarm-systems": { "name": "Fire Alarm Systems", "summary": "Reliable detection, notification, integration, and life-safety solutions." }
+  },
+  "services": {
+    "system-design-consultancy": { "name": "System Design & Consultancy" },
+    "project-management": { "name": "Project Management" },
+    "installation-commissioning": { "name": "Installation & Commissioning" },
+    "testing-integration": { "name": "Testing & Integration" },
+    "maintenance-support": { "name": "Maintenance & After-Sales Support" },
+    "technical-training-support": { "name": "Technical Training & Support" }
+  },
+  "approach": [
+    { "title": "Understand", "text": "We begin with the objective, environment, users, and operational requirements." },
+    { "title": "Design", "text": "Requirements are translated into practical and scalable system architecture." },
+    { "title": "Select", "text": "Technologies are evaluated for suitability, compatibility, reliability, and lifecycle value." },
+    { "title": "Deliver", "text": "Projects are professionally coordinated, installed, managed, and documented." },
+    { "title": "Integrate", "text": "Individual technologies are connected into a coordinated environment." },
+    { "title": "Verify", "text": "Systems are tested and commissioned against agreed requirements." },
+    { "title": "Enable", "text": "Client teams receive the training and knowledge required to operate their systems effectively." },
+    { "title": "Support", "text": "Our involvement continues through maintenance, technical assistance, optimization, and future upgrades." }
+  ],
+  "industries": {
+    "transportation-fleet": { "name": "Transportation & Fleet", "summary": "Mobile NVR, vehicle surveillance, GPS, connectivity, remote monitoring, fleet security, and centralized management." },
+    "government-public-sector": { "name": "Government & Public Sector", "summary": "Integrated security, communications, networking, surveillance, access management, and intelligent infrastructure." },
+    "commercial-corporate": { "name": "Commercial & Corporate", "summary": "Connected workplaces combining ICT, security, access control, AV, automation, and centralized management." },
+    "banking-finance": { "name": "Banking & Finance", "summary": "Security-focused environments requiring surveillance, controlled access, reliable connectivity, and centralized monitoring." },
+    "hospitality": { "name": "Hospitality", "summary": "Technology designed around guest experience, security, communication, entertainment, connectivity, and operational efficiency." },
+    "retail": { "name": "Retail", "summary": "Security, connectivity, digital communication, monitoring, analytics, and multi-site technology management." },
+    "education": { "name": "Education", "summary": "Connected learning environments combining security, networking, access, communications, and transportation monitoring." },
+    "healthcare": { "name": "Healthcare", "summary": "Reliable infrastructure supporting security, access, communications, networking, and critical operational environments." },
+    "residential": { "name": "Residential", "summary": "Integrated security, networking, entertainment, access, and smart home automation." },
+    "logistics-warehousing": { "name": "Logistics & Warehousing", "summary": "Facility surveillance, access management, ICT infrastructure, fleet monitoring, mobile surveillance, and centralized control." },
+    "industrial-manufacturing": { "name": "Industrial & Manufacturing", "summary": "Robust security, networking, communications, monitoring, and integrated technology infrastructure." }
+  },
+  "productCategories": {
+    "cctv-surveillance": { "name": "CCTV & Surveillance" },
+    "access-control": { "name": "Access Control" },
+    "time-attendance": { "name": "Time & Attendance" },
+    "video-intercom": { "name": "Video Intercom" },
+    "intrusion-alarm": { "name": "Intrusion & Alarm" },
+    "fire-life-safety": { "name": "Fire & Life Safety" },
+    "security-networking": { "name": "Security Networking" }
+  }
+}

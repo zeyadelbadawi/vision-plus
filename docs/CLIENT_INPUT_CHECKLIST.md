@@ -63,7 +63,7 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 
 | ID | Item | Details | Priority |
 |---|---|---|---|
-| D-05 | **Official logo** | Vector files (SVG, plus AI/EPS or PDF): horizontal logo on light and dark backgrounds, a symbol or monogram if one exists, and any brand rules (clear space, minimum size). The mock-ups show a wordmark, but we cannot recreate a logo from a picture. | 🔴 |
+| D-05 | **Official logo** | Vector files (SVG, plus AI/EPS or PDF): horizontal logo on light and dark backgrounds, a symbol or monogram if one exists, and any brand rules (clear space, minimum size). The hero banner you sent (2026-09-29) shows the "VisionPlus" logo with the VP monogram. Please send it as vectors so the header and footer can use it; we cannot trace a logo from a picture. Also confirm whether "From vision to execution" is approved copy. | 🔴 |
 | D-25 | **Missing source files** | `03_Vision_Plus_Website_Sitemap.png` (we used the copy inside the PDF) and **`05_Vision_Plus_Reference_Image.jpg` (not received; contents unknown)** | 🟠 |
 
 ## D. Content
@@ -72,8 +72,8 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 |---|---|---|---|
 | D-12 | **Chinese (Simplified) text** | Fill in the Chinese column of `translations.xlsx` (we send it after the English is locked). Please do not use machine translation. | 🔴 for the Chinese launch |
 | D-13 | **Arabic text** | Fill in the Arabic column of `translations.xlsx` (see Q-05) | 🔴 for the Arabic launch |
-| D-18 | **English sign-off** | Approve (1) the short summaries we cut from your approved text, and (2) new interface wording such as button labels, form messages and headings for Contact and Products. Every item is marked in the workbook. | 🔴 |
-| D-19 | **Relationship tables** | Confirm the industry-to-solution table (plan §12.4) and the service-to-approach-step mapping (plan §26.5) | 🟠 |
+| D-18 | **English sign-off** | Approve (1) the short summaries we cut from your approved text, and (2) new interface wording such as button labels, form messages and headings for Contact and Products. Every item is marked in the workbook. **Ready for review (P4):** `docs/P4_CLIENT_REVIEW.md` §1, the “Awaiting English sign-off” table in `docs/CONTENT_FIDELITY_REPORT.md`, and the *Interface* sheet of `docs/i18n/translations.xlsx`. Record the decision in `docs/P4_CLIENT_REVIEW.md` §6. | 🔴 |
+| D-19 | **Relationship tables** | Confirm the industry-to-solution table (plan §12.4) and the service-to-approach-step mapping (plan §26.5). **Ready for review (P4):** `docs/P4_CLIENT_REVIEW.md` §2; record the decision in §6. | 🟠 |
 | D-09 | **Products** | For each of the 7 categories (CCTV & Surveillance, Access Control, Time & Attendance, Video Intercom, Intrusion & Alarm, Fire & Life Safety, Security Networking): a 1–2 sentence description, the brands you supply in that category, and optionally key product lines. Note that the brands in the strategy PDF are a **market list**; we will only show brands you confirm you supply. | 🟠 |
 
 ## E. Partners
@@ -92,7 +92,7 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 
 | ID | Item | Details | Priority |
 |---|---|---|---|
-| D-11 | **Website imagery** | All slots in `IMAGE_ASSET_MANIFEST.md` / `image-asset-manifest.csv`, with exact sizes, crops and file names. Real photography only, with consent from people who appear and permission for client sites. | P1 slots 🔴 |
+| D-11 | **Website imagery** | All slots in `IMAGE_ASSET_MANIFEST.md` / `image-asset-manifest.csv`, with exact sizes, crops and file names. Real photography only, with consent from people who appear and permission for client sites. **HOME-HERO is received** (1500×938). Please also send the full-size master (2880×1800) and, ideally, a dedicated 4:5 mobile version (1080×1350). | P1 slots 🔴 |
 | D-21 | **Smart Building photo sequence** *(optional upgrade)* | 3–5 photos of the **same real interior** from a fixed tripod position (lights off, zones on, shades down, and so on), for the interactive Smart Building scene | 🟢 |
 | D-26 | **Mobile NVR footage** *(optional)* | Real, cleared camera footage or screenshots from a Vision Plus mobile surveillance system, used as an optional short clip | 🟢 |
 
@@ -111,15 +111,15 @@ Everything runs on free services. **You own the accounts, and we are added as co
 |---|---|---|---|
 | D-07 | **Domain and DNS** | The domain name, and who manages its DNS (registrar or DNS host). There is no purchase, because you already own it. Free Cloudflare hosting needs the domain's **nameservers moved to Cloudflare** (also free). Existing records, **including company email (MX)**, are copied over first and checked with your IT before the switch (plan §42.3). We need someone who can change nameservers at the registrar on the agreed day. | 🔴 |
 | D-14 | **Google account** | The company Google account (Google Workspace preferred) that will **own the inquiries spreadsheet** and the small script that writes to it and sends the email. We never need its password; you share access with us. | 🔴 |
-| D-22 | **Cloudflare account** (Free plan) | Created with a company email you control, with us invited as members. It hosts the website, the form's anti-spam and the DNS. No card is needed. | 🔴 |
+| D-22 | **Cloudflare account** (Free plan) | Created with a company email you control, with us invited as members. It hosts the website, the form's anti-spam and the DNS. No card is needed. **To switch on preview deployments we need:** (1) the member invitation, (2) a workers.dev subdomain chosen in Workers & Pages, (3) an API token from the **"Edit Cloudflare Workers"** template, scoped to this account, and (4) the Account ID. Items 3 and 4 are stored only as GitHub secrets (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`). Step by step: `docs/DEPLOYMENT.md` §2. | 🔴 |
 | D-23 | **Analytics** *(if Q-18 = yes)* | Cloudflare Web Analytics (free, no cookies), switched on in the same account | 🟢 |
 
 ## J. Approvals during the project
 
 | ID | Item | When |
 |---|---|---|
-| D-20 | Storyboards of the solution-page animations (one frame per step) | Phase 4 |
-| — | Design direction proof (live style guide + homepage hero + one solution page) | Phase 2 |
+| D-20 | Storyboards of the solution-page animations (one frame per step). **Ready for review:** `docs/SCENE_STORYBOARDS.md` (approval log in §11) | Phase 4 |
+| — | Design direction proof (live style guide + homepage hero + one solution page). **Ready for review:** homepage (approval relayed), Mobile NVR page with the Route scene first cut, and the style guide — screenshots in `docs/review/p2/`; a live preview link needs D-22 | Phase 2 |
 | — | English copy lock | Before translation |
 | — | Arabic and Chinese review by native speakers on the staging site | Phase 8 |
 | — | Final launch approval | Phase 11 |

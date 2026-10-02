@@ -1,0 +1,1513 @@
+{
+  "BRAND-LOGO": {
+    "id": "BRAND-LOGO",
+    "page": "Global",
+    "section": "Header / footer / favicon",
+    "purpose": "Primary VISION PLUS logo (horizontal, positive + negative, monogram if one exists)",
+    "family": "F9",
+    "desktop": null,
+    "desktopRatio": "free (fit box)",
+    "mobile": null,
+    "mobileRatio": "free",
+    "separateMobile": false,
+    "priority": "P0",
+    "fallback": "Interim typographic wordmark in preview only; launch blocked without official logo",
+    "path": "public/images/brand/vision-plus-logo.svg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "OG-DEFAULT": {
+    "id": "OG-DEFAULT",
+    "page": "Global",
+    "section": "Social sharing",
+    "purpose": "Default Open Graph / social card",
+    "family": "F10",
+    "desktop": {
+      "width": 1200,
+      "height": 630
+    },
+    "desktopRatio": "1.91:1",
+    "mobile": null,
+    "mobileRatio": "—",
+    "separateMobile": false,
+    "priority": "P3",
+    "fallback": "Code-generated typographic card",
+    "path": "public/images/og/og-default.png",
+    "mobilePath": null,
+    "templated": false
+  },
+  "HOME-HERO": {
+    "id": "HOME-HERO",
+    "page": "Home",
+    "section": "1 Hero",
+    "purpose": "Flagship first impression: architecture + integrated technology",
+    "family": "F1",
+    "desktop": {
+      "width": 2880,
+      "height": 1800
+    },
+    "desktopRatio": "16:10",
+    "mobile": {
+      "width": 1080,
+      "height": 1350
+    },
+    "mobileRatio": "4:5",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Charcoal surface + crop-mark placeholder",
+    "path": "public/images/home/home-hero.jpg",
+    "mobilePath": "public/images/home/home-hero-mobile.jpg",
+    "templated": false
+  },
+  "HOME-STATEMENT": {
+    "id": "HOME-STATEMENT",
+    "page": "Home",
+    "section": "2 Positioning statement",
+    "purpose": "Editorial detail image beside the positioning statement",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (layout variant B)",
+    "path": "public/images/home/home-statement.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "HOME-MNVR": {
+    "id": "HOME-MNVR",
+    "page": "Home",
+    "section": "4 Mobile NVR chapter",
+    "purpose": "Signature differentiator: security that moves",
+    "family": "F3",
+    "desktop": {
+      "width": 1440,
+      "height": 1620
+    },
+    "desktopRatio": "8:9",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Dark-gray surface + crop-mark placeholder",
+    "path": "public/images/home/home-mnvr.jpg",
+    "mobilePath": "public/images/home/home-mnvr-mobile.jpg",
+    "templated": false
+  },
+  "HOME-CLOSING": {
+    "id": "HOME-CLOSING",
+    "page": "Home",
+    "section": "11 Closing CTA",
+    "purpose": "Background for closing statement (rendered at ~35% under a charcoal scrim)",
+    "family": "F6",
+    "desktop": {
+      "width": 2880,
+      "height": 1200
+    },
+    "desktopRatio": "12:5",
+    "mobile": {
+      "width": 1080,
+      "height": 1350
+    },
+    "mobileRatio": "4:5",
+    "separateMobile": true,
+    "priority": "P2",
+    "fallback": "Solid charcoal band (valid final design)",
+    "path": "public/images/home/home-closing.jpg",
+    "mobilePath": "public/images/home/home-closing-mobile.jpg",
+    "templated": false
+  },
+  "SOL-HUB-HERO": {
+    "id": "SOL-HUB-HERO",
+    "page": "Solutions hub",
+    "section": "Page hero band",
+    "purpose": "Solutions overview hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-hub-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-hub-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-MNVR-HERO": {
+    "id": "SOL-MNVR-HERO",
+    "page": "Solution: Mobile NVR & Mobile Surveillance",
+    "section": "Page hero band",
+    "purpose": "Mobile NVR & Mobile Surveillance detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-mnvr-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-mnvr-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-MNVR-CARD": {
+    "id": "SOL-MNVR-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: Mobile NVR & Mobile Surveillance",
+    "purpose": "Mobile NVR & Mobile Surveillance index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-mnvr-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-MNVR-DETAIL": {
+    "id": "SOL-MNVR-DETAIL",
+    "page": "Solution: Mobile NVR & Mobile Surveillance",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for Mobile NVR & Mobile Surveillance",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-mnvr-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-CCTV-HERO": {
+    "id": "SOL-CCTV-HERO",
+    "page": "Solution: CCTV & Security Systems",
+    "section": "Page hero band",
+    "purpose": "CCTV & Security Systems detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-cctv-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-cctv-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-CCTV-CARD": {
+    "id": "SOL-CCTV-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: CCTV & Security Systems",
+    "purpose": "CCTV & Security Systems index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-cctv-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-CCTV-DETAIL": {
+    "id": "SOL-CCTV-DETAIL",
+    "page": "Solution: CCTV & Security Systems",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for CCTV & Security Systems",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-cctv-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-ACCESS-HERO": {
+    "id": "SOL-ACCESS-HERO",
+    "page": "Solution: Access Control",
+    "section": "Page hero band",
+    "purpose": "Access Control detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-access-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-access-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-ACCESS-CARD": {
+    "id": "SOL-ACCESS-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: Access Control",
+    "purpose": "Access Control index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-access-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-ACCESS-DETAIL": {
+    "id": "SOL-ACCESS-DETAIL",
+    "page": "Solution: Access Control",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for Access Control",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-access-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-ICT-HERO": {
+    "id": "SOL-ICT-HERO",
+    "page": "Solution: Networking & ICT",
+    "section": "Page hero band",
+    "purpose": "Networking & ICT detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-ict-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-ict-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-ICT-CARD": {
+    "id": "SOL-ICT-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: Networking & ICT",
+    "purpose": "Networking & ICT index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-ict-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-ICT-DETAIL": {
+    "id": "SOL-ICT-DETAIL",
+    "page": "Solution: Networking & ICT",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for Networking & ICT",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-ict-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-ELV-HERO": {
+    "id": "SOL-ELV-HERO",
+    "page": "Solution: ELV Systems",
+    "section": "Page hero band",
+    "purpose": "ELV Systems detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-elv-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-elv-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-ELV-CARD": {
+    "id": "SOL-ELV-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: ELV Systems",
+    "purpose": "ELV Systems index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-elv-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-ELV-DETAIL": {
+    "id": "SOL-ELV-DETAIL",
+    "page": "Solution: ELV Systems",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for ELV Systems",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-elv-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-AV-HERO": {
+    "id": "SOL-AV-HERO",
+    "page": "Solution: Audio Visual",
+    "section": "Page hero band",
+    "purpose": "Audio Visual detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-av-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-av-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-AV-CARD": {
+    "id": "SOL-AV-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: Audio Visual",
+    "purpose": "Audio Visual index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-av-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-AV-DETAIL": {
+    "id": "SOL-AV-DETAIL",
+    "page": "Solution: Audio Visual",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for Audio Visual",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-av-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-SMART-HERO": {
+    "id": "SOL-SMART-HERO",
+    "page": "Solution: Smart Building & Home Automation",
+    "section": "Page hero band",
+    "purpose": "Smart Building & Home Automation detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-smart-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-smart-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-SMART-CARD": {
+    "id": "SOL-SMART-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: Smart Building & Home Automation",
+    "purpose": "Smart Building & Home Automation index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-smart-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-SMART-DETAIL": {
+    "id": "SOL-SMART-DETAIL",
+    "page": "Solution: Smart Building & Home Automation",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for Smart Building & Home Automation",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-smart-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-FIRE-HERO": {
+    "id": "SOL-FIRE-HERO",
+    "page": "Solution: Fire Alarm Systems",
+    "section": "Page hero band",
+    "purpose": "Fire Alarm Systems detail hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/solutions/sol-fire-hero.jpg",
+    "mobilePath": "public/images/solutions/sol-fire-hero-mobile.jpg",
+    "templated": false
+  },
+  "SOL-FIRE-CARD": {
+    "id": "SOL-FIRE-CARD",
+    "page": "Solutions hub + related links + mega menu (MNVR)",
+    "section": "Index row: Fire Alarm Systems",
+    "purpose": "Fire Alarm Systems index image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / index row text-only (production)",
+    "path": "public/images/solutions/sol-fire-card.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-FIRE-DETAIL": {
+    "id": "SOL-FIRE-DETAIL",
+    "page": "Solution: Fire Alarm Systems",
+    "section": "Body media (beside capabilities list)",
+    "purpose": "Supporting in-body image for Fire Alarm Systems",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Layout collapses to single column (no image)",
+    "path": "public/images/solutions/sol-fire-detail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SOL-MNVR-FLEET": {
+    "id": "SOL-MNVR-FLEET",
+    "page": "Solution: Mobile NVR & Mobile Surveillance",
+    "section": "Applications band",
+    "purpose": "Wide fleet/transport scene introducing the applications list",
+    "family": "F6",
+    "desktop": {
+      "width": 2880,
+      "height": 1200
+    },
+    "desktopRatio": "12:5",
+    "mobile": {
+      "width": 1080,
+      "height": 1350
+    },
+    "mobileRatio": "4:5",
+    "separateMobile": true,
+    "priority": "P2",
+    "fallback": "Band renders on charcoal without image",
+    "path": "public/images/solutions/sol-mnvr-fleet.jpg",
+    "mobilePath": "public/images/solutions/sol-mnvr-fleet-mobile.jpg",
+    "templated": false
+  },
+  "PROD-HUB-HERO": {
+    "id": "PROD-HUB-HERO",
+    "page": "Products hub",
+    "section": "Page hero band",
+    "purpose": "Products / technology portfolio hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P2",
+    "fallback": "Placeholder band",
+    "path": "public/images/products/prod-hub-hero.jpg",
+    "mobilePath": "public/images/products/prod-hub-hero-mobile.jpg",
+    "templated": false
+  },
+  "PROD-CCTV": {
+    "id": "PROD-CCTV",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: CCTV & Surveillance",
+    "purpose": "CCTV & Surveillance category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-cctv.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROD-ACCESS": {
+    "id": "PROD-ACCESS",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: Access Control",
+    "purpose": "Access Control category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-access.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROD-TA": {
+    "id": "PROD-TA",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: Time & Attendance",
+    "purpose": "Time & Attendance category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-ta.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROD-INTERCOM": {
+    "id": "PROD-INTERCOM",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: Video Intercom",
+    "purpose": "Video Intercom category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-intercom.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROD-INTRUSION": {
+    "id": "PROD-INTRUSION",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: Intrusion & Alarm",
+    "purpose": "Intrusion & Alarm category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-intrusion.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROD-FIRE": {
+    "id": "PROD-FIRE",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: Fire & Life Safety",
+    "purpose": "Fire & Life Safety category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-fire.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROD-NET": {
+    "id": "PROD-NET",
+    "page": "Products hub (+ category page when enabled)",
+    "section": "Category: Security Networking",
+    "purpose": "Security Networking category image",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Placeholder (preview) / text-only row (production)",
+    "path": "public/images/products/prod-net.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-HUB-HERO": {
+    "id": "IND-HUB-HERO",
+    "page": "Industries hub",
+    "section": "Page hero band",
+    "purpose": "Industries overview hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/industries/ind-hub-hero.jpg",
+    "mobilePath": "public/images/industries/ind-hub-hero-mobile.jpg",
+    "templated": false
+  },
+  "IND-TRANSPORT": {
+    "id": "IND-TRANSPORT",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Transportation & Fleet",
+    "purpose": "Transportation & Fleet environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-transport.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-GOV": {
+    "id": "IND-GOV",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Government & Public Sector",
+    "purpose": "Government & Public Sector environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-gov.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-COMMERCIAL": {
+    "id": "IND-COMMERCIAL",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Commercial & Corporate",
+    "purpose": "Commercial & Corporate environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-commercial.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-BANKING": {
+    "id": "IND-BANKING",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Banking & Finance",
+    "purpose": "Banking & Finance environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-banking.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-HOSPITALITY": {
+    "id": "IND-HOSPITALITY",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Hospitality",
+    "purpose": "Hospitality environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-hospitality.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-RETAIL": {
+    "id": "IND-RETAIL",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Retail",
+    "purpose": "Retail environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-retail.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-EDUCATION": {
+    "id": "IND-EDUCATION",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Education",
+    "purpose": "Education environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-education.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-HEALTHCARE": {
+    "id": "IND-HEALTHCARE",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Healthcare",
+    "purpose": "Healthcare environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-healthcare.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-RESIDENTIAL": {
+    "id": "IND-RESIDENTIAL",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Residential",
+    "purpose": "Residential environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-residential.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-LOGISTICS": {
+    "id": "IND-LOGISTICS",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Logistics & Warehousing",
+    "purpose": "Logistics & Warehousing environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-logistics.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "IND-INDUSTRIAL": {
+    "id": "IND-INDUSTRIAL",
+    "page": "Industries hub + Home industries index (hover preview)",
+    "section": "Industry: Industrial & Manufacturing",
+    "purpose": "Industrial & Manufacturing environment image",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Placeholder (preview) / panel without image (production)",
+    "path": "public/images/industries/ind-industrial.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SRV-HUB-HERO": {
+    "id": "SRV-HUB-HERO",
+    "page": "Services",
+    "section": "Page hero band",
+    "purpose": "Services / lifecycle hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/services/srv-hub-hero.jpg",
+    "mobilePath": "public/images/services/srv-hub-hero-mobile.jpg",
+    "templated": false
+  },
+  "SRV-DESIGN": {
+    "id": "SRV-DESIGN",
+    "page": "Services",
+    "section": "Service: System Design & Consultancy",
+    "purpose": "System Design & Consultancy section image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (alternating layout keeps rhythm)",
+    "path": "public/images/services/srv-design.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SRV-PM": {
+    "id": "SRV-PM",
+    "page": "Services",
+    "section": "Service: Project Management",
+    "purpose": "Project Management section image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (alternating layout keeps rhythm)",
+    "path": "public/images/services/srv-pm.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SRV-INSTALL": {
+    "id": "SRV-INSTALL",
+    "page": "Services",
+    "section": "Service: Installation & Commissioning",
+    "purpose": "Installation & Commissioning section image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (alternating layout keeps rhythm)",
+    "path": "public/images/services/srv-install.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SRV-TEST": {
+    "id": "SRV-TEST",
+    "page": "Services",
+    "section": "Service: Testing & Integration",
+    "purpose": "Testing & Integration section image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (alternating layout keeps rhythm)",
+    "path": "public/images/services/srv-test.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SRV-MAINT": {
+    "id": "SRV-MAINT",
+    "page": "Services",
+    "section": "Service: Maintenance & After-Sales Support",
+    "purpose": "Maintenance & After-Sales Support section image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (alternating layout keeps rhythm)",
+    "path": "public/images/services/srv-maint.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "SRV-TRAIN": {
+    "id": "SRV-TRAIN",
+    "page": "Services",
+    "section": "Service: Technical Training & Support",
+    "purpose": "Technical Training & Support section image",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Section renders text-only (alternating layout keeps rhythm)",
+    "path": "public/images/services/srv-train.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PROJ-HUB-HERO": {
+    "id": "PROJ-HUB-HERO",
+    "page": "Projects hub",
+    "section": "Page hero band",
+    "purpose": "Projects overview hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/projects/proj-hub-hero.jpg",
+    "mobilePath": "public/images/projects/proj-hub-hero-mobile.jpg",
+    "templated": false
+  },
+  "PROJ-{slug}-COVER": {
+    "id": "PROJ-{slug}-COVER",
+    "page": "Projects hub + Home projects preview + related projects",
+    "section": "Project card",
+    "purpose": "Per-project cover (one per project)",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Project cannot be published without a cover",
+    "path": "public/images/projects/{slug}/cover.jpg",
+    "mobilePath": null,
+    "templated": true
+  },
+  "PROJ-{slug}-HERO": {
+    "id": "PROJ-{slug}-HERO",
+    "page": "Project detail",
+    "section": "Page hero band",
+    "purpose": "Per-project hero (one per project)",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Falls back to COVER cropped (acceptable)",
+    "path": "public/images/projects/{slug}/hero.jpg",
+    "mobilePath": "public/images/projects/{slug}/hero-mobile.jpg",
+    "templated": true
+  },
+  "PROJ-{slug}-GALLERY-{nn}": {
+    "id": "PROJ-{slug}-GALLERY-{nn}",
+    "page": "Project detail",
+    "section": "Gallery",
+    "purpose": "Per-project gallery (4–12 images)",
+    "family": "F8",
+    "desktop": null,
+    "desktopRatio": "3:2 / 4:5",
+    "mobile": null,
+    "mobileRatio": "3:2 / 4:5",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Gallery hidden if none",
+    "path": "public/images/projects/{slug}/gallery-{nn}.jpg",
+    "mobilePath": null,
+    "templated": true
+  },
+  "ABOUT-HERO": {
+    "id": "ABOUT-HERO",
+    "page": "About",
+    "section": "Page hero band",
+    "purpose": "About page hero",
+    "family": "F2",
+    "desktop": {
+      "width": 2880,
+      "height": 1280
+    },
+    "desktopRatio": "9:4",
+    "mobile": {
+      "width": 1080,
+      "height": 810
+    },
+    "mobileRatio": "4:3",
+    "separateMobile": true,
+    "priority": "P1",
+    "fallback": "Placeholder band",
+    "path": "public/images/about/about-hero.jpg",
+    "mobilePath": "public/images/about/about-hero-mobile.jpg",
+    "templated": false
+  },
+  "ABOUT-JOURNEY-2017": {
+    "id": "ABOUT-JOURNEY-2017",
+    "page": "About + Home journey strip",
+    "section": "Journey: 2017 Qatar",
+    "purpose": "Beginnings in Qatar",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Timeline renders text-only",
+    "path": "public/images/about/about-journey-2017.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "ABOUT-JOURNEY-2021": {
+    "id": "ABOUT-JOURNEY-2021",
+    "page": "About + Home journey strip",
+    "section": "Journey: 2021 Egypt",
+    "purpose": "Expansion into Egypt",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P2",
+    "fallback": "Timeline renders text-only",
+    "path": "public/images/about/about-journey-2021.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "ABOUT-JOURNEY-TODAY": {
+    "id": "ABOUT-JOURNEY-TODAY",
+    "page": "About",
+    "section": "Journey: Today",
+    "purpose": "Connected technologies today",
+    "family": "F7",
+    "desktop": {
+      "width": 1200,
+      "height": 900
+    },
+    "desktopRatio": "4:3",
+    "mobile": null,
+    "mobileRatio": "4:3",
+    "separateMobile": false,
+    "priority": "P3",
+    "fallback": "Timeline renders text-only",
+    "path": "public/images/about/about-journey-today.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "ABOUT-VISION": {
+    "id": "ABOUT-VISION",
+    "page": "About",
+    "section": "Vision / Mission interlude",
+    "purpose": "Full-width image moment between Vision and Mission",
+    "family": "F6",
+    "desktop": {
+      "width": 2880,
+      "height": 1200
+    },
+    "desktopRatio": "12:5",
+    "mobile": {
+      "width": 1080,
+      "height": 1350
+    },
+    "mobileRatio": "4:5",
+    "separateMobile": true,
+    "priority": "P2",
+    "fallback": "Interlude renders as charcoal typographic band",
+    "path": "public/images/about/about-vision.jpg",
+    "mobilePath": "public/images/about/about-vision-mobile.jpg",
+    "templated": false
+  },
+  "ABOUT-PHILOSOPHY": {
+    "id": "ABOUT-PHILOSOPHY",
+    "page": "About",
+    "section": "Philosophy",
+    "purpose": "Image beside “Technology Should Solve Complexity, Not Create It.”",
+    "family": "F5",
+    "desktop": {
+      "width": 1080,
+      "height": 1350
+    },
+    "desktopRatio": "4:5",
+    "mobile": null,
+    "mobileRatio": "4:5",
+    "separateMobile": false,
+    "priority": "P3",
+    "fallback": "Section renders text-only",
+    "path": "public/images/about/about-philosophy.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "PARTNER-{slug}-LOGO": {
+    "id": "PARTNER-{slug}-LOGO",
+    "page": "Home partner carousel + Partners page",
+    "section": "Partner logo",
+    "purpose": "One per confirmed partner",
+    "family": "F9",
+    "desktop": null,
+    "desktopRatio": "free (fit box)",
+    "mobile": null,
+    "mobileRatio": "free",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Partner not rendered without a logo",
+    "path": "public/images/partners/{slug}.svg",
+    "mobilePath": null,
+    "templated": true
+  },
+  "CP-POSTER": {
+    "id": "CP-POSTER",
+    "page": "Company Profile",
+    "section": "Embed poster / fallback",
+    "purpose": "Cover image shown before the Canva embed loads and if it fails",
+    "family": "F11",
+    "desktop": {
+      "width": 1920,
+      "height": 1080
+    },
+    "desktopRatio": "16:9",
+    "mobile": null,
+    "mobileRatio": "16:9",
+    "separateMobile": false,
+    "priority": "P1",
+    "fallback": "Charcoal 16:9 surface with title",
+    "path": "public/images/company-profile/cp-poster.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "CONTACT-MAP-QATAR": {
+    "id": "CONTACT-MAP-QATAR",
+    "page": "Contact",
+    "section": "Qatar location (click-to-load map preview)",
+    "purpose": "Static preview shown before the Google Map iframe is loaded",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P3",
+    "fallback": "Neutral surface with address + “Show map” button",
+    "path": "public/images/contact/contact-map-qatar.jpg",
+    "mobilePath": null,
+    "templated": false
+  },
+  "CONTACT-MAP-EGYPT": {
+    "id": "CONTACT-MAP-EGYPT",
+    "page": "Contact",
+    "section": "Egypt location (click-to-load map preview)",
+    "purpose": "Static preview shown before the Google Map iframe is loaded",
+    "family": "F4",
+    "desktop": {
+      "width": 1620,
+      "height": 1080
+    },
+    "desktopRatio": "3:2",
+    "mobile": null,
+    "mobileRatio": "3:2",
+    "separateMobile": false,
+    "priority": "P3",
+    "fallback": "Neutral surface with address + “Show map” button",
+    "path": "public/images/contact/contact-map-egypt.jpg",
+    "mobilePath": null,
+    "templated": false
+  }
+}

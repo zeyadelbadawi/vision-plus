@@ -1,0 +1,41 @@
+{
+  "_readme": "Final (designer-delivered) images. Add an entry per asset ID when the real file is placed at the manifest's replacement path, then run `pnpm assets:check && pnpm build`. See docs/IMAGE_ASSET_MANIFEST.md §6.",
+  "_example": {
+    "HOME-HERO": {
+      "status": "final",
+      "focal": {
+        "x": 0.5,
+        "y": 0.45
+      },
+      "alt": {
+        "en": "…",
+        "ar": "…",
+        "zh": "…"
+      }
+    }
+  },
+  "assets": {
+    "HOME-HERO": {
+      "status": "final",
+      "source": "Client-supplied banner (2026-09-29). Mobile file is a 4:5 crop of the same banner framed on the logo lock-up (x 750–1500). Interim resolution: 1500×938 vs 2880×1800 master spec.",
+      "size": {
+        "width": 1500,
+        "height": 938
+      },
+      "mobileSize": {
+        "width": 750,
+        "height": 938
+      },
+      "focal": {
+        "x": 0.78,
+        "y": 0.5
+      },
+      "textZone": "left",
+      "alt": {
+        "en": "VISION PLUS logo with the line “From vision to execution” on a charcoal-to-grey grain background.",
+        "ar": "شعار VISION PLUS مع عبارة «من الرؤية إلى التنفيذ» على خلفية متدرجة من الفحمي إلى الرمادي.",
+        "zh": "VISION PLUS 标志及“从愿景到执行”字样，背景为由炭黑渐变至灰色的颗粒质感。"
+      }
+    }
+  }
+}

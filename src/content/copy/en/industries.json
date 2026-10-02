@@ -1,0 +1,10 @@
+{
+  "_meta": {
+    "status": "approved",
+    "source": "01 §18 (Industries We Serve) — verbatim. Industry names and approved one-line descriptions live in catalog.json; relations live in data/relations.ts."
+  },
+  "hero": {
+    "eyebrow": "Industries We Serve",
+    "title": "Different Environments. Different Challenges. One Engineering Approach."
+  }
+}

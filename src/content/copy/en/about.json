@@ -1,0 +1,141 @@
+{
+  "_meta": {
+    "status": "approved",
+    "source": "01 §02 (About), §03 (Journey), §04 (Vision), §05 (Mission), §20 (Core Values), §23 (Philosophy) — verbatim, typographic normalisation only (title case for headings set in capitals in 01). Why Vision Plus (§19) lives in company.json."
+  },
+  "whoWeAre": {
+    "eyebrow": "About VISION PLUS",
+    "title": "Built on Experience. Driven by What’s Next.",
+    "body": [
+      "VISION PLUS was established in Qatar in 2017 with a clear purpose: to make advanced technology practical, connected, and dependable.",
+      "From the beginning, our work has been centered on understanding how technology performs in real environments — not simply how it appears on a specification sheet.",
+      "As technology evolved, so did we.",
+      "In 2021, VISION PLUS expanded into Egypt, bringing our experience, engineering approach, and systems integration capabilities into a new market while continuing to develop our expertise across security, connectivity, automation, and intelligent technologies.",
+      "Today, VISION PLUS delivers integrated solutions across Mobile NVR & Mobile Surveillance, CCTV & Security, Access Control, Networking & ICT, ELV, Audio Visual, Smart Building & Home Automation, and Fire Alarm Systems.",
+      "What defines us is not how many technologies we provide, but how effectively we make them work together.",
+      "Our involvement extends across the complete technology lifecycle — from consultancy and system design to project management, installation, integration, testing, commissioning, training, maintenance, and long-term technical support.",
+      "Whether technology is protecting a building, connecting a workplace, automating a home, or monitoring a fleet moving across a city, our objective remains the same:"
+    ],
+    "closing": "Make technology work intelligently, reliably, and as one."
+  },
+  "journey": {
+    "eyebrow": "Our Journey",
+    "title": "From Experience to Intelligence.",
+    "milestones": [
+      {
+        "when": "2017",
+        "where": "Qatar",
+        "title": "Where Our Journey Began",
+        "body": [
+          "VISION PLUS was established in Qatar, building its foundation in integrated technology, security, and low-current systems.",
+          "These early years developed the practical engineering experience and technical understanding that continue to shape the way we approach projects today."
+        ]
+      },
+      {
+        "when": "2021",
+        "where": "Egypt",
+        "title": "Expanding Our Capabilities",
+        "body": [
+          "VISION PLUS expanded into Egypt, extending our expertise into a growing market and developing broader capabilities across security, ICT, ELV, automation, audiovisual, life-safety, and intelligent systems."
+        ]
+      },
+      {
+        "when": "Today",
+        "where": "",
+        "title": "Connected Technologies. Integrated Thinking.",
+        "body": [
+          "Today, VISION PLUS operates with a broader vision: bringing multiple technologies together into intelligent environments designed around how organizations, buildings, and mobile assets actually operate."
+        ]
+      }
+    ],
+    "closing": "Qatar 2017 → Egypt 2021 → Building What’s Next."
+  },
+  "vision": {
+    "eyebrow": "Our Vision",
+    "title": "To Make Technology Work as One.",
+    "body": [
+      "We envision environments where security, communication, connectivity, automation, and intelligence no longer operate as separate systems, but as one coordinated technology ecosystem.",
+      "Our ambition is to combine proven engineering knowledge with emerging technologies to create environments that are more secure, more connected, easier to manage, and ready to evolve.",
+      "We see the future not as a collection of devices, but as an intelligent network of systems working together with purpose."
+    ]
+  },
+  "mission": {
+    "eyebrow": "Our Mission",
+    "title": "From Requirement to Reality — and Beyond.",
+    "body": [
+      "Our mission is to understand what each environment needs to achieve, then engineer the technology around that purpose.",
+      "We translate operational requirements into practical system designs, select technologies for their suitability rather than simply their specifications, integrate them into a unified environment, and remain involved throughout their operational lifecycle.",
+      "From the first design decision to final commissioning — and from user training to ongoing maintenance and support — we take responsibility for making technology perform the way it was intended."
+    ],
+    "closing": "Make complex technology easier to operate, dependable in everyday use, and valuable for the long term."
+  },
+  "values": {
+    "eyebrow": "Our Core Values",
+    "items": [
+      {
+        "title": "Think Before We Build",
+        "subtitle": "Purpose Before Technology",
+        "body": [
+          "We start with the requirement, not the product.",
+          "Understanding what needs to be achieved allows us to select and engineer technology with purpose."
+        ]
+      },
+      {
+        "title": "Make It Work Together",
+        "subtitle": "Integration by Design",
+        "body": [
+          "A collection of good products does not automatically create a good system.",
+          "We design around how technologies communicate and operate together."
+        ]
+      },
+      {
+        "title": "Own the Outcome",
+        "subtitle": "Responsibility from Start to Support",
+        "body": [
+          "We take responsibility for our role throughout the complete project lifecycle rather than viewing installation as the finish line."
+        ]
+      },
+      {
+        "title": "Engineer for Real Life",
+        "subtitle": "Practical Engineering",
+        "body": [
+          "Technology has to perform outside the presentation room.",
+          "Our engineering considers actual operating conditions, users, expansion, maintenance, and long-term performance."
+        ]
+      },
+      {
+        "title": "Stay Ready for What’s Next",
+        "subtitle": "Continuous Evolution",
+        "body": [
+          "Technology never stands still.",
+          "We continuously develop our capabilities and explore technologies that can make our solutions more intelligent, efficient, and valuable."
+        ]
+      },
+      {
+        "title": "Earn Trust Through Action",
+        "subtitle": "Trust Is Built, Not Claimed",
+        "body": [
+          "We believe reputation comes from consistent delivery, clear communication, responsible decisions, and dependable support."
+        ]
+      },
+      {
+        "title": "Stay Beyond the Handover",
+        "subtitle": "Partnership Beyond Projects",
+        "body": [
+          "Commissioning is a milestone, not the end of our responsibility.",
+          "We remain available throughout the operational life of the technologies we deliver."
+        ]
+      }
+    ]
+  },
+  "philosophy": {
+    "eyebrow": "Our Philosophy",
+    "title": "Technology Should Solve Complexity, Not Create It.",
+    "body": [
+      "We believe successful technology is not defined by the number of devices installed.",
+      "It is defined by how naturally those technologies work together, how reliably they perform, how easily people can operate them, and how effectively they support the purpose for which they were designed.",
+      "That belief guides every stage of our work."
+    ],
+    "lines": ["Understand the Need.", "Engineer the Solution.", "Connect the Technology.", "Support the Lifecycle."]
+  }
+}

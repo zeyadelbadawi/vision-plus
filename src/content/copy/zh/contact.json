@@ -1,0 +1,11 @@
+{
+  "_meta": {
+    "status": "placeholder",
+    "note": "English source text as a structural placeholder — awaiting the client-supplied Simplified Chinese (D-12) via the translation workbook. Production build refuses placeholder."
+  },
+  "hero": {
+    "title": "Tell us what you need to achieve."
+  },
+  "contactInformation": "Contact Information",
+  "locations": "Our Locations"
+}

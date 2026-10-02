@@ -1,0 +1,52 @@
+# Production deployment (MASTER_PROJECT_PLAN §42) — manual only until launch (P11).
+# A CONTENT_MODE=production build refuses draft / machine-translated / placeholder content, so it
+# fails by design until every launch blocker in docs/CLIENT_INPUT_CHECKLIST.md is resolved.
+# Needs the client's Cloudflare account (D-22); the custom domain (D-07) is attached in P11.
+name: Deploy production
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to publish to the production worker'
+        required: true
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build (production gates) and deploy
+    if: github.event.inputs.confirm == 'deploy'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production # add required reviewers in GitHub → Settings → Environments
+    env:
+      CONTENT_MODE: production
+      NEXT_TELEMETRY_DISABLED: 1
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Check Cloudflare credentials
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error title=Production deploy blocked::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set (D-22). See docs/DEPLOYMENT.md."
+            exit 1
+          fi
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint && pnpm typecheck && pnpm test
+      - name: Build with production gates
+        run: pnpm build
+      - run: pnpm budget
+      - name: Deploy production worker
+        run: pnpm deploy:production

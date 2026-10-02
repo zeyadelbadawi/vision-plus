@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Scene engine + scenes (MASTER_PROJECT_PLAN §23.5–23.6; docs/SCENE_STORYBOARDS.md)
+   Imported only by pages that contain a scene. Visuals are pure CSS driven by
+   --b1…--b8 (per-beat progress 0→1). They are registered numbers whose initial
+   value is 1, so with no JavaScript or with reduced motion every scene shows its
+   final composition. Only opacity, transform/offset and stroke-dashoffset animate.
+   ========================================================================== */
+@property --b1 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b2 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b3 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b4 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b5 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b6 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b7 { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --b8 { syntax: '<number>'; inherits: true; initial-value: 1; }
+
+@layer components {
+  /* Generated: per-frame beat state (frame n = beats < n done, beat n plays on entry, beats > n not yet). */
+  .scene__frame[data-frame='1'] { --b1: 1; --b2: 0; --b3: 0; --b4: 0; --b5: 0; --b6: 0; --b7: 0; --b8: 0; }
+  .scene__frame[data-frame='2'] { --b1: 1; --b2: 1; --b3: 0; --b4: 0; --b5: 0; --b6: 0; --b7: 0; --b8: 0; }
+  .scene__frame[data-frame='3'] { --b1: 1; --b2: 1; --b3: 1; --b4: 0; --b5: 0; --b6: 0; --b7: 0; --b8: 0; }
+  .scene__frame[data-frame='4'] { --b1: 1; --b2: 1; --b3: 1; --b4: 1; --b5: 0; --b6: 0; --b7: 0; --b8: 0; }
+  .scene__frame[data-frame='5'] { --b1: 1; --b2: 1; --b3: 1; --b4: 1; --b5: 1; --b6: 0; --b7: 0; --b8: 0; }
+  .scene__frame[data-frame='6'] { --b1: 1; --b2: 1; --b3: 1; --b4: 1; --b5: 1; --b6: 1; --b7: 0; --b8: 0; }
+  .scene__frame[data-frame='7'] { --b1: 1; --b2: 1; --b3: 1; --b4: 1; --b5: 1; --b6: 1; --b7: 1; --b8: 0; }
+  .scene__frame[data-frame='8'] { --b1: 1; --b2: 1; --b3: 1; --b4: 1; --b5: 1; --b6: 1; --b7: 1; --b8: 1; }
+  .motion-ok .scene__frame[data-frame='1']:not([data-inview]) { --b1: 0; }
+  .motion-ok .scene__frame[data-frame='2']:not([data-inview]) { --b2: 0; }
+  .motion-ok .scene__frame[data-frame='3']:not([data-inview]) { --b3: 0; }
+  .motion-ok .scene__frame[data-frame='4']:not([data-inview]) { --b4: 0; }
+  .motion-ok .scene__frame[data-frame='5']:not([data-inview]) { --b5: 0; }
+  .motion-ok .scene__frame[data-frame='6']:not([data-inview]) { --b6: 0; }
+  .motion-ok .scene__frame[data-frame='7']:not([data-inview]) { --b7: 0; }
+  .motion-ok .scene__frame[data-frame='8']:not([data-inview]) { --b8: 0; }
+  
+  /* Generated: pinned mode — beat n runs while 1.12·p·beats passes n−1 → n (see route-geometry.ts beatProgress).
+   1.12 makes the last beat finish before the stage unpins (the follow progress ends at ≈ 1 − 0.3/(0.7·beats)). */
+  @media (min-width: 1024px) {
+    .motion-ok:not(.scene-lite) .scene {
+      --b1: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 0) * 1.4 - 0.1), 1);
+      --b2: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 1) * 1.4 - 0.1), 1);
+      --b3: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 2) * 1.4 - 0.1), 1);
+      --b4: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 3) * 1.4 - 0.1), 1);
+      --b5: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 4) * 1.4 - 0.1), 1);
+      --b6: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 5) * 1.4 - 0.1), 1);
+      --b7: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 6) * 1.4 - 0.1), 1);
+      --b8: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 7) * 1.4 - 0.1), 1);
+    }
+  }
+
+  /* Stepped frames are crops: each shows only its own beat's labels (earlier labels would be cut by the crop) */
+  .scene__frame .ra-label { visibility: hidden; }
+  .scene__frame[data-frame='1'] .ra-label[data-beat='1'] { visibility: visible; }
+  .scene__frame[data-frame='2'] .ra-label[data-beat='2'] { visibility: visible; }
+  .scene__frame[data-frame='3'] .ra-label[data-beat='3'] { visibility: visible; }
+  .scene__frame[data-frame='4'] .ra-label[data-beat='4'] { visibility: visible; }
+  .scene__frame[data-frame='5'] .ra-label[data-beat='5'] { visibility: visible; }
+  .scene__frame[data-frame='6'] .ra-label[data-beat='6'] { visibility: visible; }
+  .scene__frame[data-frame='7'] .ra-label[data-beat='7'] { visibility: visible; }
+  .scene__frame[data-frame='8'] .ra-label[data-beat='8'] { visibility: visible; }
+
+  /* ---------- Engine layout ---------- */
+  .scene { position: relative; }
+  .scene__stage { display: none; }
+  .scene__steps { display: grid; gap: 48px; }
+  .scene__frame { margin-block-end: 24px; aspect-ratio: 4 / 5; border: 1px solid var(--line); background: var(--bg); }
+  .scene__step:last-child .scene__frame { aspect-ratio: 16 / 10; }
+  .scene__frame svg { display: block; width: 100%; height: 100%; }
+  .scene__n { display: block; margin-block-end: 10px; font-size: var(--fs-caption); color: var(--fg-muted); }
+  .scene__labels { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-block-start: 16px; font-size: var(--fs-body-sm); }
+  .scene__labels li { display: inline-flex; align-items: center; gap: 10px; }
+  .scene__labels li::before { content: ''; width: 7px; height: 7px; flex: none; background: var(--color-gold); }
+  .motion-ok .scene__frame { transition: --b1 900ms var(--ease-precise), --b2 1800ms var(--ease-precise), --b3 1800ms var(--ease-precise),
+      --b4 1100ms var(--ease-precise), --b5 900ms var(--ease-precise), --b6 1400ms var(--ease-precise), --b7 900ms var(--ease-precise), --b8 900ms var(--ease-precise); }
+
+  /* Mobile/tablet: a sticky tick bar marks the position in the sequence (decorative; the list carries order) */
+  .scene__ticks { position: sticky; inset-block-start: 64px; z-index: 2; display: flex; gap: 6px; padding-block: 12px; margin-block-end: 8px; background: var(--bg); }
+  .scene__ticks li { flex: 1; height: 2px; background: var(--line-strong); }
+  .scene:has(.scene__frame[data-frame='1'][data-inview]) [data-tick='1'],
+  .scene:has(.scene__frame[data-frame='2'][data-inview]) [data-tick='2'],
+  .scene:has(.scene__frame[data-frame='3'][data-inview]) [data-tick='3'],
+  .scene:has(.scene__frame[data-frame='4'][data-inview]) [data-tick='4'],
+  .scene:has(.scene__frame[data-frame='5'][data-inview]) [data-tick='5'],
+  .scene:has(.scene__frame[data-frame='6'][data-inview]) [data-tick='6'],
+  .scene:has(.scene__frame[data-frame='7'][data-inview]) [data-tick='7'],
+  .scene:has(.scene__frame[data-frame='8'][data-inview]) [data-tick='8'] { background: var(--color-gold); }
+  html:not(.motion-ok) .scene__ticks { display: none; }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .scene__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .scene__frame { aspect-ratio: 3 / 4; }
+  }
+
+  @media (min-width: 1024px) {
+    /* Desktop static (reduced motion / no JS): the full final composition, then the beat texts */
+    .scene__ticks { display: none; }
+    .scene__stage { display: block; margin-block-end: 64px; }
+    .scene__stage svg { display: block; width: 100%; height: auto; }
+    .scene__frame { display: none; }
+    .scene__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 48px; }
+
+    /* Desktop pinned: steps scroll in 5 columns while the stage stays in 7 */
+    .motion-ok:not(.scene-lite) .scene { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .motion-ok:not(.scene-lite) .scene__stage {
+      grid-column: 6 / -1; grid-row: 1; position: sticky; inset-block-start: calc(var(--header-h) + 3svh);
+      align-self: start; height: calc(100svh - var(--header-h) - 6svh); margin: 0; display: flex; align-items: center;
+    }
+    .motion-ok:not(.scene-lite) .scene__stage svg { max-height: 100%; }
+    .motion-ok:not(.scene-lite) .scene__steps { grid-column: 1 / 6; grid-row: 1; display: block; }
+    .motion-ok:not(.scene-lite) .scene__step {
+      position: relative; display: flex; align-items: center; min-height: 70svh; padding-inline-start: 28px;
+    }
+    .motion-ok:not(.scene-lite) .scene__step::before {
+      /* gold marker for the active beat (text is never hidden or dimmed) */
+      content: ''; position: absolute; inset-inline-start: 0; inset-block: calc(50% - 60px); width: 2px;
+      background: var(--color-gold); opacity: clamp(0, calc(var(--self) - var(--next)), 1);
+    }
+    .motion-ok:not(.scene-lite) .scene__step::after {
+      content: ''; position: absolute; inset-inline-start: 0; inset-block: calc(50% - 60px); width: 1px; background: var(--line-strong);
+    }
+    .scene-lite .scene__stage { display: none; }
+    .scene-lite .scene__frame { display: block; }
+  }
+
+  /* ---------- Mobile NVR "Route" artwork ---------- */
+  .route-art { --travel: calc((var(--b2) + var(--b3)) / 2); overflow: visible; }
+  .route-art .ra-grid path { fill: none; stroke: var(--scene-line); stroke-width: 1; opacity: 0.55; }
+  .route-art .ra-blocks rect { fill: none; stroke: var(--scene-line); stroke-width: 1; opacity: 0.35; }
+  .route-art .ra-depot rect, .route-art .ra-depot path { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
+  .route-art .ra-route-base { fill: none; stroke: var(--scene-line); stroke-width: 1.5; }
+  .route-art .ra-draw { fill: none; stroke-dasharray: 1 1; }
+  .route-art .ra-route { stroke: var(--color-gold); stroke-width: 3; stroke-linejoin: round; stroke-dashoffset: calc(1 - var(--b1)); }
+  .route-art .ra-route-2 { stroke: var(--color-gold); stroke-width: 2; stroke-linejoin: round; stroke-dashoffset: calc(1 - var(--b6)); opacity: 0.8; }
+  .route-art .ra-link { stroke: var(--color-gold); stroke-width: 1.5; stroke-dashoffset: calc(1 - var(--b6)); }
+  .route-art .ra-fleet-vehicles { opacity: var(--b6); }
+  .route-art .ra-uplink { stroke: var(--color-gold); stroke-width: 2; stroke-dashoffset: calc(1 - var(--b4)); }
+  .route-art .ra-trail circle { fill: var(--color-gold); opacity: clamp(0, calc((var(--travel) - var(--f)) * 20), 1); }
+  .route-art .ra-masts > g { opacity: var(--b3); }
+  .route-art .ra-mast { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
+  .route-art .ra-uplink-dots { fill: none; stroke: var(--fg-muted); stroke-width: 1; stroke-dasharray: 2 6; }
+  .route-art .ra-arc { fill: none; stroke: var(--color-gold); stroke-width: 2; opacity: clamp(0, calc((var(--travel) - var(--f) + 0.02) * 12), 1); }
+  .route-art .ra-zone { fill: none; stroke: var(--color-gold); stroke-width: 2; stroke-dasharray: 10 8; opacity: var(--b5); }
+  .route-art .ra-node-base { fill: var(--bg); stroke: var(--fg-muted); stroke-width: 1.5; }
+  .route-art .ra-node-on { fill: none; stroke: var(--color-gold); stroke-width: 2; opacity: var(--b4); }
+  .route-art .ra-frame { fill: none; stroke: var(--fg); stroke-width: 1.5; opacity: var(--b4); }
+  .route-art .ra-vehicle { offset-distance: calc(var(--travel) * 100%); offset-rotate: auto; opacity: clamp(0, calc(var(--b1) * 3), 1); }
+  .route-art .ra-vehicle-body { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
+  .route-art .ra-vehicle-line { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
+  .route-art .ra-fleet-vehicles .ra-vehicle-body { stroke: var(--fg-muted); }
+  .route-art .ra-wedges path { fill: var(--color-gray-400); fill-opacity: 0.1; stroke: var(--color-gold); stroke-width: 1.5; stroke-linejoin: round; opacity: var(--b1); }
+  .route-art .ra-label {
+    font-family: var(--font-script, var(--font-plex)), var(--font-plex), sans-serif; font-size: 24px; font-weight: 500;
+    fill: var(--fg); opacity: var(--o, 1); paint-order: stroke; stroke: var(--bg); stroke-width: 8px; stroke-linejoin: round;
+  }
+}

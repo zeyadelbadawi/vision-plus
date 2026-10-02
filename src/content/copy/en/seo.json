@@ -1,0 +1,96 @@
+{
+  "_meta": {
+    "status": "draft",
+    "source": "Per-page <title> and meta description (MASTER_PROJECT_PLAN §36). Rendered as “%s — VISION PLUS”, so titles stay ≤ 45 characters (≤ 60 rendered); descriptions ≤ 155. Selected verbatim from approved copy wherever possible; the homepage uses company.json. Every non-verbatim entry is listed in review.",
+    "review": {
+      "products.title": { "status": "derived", "source": "02 p6 sitemap item “Products”" },
+      "partners.description": { "status": "derived", "source": "Selection of two approved 01 §21 lines (the full §21 sentences exceed 155 characters)" },
+      "companyProfile.title": { "status": "draft", "source": "Team microcopy (brief §06; the page is not in 01)" },
+      "companyProfile.description": { "status": "draft", "source": "Team microcopy" },
+      "contact.title": { "status": "derived", "source": "02 p6 sitemap item “Contact”" },
+      "contact.description": { "status": "draft", "source": "Team microcopy" },
+      "privacy.title": { "status": "draft", "source": "Team microcopy; the policy text itself comes from the client (D-16)" },
+      "privacy.description": { "status": "draft", "source": "Team microcopy" },
+      "notFound.title": { "status": "draft", "source": "Team microcopy" },
+      "notFound.description": { "status": "draft", "source": "Team microcopy" }
+    }
+  },
+  "solutionsHub": {
+    "title": "Our Solutions",
+    "description": "Our portfolio brings together technologies that protect, connect, communicate, automate, and provide intelligence."
+  },
+  "solutions": {
+    "mobile-nvr-mobile-surveillance": {
+      "title": "Mobile NVR & Mobile Surveillance",
+      "description": "Mobile video surveillance, vehicle monitoring, GPS, connectivity, remote monitoring, and fleet intelligence."
+    },
+    "cctv-security-systems": {
+      "title": "CCTV & Security Systems",
+      "description": "Advanced surveillance, intelligent video management, analytics, recording, and centralized security."
+    },
+    "access-control": {
+      "title": "Access Control",
+      "description": "Intelligent management of people, vehicles, visitors, and secured areas."
+    },
+    "networking-ict": {
+      "title": "Networking & ICT",
+      "description": "Reliable and scalable infrastructure connecting people, devices, systems, and information."
+    },
+    "elv-systems": {
+      "title": "ELV Systems",
+      "description": "Integrated Extra-Low Voltage infrastructure supporting modern connected environments."
+    },
+    "audio-visual": {
+      "title": "Audio Visual",
+      "description": "Professional communication, collaboration, presentation, digital signage, and audio solutions."
+    },
+    "smart-building-home-automation": {
+      "title": "Smart Building & Home Automation",
+      "description": "Connected environments providing intelligent control of building and residential technologies."
+    },
+    "fire-alarm-systems": {
+      "title": "Fire Alarm Systems",
+      "description": "Reliable detection, notification, integration, and life-safety solutions."
+    }
+  },
+  "industries": {
+    "title": "Industries We Serve",
+    "description": "Different Environments. Different Challenges. One Engineering Approach."
+  },
+  "services": {
+    "title": "Professional Services",
+    "description": "The performance of any system depends on how it is designed, implemented, integrated, and supported."
+  },
+  "products": {
+    "title": "Products",
+    "description": "The Right Technology. For the Right Application."
+  },
+  "projects": {
+    "title": "Projects & Experience",
+    "description": "Our experience covers technology environments across security, ICT, ELV, audiovisual, automation, life safety, mobile surveillance, and integrated systems."
+  },
+  "about": {
+    "title": "About VISION PLUS",
+    "description": "VISION PLUS was established in Qatar in 2017 with a clear purpose: to make advanced technology practical, connected, and dependable."
+  },
+  "partners": {
+    "title": "Technology Partners",
+    "description": "Strong Solutions Start with the Right Technology. The Right Technology. For the Right Application."
+  },
+  "companyProfile": {
+    "title": "Company Profile",
+    "description": "The VISION PLUS company profile."
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Request a consultation or send an inquiry to VISION PLUS in Qatar and Egypt."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "How VISION PLUS handles personal data submitted through this website."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you requested could not be found."
+  }
+}

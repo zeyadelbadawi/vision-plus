@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "status": "derived",
+    "source": "MASTER_PROJECT_PLAN §9.2 / §11: the client's sitemap names (02 p6) → canonical routes and anchors. Emitted as 301s in out/_redirects for every locale once the target page exists (scripts/postbuild.mjs).",
+    "pending": [
+      { "from": "/industries/real-estate-compounds", "reason": "No approved equivalent — Q-08 (fold into Residential + Commercial, or supply approved copy)" },
+      { "from": "/services/supply-procurement", "reason": "No approved copy — Q-09" }
+    ]
+  },
+  "aliases": [
+    { "from": "/solutions/video-surveillance", "to": "/solutions/cctv-security-systems", "sitemap": "Video Surveillance" },
+    { "from": "/solutions/integrated-security", "to": "/solutions", "sitemap": "Integrated Security" },
+    { "from": "/solutions/smart-building-security", "to": "/solutions/smart-building-home-automation", "sitemap": "Smart Building Security" },
+    { "from": "/solutions/network-security-infrastructure", "to": "/solutions/networking-ict", "sitemap": "Network & Security Infrastructure" },
+    { "from": "/solutions/ai-video-analytics", "to": "/solutions/cctv-security-systems", "sitemap": "AI & Video Analytics" },
+
+    { "from": "/services/security-consultation", "to": "/services#system-design-consultancy", "sitemap": "Security Consultation" },
+    { "from": "/services/site-survey", "to": "/services#approach", "sitemap": "Site Survey" },
+    { "from": "/services/product-selection", "to": "/services#approach", "sitemap": "Product Selection" },
+    { "from": "/services/system-configuration", "to": "/services#installation-commissioning", "sitemap": "System & Configuration" },
+
+    { "from": "/industries/residential", "to": "/industries#residential", "sitemap": "Residential" },
+    { "from": "/industries/commercial-corporate-offices", "to": "/industries#commercial-corporate", "sitemap": "Commercial / Corporate & Offices" },
+    { "from": "/industries/retail", "to": "/industries#retail", "sitemap": "Retail" },
+    { "from": "/industries/hospitality-hotels", "to": "/industries#hospitality", "sitemap": "Hospitality & Hotels" },
+    { "from": "/industries/industrial-warehouses", "to": "/industries#industrial-manufacturing", "sitemap": "Industrial & Warehouses" },
+    { "from": "/industries/education", "to": "/industries#education", "sitemap": "Education" },
+    { "from": "/industries/healthcare", "to": "/industries#healthcare", "sitemap": "Healthcare" },
+    { "from": "/industries/government-institutions", "to": "/industries#government-public-sector", "sitemap": "Government & Institutions" },
+
+    { "from": "/projects/residential", "to": "/projects?sector=residential", "sitemap": "Projects › Residential" },
+    { "from": "/projects/commercial", "to": "/projects?sector=commercial-corporate", "sitemap": "Projects › Commercial" },
+    { "from": "/projects/corporate", "to": "/projects?sector=commercial-corporate", "sitemap": "Projects › Corporate" },
+    { "from": "/projects/hospitality", "to": "/projects?sector=hospitality", "sitemap": "Projects › Hospitality" },
+    { "from": "/projects/industrial", "to": "/projects?sector=industrial-manufacturing", "sitemap": "Projects › Industrial" },
+
+    { "from": "/about/who-we-are", "to": "/about#who-we-are", "sitemap": "Who We Are" },
+    { "from": "/about/our-vision", "to": "/about#vision", "sitemap": "Our Vision" },
+    { "from": "/about/our-mission", "to": "/about#mission", "sitemap": "Our Mission" },
+    { "from": "/about/our-values", "to": "/about#values", "sitemap": "Our Values" },
+    { "from": "/about/why-vision-plus", "to": "/about#why-vision-plus", "sitemap": "Why Vision Plus" },
+
+    { "from": "/contact/request-a-consultation", "to": "/contact?type=consultation", "sitemap": "Request a Consultation" },
+    { "from": "/contact/general-inquiry", "to": "/contact?type=general", "sitemap": "General Inquiry" },
+    { "from": "/contact/become-a-partner", "to": "/contact?type=partnership", "sitemap": "Become a Partner" },
+    { "from": "/contact/contact-information", "to": "/contact#locations", "sitemap": "Contact Information" },
+    { "from": "/contact/our-locations", "to": "/contact#locations", "sitemap": "Our Locations" }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "_meta": { "status": "approved", "source": "01 §02, §03, §06, §07, §08, §17, §18, §21, §22, §24 — verbatim; selection per MASTER_PROJECT_PLAN §26.1" },
+  "positioning": {
+    "title": "Built on Experience. Driven by What’s Next.",
+    "statement": "What defines us is not how many technologies we provide, but how effectively we make them work together.",
+    "body": [
+      "VISION PLUS was established in Qatar in 2017 with a clear purpose: to make advanced technology practical, connected, and dependable.",
+      "Our involvement extends across the complete technology lifecycle — from consultancy and system design to project management, installation, integration, testing, commissioning, training, maintenance, and long-term technical support."
+    ],
+    "closing": "Make technology work intelligently, reliably, and as one."
+  },
+  "integration": {
+    "title": "One Technology Partner. Multiple Capabilities.",
+    "lede": "Our portfolio brings together technologies that protect, connect, communicate, automate, and provide intelligence."
+  },
+  "mobileNvr": {
+    "title": "Security That Moves With You.",
+    "body": [
+      "Security requirements do not stop when an asset leaves a building.",
+      "VISION PLUS provides specialized Mobile NVR & Mobile Surveillance Solutions designed for transportation networks, vehicle fleets, mobile operations, and valuable moving assets."
+    ],
+    "insight": {
+      "before": "Traditional vehicle surveillance tells you what happened.",
+      "after": "An intelligent mobile security platform helps you understand what is happening, where it is happening, and when attention is required."
+    },
+    "equation": ["Video", "Location", "Connectivity", "Data", "Intelligence"],
+    "applicationsTitle": "Applications",
+    "applications": [
+      "Public Transportation",
+      "School Buses",
+      "Corporate Fleets",
+      "Logistics & Delivery Vehicles",
+      "Emergency Vehicles",
+      "Government Fleets",
+      "Construction Fleets",
+      "Heavy Equipment",
+      "Specialized Mobile Operations"
+    ]
+  },
+  "approach": {
+    "title": "From Requirement to Lifecycle.",
+    "closing": "Understand. Design. Deliver. Integrate. Support."
+  },
+  "industries": {
+    "title": "Different Environments. Different Challenges. One Engineering Approach."
+  },
+  "projects": {
+    "title": "Technology in Action.",
+    "body": [
+      "Every project represents a different operational challenge.",
+      "Our experience covers technology environments across security, ICT, ELV, audiovisual, automation, life safety, mobile surveillance, and integrated systems."
+    ],
+    "fields": ["Project Name", "Location", "Client / Sector", "Solutions Delivered", "Scope of Work", "Completion Year"]
+  },
+  "partners": {
+    "title": "Strong Solutions Start with the Right Technology.",
+    "body": "VISION PLUS works with established technology manufacturers and solution providers selected according to project requirements, performance, reliability, compatibility, and long-term support.",
+    "closing": "The Right Technology. For the Right Application."
+  },
+  "journey": {
+    "title": "From Experience to Intelligence.",
+    "milestones": [
+      { "when": "2017", "where": "Qatar", "title": "Where Our Journey Began", "text": "VISION PLUS was established in Qatar, building its foundation in integrated technology, security, and low-current systems." },
+      { "when": "2021", "where": "Egypt", "title": "Expanding Our Capabilities", "text": "VISION PLUS expanded into Egypt, extending our expertise into a growing market and developing broader capabilities across security, ICT, ELV, automation, audiovisual, life-safety, and intelligent systems." },
+      { "when": "Today", "where": "", "title": "Connected Technologies. Integrated Thinking.", "text": "Today, VISION PLUS operates with a broader vision: bringing multiple technologies together into intelligent environments designed around how organizations, buildings, and mobile assets actually operate." }
+    ],
+    "closing": "Qatar 2017 → Egypt 2021 → Building What’s Next."
+  },
+  "closing": {
+    "lead": "Technology Is Everywhere.",
+    "title": "Making It Work Together Is What Matters.",
+    "body": "From buildings to moving fleets, from individual technologies to connected environments, VISION PLUS brings together engineering, technology, integration, and support to create systems built around the way our clients operate."
+  }
+}

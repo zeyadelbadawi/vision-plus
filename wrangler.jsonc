@@ -1,0 +1,30 @@
+// Cloudflare Workers + Static Assets (MASTER_PROJECT_PLAN §42.2). Free plan; no paid features.
+// Top level = PREVIEW worker (branch previews via `wrangler versions upload --preview-alias <branch>`,
+// CONTENT_MODE=preview build, noindex). `--env production` = the production worker (custom domain is
+// attached in P11 once the client's DNS is on Cloudflare — D-07). No account IDs or secrets live here.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vision-plus-web-preview",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // Only these paths invoke the Worker; everything else is served as a static asset (free, unmetered).
+    "run_worker_first": ["/", "/api/*"]
+  },
+  "observability": { "enabled": true },
+  "vars": { "SITE_ENV": "preview" },
+  "env": {
+    "production": {
+      "name": "vision-plus-web",
+      "vars": { "SITE_ENV": "production" }
+      // P11: "routes": [{ "pattern": "<client-domain>", "custom_domain": true }]  (needs D-07)
+      // P6:  "kv_namespaces": [{ "binding": "RATE_LIMIT", "id": "<created in client account>" }]
+    }
+  }
+}

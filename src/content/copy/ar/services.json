@@ -1,0 +1,54 @@
+{
+  "_meta": {
+    "status": "placeholder",
+    "note": "English source text as a structural placeholder — awaiting the human Arabic translation (D-13) via the translation workbook. Production build refuses placeholder."
+  },
+  "hero": {
+    "eyebrow": "Professional Services",
+    "title": "Technology Requires More Than Products.",
+    "lede": "The performance of any system depends on how it is designed, implemented, integrated, and supported."
+  },
+  "items": {
+    "system-design-consultancy": {
+      "body": [
+        "We transform technical and operational requirements into optimized, scalable system architectures tailored to each environment.",
+        "Our focus is not simply on what technology can do, but on what the project needs it to do."
+      ]
+    },
+    "project-management": {
+      "body": [
+        "Professional project management provides structured control throughout delivery.",
+        "Our approach covers planning, scheduling, stakeholder coordination, documentation, quality management, cost awareness, communication, and risk mitigation."
+      ]
+    },
+    "installation-commissioning": {
+      "body": [
+        "Professional installation and commissioning are delivered by qualified technical teams following approved designs, project specifications, manufacturer requirements, and applicable standards.",
+        "Our methodology emphasizes accuracy, installation quality, site coordination, and minimal operational disruption."
+      ]
+    },
+    "testing-integration": {
+      "body": [
+        "We verify that technologies do more than function individually.",
+        "Comprehensive testing covers connectivity, interoperability, functionality, performance, and system integration to ensure technologies operate as one coordinated environment."
+      ]
+    },
+    "maintenance-support": {
+      "body": [
+        "Technology needs to perform long after handover.",
+        "Our preventive and corrective maintenance services are designed to maximize availability, reduce unexpected downtime, extend equipment lifecycle, and maintain system performance."
+      ]
+    },
+    "technical-training-support": {
+      "body": [
+        "A successful system requires knowledgeable users.",
+        "VISION PLUS provides technical training and ongoing support to help client teams confidently operate, manage, and maintain their installed technologies."
+      ]
+    }
+  },
+  "approach": {
+    "eyebrow": "The VISION PLUS Approach",
+    "title": "From Requirement to Lifecycle.",
+    "closing": "Understand. Design. Deliver. Integrate. Support."
+  }
+}
