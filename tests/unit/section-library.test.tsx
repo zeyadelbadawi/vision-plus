@@ -9,6 +9,7 @@ import { RelatedRail } from '@/components/sections/shared/related-rail';
 import { PillarStrip } from '@/components/sections/shared/pillar-strip';
 import { SceneSteps } from '@/components/sections/shared/scene-steps';
 import { SplitEditorial } from '@/components/sections/shared/split-editorial';
+import { Timeline } from '@/components/sections/shared/timeline';
 import { scenes } from '@/content/data/scenes';
 
 // Shared section library (MASTER_PROJECT_PLAN §20.8, §27; P5A-01): markup contracts the pages rely on.
@@ -96,6 +97,46 @@ describe('SplitEditorial', () => {
   });
   it('without an image renders the text column only', () => {
     expect(render(true)).not.toContain('split__media');
+  });
+});
+
+describe('SplitEditorial eyebrow', () => {
+  it('renders the optional eyebrow above the heading only when given', () => {
+    const withEyebrow = renderToStaticMarkup(
+      <SplitEditorial locale="en" id="p" eyebrow="Our Philosophy" title="T">
+        <p>B</p>
+      </SplitEditorial>,
+    );
+    expect(withEyebrow).toContain('<p class="t-caption text-fg-muted mb-4">Our Philosophy</p><h2 id="p-title"');
+    const without = renderToStaticMarkup(
+      <SplitEditorial locale="en" id="p" title="T">
+        <p>B</p>
+      </SplitEditorial>,
+    );
+    expect(without).not.toContain('t-caption');
+  });
+});
+
+describe('Timeline', () => {
+  const html = renderToStaticMarkup(
+    <Timeline
+      locale="en"
+      items={[
+        { when: '2017', where: 'Qatar', title: 'One', body: ['A', 'B'], image: 'ABOUT-JOURNEY-2017' },
+        { when: 'Today', where: '', title: 'Two', body: ['C'] },
+      ]}
+    />,
+  );
+  it('is an ordered list revealed once, with the journey seam on every milestone', () => {
+    expect(html).toMatch(/^<ol class="journey timeline" data-reveal="">/);
+    expect(html.match(/<li class="journey__step"/g)).toHaveLength(2);
+    expect(html.match(/class="journey__fill"/g)).toHaveLength(2);
+  });
+  it('shows where only when given, the photo only when it has one, and every body paragraph', () => {
+    expect(html.match(/journey__where/g)).toHaveLength(1);
+    expect(html.match(/timeline__media/g)).toHaveLength(1);
+    expect(html).toContain('data-slot="ABOUT-JOURNEY-2017"');
+    expect(html.match(/<p class="t-body-sm mt-3/g)).toHaveLength(3);
   });
 });
 

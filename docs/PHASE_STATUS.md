@@ -101,13 +101,14 @@ Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** clo
 | Task | Status | Commit | Validation |
 |---|---|---|---|
 | P5-00 Baseline (plan §55.2–55.3, documentation fixes) | Done | `011a873` | Docs only |
-| P5A-01 Shared section library | Started: `IndexList`, `ProcessTrack`, `StatementBand`, `CtaBand`, `HeroBand`, `SpecList`, `RelatedRail`, `PillarStrip`, `SceneSteps`, `SplitEditorial` | `0573e0a` | Unit 7 tests; used by P5A-02 |
+| P5A-01 Shared section library | Started: `IndexList`, `ProcessTrack`, `StatementBand`, `CtaBand`, `HeroBand`, `SpecList`, `RelatedRail`, `PillarStrip`, `SceneSteps`, `SplitEditorial`, `Timeline` | `0573e0a` | Unit 7 tests; used by P5A-02 |
 | P5A-02 Solutions hub (§26.3) | Implemented, awaiting review | `0573e0a` | Plan §55.3.5: local suite green; E2E 147/7; 0 px on 84 renders; markup unchanged elsewhere; CI 37054589973 green; matrix 37054595279: 368 passed / 17 skipped / 0 failed |
 | P5A-04 Solution detail template (7 solutions, no scenes) | Implemented, awaiting review | `c1d7370` | Plan §55.3.5–55.3.6 |
 | P5A-03 Localized 404 | Implemented, awaiting review | `fce167f` | Plan §55.3.5; `worker:smoke` 29/29 |
 | P5A-05 Services lifecycle (§26.5) | Implemented, awaiting review; R-2 wording still pending client review | `667ac58` | Plan §55.3.5, §55.3.7 |
 | P5A-06 Industries explorer (§26.4) | Implemented, awaiting review; R-1 summary and R-4 order still pending client review | `52e9338` | Plan §55.3.5, §55.3.8 |
 | Milestone P5A-03 to P5A-06 | Validated | `46ca5f5` | Local suite green; E2E Chromium 232/10 skipped; CI 37077803419 green; matrix 37077807521: 581 passed / 24 skipped / 0 failed / 0 flaky |
+| P5A-07 About (§26.8) | Implemented, awaiting review; Vision, Mission and Core Values withheld (Q-04) | *this commit* | Plan §55.3.5, §55.3.9 |
 | Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); P5B-03… order and Smart Building view (E-6, E-7) | — | — |
 
 ## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*

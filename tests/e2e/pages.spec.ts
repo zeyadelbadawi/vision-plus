@@ -496,6 +496,60 @@ test.describe('Industries explorer (§26.4)', () => {
   });
 });
 
+// P5A-07 About (MASTER_PROJECT_PLAN §26.8, §55.3.9). Q-04: Vision, Mission and Core Values render their labels only.
+test.describe('About (§26.8)', () => {
+  const SECTIONS = ['who-we-are', 'journey', 'vision', 'mission', 'values', 'philosophy', 'why-vision-plus'];
+  // Withheld under Q-04: none of these may appear anywhere in the page, including the RSC payload.
+  const WITHHELD = [
+    'To Make Technology Work as One',
+    'From Requirement to Reality',
+    'We envision environments',
+    'Our mission is to understand',
+    'Make complex technology easier',
+    'Think Before We Build',
+    'Purpose Before Technology',
+    'Partnership Beyond Projects',
+  ];
+
+  for (const l of LOCALES) {
+    test(`/${l.code}/about: sections in order, in-page index, journey, philosophy, 8 reasons, links out`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      const res = await page.goto(`/${l.code}/about`);
+      const ids = await page.locator('main section[id]').evaluateAll((els) => els.map((e) => e.id));
+      expect(ids).toEqual(SECTIONS);
+      const index = await page.locator('.page-index a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(index).toEqual(SECTIONS.map((s) => `#${s}`));
+      await expect(page.locator('#who-we-are p.t-h1')).not.toBeEmpty();
+      await expect(page.locator('#journey .journey__step')).toHaveCount(3);
+      await expect(page.locator('#journey [data-slot^="ABOUT-JOURNEY-"]')).toHaveCount(3);
+      await expect(page.locator('#philosophy .about__lines li')).toHaveCount(4);
+      await expect(page.locator('#why-vision-plus .editorial-list__item')).toHaveCount(8);
+      const out = await page.locator('.link-blocks a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(out).toEqual([`/${l.code}/partners`, `/${l.code}/company-profile`]);
+      // Q-04: label only, with the preview note; no body under the heading
+      for (const id of ['vision', 'mission', 'values']) {
+        await expect(page.locator(`#${id} h2`)).not.toBeEmpty();
+        await expect(page.locator(`#${id} .pending-note`)).toHaveCount(1);
+        await expect(page.locator(`#${id} p:not(.pending-note), #${id} li`)).toHaveCount(0);
+      }
+      const html = (await res!.text()) + (await page.content());
+      for (const w of WITHHELD) expect(html, w).not.toContain(w);
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('the in-page index and the header menu anchors land on their sections', async ({ page }) => {
+    await page.goto('/en/about');
+    await page.locator('.page-index a[href="#philosophy"]').click();
+    await expect(page.locator('#philosophy-title')).toBeInViewport();
+    for (const id of ['vision', 'values', 'journey']) {
+      await page.goto(`/en/about#${id}`);
+      await expect(page.locator(`#${id}-title`)).toBeInViewport();
+    }
+  });
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

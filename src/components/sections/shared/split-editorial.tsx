@@ -13,6 +13,7 @@ import { textAttrs } from '@/lib/text-attrs';
 export function SplitEditorial({
   locale,
   id,
+  eyebrow,
   title,
   image,
   flip = false,
@@ -21,6 +22,8 @@ export function SplitEditorial({
 }: {
   locale: Locale;
   id: string;
+  /** Optional approved eyebrow above the heading. */
+  eyebrow?: string;
   title: string;
   image?: ImageId;
   flip?: boolean;
@@ -40,6 +43,11 @@ export function SplitEditorial({
           data-reveal=""
         >
           <span className="seam mb-6 w-12" aria-hidden="true" />
+          {eyebrow && (
+            <p className="t-caption text-fg-muted mb-4" {...textAttrs(locale, eyebrow)}>
+              {eyebrow}
+            </p>
+          )}
           <h2 id={`${id}-title`} className="t-h2" {...textAttrs(locale, title)}>
             {title}
           </h2>
