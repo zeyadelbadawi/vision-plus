@@ -38,6 +38,9 @@ import zhSolutions from './copy/zh/solutions.json';
 import enSamples from './copy/en/samples.json';
 import arSamples from './copy/ar/samples.json';
 import zhSamples from './copy/zh/samples.json';
+import enPrivacy from './copy/en/privacy.json';
+import arPrivacy from './copy/ar/privacy.json';
+import zhPrivacy from './copy/zh/privacy.json';
 import locationsJson from './data/locations.json';
 
 export type ContentStatus = 'approved' | 'derived' | 'draft' | 'placeholder' | 'draft-mt';
@@ -57,6 +60,13 @@ export type SeoCopy = Shape<typeof enSeo>;
 export type ServicesCopy = Shape<typeof enServices>;
 export type SolutionsCopy = Shape<typeof enSolutions>;
 export type SamplesCopy = Shape<typeof enSamples>;
+/** Long-form policy (§26.12): the text comes from the client's legal adviser (D-16); `sections` is empty until then. */
+export interface PrivacyCopy {
+  labels: { contents: string; updated: string };
+  /** ISO date the policy takes effect, or '' while there is no policy text. */
+  updated: string;
+  sections: { id: string; title: string; paragraphs: string[]; list?: string[] }[];
+}
 
 // `satisfies` enforces key parity across locales at compile time; scripts/content-check.mjs
 // additionally checks array lengths and the content-status gate.
@@ -73,6 +83,8 @@ const seoCopy = { en: enSeo, ar: arSeo, zh: zhSeo } satisfies Record<Locale, Seo
 const servicesCopy = { en: enServices, ar: arServices, zh: zhServices } satisfies Record<Locale, ServicesCopy>;
 const solutionsCopy = { en: enSolutions, ar: arSolutions, zh: zhSolutions } satisfies Record<Locale, SolutionsCopy>;
 const samplesCopy = { en: enSamples, ar: arSamples, zh: zhSamples } satisfies Record<Locale, SamplesCopy>;
+// JSON infers `never[]` for the still-empty sections; content:check validates the real shape (schema 'privacy.json').
+const privacyCopy = { en: enPrivacy, ar: arPrivacy, zh: zhPrivacy } as Record<Locale, PrivacyCopy>;
 
 export const getCatalog = (locale: Locale): CatalogCopy => catalog[locale];
 export const getCompany = (locale: Locale): CompanyCopy => company[locale];
@@ -89,6 +101,7 @@ export const getServicesCopy = (locale: Locale): ServicesCopy => servicesCopy[lo
 export const getSolutionsCopy = (locale: Locale): SolutionsCopy => solutionsCopy[locale];
 /** Illustrative sample content (Q-12, D-01, D-02) — preview builds only; see data/samples.ts. */
 export const getSamplesCopy = (locale: Locale): SamplesCopy => samplesCopy[locale];
+export const getPrivacyCopy = (locale: Locale): PrivacyCopy => privacyCopy[locale];
 
 /**
  * Whether a catalog entry still awaits client review (`_meta.review` without `approved`, e.g. `approach.0.text`, R-2).

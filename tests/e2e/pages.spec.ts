@@ -803,6 +803,24 @@ test.describe('Company Profile (§33)', () => {
   }
 });
 
+test.describe('Privacy (§26.12)', () => {
+  for (const l of LOCALES) {
+    test(`/${l.code}/privacy: one h1 and the pending-client line; no policy text or table of contents until D-16`, async ({ page }) => {
+      await page.goto(`/${l.code}/privacy`);
+      await expect(page.locator('main h1')).toHaveCount(1);
+      await expect(page.locator('main .page-intro')).toContainText('D-16');
+      await expect(page.locator('.legal, .legal__toc, main time')).toHaveCount(0);
+    });
+  }
+
+  test('the contact consent link reaches the privacy page', async ({ page }) => {
+    await page.goto('/en/contact');
+    await page.locator('label[for="consent"] a').click();
+    await expect(page).toHaveURL(/\/en\/privacy$/);
+    await expect(page.locator('main h1')).toHaveCount(1);
+  });
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

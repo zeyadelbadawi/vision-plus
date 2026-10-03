@@ -380,6 +380,22 @@
   .motion-ok .cp-frame__skeleton { animation: cp-shimmer 1.4s linear infinite; }
   @keyframes cp-shimmer { to { background-position: -200% 0; } }
   .cp-frame__fallback { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 24px; text-align: center; }
+
+  /* Privacy (§26.12): long-form legal text with a table of contents (sticky beside the prose on desktop) */
+  .legal { display: grid; gap: 48px; }
+  .legal__toc { padding-block-start: 16px; border-block-start: 1px solid var(--line); }
+  .legal__toc-title { font-size: var(--fs-caption); font-weight: 500; color: var(--fg-muted); letter-spacing: 0.04em; }
+  .legal__toc ol { display: grid; gap: 10px; margin-block-start: 14px; list-style: decimal; padding-inline-start: 1.4em; font-size: var(--fs-body-sm); }
+  .legal__toc-link { text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .legal__toc-link:hover { text-decoration-color: currentColor; }
+  .legal__updated { font-size: var(--fs-body-sm); color: var(--fg-muted); }
+  .legal__body { display: grid; gap: 48px; }
+  .legal__section { display: grid; gap: 16px; }
+  .legal__list { display: grid; gap: 8px; list-style: disc; padding-inline-start: 1.4em; }
+  @media (min-width: 1024px) {
+    .legal { grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); column-gap: calc(var(--gutter) * 2); align-items: start; }
+    .legal__toc { position: sticky; inset-block-start: calc(64px + 32px); }
+  }
 }
 
 /* Style guide (preview only) */

@@ -106,6 +106,22 @@ export function schemas(r: Registries) {
       privacy: seoEntry,
       notFound: seoEntry,
     }),
+    // The policy text comes from the client's legal adviser (D-16): empty `sections` until it is supplied.
+    'privacy.json': z.strictObject({
+      _meta: meta,
+      labels: z.strictObject({ contents: text, updated: text }),
+      updated: z.union([z.literal(''), z.iso.date()]),
+      sections: z
+        .array(
+          z.strictObject({
+            id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+            title: text,
+            paragraphs: z.array(text).min(1),
+            list: z.array(text).min(1).optional(),
+          }),
+        )
+        .refine((s) => new Set(s.map((x) => x.id)).size === s.length, 'section ids must be unique'),
+    }),
   } as Record<string, z.ZodTypeAny>;
 }
 

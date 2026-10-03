@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "status": "placeholder",
+    "source": "D-16: the policy text comes from the client's legal adviser and has not been supplied. Until it is, `sections` stays empty and the page shows the pending-client line (production blocked). Only the two layout labels are team microcopy.",
+    "review": {
+      "labels.contents": {
+        "status": "draft",
+        "source": "Team microcopy: table-of-contents heading for the long-form policy layout (§26.12)"
+      },
+      "labels.updated": {
+        "status": "draft",
+        "source": "Team microcopy: label before the policy's effective date (§26.12)"
+      }
+    }
+  },
+  "labels": {
+    "contents": "Contents",
+    "updated": "Last updated"
+  },
+  "updated": "",
+  "sections": []
+}
