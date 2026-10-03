@@ -25,6 +25,8 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
       options: --ipc=host
     steps:
+      # the Playwright image has no git-lfs, which checkout needs to fetch the baselines
+      - run: apt-get update && apt-get install -y --no-install-recommends git-lfs
       - uses: actions/checkout@v7
         with:
           lfs: true # baselines are Git LFS objects (.gitattributes)
