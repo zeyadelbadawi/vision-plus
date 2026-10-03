@@ -803,6 +803,66 @@ test.describe('Company Profile (§33)', () => {
   }
 });
 
+test.describe('Scene lab (§23.6, P5B-01; preview only)', () => {
+  test.skip(({ viewport }) => (viewport?.width ?? 0) < 1024, 'tooling page, checked at desktop width');
+  type Page = import('@playwright/test').Page;
+  const lab = (page: Page, id: string) => page.locator(`[data-lab-scene="${id}"]`);
+  const frame = (page: Page, id: string) => page.frameLocator(`[data-lab-scene="${id}"] iframe`);
+  const slide = async (page: Page, id: string, v: number) => {
+    await lab(page, id).locator('input[type=range]').fill(String(v));
+    await page.waitForTimeout(200);
+  };
+
+  test('the slider scrubs the Route scene forwards and backwards, and steps the On board scene', async ({ page }) => {
+    await page.goto('/en/_lab/scenes');
+    const route = frame(page, 'mnvr-route').locator('.scene[data-driver="manual"]');
+    await expect(route).toBeAttached();
+    const state = () => route.evaluate((el) => [el.style.getPropertyValue('--p'), el.dataset.current]);
+    await expect.poll(async () => (await route.getAttribute('data-live')) !== null).toBe(true);
+    for (const [v, beat] of [
+      [0.5, '4'],
+      [1, '6'],
+      [0.2, '2'],
+      [0, '0'],
+    ] as const) {
+      await slide(page, 'mnvr-route', v);
+      expect(await state()).toEqual([v.toFixed(4), beat]);
+    }
+    const alert = () => route.evaluate((el) => Number(getComputedStyle(el.querySelector('.scene__stage .ax-node--alert')!).opacity));
+    await slide(page, 'mnvr-route', 1);
+    await expect.poll(alert).toBeCloseTo(1, 1);
+    const onboard = frame(page, 'mnvr-onboard').locator('.sys[data-driver="manual"]');
+    await slide(page, 'mnvr-onboard', 0.4);
+    await expect(onboard).toHaveAttribute('data-current', '2');
+    await expect(onboard).toHaveAttribute('data-reached', '1 2');
+  });
+
+  test('static mode is the reduced-motion composition; Arabic mirrors the artwork; the frames hide the site chrome', async ({ page }) => {
+    await page.goto('/en/_lab/scenes');
+    const controls = lab(page, 'mnvr-route').locator('select');
+    await controls.first().selectOption('static');
+    await expect(lab(page, 'mnvr-route').locator('input[type=range]')).toBeDisabled();
+    await expect
+      .poll(() =>
+        frame(page, 'mnvr-route')
+          .locator('html')
+          .evaluate((h) => h.classList.contains('motion-ok')),
+      )
+      .toBe(false);
+    await controls.first().selectOption('pinned');
+    await controls.nth(1).selectOption('ar');
+    await expect(frame(page, 'mnvr-route').locator('html')).toHaveAttribute('dir', 'rtl');
+    await expect(frame(page, 'mnvr-route').locator('.site-header')).toBeHidden();
+  });
+
+  test('the Mobile NVR page keeps the scroll driver', async ({ page }) => {
+    await page.goto('/en/solutions/mobile-nvr-mobile-surveillance');
+    await expect(page.locator('.scene')).toHaveAttribute('data-progress', 'follow');
+    await expect(page.locator('.sys')).toHaveAttribute('data-steps', '');
+    await expect(page.locator('[data-driver]')).toHaveCount(0);
+  });
+});
+
 test.describe('Open Graph cards (§36, P5A-14)', () => {
   for (const l of LOCALES) {
     test(`/${l.code}: home and a solution page reference their own 1200×630 card, which is served`, async ({ page, request }) => {

@@ -1,0 +1,13 @@
+/* Scene lab (MASTER_PROJECT_PLAN §23.6, P5B-01), preview only; imported by the /_lab/scenes pages alone. */
+@layer components {
+  .lab { padding-block: 48px 96px; }
+  .lab-scene { margin-block-start: 56px; padding-block-start: 24px; border-block-start: 1px solid var(--line); }
+  .lab-scene__controls { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; margin-block: 16px; font-size: var(--fs-body-sm); }
+  .lab-scene__controls select { border: 1px solid var(--line-strong); padding: 4px 8px; background: var(--bg-raised); }
+  .lab-scene__slider { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .lab-scene__slider input { width: min(420px, 70vw); accent-color: var(--color-gold); }
+  .lab-scene__viewport { overflow: auto; max-width: 100%; border: 1px solid var(--line); background: var(--bg-raised); }
+  .lab-scene__viewport iframe { display: block; border: 0; }
+  /* inside a frame only the scene shows */
+  .lab-frame .site-header, .lab-frame footer, .lab-frame .preview-notice { display: none; }
+}

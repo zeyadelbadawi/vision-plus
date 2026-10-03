@@ -3,7 +3,7 @@ import { localeMeta, type Locale } from '@/i18n/locales';
 import { getSolutionsCopy } from '@/content';
 import { scenes } from '@/content/data/scenes';
 import { sceneText } from '@/content/scene-text';
-import { ScrollScene, type SceneBeat } from '@/components/scenes/scroll-scene';
+import { ScrollScene, type SceneBeat, type SceneDriver } from '@/components/scenes/scroll-scene';
 import { ARCH_FRAMES, MnvrArchitectureArt, type ArchTerms } from '@/components/scenes/mnvr-architecture-art';
 import '@/styles/scenes.css';
 
@@ -14,7 +14,7 @@ import '@/styles/scenes.css';
  * frame is a full-width crop with complete labels), and the complete still diagram without JS or with reduced motion.
  * Every word comes from the scene registry or the approved capability list (tests/unit/scenes.test.ts).
  */
-export async function MnvrRouteScene({ locale, name }: { locale: Locale; name: string }) {
+export async function MnvrRouteScene({ locale, name, driver }: { locale: Locale; name: string; driver?: SceneDriver }) {
   const scene = scenes.find((s) => s.id === 'mnvr-route');
   if (!scene) throw new Error('mnvr-route scene missing from the registry');
   const t = await getTranslations({ locale, namespace: 'scene' });
@@ -47,6 +47,7 @@ export async function MnvrRouteScene({ locale, name }: { locale: Locale; name: s
       locale={locale}
       id={scene.id}
       className="scene--arch"
+      driver={driver}
       beats={beats}
       stepsLabel={t('stepsLabel', { name })}
       stage={<MnvrArchitectureArt rtl={rtl} terms={terms} />}

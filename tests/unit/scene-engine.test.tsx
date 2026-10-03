@@ -1,7 +1,11 @@
 import { readFileSync } from 'node:fs';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { ARCH_FRAMES, TALL, WIDE } from '@/components/scenes/mnvr-architecture-art';
 import { PIN_SCALE, beatProgress } from '@/components/scenes/scene-progress';
+import { MAX_BEATS, ScrollScene, type SceneBeat } from '@/components/scenes/scroll-scene';
+import { beatAt } from '@/components/scenes/lab/lab-frame-driver';
+import { MnvrOnboardScene } from '@/components/sections/solution/mnvr-onboard-scene';
 import { scenes } from '@/content/data/scenes';
 import { sceneText, sentences } from '@/content/scene-text';
 import { textAttrs } from '@/lib/text-attrs';
@@ -88,5 +92,64 @@ describe('placeholder text direction', () => {
     expect(textAttrs('zh', 'Security That Moves With You.')).toEqual({ lang: 'en', dir: 'ltr' });
     expect(textAttrs('zh', '以技术相连。')).toEqual({});
     expect(textAttrs('en', 'anything')).toEqual({});
+  });
+});
+
+describe('scene engine hardening (P5B-01)', () => {
+  const beats = (n: number): SceneBeat[] => Array.from({ length: n }, (_, i) => ({ key: `b${i + 1}`, title: `Beat ${i + 1}`, labels: [] }));
+  const scene = (n: number, frames = n, driver?: 'scroll' | 'manual') =>
+    renderToStaticMarkup(
+      <ScrollScene
+        locale="en"
+        id="test"
+        beats={beats(n)}
+        stage={<svg />}
+        frames={Array.from({ length: frames }, (_, i) => (
+          <svg key={i} />
+        ))}
+        stepsLabel="Steps"
+        driver={driver}
+      />,
+    );
+
+  it('accepts 1 to 8 beats (scenes.css registers --b1…--b8) and refuses more or none, at build time', () => {
+    expect(MAX_BEATS).toBe(8);
+    expect(readFileSync('src/styles/scenes.css', 'utf8')).toContain('@property --b8 ');
+    expect(readFileSync('src/styles/scenes.css', 'utf8')).not.toContain('@property --b9 ');
+    expect(() => scene(8)).not.toThrow();
+    expect(() => scene(9)).toThrow(/9 beats; a scene has 1–8/);
+    expect(() => scene(0)).toThrow(/0 beats/);
+  });
+
+  it('needs one stepped frame per beat', () => {
+    expect(() => scene(6, 5)).toThrow(/5 stepped frames for 6 beats/);
+  });
+
+  it('the scroll driver (default) hands the scene to the MotionController; manual leaves it to the caller', () => {
+    const page = scene(3);
+    expect(page).toContain('data-progress="follow"');
+    expect(page).toContain('data-steps=""');
+    expect(page).not.toContain('data-driver');
+    const lab = scene(3, 3, 'manual');
+    expect(lab).not.toContain('data-progress');
+    expect(lab).not.toContain('data-steps');
+    expect(lab).toContain('data-driver="manual"');
+  });
+
+  it('the On board scene follows the same driver rule', () => {
+    expect(renderToStaticMarkup(<MnvrOnboardScene locale="en" />)).toMatch(/^<div class="sys" data-steps="">/);
+    expect(renderToStaticMarkup(<MnvrOnboardScene locale="en" driver="manual" />)).toMatch(/^<div class="sys" data-driver="manual">/);
+  });
+
+  it('the lab maps slider progress to the beat the pinned CSS is playing', () => {
+    expect(beatAt(0, 6)).toBe(0);
+    expect(beatAt(0.01, 6)).toBe(1);
+    expect(beatAt(1, 6)).toBe(6);
+    // beat n is under way exactly when its CSS progress has started (scene-progress.ts)
+    for (let p = 0.02; p < 1; p += 0.05) {
+      const n = beatAt(p, 6);
+      expect(beatProgress(p, 6, n)).toBeGreaterThanOrEqual(0);
+      if (n < 6) expect(p * 6 * PIN_SCALE).toBeLessThanOrEqual(n);
+    }
   });
 });

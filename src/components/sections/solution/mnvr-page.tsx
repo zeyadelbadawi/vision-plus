@@ -7,29 +7,19 @@ import { industriesForSolution } from '@/content/data/relations';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { Section } from '@/components/layout/section';
 import { ImageSlot } from '@/components/media/image-slot';
-import { MnvrOnboardArt } from '@/components/scenes/mnvr-onboard-art';
 import { LinkButton } from '@/components/ui/button';
 import { Equation } from '@/components/ui/equation';
 import { Link } from '@/i18n/navigation';
 import { textAttrs } from '@/lib/text-attrs';
+import { MnvrOnboardScene } from './mnvr-onboard-scene';
 import { MnvrRouteScene } from './mnvr-route-scene';
 import '@/styles/pages.css';
 import '@/styles/mnvr.css';
 
 const SLUG = 'mobile-nvr-mobile-surveillance';
 
-/**
- * The five "On board" steps (P2 revision). Every word is approved copy, referenced by position so all locales
- * resolve to the same item: `cap` indexes capabilities.items (step title + tags), `text` is a fleet pillar text
- * or a body paragraph. tests/unit/mnvr-page.test.ts pins the English so a reorder of the copy cannot go unnoticed.
- */
-export const SYSTEM_STEPS = [
-  { cap: [1], text: { pillar: 0 } },
-  { cap: [0, 13], text: { body: 2 } },
-  { cap: [2], text: { pillar: 1 } },
-  { cap: [3, 4, 5], text: { pillar: 2 } },
-  { cap: [6, 7, 14], text: { pillar: 3 } },
-] as const;
+// Re-exported for tests/unit/mnvr-page.test.ts; the steps live with the On board scene.
+export { SYSTEM_STEPS } from './mnvr-onboard-scene';
 
 /**
  * Dedicated Mobile NVR & Mobile Surveillance page (client decision 2026-10-02, P2 revision): the generic solution
@@ -55,11 +45,6 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
   const index = solutions.findIndex((s) => s.slug === SLUG);
   const neighbours = [solutions[(index + solutions.length - 1) % solutions.length]!, solutions[(index + 1) % solutions.length]!];
   const relatedIndustries = industriesForSolution(SLUG);
-  const steps = SYSTEM_STEPS.map((s) => {
-    const [title = '', ...tags] = s.cap.map((i) => caps[i]!);
-    const text = 'pillar' in s.text ? copy.fleet.pillars[s.text.pillar]!.text : copy.body[s.text.body]!;
-    return { title, tags, text };
-  });
 
   return (
     <main id="main" tabIndex={-1} data-hero="dark" className="mnvr">
@@ -104,44 +89,7 @@ export async function MnvrPage({ locale }: { locale: Locale }) {
               {copy.body[3]}
             </h2>
           </div>
-          <div className="sys" data-steps="">
-            <div className="sys__stage">
-              <p className="sys__caption" aria-hidden="true">
-                {steps.map((s, i) => (
-                  <span key={s.title} data-layer={i + 1}>
-                    <b className="t-num">{i + 1}</b> <span {...tx(s.title)}>{s.title}</span>
-                  </span>
-                ))}
-              </p>
-              <MnvrOnboardArt rtl={locale === 'ar'} />
-            </div>
-            <ol className="sys__steps">
-              {steps.map((s, i) => (
-                <li key={s.title} className="sys__step" data-step={i + 1}>
-                  <span className="sys__n t-num" aria-hidden="true">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <h3 className="t-h4" {...tx(s.title)}>
-                      {s.title}
-                    </h3>
-                    {s.tags.length > 0 && (
-                      <ul className="sys__tags">
-                        {s.tags.map((t) => (
-                          <li key={t} {...tx(t)}>
-                            {t}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    <p className="t-body text-fg-muted mt-3" {...tx(s.text)}>
-                      {s.text}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+          <MnvrOnboardScene locale={locale} />
         </div>
       </section>
 

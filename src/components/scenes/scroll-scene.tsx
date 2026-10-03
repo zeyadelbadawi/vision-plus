@@ -22,6 +22,15 @@ export interface SceneBeat {
   labels: string[];
 }
 
+/** scenes.css registers --b1…--b8 (@property), so a scene has at most 8 beats. */
+export const MAX_BEATS = 8;
+
+/**
+ * Who drives the scene: `scroll` (the page) lets the MotionController write --p and the current beat; `manual` (the
+ * scene lab, test hooks) leaves both to the caller, which sets --p and data-live / data-current / data-reached itself.
+ */
+export type SceneDriver = 'scroll' | 'manual';
+
 /** Low-power heuristic (§23.5 rule 8): fall back to stepped mode even on desktop. */
 const lowPowerScript = `(function(){try{var n=navigator,c=n.connection;if((c&&c.saveData)||(n.deviceMemory&&n.deviceMemory<=2))document.documentElement.classList.add('scene-lite');}catch(e){}})();`;
 
@@ -33,6 +42,7 @@ export function ScrollScene({
   stepsLabel,
   className,
   locale,
+  driver = 'scroll',
 }: {
   locale: Locale;
   id: string;
@@ -41,14 +51,19 @@ export function ScrollScene({
   frames: ReactNode[];
   stepsLabel: string;
   className?: string;
+  driver?: SceneDriver;
 }) {
   const n = beats.length;
+  // Fail the build, not the page: beyond 8 beats the CSS has no --bN, and every beat needs its stepped frame.
+  if (n < 1 || n > MAX_BEATS) throw new Error(`ScrollScene "${id}": ${n} beats; a scene has 1–${MAX_BEATS} (scenes.css registers --b1…--b${MAX_BEATS})`);
+  if (frames.length !== n) throw new Error(`ScrollScene "${id}": ${frames.length} stepped frames for ${n} beats`);
   return (
     <div
       className={['scene', className].filter(Boolean).join(' ')}
       data-scene={id}
-      data-progress="follow"
-      data-steps=""
+      data-progress={driver === 'scroll' ? 'follow' : undefined}
+      data-steps={driver === 'scroll' ? '' : undefined}
+      data-driver={driver === 'manual' ? 'manual' : undefined}
       style={{ '--beats': n } as CSSProperties}
     >
       <script dangerouslySetInnerHTML={{ __html: lowPowerScript }} />

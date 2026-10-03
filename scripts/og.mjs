@@ -6,7 +6,7 @@
 // The site's own typefaces (IBM Plex Sans, IBM Plex Sans Arabic, Noto Sans SC) are subset to the card text and loaded
 // through a private fontconfig, so the result never depends on fonts installed on the build machine.
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import subsetFont from 'subset-font';
