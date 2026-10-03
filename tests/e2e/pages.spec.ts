@@ -223,7 +223,8 @@ test.describe('Solution detail template (§26.2)', () => {
       await expect(page.locator('main h1')).toHaveCount(1);
       await expect(page.locator('.solution__headline')).not.toBeEmpty();
       await expect(page.locator('#context-title')).toHaveCount(p.context ? 1 : 0);
-      await expect(page.locator('.scene-steps__beat')).toHaveCount(p.beats);
+      // beat texts: the live scene's steps where its artwork is built (ELV, P5B), else the static beat list
+      await expect(page.locator('.scene-steps__beat, .scene__step')).toHaveCount(p.beats);
       await expect(page.locator('.spec-list > li')).toHaveCount(p.capabilities);
       await expect(page.locator('#module-title')).toHaveCount(p.module ? 1 : 0);
       await expect(page.locator('ol.lifecycle--compact > li')).toHaveCount(8);
@@ -252,7 +253,7 @@ test.describe('Solution detail template (§26.2)', () => {
     const ctx = await browser.newContext({ javaScriptEnabled: false });
     const page = await ctx.newPage();
     await page.goto('/en/solutions/elv-systems');
-    await expect(page.locator('.scene-steps__beat h3')).toHaveText(['Coordination', 'Integration', 'Reliability', 'Scalability']);
+    await expect(page.locator('.scene__step h3')).toHaveText(['Coordination', 'Integration', 'Reliability', 'Scalability']);
     await page.goto('/en/solutions/smart-building-home-automation');
     await expect(page.locator('.scene-steps__beat h3')).toHaveText(['Comfort', 'Efficiency', 'Control', 'Security', 'Experience']);
     await expect(page.locator('.pillar-strip li')).toHaveText(['Comfort', 'Efficiency', 'Control', 'Security', 'Experience']);
@@ -801,6 +802,72 @@ test.describe('Company Profile (§33)', () => {
       expect(canva).toEqual([]);
     });
   }
+});
+
+test.describe('ELV Systems scene "One Infrastructure" (§23.6.3)', () => {
+  const ELV = '/solutions/elv-systems';
+  type Page = import('@playwright/test').Page;
+  const k = (page: Page, sel: string) => page.locator('.scene').evaluate((el, s) => Number(getComputedStyle(el.querySelector(s)!).opacity), sel);
+
+  test('desktop pinned: --p scrubs the four beats in order, both ways (test hook, §40)', async ({ page }, info) => {
+    test.skip((info.project.use.viewport?.width ?? 0) < 1024, 'pinned mode exists only at ≥ 1024 px');
+    await page.goto(`/en${ELV}`);
+    const scene = page.locator('.scene');
+    await scene.scrollIntoViewIfNeeded();
+    await expect(page.locator('.scene__stage')).toHaveCSS('position', 'sticky');
+    const at = async (p: number) => {
+      await scene.evaluate((el, v) => (el as HTMLElement).style.setProperty('--p', String(v)), p);
+      return {
+        strands: await k(page, '.scene__stage .elv-strands'),
+        links: await k(page, '.scene__stage [data-beat="2"]'),
+        backup: await k(page, '.scene__stage [data-beat="3"]'),
+        floor: await k(page, '.scene__stage .elv-new'),
+      };
+    };
+    // stop the controller from rewriting --p while we scrub
+    await scene.evaluate((el) => el.removeAttribute('data-progress'));
+    const start = await at(0);
+    expect(start.links).toBeCloseTo(0.14, 2);
+    expect(start.backup).toBeCloseTo(0.14, 2);
+    expect(start.floor).toBeCloseTo(0.14, 2);
+    const mid = await at(0.5);
+    expect(mid.links).toBeCloseTo(1, 2);
+    expect(mid.floor).toBeCloseTo(0.14, 2);
+    expect((await at(1)).floor).toBeCloseTo(1, 2);
+    expect((await at(0)).links).toBeCloseTo(0.14, 2); // and back
+  });
+
+  test('stepped: one frame per beat below 1024 px, each a crop of the same section', async ({ page }, info) => {
+    test.skip((info.project.use.viewport?.width ?? 0) >= 1024, 'stepped mode is the mobile and tablet layout');
+    await page.goto(`/en${ELV}`);
+    await expect(page.locator('.scene__stage')).toBeHidden();
+    const boxes = await page.locator('.scene__frame svg').evaluateAll((s) => s.map((e) => e.getAttribute('viewBox')));
+    expect(boxes).toHaveLength(4);
+    expect(new Set(boxes).size).toBe(4);
+  });
+
+  test('RTL mirrors the artwork (and its crop windows) but never the text', async ({ page }) => {
+    await page.goto(`/ar${ELV}`);
+    await expect(page.locator('.scene .scene__stage svg > g').first()).toHaveAttribute('transform', 'matrix(-1 0 0 1 1200 0)');
+    const en = await (await page.request.get(`/en${ELV}`)).text();
+    const crop = (html: string) => html.match(/data-frame-art="3"/) && html.match(/viewBox="([^"]+)"[^>]*data-frame-art="3"/)?.[1];
+    const ar = await page.content();
+    const [x, , w] = crop(en)!.split(' ').map(Number) as [number, number, number];
+    expect(crop(ar)!.split(' ').map(Number)[0]).toBe(1200 - x - w);
+    await expect(page.locator('.scene__step h3').first()).not.toHaveAttribute('dir', 'rtl');
+  });
+
+  test('reduced motion: the complete section and all four principles, legend included', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto(`/en${ELV}`);
+    await expect(page.locator('html')).not.toHaveClass(/motion-ok/);
+    await expect(page.locator('.scene__step h3')).toHaveText(['Coordination', 'Integration', 'Reliability', 'Scalability']);
+    await expect(page.locator('.scene__step[data-step="1"] .scene__labels li')).toHaveCount(6);
+    const stage = (await page.locator('.scene__stage').isVisible()) ? '.scene__stage' : '.scene__frame[data-frame="4"]';
+    expect(await page.locator(`${stage} .elv-new`).evaluate((el) => Number(getComputedStyle(el).opacity))).toBeCloseTo(1, 2);
+    await ctx.close();
+  });
 });
 
 test.describe('Scene lab (§23.6, P5B-01; preview only)', () => {

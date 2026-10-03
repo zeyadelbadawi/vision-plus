@@ -172,4 +172,46 @@
   @media (prefers-reduced-motion: reduce) {
     .ax * { animation: none !important; }
   }
+
+  /* ---------- ELV Systems scene "One Infrastructure": a building section (elv-section-art.tsx) ----------
+     Same rule as the architecture scene: every part follows its beat's --bN (pinned: scrubbed both ways; stepped: each
+     frame its own state; static: complete). Beat 1 aligns the scattered strands (translate), 2 draws gold links, 3 draws
+     the redundant backbone, 4 slides the new floor in. The six systems differ by stroke pattern, never by colour; the
+     legend is the DOM label list of beat 1, with the same patterns as swatches. */
+  .scene--elv .scene__frame, .scene--elv .scene__step:last-child .scene__frame { aspect-ratio: auto; border-radius: 12px; overflow: hidden; }
+  .scene--elv .scene__frame svg { height: auto; }
+  svg.elv { overflow: visible; stroke-linecap: round; stroke-linejoin: round; }
+  .elv-shell { fill: var(--bg); stroke: var(--line-strong); stroke-width: 1.5; }
+  .elv-slab, .elv-roof { fill: var(--line-strong); }
+  .elv-ground { fill: var(--fg-muted); }
+  .elv-strand { fill: none; stroke: var(--fg); stroke-width: 3; transform: translateX(calc((1 - var(--k, 1)) * var(--dx, 0px))); }
+  .elv-strand--1 { stroke-dasharray: none; }
+  .elv-strand--2 { stroke-dasharray: 9 5; }
+  .elv-strand--3 { stroke-dasharray: 2 6; }
+  .elv-strand--4 { stroke-dasharray: 10 4 2 4; }
+  .elv-strand--5 { stroke-dasharray: 4 3; }
+  .elv-strand--6 { stroke-dasharray: 10 4 2 4 2 4; }
+  .elv-riser { fill: none; stroke: var(--line-strong); stroke-width: 1; }
+  .elv-tray, .elv-spine, .elv-spine2, .elv-tie, .elv-link { fill: none; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--k, 1)); }
+  .elv-tray { stroke: var(--line-strong); stroke-width: 1.5; }
+  .elv-spine { stroke: var(--fg); stroke-width: 6; }
+  .elv-spine2 { stroke: var(--color-gold); stroke-width: 6; }
+  .elv-tie { stroke: var(--color-gold); stroke-width: 2.5; }
+  .elv-link { stroke: var(--color-gold); stroke-width: 3; }
+  .elv-new { transform: translateY(calc((1 - var(--k, 1)) * -48px)); }
+  .elv [data-beat] { opacity: calc(0.14 + 0.86 * var(--k, 1)); }
+  .elv [data-beat='1'] { --k: var(--b1); }
+  .elv [data-beat='2'] { --k: var(--b2); }
+  .elv [data-beat='3'] { --k: var(--b3); }
+  .elv [data-beat='4'] { --k: var(--b4); }
+  /* strands align fully but stay readable while scattered */
+  .elv .elv-strands[data-beat] { opacity: calc(0.35 + 0.65 * var(--k, 1)); }
+  .scene--elv .scene__step[data-step='1'] .scene__labels li::before {
+    content: ''; display: inline-block; flex: none; width: 34px; height: 2.5px; background: currentColor;
+  }
+  .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(2)::before { background: repeating-linear-gradient(90deg, currentColor 0px 9px, transparent 9px 14px); }
+  .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(3)::before { background: repeating-linear-gradient(90deg, currentColor 0px 2px, transparent 2px 8px); }
+  .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(4)::before { background: repeating-linear-gradient(90deg, currentColor 0px 10px, transparent 10px 14px, currentColor 14px 16px, transparent 16px 20px); }
+  .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(5)::before { background: repeating-linear-gradient(90deg, currentColor 0px 4px, transparent 4px 7px); }
+  .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(6)::before { background: repeating-linear-gradient(90deg, currentColor 0px 10px, transparent 10px 14px, currentColor 14px 16px, transparent 16px 20px, currentColor 20px 22px, transparent 22px 26px); }
 }

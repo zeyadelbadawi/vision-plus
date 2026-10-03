@@ -5,4 +5,10 @@ import { SYSTEM_STEPS } from '@/components/sections/solution/mnvr-onboard-scene'
 export const LAB_SCENES = [
   { id: 'mnvr-route', title: 'Mobile NVR · Route (fleet level)', kind: 'progress', beats: scenes.find((s) => s.id === 'mnvr-route')!.beats.length },
   { id: 'mnvr-onboard', title: 'Mobile NVR · On board (cutaway)', kind: 'steps', beats: SYSTEM_STEPS.length },
+  {
+    id: 'elv-one-infrastructure',
+    title: 'ELV Systems · One Infrastructure',
+    kind: 'progress',
+    beats: scenes.find((s) => s.id === 'elv-one-infrastructure')!.beats.length,
+  },
 ] as const satisfies readonly { id: string; title: string; kind: 'progress' | 'steps'; beats: number }[];

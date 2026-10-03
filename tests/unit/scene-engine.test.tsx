@@ -6,6 +6,7 @@ import { PIN_SCALE, beatProgress } from '@/components/scenes/scene-progress';
 import { MAX_BEATS, ScrollScene, type SceneBeat } from '@/components/scenes/scroll-scene';
 import { beatAt } from '@/components/scenes/lab/lab-frame-driver';
 import { MnvrOnboardScene } from '@/components/sections/solution/mnvr-onboard-scene';
+import { ELV_FRAMES, ELV_SYSTEMS, ElvSectionArt, mirrorViewBox } from '@/components/scenes/elv-section-art';
 import { scenes } from '@/content/data/scenes';
 import { sceneText, sentences } from '@/content/scene-text';
 import { textAttrs } from '@/lib/text-attrs';
@@ -151,5 +152,30 @@ describe('scene engine hardening (P5B-01)', () => {
       expect(beatProgress(p, 6, n)).toBeGreaterThanOrEqual(0);
       if (n < 6) expect(p * 6 * PIN_SCALE).toBeLessThanOrEqual(n);
     }
+  });
+});
+
+describe('ELV scene artwork (elv-one-infrastructure)', () => {
+  const elv = scenes.find((s) => s.id === 'elv-one-infrastructure')!;
+
+  it('has one stepped frame per approved beat and one strand per system in the legend', () => {
+    expect(ELV_FRAMES).toHaveLength(elv.beats.length);
+    expect(elv.beats[0]!.labels).toHaveLength(ELV_SYSTEMS);
+    expect(elv.status).toBe('built-review');
+  });
+
+  it('tags every animated part with a beat and shows no text inside the drawing', () => {
+    const svg = renderToStaticMarkup(<ElvSectionArt rtl={false} />);
+    for (const n of [1, 2, 3, 4]) expect(svg).toContain(`data-beat="${n}"`);
+    expect(svg).not.toMatch(/<text/);
+    expect(svg.match(/class="elv-strand /g)).toHaveLength(ELV_SYSTEMS * 5); // 4 floors + the added one
+  });
+
+  it('mirrors the drawing and its crop windows in RTL', () => {
+    expect(mirrorViewBox('742 335 180 225')).toBe('278 335 180 225');
+    expect(mirrorViewBox(mirrorViewBox(ELV_FRAMES[0]!))).toBe(ELV_FRAMES[0]);
+    const rtl = renderToStaticMarkup(<ElvSectionArt rtl viewBox={ELV_FRAMES[2]} />);
+    expect(rtl).toContain(`viewBox="${mirrorViewBox(ELV_FRAMES[2]!)}"`);
+    expect(rtl).toContain('transform="matrix(-1 0 0 1 1200 0)"');
   });
 });

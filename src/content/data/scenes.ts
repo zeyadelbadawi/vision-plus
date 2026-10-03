@@ -46,7 +46,8 @@ export interface Scene {
   beats: SceneBeat[];
   /** Closing caption or typographic coda shown after the last beat. */
   coda?: CopyRef[];
-  status: 'built-approved' | 'storyboard-pending-d20';
+  /** built-approved: built and approved; built-review: built on the approved storyboard, awaiting review; storyboard-*: not built. */
+  status: 'built-approved' | 'built-review' | 'storyboard-pending-d20';
 }
 
 const sol = (slug: SolutionSlug, path: string) => `solutions:items.${slug}.${path}`;
@@ -158,7 +159,7 @@ export const scenes: Scene[] = [
     classification: 'rich',
     modes: { base: 'stepped', lg: 'pinned' },
     budgetKb: 45,
-    status: 'storyboard-pending-d20',
+    status: 'built-review',
     beats: [
       {
         key: 'coordination',

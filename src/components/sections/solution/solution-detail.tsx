@@ -20,6 +20,7 @@ import { LinkButton } from '@/components/ui/button';
 import { ArrowEnd } from '@/components/ui/icons';
 import { isPreview } from '@/lib/env';
 import { textAttrs } from '@/lib/text-attrs';
+import { ElvScene } from './elv-scene';
 import '@/styles/pages.css';
 
 /** The seven solutions on the shared §26.2 template. Mobile NVR has its own dedicated page (A-22, A-29). */
@@ -106,7 +107,7 @@ export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: T
         </Section>
       )}
 
-      {/* 3. Scene: the approved beat texts (artwork follows in P5B) */}
+      {/* 3. Scene: the live scene once its artwork is built (P5B), else the approved beat texts on their own */}
       {scene && hasSteps && (
         <Section tone="raised" labelledBy="scene-title">
           <div className="container-vp">
@@ -123,7 +124,7 @@ export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: T
               </h2>
             )}
             <div className="mt-12">
-              <SceneSteps locale={locale} scene={scene} />
+              {scene.id === 'elv-one-infrastructure' ? <ElvScene locale={locale} scene={scene} name={name} /> : <SceneSteps locale={locale} scene={scene} />}
             </div>
           </div>
         </Section>
