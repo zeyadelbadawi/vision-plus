@@ -120,7 +120,7 @@ Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** clo
 | P5B-01 Scene engine + scene lab (§23.5, §23.6) | Implemented, awaiting review (manual driver, guards, lab; Mobile NVR page DOM- and pixel-identical) | `ec56777` | Plan §55.3.18 |
 | P5B ELV scene "One Infrastructure" (§23.6.3) | Implemented, awaiting review (pinned/stepped/static, RTL; only the ELV pages changed) | `d73f3bc` | Plan §55.3.19; CI 37153024089 green |
 | P5B CCTV scene "See · Know · Respond" (§23.6.4) | Implemented, awaiting review (desktop sticky, stepped frames, static, RTL; only the CCTV pages changed; performance traces not done) | `dd3e6fa` | Plan §55.3.20; CI 37157786847 green; visual 37157827197 green |
-| Branch merge: `main` (9 commits, up to `3c245b7`) into the working branch | Done on the branch only; `main` unchanged; every `main` change verified as kept; awaiting Ziad's decision on merging into `main` | `2b8622a` | Plan §55.3.21 |
+| Branch merge: `main` (9 commits, up to `3c245b7`) into the working branch | Done on the branch only; `main` unchanged; every `main` change verified as kept; awaiting Ziad's decision on merging into `main` | `2b8622a` | Plan §55.3.21; CI 37161391774 green; visual 37161415485 green |
 | Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); next P5B scene after CCTV (Ziad's choice) and Smart Building view (E-6) | — | — |
 
 ## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*
