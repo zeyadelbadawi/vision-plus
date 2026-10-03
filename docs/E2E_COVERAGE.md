@@ -71,7 +71,7 @@ Full-page screenshots compared pixel for pixel, generated and checked only insid
 
 | Scope | Screenshots | Status |
 |---|---|---|
-| Solution template (§26.2): 7 pages × en/ar/zh × 390/768/1440/1920 × default/reduced motion | 168 | Generated and verified 2026-10-03; not yet committed (Git LFS host blocked in the session environment) |
+| Solution template (§26.2): 7 pages × en/ar/zh × 390/768/1440/1920 × default/reduced motion | 168 | Baselined 2026-10-03 (Git LFS) |
 | Other templates (homepage, hub, Services, Industries, About, Mobile NVR with scene checkpoints, …) | — | Not yet baselined |
 
 ## Results
