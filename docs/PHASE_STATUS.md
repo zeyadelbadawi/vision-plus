@@ -115,6 +115,7 @@ Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** clo
 | P5A-10 Contact UI (§26.10, §30) | Implemented, awaiting review (UI only; sending is P6; office data D-01–D-03 pending) | `b165ec3` | Plan §55.3.5, §55.3.13; CI 37112049563 green; matrix 37112049051: 736 passed / 24 skipped / 0 failed |
 | P5A-11 Company Profile (§26.11, §33) | Implemented, awaiting review (placeholder until D-06; embed island and `canva:parse` ready) | `6914e3b` | Plan §55.3.5, §55.3.14 |
 | P5A-12 Privacy (§26.12) | Implemented, awaiting review (long-form template ready; no policy text until D-16, pending line kept) | `a09b802` | Plan §55.3.5, §55.3.15 |
+| P5A-14 OG cards (§36) | Implemented, awaiting review (54 build-time cards, per-page og/twitter tags, site:check gate; `ar_QA` until Q-23) | `4b57dac` | Plan §55.3.5, §55.3.16 |
 | Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); P5B-03… order and Smart Building view (E-6, E-7) | — | — |
 
 ## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*

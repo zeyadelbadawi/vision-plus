@@ -81,7 +81,7 @@ These decide how we build. The full reasoning is in `MASTER_PROJECT_PLAN.md` §5
 | Q-16 | Is your company Google account **Google Workspace** (company email) or a personal Gmail? | Workspace: it allows 1,500 emails/day (Gmail allows 100/day) and sends from your company address. |
 | Q-19 | "Become a Partner" (in your sitemap): who is it for — manufacturers, resellers, installers or subcontractors? | Tell us, and we'll word the form accordingly. |
 | Q-22 | **Hosting:** Vercel's free plan is for **non-commercial personal use only**, and a company website is commercial. May we host on **Cloudflare's free plan** instead? Commercial use is allowed there and it costs $0. | Yes (plan §42.1). |
-| Q-23 | Which Arabic market is primary for search engines: Qatar or Egypt? | Qatar (headquarters since 2017), unless you prefer Egypt. |
+| Q-23 | Which Arabic market is primary for search engines: Qatar or Egypt? | Qatar (headquarters since 2017), unless you prefer Egypt. *Interim (P5A-14): the Arabic social cards declare `ar_QA`; one constant changes it.* |
 
 ---
 
