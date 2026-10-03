@@ -85,6 +85,21 @@ test('industry index uses the delivered industry images; the missing ones keep t
   expect(await section.locator('picture img').count()).toBeGreaterThan(0);
 });
 
+test('the supplied Mobile NVR chapter image renders as a responsive picture with localized alt text', async ({ page }) => {
+  for (const [code, fragment] of [
+    ['en', 'A gated residential compound at dusk'],
+    ['ar', 'مجمع سكني مسوّر عند الغسق'],
+    ['zh', '黄昏时分的封闭式住宅小区'],
+  ] as const) {
+    await page.goto(`/${code}`);
+    const img = page.locator('.mnvr__media picture img');
+    await expect(img).toHaveAttribute('alt', new RegExp(fragment));
+    await img.scrollIntoViewIfNeeded();
+    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    await expect(page.locator('[data-slot="HOME-MNVR"]')).toHaveCount(0);
+  }
+});
+
 test.describe('desktop navigation', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1200, 'desktop only');
 
