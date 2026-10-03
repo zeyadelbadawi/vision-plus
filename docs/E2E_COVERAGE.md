@@ -97,6 +97,7 @@ Full-page screenshots compared pixel for pixel, generated and checked only insid
 | Local, Chromium projects | `4b57dac` (P5A-14 OG cards) | `pnpm test:e2e` | 322 passed, 10 skipped, 0 failed (4.5 min) |
 | Local, Chromium projects | `ec56777` (P5B-01 scene lab) | `pnpm test:e2e` | 325 passed, 13 skipped, 0 failed (5.0 min) |
 | Local, Chromium projects | `d73f3bc` (P5B ELV scene) | `pnpm test:e2e` | 331 passed, 15 skipped, 0 failed (4.7 min) |
+| Local, Chromium projects | `dd3e6fa` (P5B CCTV scene) | `pnpm test:e2e` | 337 passed, 17 skipped, 0 failed (4.7 min) |
 | GitHub E2E matrix, run 37112049051 | `5f9be00` (P5A-10 Contact) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **736 passed, 24 skipped, 0 failed** (13.0 min) |
 | Local, Chromium projects | `b165ec3` (P5A-10 Contact) | `pnpm test:e2e` | 294 passed, 10 skipped, 0 failed (4.0 min) |
 | GitHub E2E matrix, run 37108539686 (attempt 2; attempt 1 blocked by account billing) | `c94bf91` (P5A-09 Partners) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **701 passed, 24 skipped, 0 failed** (12.8 min) |

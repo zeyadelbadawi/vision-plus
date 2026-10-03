@@ -46,7 +46,7 @@ Per the plan's working rule, the storyboards are text, not images. Each frame be
 | 2a | On board | Mobile NVR & Mobile Surveillance | Rich, step-synchronised | sticky / sticky / sticky (static in RM) | 5 | **Concept A** (isometric cutaway), replacing the 2026-10-02 vehicle illustration: **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE**; not covered by D-20 |
 | 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Approved (D-20, 2026-10-02) |
 | 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Approved (D-20, 2026-10-02). **IMPLEMENTED 2026-10-03 (P5B, Ziad's order E-7) — AWAITING REVIEW**; the coda is the pinned stage's final state (no fifth step). Open: the client question below (remove any strand?) |
-| 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Approved (D-20, 2026-10-02) |
+| 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Approved (D-20, 2026-10-02). **IMPLEMENTED 2026-10-03 (P5B, approved by Ziad as the next scene after ELV) — AWAITING REVIEW**; desktop: sticky plan, each beat plays once when its step is reached |
 | 6 | Who · Where · When | Access Control | Moderate | stepped (sticky art on D) | 3 + coda | Approved (D-20, 2026-10-02) |
 | 7 | Critical Sequence | Fire Alarm Systems | Moderate, restrained | in-view sequence | 4 + coda | Approved (D-20, 2026-10-02) |
 | 8 | Topology | Networking & ICT | Subtle | in-view, scrubbed in its own height | 3 phases + caption | Approved (D-20, 2026-10-02) |
@@ -267,7 +267,7 @@ All layers mirror.
 
 ---
 
-## 5. See · Know · Respond — CCTV & Security Systems (Moderate)
+## 5. See · Know · Respond — CCTV & Security Systems (Moderate) — **IMPLEMENTED 2026-10-03 (`dd3e6fa`) — AWAITING REVIEW**
 
 | | |
 |---|---|
