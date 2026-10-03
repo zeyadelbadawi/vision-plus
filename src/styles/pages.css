@@ -367,6 +367,19 @@
   .office-map__frame { display: block; width: 100%; aspect-ratio: 3 / 2; border: 0; }
   .office-map__surface { display: grid; place-items: center; aspect-ratio: 3 / 2; padding: 24px; background: var(--bg-raised); border: 1px solid var(--line); text-align: center; color: var(--fg-muted); }
   .office-map__overlay { position: absolute; inset: auto 0 0; display: grid; gap: 8px; justify-items: start; padding: 16px; background: linear-gradient(to top, var(--bg), transparent); }
+
+  /* Company Profile (§33): charcoal intro and a framed 16:9 presentation area */
+  .cp-markets { margin-block-start: 24px; color: var(--fg-muted); letter-spacing: 0.08em; }
+  html:lang(en) .cp-markets { text-transform: uppercase; }
+  .cp-section { padding-block: 56px var(--space-section); }
+  .cp-frame { position: relative; width: 100%; max-width: 1312px; overflow: hidden; border: 1px solid var(--line); background: var(--bg-raised); }
+  .cp-frame__overlay { position: absolute; inset: auto 0 0; display: grid; gap: 10px; justify-items: start; padding: 24px; background: linear-gradient(to top, rgb(0 0 0 / 0.6), transparent); }
+  .cp-frame__pending { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; font-size: var(--fs-body-sm); color: var(--fg-muted); }
+  .cp-frame__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .cp-frame__skeleton { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.06) 50%, transparent 70%) var(--bg-raised); background-size: 200% 100%; }
+  .motion-ok .cp-frame__skeleton { animation: cp-shimmer 1.4s linear infinite; }
+  @keyframes cp-shimmer { to { background-position: -200% 0; } }
+  .cp-frame__fallback { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 24px; text-align: center; }
 }
 
 /* Style guide (preview only) */

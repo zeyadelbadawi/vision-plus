@@ -781,6 +781,27 @@ test.describe('Contact (§26.10, §30)', () => {
   });
 });
 
+// P5A-11 Company Profile (MASTER_PROJECT_PLAN §26.11, §33, §55.3.14): no Canva URL yet (D-06) → placeholder frame.
+test.describe('Company Profile (§33)', () => {
+  for (const l of LOCALES) {
+    test(`/${l.code}/company-profile: charcoal intro, markets line, poster frame with the pending line, nothing from Canva`, async ({ page }) => {
+      const canva: string[] = [];
+      page.on('request', (r) => {
+        if (/canva\.(com|cn)/.test(r.url())) canva.push(r.url());
+      });
+      await page.goto(`/${l.code}/company-profile`);
+      await expect(page.locator('main')).toHaveAttribute('data-hero', 'dark');
+      await expect(page.locator('main h1')).toHaveCount(1);
+      await expect(page.locator('.cp-markets')).toContainText('•');
+      const frame = page.locator('.cp-frame');
+      await expect(frame.locator('[data-slot="CP-POSTER"]')).toHaveCount(1);
+      await expect(frame.locator('.cp-frame__pending')).toContainText('D-06');
+      await expect(page.locator('iframe, .cp-frame button')).toHaveCount(0);
+      expect(canva).toEqual([]);
+    });
+  }
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

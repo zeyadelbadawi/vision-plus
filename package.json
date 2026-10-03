@@ -19,6 +19,7 @@
     "test:e2e": "playwright test",
     "test:visual": "node scripts/visual.mjs",
     "test:visual:update": "node scripts/visual.mjs --update-snapshots",
+    "canva:parse": "node scripts/canva-parse.mjs",
     "content:check": "node scripts/content-check.mjs",
     "content:fidelity": "node scripts/content-fidelity.mjs",
     "i18n:export": "node scripts/i18n-export.mjs",
