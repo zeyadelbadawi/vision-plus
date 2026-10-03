@@ -92,7 +92,7 @@ Full-page screenshots compared pixel for pixel, generated and checked only insid
 | GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
 | GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
 | Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
-| Local, Chromium projects | P5A-11 Company Profile (before commit) | `pnpm test:e2e` | 300 passed, 10 skipped, 0 failed (4.1 min) |
+| Local, Chromium projects | `6914e3b` (P5A-11 Company Profile) | `pnpm test:e2e` | 300 passed, 10 skipped, 0 failed (4.1 min) |
 | GitHub E2E matrix, run 37112049051 | `5f9be00` (P5A-10 Contact) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **736 passed, 24 skipped, 0 failed** (13.0 min) |
 | Local, Chromium projects | `b165ec3` (P5A-10 Contact) | `pnpm test:e2e` | 294 passed, 10 skipped, 0 failed (4.0 min) |
 | GitHub E2E matrix, run 37108539686 (attempt 2; attempt 1 blocked by account billing) | `c94bf91` (P5A-09 Partners) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **701 passed, 24 skipped, 0 failed** (12.8 min) |
