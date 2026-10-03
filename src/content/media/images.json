@@ -36,6 +36,23 @@
         "ar": "شعار VP بلونين فحمي وذهبي يحمل كاميرات مراقبة وكاميرا قبة متحركة وشاشة تعرض بث الكاميرات وقفلًا ذكيًا وجهاز اتصال داخلي للباب، بين مبانٍ حديثة أمام أفق مدينة ليلًا.",
         "zh": "炭黑与金色的 VP 字母造型，承载着监控摄像机、PTZ 球形摄像机、显示监控画面的显示器、智能门锁和门禁对讲机，背景为现代建筑与城市夜景天际线。"
       }
+    },
+    "HOME-STATEMENT": {
+      "status": "final",
+      "source": "Client-supplied image, approved by Ziad for the homepage positioning section (2026-10-03). Supplied as 1620×1080 WebP (manifest master size, 3:2), saved as sRGB JPG q90. Contains the English line “One vision for all Connected solutions.” baked into the artwork.",
+      "size": {
+        "width": 1620,
+        "height": 1080
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "“One vision for all Connected solutions.” over a dusk view from a desk with a hard hat, floor plans and a tablet showing camera feeds, facing a lit modern building with a dome camera and an access-control panel, and a city skyline at sunset.",
+        "ar": "عبارة «One vision for all Connected solutions.» فوق مشهد عند الغروب من مكتب عليه خوذة عمل ومخططات طوابق وجهاز لوحي يعرض بث الكاميرات، أمام مبنى حديث مضاء مزوّد بكاميرا قبة ولوحة تحكم بالدخول، وأفق مدينة عند الغروب.",
+        "zh": "“One vision for all Connected solutions.”字样，叠加在黄昏时分的书桌场景上：桌上有安全帽、楼层平面图和显示监控画面的平板电脑，对面是一栋灯火通明、装有球形摄像机和门禁面板的现代建筑，远处是日落时的城市天际线。"
+      }
     }
   }
 }
