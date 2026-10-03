@@ -1,16 +1,19 @@
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
 import { getHome } from '@/content';
-import { partners, previewSlots } from '@/content/data/registry';
+import { partners, partnersAlphabetical, previewSlots } from '@/content/data/registry';
 import { Section } from '@/components/layout/section';
 import { LinkButton } from '@/components/ui/button';
 import { ArrowEnd } from '@/components/ui/icons';
 import { isPreview } from '@/lib/env';
+import { textAttrs } from '@/lib/text-attrs';
 import { PartnerMarquee } from './partner-marquee';
 
 /**
- * Partners (§26.1 #9). No partner is confirmed yet (D-08); the PDF's market brand list is NOT a partner
- * list. Production: hidden until confirmed partners exist. Preview: logo cells as designed placeholders.
+ * Partners (§26.1 #9, §34). The client confirmed 17 partners by name (D-08 update, A-30, 2026-10-03); the strip lists
+ * them alphabetically. Until the designer's logo files arrive a partner is set in type in its logo cell (the logo
+ * variant takes over as a data change). With no confirmed partner, production hides the section and preview shows
+ * designed placeholder cells.
  */
 export async function HomePartners({ locale }: { locale: Locale }) {
   if (partners.length === 0 && !isPreview) return null;
@@ -23,12 +26,18 @@ export async function HomePartners({ locale }: { locale: Locale }) {
 
   const cells =
     partners.length > 0
-      ? partners.map((p) => (
-          <div key={p.slug} className="logo-cell">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={p.logo.mono} alt={p.name} loading="lazy" decoding="async" />
-          </div>
-        ))
+      ? partnersAlphabetical.map((p) =>
+          p.logo ? (
+            <div key={p.slug} className="logo-cell">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.logo.mono} alt={p.name} loading="lazy" decoding="async" />
+            </div>
+          ) : (
+            <div key={p.slug} className="logo-cell logo-cell--name">
+              <span {...textAttrs(locale, p.name)}>{p.name}</span>
+            </div>
+          ),
+        )
       : Array.from({ length: previewSlots.partners }, (_, i) => (
           <div key={i} className="logo-cell logo-cell--placeholder vp-placeholder" aria-hidden="true">
             <span className="vp-crop vp-crop--ts" />

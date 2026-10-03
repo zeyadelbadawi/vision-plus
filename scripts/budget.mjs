@@ -15,6 +15,7 @@ const ROUTES = [
   'en/about',
   'en/projects',
   'en/projects/sample-corporate-workplace',
+  'en/partners',
 ];
 let failed = false;
 for (const r of ROUTES) {

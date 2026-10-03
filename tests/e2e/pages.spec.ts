@@ -643,6 +643,53 @@ test.describe('Projects (§26.7)', () => {
   });
 });
 
+// P5A-09 Partners (MASTER_PROJECT_PLAN §26.9, §34, §55.3.12): the 17 client-confirmed partners (D-08 update, A-30).
+test.describe('Partners (§26.9)', () => {
+  const ALPHABETICAL = [
+    'Axis',
+    'Bosch',
+    'Dahua',
+    'Genetec',
+    'Hanwha',
+    'HID',
+    'Hikvision',
+    'Honeywell',
+    'ITC',
+    'Johnson Controls',
+    'Milestone',
+    'Philips',
+    'Schneider Electric',
+    'Siemens',
+    'Suprema',
+    'UNV',
+    'ZKTeco',
+  ];
+
+  for (const l of LOCALES) {
+    test(`/${l.code}/partners: 17 confirmed partners, alphabetical, name captions, no logos invented`, async ({ page }) => {
+      await page.goto(`/${l.code}/partners`);
+      const names = await page.locator('.partner-cell__name').allTextContents();
+      expect(names).toEqual(ALPHABETICAL);
+      await expect(page.locator('.partner-cell img')).toHaveCount(0);
+      // the wordmark repeats the caption, so it is hidden from assistive technology; preview labels the missing logo
+      await expect(page.locator('.partner-cell__wordmark[aria-hidden="true"]')).toHaveCount(17);
+      await expect(page.locator('.partner-cell__pending')).toHaveCount(17);
+      await expect(page.locator('#partners-closing')).not.toBeEmpty();
+    });
+
+    test(`/${l.code} homepage strip: the 17 partners set in type, once for assistive technology`, async ({ page }) => {
+      await page.goto(`/${l.code}`);
+      const strip = page.locator('section[aria-labelledby="partners-title"]');
+      const visible = strip.locator('.marquee__group:not([aria-hidden]) .logo-cell--name');
+      await expect(visible).toHaveCount(17);
+      expect(await visible.allTextContents()).toEqual(ALPHABETICAL);
+      await expect(strip.locator('.marquee__group[aria-hidden="true"]')).toHaveCount(1);
+      await expect(strip.locator('.logo-cell--placeholder, .placeholder-note')).toHaveCount(0);
+      await expect(strip.locator('.marquee__toggle')).toBeVisible();
+    });
+  }
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

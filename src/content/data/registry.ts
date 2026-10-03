@@ -64,17 +64,46 @@ export const productCategories = [
 export type ProductCategorySlug = (typeof productCategories)[number];
 
 /**
- * Partners and projects: EMPTY until the client supplies real, confirmed data (D-08, D-10).
- * Nothing here may be invented. Sections that depend on them are hidden in production.
+ * Partners (MASTER_PROJECT_PLAN §34). D-08 update (2026-10-03, A-30): the client confirmed these 17 technology partners
+ * and permission to display their names; spelling as supplied, in the order supplied (pages sort alphabetically).
+ * Logos (`PARTNER-{slug}-LOGO`, P1) come from the designer: until then each partner renders as its name in type.
+ * Never add a partner, or a logo, without the client's confirmation and display permission (R-11).
  */
 export interface Partner {
   slug: string;
   name: string;
-  logo: { mono: string; color?: string };
+  status: 'confirmed';
+  /** Monochrome logo (required for the logo variant) and optional colour version for hover/focus (Q-13). */
+  logo?: { mono: string; color?: string };
   website?: string;
 }
-export const partners: Partner[] = [];
+export const partners: Partner[] = [
+  { slug: 'hikvision', name: 'Hikvision', status: 'confirmed' },
+  { slug: 'unv', name: 'UNV', status: 'confirmed' },
+  { slug: 'dahua', name: 'Dahua', status: 'confirmed' },
+  { slug: 'axis', name: 'Axis', status: 'confirmed' },
+  { slug: 'bosch', name: 'Bosch', status: 'confirmed' },
+  { slug: 'itc', name: 'ITC', status: 'confirmed' },
+  { slug: 'hanwha', name: 'Hanwha', status: 'confirmed' },
+  { slug: 'zkteco', name: 'ZKTeco', status: 'confirmed' },
+  { slug: 'suprema', name: 'Suprema', status: 'confirmed' },
+  { slug: 'hid', name: 'HID', status: 'confirmed' },
+  { slug: 'honeywell', name: 'Honeywell', status: 'confirmed' },
+  { slug: 'johnson-controls', name: 'Johnson Controls', status: 'confirmed' },
+  { slug: 'genetec', name: 'Genetec', status: 'confirmed' },
+  { slug: 'milestone', name: 'Milestone', status: 'confirmed' },
+  { slug: 'siemens', name: 'Siemens', status: 'confirmed' },
+  { slug: 'schneider-electric', name: 'Schneider Electric', status: 'confirmed' },
+  { slug: 'philips', name: 'Philips', status: 'confirmed' },
+];
 
+/** Partners sorted for display (§26.9: alphabetical). */
+export const partnersAlphabetical = [...partners].sort((a, b) => a.name.localeCompare(b.name, 'en'));
+
+/**
+ * Projects: EMPTY until the client supplies real, confirmed data (D-10). Nothing here may be invented; sections that
+ * depend on them are hidden in production.
+ */
 export interface Project {
   slug: string;
   featured?: boolean;

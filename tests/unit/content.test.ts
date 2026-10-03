@@ -25,8 +25,32 @@ describe('content', () => {
     expect(copyStatus('zh')).toBe('draft-mt');
   });
 
-  it('never ships invented partners, projects or office details', () => {
-    expect(partners).toHaveLength(0);
+  it('ships only the client-confirmed partners (A-30), no invented projects or office details', () => {
+    // D-08 update 2026-10-03: exactly the 17 names the client confirmed, as supplied; no logo until the designer's files
+    expect(partners.map((p) => p.name)).toEqual([
+      'Hikvision',
+      'UNV',
+      'Dahua',
+      'Axis',
+      'Bosch',
+      'ITC',
+      'Hanwha',
+      'ZKTeco',
+      'Suprema',
+      'HID',
+      'Honeywell',
+      'Johnson Controls',
+      'Genetec',
+      'Milestone',
+      'Siemens',
+      'Schneider Electric',
+      'Philips',
+    ]);
+    for (const p of partners) {
+      expect(p.status).toBe('confirmed');
+      expect(p.logo, `${p.name}: logos come only from the designer's files`).toBeUndefined();
+    }
+    expect(new Set(partners.map((p) => p.slug)).size).toBe(partners.length);
     expect(projects).toHaveLength(0);
     for (const o of offices) {
       expect(o.address).toBeNull();

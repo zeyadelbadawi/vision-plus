@@ -318,6 +318,26 @@
   @media (prefers-reduced-motion: reduce) {
     .project-card__arrow { transition: none; }
   }
+
+  /* Partners (§26.9, §34): uniform cells, 2/3/4/6 columns; 240×96 logo box with the name as caption */
+  .partner-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px var(--gutter); }
+  @media (min-width: 768px) { .partner-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .partner-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (min-width: 1440px) { .partner-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .partner-cell { scroll-margin-block-start: calc(var(--header-h) + 24px); }
+  .partner-cell__logo {
+    position: relative; display: grid; place-items: center; width: 100%; max-width: 240px; aspect-ratio: 240 / 96;
+    padding: 12px; border: 1px solid var(--line); background: var(--bg-raised);
+  }
+  .partner-cell__logo img { max-width: 100%; max-height: 100%; object-fit: contain; filter: grayscale(1); }
+  .partner-cell__wordmark { font-size: var(--fs-body); font-weight: 500; line-height: 1.2; text-align: center; color: var(--fg); }
+  @media (min-width: 768px) { .partner-cell__wordmark { font-size: var(--fs-h4); } }
+  /* preview: keep the name clear of the "Partner logo" label */
+  .partner-cell__logo:has(.partner-cell__pending) { padding-block-end: 22px; }
+  .partner-cell__pending {
+    position: absolute; inset-block-end: 4px; inset-inline-end: 6px; font-size: 10px; color: var(--placeholder-mark);
+  }
+  .partner-cell__name { margin-block-start: 12px; font-size: var(--fs-caption); font-weight: 400; color: var(--fg-muted); }
 }
 
 /* Style guide (preview only) */
