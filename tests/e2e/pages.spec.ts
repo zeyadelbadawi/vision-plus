@@ -426,7 +426,8 @@ test.describe('Industries explorer (§26.4)', () => {
         await expect(panel.locator('h3')).not.toBeEmpty();
         await expect(panel.locator('p.t-lede')).not.toBeEmpty();
         await expect(panel.locator(`a[href="/${l.code}/contact?type=consultation&industry=${slug}"]`)).toHaveCount(1);
-        await expect(panel.locator('[data-slot^="IND-"]')).toHaveCount(1);
+        // one image per panel: the final picture once delivered, else the labelled placeholder
+        await expect(panel.locator('[data-slot^="IND-"], picture img')).toHaveCount(1);
       }
       // R-1: the drafted Real Estate summary is marked in preview and has no derived relation; R-4: the order is marked
       await expect(page.locator('.ix__panel .pending-note')).toHaveCount(1);

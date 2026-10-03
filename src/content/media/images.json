@@ -122,6 +122,23 @@
         "zh": "一位拖着行李箱的客人在酒店前台办理入住，前台接待员面带微笑，大堂天花板上装有摄像机。"
       }
     },
+    "IND-REALESTATE": {
+      "status": "final",
+      "source": "Client-supplied industry image (Real-Estate-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "Terraced apartment towers with planted balconies, palm gardens and pools at sunset, overlooking a city skyline.",
+        "ar": "أبراج سكنية مدرّجة بشرفات مزروعة وحدائق نخيل ومسابح عند الغروب، تطل على أفق المدينة.",
+        "zh": "日落时分的阶梯式公寓楼，阳台绿植环绕，周围是棕榈花园和泳池，远眺城市天际线。"
+      }
+    },
     "IND-RESIDENTIAL": {
       "status": "final",
       "source": "Client-supplied industry image (Residential-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
