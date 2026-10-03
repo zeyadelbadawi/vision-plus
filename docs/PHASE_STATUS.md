@@ -110,7 +110,7 @@ Ziad authorised P5 to start while P2 is open (plan §55 A-24). P2 is **not** clo
 | Milestone P5A-03 to P5A-06 | Validated | `46ca5f5` | Local suite green; E2E Chromium 232/10 skipped; CI 37077803419 green; matrix 37077807521: 581 passed / 24 skipped / 0 failed / 0 flaky |
 | P5A-07 About (§26.8) | Implemented, awaiting review; Vision, Mission and Core Values withheld (Q-04) | `ddbac22` | Plan §55.3.5, §55.3.9; CI 37080632093 green; matrix 37080638510: 601 passed / 24 skipped / 0 failed |
 | P5-T1 Visual baseline: solution template | Started: tooling (`1e139fd`), 168 baselines in Git LFS (`59a72ae`), CI checkout fix (`a1ea9a7`); 168/168 deterministic re-runs; other templates pending | `59a72ae` | Plan §55.3.10 |
-| P5A-08 Projects (§26.7, §35) | Implemented, awaiting review (preview samples only); filter bar and real-project data model open until ≥ 6 real projects (D-10) | *this commit* | Plan §55.3.5, §55.3.11 |
+| P5A-08 Projects (§26.7, §35) | Implemented, awaiting review (preview samples only); filter bar and real-project data model open until ≥ 6 real projects (D-10) | `0fa3b4b` | Plan §55.3.5, §55.3.11 |
 | Blocked | P5B-02 Mobile NVR finish (B-1, B-2); P5A-13 Products (Q-02); P5A-16 navigation order (Q-03); P5B-03… order and Smart Building view (E-6, E-7) | — | — |
 
 ## P5 — Page Templates, Scene Engine & Solution Scenes · **Not started — entry conditions not met** — *superseded by the section above (kept for history)*

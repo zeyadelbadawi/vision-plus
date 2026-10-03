@@ -92,7 +92,7 @@ Full-page screenshots compared pixel for pixel, generated and checked only insid
 | GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
 | GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
 | Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
-| Local, Chromium projects | P5A-08 Projects (before commit) | `pnpm test:e2e` | 268 passed, 10 skipped, 0 failed (3.2 min) |
+| Local, Chromium projects | `0fa3b4b` (P5A-08 Projects) | `pnpm test:e2e` | 268 passed, 10 skipped, 0 failed (3.2 min) |
 | GitHub E2E matrix, run 37080638510 | `58f2beb` (P5A-07 About) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **601 passed, 24 skipped, 0 failed** (13.2 min) |
 | Local, Chromium projects | `ddbac22` (P5A-07 About) | `pnpm test:e2e` | 240 passed, 10 skipped, 0 failed (3.0 min) |
 | GitHub E2E matrix, [run 37077807521](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37077807521) | `46ca5f5` (P5A-03 to P5A-06) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **581 passed, 24 skipped, 0 failed, 0 flaky** (20.3 min) |
