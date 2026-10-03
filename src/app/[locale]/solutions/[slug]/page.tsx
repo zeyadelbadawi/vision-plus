@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
 import { getCatalog, getSolutionsCopy } from '@/content';
 import { solutions, type SolutionSlug } from '@/content/data/registry';
-import { SolutionDetail } from '@/components/sections/solution/solution-detail';
+import { MnvrPage } from '@/components/sections/solution/mnvr-page';
 import { TemplatePage } from '@/components/layout/template-page';
 import { solutionMetadata } from '@/lib/metadata';
 
@@ -15,10 +15,10 @@ export function generateStaticParams() {
 }
 
 /**
- * The full solution template is enabled for Mobile NVR only — the P2 design-direction proof
- * (MASTER_PROJECT_PLAN §49.1 P2). The other seven solutions get the P3 empty template until P5.
+ * Mobile NVR has its own dedicated page (client decision 2026-10-02: the P2 page built on the generic §26.2 template
+ * was not accepted; a distinctive page with a small scroll-triggered animation was requested). The other seven
+ * solutions keep the P3 empty template until P5, which will use the §26.2 template (solution-detail.tsx).
  */
-const FULL_TEMPLATE = new Set<SolutionSlug>(['mobile-nvr-mobile-surveillance']);
 const isSlug = (s: string): s is SolutionSlug => solutions.some((x) => x.slug === s);
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
@@ -31,7 +31,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ local
   const locale = raw as Locale;
   setRequestLocale(locale);
   if (!isSlug(slug)) notFound();
-  if (slug === 'mobile-nvr-mobile-surveillance' && FULL_TEMPLATE.has(slug)) return <SolutionDetail locale={locale} slug={slug} />;
+  if (slug === 'mobile-nvr-mobile-surveillance') return <MnvrPage locale={locale} />;
 
   const tn = await getTranslations({ locale, namespace: 'nav' });
   const name = getCatalog(locale).solutions[slug].name;

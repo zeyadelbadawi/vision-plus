@@ -33,7 +33,7 @@
   .motion-ok .scene__frame[data-frame='7']:not([data-inview]) { --b7: 0; }
   .motion-ok .scene__frame[data-frame='8']:not([data-inview]) { --b8: 0; }
   
-  /* Generated: pinned mode — beat n runs while 1.12·p·beats passes n−1 → n (see route-geometry.ts beatProgress).
+  /* Generated: pinned mode — beat n runs while 1.12·p·beats passes n−1 → n (see scene-progress.ts beatProgress).
    1.12 makes the last beat finish before the stage unpins (the follow progress ends at ≈ 1 − 0.3/(0.7·beats)). */
   @media (min-width: 1024px) {
     .motion-ok:not(.scene-lite) .scene {
@@ -47,17 +47,6 @@
       --b8: clamp(0, calc((var(--p, 1) * var(--beats) * 1.12 - 7) * 1.4 - 0.1), 1);
     }
   }
-
-  /* Stepped frames are crops: each shows only its own beat's labels (earlier labels would be cut by the crop) */
-  .scene__frame .ra-label { visibility: hidden; }
-  .scene__frame[data-frame='1'] .ra-label[data-beat='1'] { visibility: visible; }
-  .scene__frame[data-frame='2'] .ra-label[data-beat='2'] { visibility: visible; }
-  .scene__frame[data-frame='3'] .ra-label[data-beat='3'] { visibility: visible; }
-  .scene__frame[data-frame='4'] .ra-label[data-beat='4'] { visibility: visible; }
-  .scene__frame[data-frame='5'] .ra-label[data-beat='5'] { visibility: visible; }
-  .scene__frame[data-frame='6'] .ra-label[data-beat='6'] { visibility: visible; }
-  .scene__frame[data-frame='7'] .ra-label[data-beat='7'] { visibility: visible; }
-  .scene__frame[data-frame='8'] .ra-label[data-beat='8'] { visibility: visible; }
 
   /* ---------- Engine layout ---------- */
   .scene { position: relative; }
@@ -122,34 +111,65 @@
     .scene-lite .scene__frame { display: block; }
   }
 
-  /* ---------- Mobile NVR "Route" artwork ---------- */
-  .route-art { --travel: calc((var(--b2) + var(--b3)) / 2); overflow: visible; }
-  .route-art .ra-grid path { fill: none; stroke: var(--scene-line); stroke-width: 1; opacity: 0.55; }
-  .route-art .ra-blocks rect { fill: none; stroke: var(--scene-line); stroke-width: 1; opacity: 0.35; }
-  .route-art .ra-depot rect, .route-art .ra-depot path { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
-  .route-art .ra-route-base { fill: none; stroke: var(--scene-line); stroke-width: 1.5; }
-  .route-art .ra-draw { fill: none; stroke-dasharray: 1 1; }
-  .route-art .ra-route { stroke: var(--color-gold); stroke-width: 3; stroke-linejoin: round; stroke-dashoffset: calc(1 - var(--b1)); }
-  .route-art .ra-route-2 { stroke: var(--color-gold); stroke-width: 2; stroke-linejoin: round; stroke-dashoffset: calc(1 - var(--b6)); opacity: 0.8; }
-  .route-art .ra-link { stroke: var(--color-gold); stroke-width: 1.5; stroke-dashoffset: calc(1 - var(--b6)); }
-  .route-art .ra-fleet-vehicles { opacity: var(--b6); }
-  .route-art .ra-uplink { stroke: var(--color-gold); stroke-width: 2; stroke-dashoffset: calc(1 - var(--b4)); }
-  .route-art .ra-trail circle { fill: var(--color-gold); opacity: clamp(0, calc((var(--travel) - var(--f)) * 20), 1); }
-  .route-art .ra-masts > g { opacity: var(--b3); }
-  .route-art .ra-mast { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
-  .route-art .ra-uplink-dots { fill: none; stroke: var(--fg-muted); stroke-width: 1; stroke-dasharray: 2 6; }
-  .route-art .ra-arc { fill: none; stroke: var(--color-gold); stroke-width: 2; opacity: clamp(0, calc((var(--travel) - var(--f) + 0.02) * 12), 1); }
-  .route-art .ra-zone { fill: none; stroke: var(--color-gold); stroke-width: 2; stroke-dasharray: 10 8; opacity: var(--b5); }
-  .route-art .ra-node-base { fill: var(--bg); stroke: var(--fg-muted); stroke-width: 1.5; }
-  .route-art .ra-node-on { fill: none; stroke: var(--color-gold); stroke-width: 2; opacity: var(--b4); }
-  .route-art .ra-frame { fill: none; stroke: var(--fg); stroke-width: 1.5; opacity: var(--b4); }
-  .route-art .ra-vehicle { offset-distance: calc(var(--travel) * 100%); offset-rotate: auto; opacity: clamp(0, calc(var(--b1) * 3), 1); }
-  .route-art .ra-vehicle-body { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
-  .route-art .ra-vehicle-line { fill: none; stroke: var(--fg-muted); stroke-width: 1.5; }
-  .route-art .ra-fleet-vehicles .ra-vehicle-body { stroke: var(--fg-muted); }
-  .route-art .ra-wedges path { fill: var(--color-gray-400); fill-opacity: 0.1; stroke: var(--color-gold); stroke-width: 1.5; stroke-linejoin: round; opacity: var(--b1); }
-  .route-art .ra-label {
-    font-family: var(--font-script, var(--font-plex)), var(--font-plex), sans-serif; font-size: 24px; font-weight: 500;
-    fill: var(--fg); opacity: var(--o, 1); paint-order: stroke; stroke: var(--bg); stroke-width: 8px; stroke-linejoin: round;
+  /* ---------- Mobile NVR fleet-level scene: Concept B, the architecture schematic (mnvr-architecture-art.tsx) ----------
+     Every part carries data-beat; its build follows that beat's --bN, so the pinned stage scrubs with the scroll in
+     both directions, each stepped frame shows its own state (earlier beats built, its beat plays on entry, later beats
+     waiting at 14 %), and no JS / reduced motion shows everything (--bN = 1). The current beat (data-current on the
+     scene root, MotionController [data-steps]) runs its data pulses three times, then rests. */
+  svg.ax { overflow: visible; stroke-linejoin: round; stroke-linecap: round; }
+  .scene--arch .scene__frame, .scene--arch .scene__step:last-child .scene__frame { aspect-ratio: auto; border-radius: 12px; overflow: hidden; }
+  .scene--arch .scene__frame svg { height: auto; }
+  .ax-zone { fill: color-mix(in srgb, var(--color-white) 3%, transparent); stroke: var(--color-gray-dark); stroke-width: 1.5; }
+  .ax-zone--platform { fill: color-mix(in srgb, var(--color-white) 4%, transparent); }
+  .ax-zone--ghost { fill: none; stroke-dasharray: 6 6; }
+  .ax-node rect, .ax-node > circle { fill: var(--color-gray-dark); stroke: var(--color-gray-mid); stroke-width: 1.2; transition: stroke 500ms; }
+  .ax-node--nvr > rect { fill: color-mix(in srgb, var(--color-charcoal) 55%, var(--color-gray-dark)); }
+  .ax-node--alert > rect { stroke: var(--color-gold); }
+  .ax-glyph { fill: none; stroke: var(--color-gray-400); stroke-width: 1.6; transition: stroke 500ms; }
+  .ax-led { fill: var(--color-gold); }
+  .ax-node .ax-bay { fill: var(--color-gold); stroke: none; }
+  .ax-node .ax-pane { fill: var(--color-gold); fill-opacity: calc(0.04 + 0.1 * var(--k, 1)); stroke: color-mix(in srgb, var(--color-gold) 60%, transparent); }
+  .ax-track { stroke: var(--color-gray-mid); stroke-width: 2; }
+  .ax-track--on { stroke: var(--color-gold); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--k, 1)); }
+  .ax-row path { stroke: var(--color-gold); stroke-width: 6; }
+  .ax-ring { fill: none !important; stroke: var(--color-gold) !important; opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; }
+  .ax-wire { fill: none; stroke: var(--color-gold); stroke-width: 1.8; stroke-dasharray: 1; }
+  .ax-wire--fleet { stroke-opacity: 0.6; }
+  .ax-flow { fill: none; stroke: var(--color-gold); stroke-width: 5; stroke-dasharray: 0.05 2; stroke-dashoffset: 0.05; opacity: 0; }
+  .ax-label { fill: var(--fg); font-size: 16px; font-weight: 500; }
+  .ax-label--strong { font-size: 17px; font-weight: 600; }
+  .ax-label--muted { fill: var(--fg-muted); font-size: 14px; }
+  .ax [data-beat] { opacity: calc(0.14 + 0.86 * var(--k, 1)); }
+  .ax [data-beat] .ax-wire { stroke-dashoffset: calc(1 - var(--k, 1)); }
+  .ax [data-beat='1'] { --k: var(--b1); }
+  .ax [data-beat='2'] { --k: var(--b2); }
+  .ax [data-beat='3'] { --k: var(--b3); }
+  .ax [data-beat='4'] { --k: var(--b4); }
+  .ax [data-beat='5'] { --k: var(--b5); }
+  .ax [data-beat='6'] { --k: var(--b6); }
+  .scene[data-live][data-current='1'] :is(.scene__stage, .scene__frame[data-frame='1']) [data-beat='1'] .ax-flow { animation: ax-flow 1.4s linear calc(0.6s + var(--i) * 0.2s) 3 both; }
+  .scene[data-live][data-current='1'] :is(.scene__stage, .scene__frame[data-frame='1']) .ax-node[data-beat='1'] > :is(rect, circle), .scene[data-live][data-current='1'] :is(.scene__stage, .scene__frame[data-frame='1']) .ax-node[data-beat='1'] .ax-glyph { stroke: var(--color-gold); }
+  .scene[data-live][data-current='2'] :is(.scene__stage, .scene__frame[data-frame='2']) [data-beat='2'] .ax-flow { animation: ax-flow 1.4s linear calc(0.6s + var(--i) * 0.2s) 3 both; }
+  .scene[data-live][data-current='2'] :is(.scene__stage, .scene__frame[data-frame='2']) .ax-node[data-beat='2'] > :is(rect, circle), .scene[data-live][data-current='2'] :is(.scene__stage, .scene__frame[data-frame='2']) .ax-node[data-beat='2'] .ax-glyph { stroke: var(--color-gold); }
+  .scene[data-live][data-current='3'] :is(.scene__stage, .scene__frame[data-frame='3']) [data-beat='3'] .ax-flow { animation: ax-flow 1.4s linear calc(0.6s + var(--i) * 0.2s) 3 both; }
+  .scene[data-live][data-current='3'] :is(.scene__stage, .scene__frame[data-frame='3']) .ax-node[data-beat='3'] > :is(rect, circle), .scene[data-live][data-current='3'] :is(.scene__stage, .scene__frame[data-frame='3']) .ax-node[data-beat='3'] .ax-glyph { stroke: var(--color-gold); }
+  .scene[data-live][data-current='4'] :is(.scene__stage, .scene__frame[data-frame='4']) [data-beat='4'] .ax-flow { animation: ax-flow 1.4s linear calc(0.6s + var(--i) * 0.2s) 3 both; }
+  .scene[data-live][data-current='4'] :is(.scene__stage, .scene__frame[data-frame='4']) .ax-node[data-beat='4'] > :is(rect, circle), .scene[data-live][data-current='4'] :is(.scene__stage, .scene__frame[data-frame='4']) .ax-node[data-beat='4'] .ax-glyph { stroke: var(--color-gold); }
+  .scene[data-live][data-current='5'] :is(.scene__stage, .scene__frame[data-frame='5']) [data-beat='5'] .ax-flow { animation: ax-flow 1.4s linear calc(0.6s + var(--i) * 0.2s) 3 both; }
+  .scene[data-live][data-current='5'] :is(.scene__stage, .scene__frame[data-frame='5']) .ax-node[data-beat='5'] > :is(rect, circle), .scene[data-live][data-current='5'] :is(.scene__stage, .scene__frame[data-frame='5']) .ax-node[data-beat='5'] .ax-glyph { stroke: var(--color-gold); }
+  .scene[data-live][data-current='6'] :is(.scene__stage, .scene__frame[data-frame='6']) [data-beat='6'] .ax-flow { animation: ax-flow 1.4s linear calc(0.6s + var(--i) * 0.2s) 3 both; }
+  .scene[data-live][data-current='6'] :is(.scene__stage, .scene__frame[data-frame='6']) .ax-node[data-beat='6'] > :is(rect, circle), .scene[data-live][data-current='6'] :is(.scene__stage, .scene__frame[data-frame='6']) .ax-node[data-beat='6'] .ax-glyph { stroke: var(--color-gold); }
+  .scene[data-live][data-current='3'] :is(.scene__stage, .scene__frame[data-frame='3']) .ax-ring { animation: ax-ring 1.6s ease-out 0.6s 3; }
+  @keyframes ax-flow {
+    0% { stroke-dashoffset: 0.05; opacity: 0; }
+    12%, 88% { opacity: 1; }
+    100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+  @keyframes ax-ring {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ax * { animation: none !important; }
   }
 }

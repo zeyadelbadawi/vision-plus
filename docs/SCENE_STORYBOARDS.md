@@ -2,6 +2,7 @@
 
 **Phase:** P4 · **For client approval:** D-20 (one decision per scene, logged in §11).
 **Spec:** MASTER_PROJECT_PLAN §23.5 (engine) and §23.6 (per-solution concepts). **Built in:** P5B (artwork and code), only after approval. Exception, as the plan specifies: the Mobile NVR Route scene has a P2 *first cut* for direction review (built 2026-10-01); its final version still follows D-20.
+**Mobile NVR update (2026-10-02, `885b397`):** on the Mobile NVR page, the Route scene's visual is now Concept B, the architecture schematic (§2.0), and a second scene, On board, uses Concept A, the isometric cutaway (§2a). Ziad approved both as the direction and limited the change to the Mobile NVR page. The implemented page awaits his review, then the client's approval. The beat text of §2 is unchanged.
 **Machine-readable twin:** `src/content/data/scenes.ts`. Every word a scene shows is a reference into the approved copy; `tests/unit/scenes.test.ts` fails the build if a label is not approved text.
 
 Per the plan's working rule, the storyboards are text, not images. Each frame below describes exactly what is drawn, so the client can approve the idea before any artwork is produced. Small composition sketches show layout only, not style.
@@ -43,6 +44,7 @@ Per the plan's working rule, the storyboards are text, not images. Each frame be
 |---|---|---|---|---|---|---|
 | 1 | Integration System | Home | Signature | in-view / stepped / stepped | 8 nodes | **Built and approved with the homepage**: documented as built, no change |
 | 2 | Route | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | **First cut built in P2** (`6932552`, on the Mobile NVR page; screenshots `docs/review/p2/route-*`). Storyboard still awaiting D-20 |
+| 2a | On board | Mobile NVR & Mobile Surveillance | Rich, step-synchronised | sticky / sticky / sticky (static in RM) | 5 | **Concept A implemented (`885b397`)**; awaiting Ziad's review of the implemented page. Scene 2's visual was replaced by Concept B in the same commit (§2.0) |
 | 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Awaiting D-20 |
 | 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Awaiting D-20 |
 | 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Awaiting D-20 |
@@ -71,6 +73,29 @@ The homepage Mobile NVR chapter deliberately animates only the **equation** (a g
 ---
 
 ## 2. Route — Mobile NVR & Mobile Surveillance (Rich)
+
+### 2.0 Implemented visual: Concept B, the architecture schematic (replaces the city map, 2026-10-02, `885b397`)
+
+The six beats, their DOM text and their labels are unchanged (the beat table below). Only the artwork changed. Ziad found the city-map diagram static and asked for a more professional visual. He authorised the replacement for the Mobile NVR page only and approved Concept B as the direction. The implemented page awaits his review.
+
+| | |
+|---|---|
+| **Artwork** | `src/components/scenes/mnvr-architecture-art.tsx`. Three zones in a dark, hairline schematic, reading in the language direction: **the vehicle** (four camera nodes and GPS feeding the Mobile NVR with its local storage); **the networks** (4G/5G and Wi-Fi); **the remote platform** (2 × 2 live-view panes, a playback strip, event alerts, fleet monitoring). Every label is an approved capability term. There is no footage, data or number; the fleet count is symbolic. |
+| **Modes** | Shared scene engine (`scroll-scene.tsx`, `scenes.css`). **Desktop (≥ 1024 px):** the stage is pinned beside the six beat texts. Each part follows its beat's `--bN`, so the diagram builds with the scroll and unbuilds when scrolling back. **Below 1024 px:** one full-width frame per beat, cropped from a stacked layout (`layout="tall"`) so every label is complete. Each frame shows its own beat built, earlier beats built and later beats waiting (14 %). **Reduced motion / no JS:** the complete diagram on desktop, and every frame complete on mobile. |
+| **Motion** | Building is opacity and stroke-dashoffset only. The current beat (`data-current`, MotionController `[data-steps]`) runs data pulses along its connections three times, then rests; its nodes and glyphs turn gold. No loops, no flashing, never red. |
+| **RTL** | The artwork mirrors, so the flow runs from the inline end. Labels are never mirrored and anchor at the inline start. |
+
+| Beat | What builds | Data flow (current beat) |
+|---|---|---|
+| 1 Video | Camera nodes, cabling into the Mobile NVR, storage bars | Pulses from every camera into the recorder |
+| 2 Location | GPS node and its link into the recorder | Pulse along the GPS link |
+| 3 Connectivity | 4G/5G and Wi-Fi nodes; uplinks from the recorder through both networks to the platform | Pulses along the uplinks; the network rings ping |
+| 4 Monitoring | Live-view panes light; the playback strip runs | — (the panes and the strip are the emphasis) |
+| 5 Intelligence | Event alerts node (steady gold) | — |
+| 6 Management | Further vehicles behind the first, with their links into the networks; fleet-monitoring rows | Pulses along the fleet links |
+
+The table and composition below describe the **earlier city-map artwork** (`6932552`), kept as the record.
+
 
 | | |
 |---|---|
@@ -122,6 +147,34 @@ D composition (1440 × 900)            ┌────────────�
 - **Questions for the client:**
   - Beats 1 and 2 add one approved capability label each (cameras, GPS), which the plan left unlabelled. Keep them?
   - Is a generic symmetric vehicle glyph acceptable (bus or van silhouette), or should it be abstract (a rounded rectangle)?
+
+---
+
+## 2a. On board — Concept A, the isometric technical cutaway (2026-10-02, `885b397`)
+
+Ziad asked for the earlier vehicle illustration to be replaced by a more professional and convincing visual, and approved Concept A as the direction. The implemented page awaits his review. This scene was added after the storyboard set above.
+
+| | |
+|---|---|
+| **Approved concept** | “Our approach brings together video, location, connectivity, data, and intelligent monitoring within one coordinated mobile security environment.” (`01` §07), shown as the system installed on one vehicle. |
+| **Placement** | Section 2 of the dedicated Mobile NVR page, before the fleet-level scene (§2). |
+| **Artwork** | `src/components/scenes/mnvr-onboard-art.tsx`, with geometry from `iso.ts`: an isometric cutaway of a generic, unbranded coach, with the near wall and roof cut away. Light surfaces, Option B tokens only, gold = active. The components are the five approved ones: cameras (front, rear, cabin, side) with their coverage; the Mobile NVR cabinet behind the driver, with cabling from every camera; the roof GPS antenna; the roof 4G/5G antenna with an uplink to a network mast; a remote monitoring wall whose panes light (**empty**, no imagery, D-26). No text in the art: numbered callouts only (never mirrored). The current step's approved title appears in a caption above the artwork (decorative; `aria-hidden`). |
+| **Modes** | Step-synchronised (MotionController `[data-steps]`: `data-current`, `data-reached`, in both directions). Desktop: the stage is sticky in 8 columns beside the steps. Mobile and tablet: a compact sticky stage under the compact header. **Reduced motion / no JS:** the complete system at the overall view, with compact steps. |
+| **Budget** | Inline SVG; no animation library. Only opacity, transform, fill and stroke-dashoffset animate. |
+
+| Step | DOM text (approved key) | Builds when reached | Current-step emphasis (finite) | View |
+|---|---|---|---|---|
+| 1 | “Multi-Channel HD/IP Vehicle Cameras” · pillar Video text | Camera housings light; coverage on the road ahead, behind, at the kerb and on the cabin floor | Coverage sweeps twice | The vehicle and its coverage (the monitoring wall stays out of frame) |
+| 2 | “Mobile Network Video Recorders” + “Secure Local Video Storage” · `body.2` | Cabling draws from every camera; the recorder lights and its storage bays fill | The recorder lifts slightly; video pulses run into it (3×) | Close on the recorder |
+| 3 | “GPS Tracking & Positioning” · pillar Location text | The roof antenna lights; a position fix appears on the ground under the vehicle | The fix pings (3×) | Roof and ground |
+| 4 | “4G/5G Connectivity” + “Wi-Fi Communication”, “Real-Time Video Transmission” · pillar Connectivity text | The antenna radiates; the uplink draws to the network mast | Arcs radiate; pulses travel the uplink (3×) | Vehicle and mast |
+| 5 | “Remote Live Viewing” + “Remote Video Playback”, “Centralized Management Platforms” · pillar Monitoring text | The backhaul reaches the monitoring wall; its panes light | Pulses travel the backhaul (3×) | The whole system |
+
+- **RTL:** the artwork mirrors; step numbers, callouts and text do not.
+- **Must not show:** branding, plates, people, places, times, device counts, footage or alarms.
+- **Arabic and Chinese step copy:** still the English placeholder (P8, D-12/D-13).
+- **Tests:** `tests/unit/mnvr-page.test.ts` (approved copy references, callouts and views inside the artboard, the step 1 view excluding the wall); `tests/e2e/pages.spec.ts` (each step builds its part, the view follows the step, back-scroll un-builds, reduced motion, no JavaScript, RTL, axe).
+- **Review evidence:** screenshots of the implemented scenes are kept on `claude/confident-cori-lahb3k` (`docs/review/p2-mnvr-final/`), not on `main`.
 
 ---
 
