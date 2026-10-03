@@ -249,7 +249,7 @@ Each group lists the slots in a table. Expand "Art direction…" under a group f
   *Focal/crop:* Subject within central 80% height and central 60% width  
   *Format:* JPG (sRGB, q≥90) · *Fallback:* Placeholder band  
   *File:* `public/images/solutions/sol-mnvr-hero.jpg + public/images/solutions/sol-mnvr-hero-mobile.jpg`
-- **`SOL-MNVR-DETAIL`** — Detail view: equipment, installation or system in use.  
+- **`SOL-MNVR-DETAIL`** — **Not used; do not commission** (Ziad, B-3, 2026-10-03: the dedicated Mobile NVR page has no §26.2 #2 context section). Original brief: detail view: equipment, installation or system in use.  
   *Focal/crop:* Subject upper-center; bottom 10% may be trimmed  
   *Format:* JPG (sRGB, q≥90) · *Fallback:* Layout collapses to single column (no image)  
   *File:* `public/images/solutions/sol-mnvr-detail.jpg`
