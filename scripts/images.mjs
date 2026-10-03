@@ -4,6 +4,7 @@
 import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname } from 'node:path';
 import sharp from 'sharp';
+import { resolveSlot } from './media-slots.mjs';
 
 const WIDTHS = [390, 640, 828, 1080, 1280, 1620, 1920, 2400, 2880];
 const manifest = JSON.parse(readFileSync('src/content/media/manifest.generated.json', 'utf8'));
@@ -14,7 +15,7 @@ const outBase = (p) => p.replace(/^public\/images\//, 'public/_img/').replace(/\
 
 let made = 0;
 for (const id of Object.keys(finals)) {
-  const slot = manifest[id];
+  const slot = resolveSlot(manifest, id);
   const f = finals[id];
   for (const [path, spec] of [
     [slot.path, f.size ?? slot.desktop],

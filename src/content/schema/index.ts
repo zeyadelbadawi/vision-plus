@@ -131,7 +131,8 @@ export const aliases = z.strictObject({
 
 /** Final image entries (images.json `assets`). */
 export const finalImages = z.record(
-  z.string().regex(/^[A-Z0-9-]+$/),
+  // a manifest ID, or a concrete instance of a templated one (PROJ-{slug}-COVER → PROJ-sample-fleet-surveillance-COVER)
+  z.string().regex(/^(?:[A-Z0-9-]+|[A-Z0-9]+-[a-z0-9-]+-[A-Z0-9-]+)$/),
   z.looseObject({
     status: z.literal('final'),
     alt: z.strictObject({ en: text, ar: text, zh: text }),

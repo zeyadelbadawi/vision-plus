@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "status": "draft-mt",
+    "note": "Draft Simplified Chinese by Claude (D-12, 2026-10-02) of illustrative sample content — preview only, not Vision Plus facts."
+  },
+  "label": "示例项目",
+  "dataLabel": "示例数据 — 未经核实",
+  "projectFacts": {
+    "location": "示例地点",
+    "client": "示例客户",
+    "year": "20XX"
+  },
+  "projects": {
+    "sample-fleet-surveillance": {
+      "name": "车队移动监控",
+      "scope": "示例范围：车队移动监控——系统设计、安装调试与维护。"
+    },
+    "sample-corporate-workplace": {
+      "name": "企业办公环境集成",
+      "scope": "示例范围：为企业办公环境提供一体化安防、门禁、网络基础设施与会议室音视频系统。"
+    },
+    "sample-hospitality-venue": {
+      "name": "酒店宾客技术",
+      "scope": "示例范围：为酒店场所提供监控、网络基础设施与宾客区域音视频系统。"
+    },
+    "sample-logistics-site": {
+      "name": "物流园区安防与连接",
+      "scope": "示例范围：为物流园区提供设施监控、出入管理、网络基础设施与车队监控。"
+    }
+  },
+  "offices": {
+    "qatar": {
+      "address": "示例大楼 00 号，示例街道，卡塔尔"
+    },
+    "egypt": {
+      "address": "示例大楼 00 号，示例街道，埃及"
+    }
+  }
+}

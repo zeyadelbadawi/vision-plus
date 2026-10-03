@@ -210,6 +210,57 @@
         "ar": "مجمع سكني مسوّر عند الغسق: سيارة تنتظر عند حاجز بجوار كشك حراسة مضاء مزوّد بكاميرات مراقبة. وفوقه أيقونات لأنظمة المراقبة والأمن، والتحكم في الإضاءة، وإدارة التكييف، والستائر والتظليل، والتحكم في الدخول، ودخول المركبات وإدارة المواقف، وأتمتة المنزل الذكي، وإدارة الطاقة، ونظام إدارة المباني (BMS)، والاتصال الداخلي.",
         "zh": "黄昏时分的封闭式住宅小区：一辆汽车停在道闸前，旁边是装有监控摄像机、灯火通明的岗亭。上方是各系统图标：闭路电视与安防系统、照明控制、暖通空调管理、遮阳与百叶、门禁控制、车辆出入与停车管理、智能家居自动化、能源管理、楼宇管理系统（BMS）和对讲系统。"
       }
+    },
+    "PROJ-sample-fleet-surveillance-COVER": {
+      "status": "final",
+      "source": "Client-supplied illustrative image, approved by Ziad as the cover of this sample project card (home Projects preview, 2026-10-03). Not a photo of delivered Vision Plus work. Supplied 1650×1080; centre-cropped to the manifest 1620×1080 (3:2), sRGB JPG q88.",
+      "size": {
+        "width": 1620,
+        "height": 1080
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A line of white coaches on a city highway at sunset, overlaid with location pins, a panel of in-vehicle camera feeds and icons for cameras, location, analytics and cloud.",
+        "ar": "صف من الحافلات البيضاء على طريق سريع في المدينة عند الغروب، تعلوه دبابيس مواقع ولوحة تعرض بث الكاميرات داخل المركبات وأيقونات للكاميرات والموقع والتحليلات والسحابة.",
+        "zh": "日落时分，一列白色大巴行驶在城市高速路上，画面叠加了定位标记、车载摄像画面面板，以及摄像机、定位、数据分析和云端图标。"
+      }
+    },
+    "PROJ-sample-corporate-workplace-COVER": {
+      "status": "final",
+      "source": "Client-supplied illustrative image, approved by Ziad as the cover of this sample project card (home Projects preview, 2026-10-03). Not a photo of delivered Vision Plus work. Supplied 1650×1080; centre-cropped to the manifest 1620×1080 (3:2), sRGB JPG q88.",
+      "size": {
+        "width": 1620,
+        "height": 1080
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "Staff walk through speed-gate turnstiles in a sunlit office lobby, past a face-recognition reader on the wall and a video wall of camera feeds above the reception desk.",
+        "ar": "موظفون يعبرون بوابات دخول سريعة في ردهة مكتب مشمسة، بجوار قارئ للتعرّف على الوجه على الجدار وشاشة عرض لبث الكاميرات فوق مكتب الاستقبال.",
+        "zh": "员工在阳光明媚的办公大堂穿过速通闸机，墙上装有人脸识别终端，前台上方的视频墙显示着监控画面。"
+      }
+    },
+    "PROJ-sample-hospitality-venue-COVER": {
+      "status": "final",
+      "source": "Client-supplied illustrative image, approved by Ziad as the cover of this sample project card (home Projects preview, 2026-10-03). Not a photo of delivered Vision Plus work. Supplied 1650×1080; centre-cropped to the manifest 1620×1080 (3:2), sRGB JPG q88.",
+      "size": {
+        "width": 1620,
+        "height": 1080
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A couple with a suitcase walks towards a hotel reception desk, where a receptionist waits beside a check-in tablet in a warmly lit lobby.",
+        "ar": "زوجان يحملان حقيبة سفر يتجهان نحو مكتب الاستقبال في فندق، حيث تنتظرهما موظفة الاستقبال بجوار جهاز لوحي لتسجيل الوصول في ردهة ذات إضاءة دافئة.",
+        "zh": "一对拖着行李箱的夫妇走向酒店前台，前台接待员在入住平板旁等候，大堂灯光温暖。"
+      }
     }
   }
 }

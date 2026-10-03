@@ -46,7 +46,9 @@ for (const set of sets) {
     const status = data._meta?.status;
     if (!STATUSES.has(status)) errors.push(`${file}: unknown or missing _meta.status "${status}"`);
     if (l !== 'en') compare(en, data, '$', file);
-    if (status !== 'approved') blockers.push(`${file}: status "${status}"`);
+    // samples.json is preview-only illustrative content (Q-12): it never blocks by status; instead site:check fails a
+    // production build that renders any [data-sample] element.
+    if (status !== 'approved' && set.name !== 'samples.json') blockers.push(`${file}: status "${status}"`);
   }
 }
 

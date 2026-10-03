@@ -460,3 +460,13 @@ body:has(main[data-hero='dark']) .site-header--top {
   .breadcrumbs [aria-current='page'] { color: var(--fg); }
   .breadcrumbs__sep { flex: none; opacity: 0.6; }
 }
+
+/* Illustrative sample content (Q-12): always visibly labelled, preview builds only */
+.sample-tag {
+  display: inline-block;
+  font-size: var(--fs-caption);
+  line-height: 1.4;
+  color: var(--fg-muted);
+  border: 1px dashed var(--line-strong);
+  padding: 2px 8px;
+}
