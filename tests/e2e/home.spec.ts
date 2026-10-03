@@ -1,5 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+const manifest = JSON.parse(readFileSync('src/content/media/manifest.generated.json', 'utf8')) as Record<string, unknown>;
 
 const LOCALES = [
   { code: 'en', lang: 'en', dir: 'ltr' },
@@ -38,9 +41,13 @@ for (const l of LOCALES) {
 
 test('image placeholders are hidden from assistive technology and carry manifest IDs', async ({ page }) => {
   await page.goto('/en');
+  // the count falls as delivered images replace placeholders; every one that remains must follow the rule
   const slots = page.locator('[data-slot]');
-  expect(await slots.count()).toBeGreaterThan(10);
-  for (const s of await slots.all()) await expect(s).toHaveAttribute('aria-hidden', 'true');
+  expect(await slots.count()).toBeGreaterThan(0);
+  for (const s of await slots.all()) {
+    await expect(s).toHaveAttribute('aria-hidden', 'true');
+    expect(manifest).toHaveProperty([(await s.getAttribute('data-slot'))!]);
+  }
 });
 
 test('the supplied hero banner renders as a responsive picture with localized alt text', async ({ page }) => {
