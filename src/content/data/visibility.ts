@@ -8,3 +8,10 @@ export const pageVisibility = {
   // approved (D-09). The product-category data and the page template stay ready.
   products: false,
 } as const;
+
+/**
+ * `output: export` refuses a dynamic route whose generateStaticParams() returns nothing. A detail route with no
+ * publishable entries (production Projects before real data, D-10) therefore emits this one placeholder slug, whose
+ * page calls notFound(); scripts/postbuild.mjs then removes it so it can never be served (no soft 404).
+ */
+export const UNPUBLISHED_SLUG = '_unpublished';

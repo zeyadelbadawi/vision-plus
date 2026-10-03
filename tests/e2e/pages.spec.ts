@@ -21,6 +21,7 @@ const ROUTES = [
   '/industries',
   '/services',
   '/projects',
+  '/projects/sample-corporate-workplace',
   '/about',
   '/partners',
   '/company-profile',
@@ -547,6 +548,98 @@ test.describe('About (§26.8)', () => {
       await page.goto(`/en/about#${id}`);
       await expect(page.locator(`#${id}-title`)).toBeInViewport();
     }
+  });
+});
+
+// P5A-08 Projects (MASTER_PROJECT_PLAN §26.7, §35, §55.3.11). Preview: the four Q-12 illustrative samples, labelled.
+test.describe('Projects (§26.7)', () => {
+  const SAMPLES = ['sample-fleet-surveillance', 'sample-corporate-workplace', 'sample-hospitality-venue', 'sample-logistics-site'];
+
+  for (const l of LOCALES) {
+    test(`/${l.code}/projects: the 4 labelled samples link to their pages; no filter bar below 6 projects`, async ({ page }) => {
+      await page.goto(`/${l.code}/projects`);
+      const cards = page.locator('.project-card');
+      await expect(cards).toHaveCount(4);
+      for (const c of await cards.all()) {
+        await expect(c).toHaveAttribute('data-sample', '');
+        await expect(c.locator('.sample-tag')).toHaveCount(1);
+      }
+      const hrefs = await page.locator('.project-card__link').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(hrefs).toEqual(SAMPLES.map((s) => `/${l.code}/projects/${s}`));
+      await expect(page.locator('.project-note')).toHaveCount(1);
+      await expect(page.locator('select, [role="radiogroup"], .filters')).toHaveCount(0);
+    });
+
+    test(`/${l.code}/projects/<sample>: facts, scope, gallery, related solutions, next project`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(`/${l.code}/projects/sample-corporate-workplace`);
+      await expect(page.locator('main')).toHaveAttribute('data-sample', '');
+      await expect(page.locator('main .sample-tag')).toHaveCount(1);
+      await expect(page.locator('.project-facts > div')).toHaveCount(4);
+      const solutions = await page.locator('.project-facts__links a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+      expect(solutions).toEqual(['cctv-security-systems', 'access-control', 'networking-ict', 'audio-visual'].map((s) => `/${l.code}/solutions/${s}`));
+      await expect(page.locator('#scope-title + p')).not.toBeEmpty();
+      await expect(page.locator('.gallery__thumb')).toHaveCount(4);
+      await expect(page.locator('.project-next a')).toHaveAttribute('href', `/${l.code}/projects/sample-hospitality-venue`);
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('the last sample wraps to the first as "next project"', async ({ page }) => {
+    await page.goto('/en/projects/sample-logistics-site');
+    await expect(page.locator('.project-next a')).toHaveAttribute('href', '/en/projects/sample-fleet-surveillance');
+  });
+
+  for (const l of [LOCALES[0], LOCALES[1]]) {
+    test(`/${l.code} gallery lightbox: modal, arrows mirrored in ${l.dir.toUpperCase()}, Esc returns focus`, async ({ page }) => {
+      await page.goto(`/${l.code}/projects/sample-corporate-workplace`);
+      const thumb = page.locator('.gallery__thumb').nth(1);
+      await thumb.click();
+      const dialog = page.locator('dialog.lightbox');
+      await expect(dialog).toBeVisible();
+      await expect(page.locator('.lightbox__count')).toHaveText('2 / 4');
+      expect(await page.evaluate(() => !!document.activeElement?.closest('dialog'))).toBe(true);
+      // forward = toward the inline end: ArrowRight in LTR, ArrowLeft in RTL
+      await page.keyboard.press(l.dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight');
+      await expect(page.locator('.lightbox__count')).toHaveText('3 / 4');
+      await page.keyboard.press(l.dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft');
+      await page.keyboard.press(l.dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft');
+      await expect(page.locator('.lightbox__count')).toHaveText('1 / 4');
+      await page.keyboard.press(l.dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft');
+      await expect(page.locator('.lightbox__count')).toHaveText('4 / 4');
+      await expect(page.locator('.lightbox__slide:visible')).toHaveCount(1);
+      await page.keyboard.press('Escape');
+      await expect(dialog).toBeHidden();
+      await expect(thumb).toBeFocused();
+    });
+  }
+
+  test('the lightbox buttons step and close; the previous arrow points toward the inline start', async ({ page }) => {
+    for (const code of ['en', 'ar']) {
+      await page.goto(`/${code}/projects/sample-hospitality-venue`);
+      await page.locator('.gallery__thumb').first().click();
+      // net horizontal direction of each arrow (svg + wrappers): previous points to the inline start, next to the end
+      const [prev, next] = await page.locator('.lightbox__nav svg').evaluateAll((svgs) =>
+        svgs.map((svg) => {
+          let sign = 1;
+          for (let el: Element | null = svg; el && !el.matches('button'); el = el.parentElement)
+            sign *= new DOMMatrix(getComputedStyle(el).transform === 'none' ? undefined : getComputedStyle(el).transform).a < 0 ? -1 : 1;
+          return sign; // 1 = points right
+        }),
+      );
+      const rtl = code === 'ar';
+      expect([prev, next]).toEqual(rtl ? [1, -1] : [-1, 1]);
+      await page.locator('.lightbox__nav .lightbox__btn').nth(1).click();
+      await expect(page.locator('.lightbox__count')).toHaveText('2 / 4');
+      await page.locator('.lightbox__bar .lightbox__btn').click();
+      await expect(page.locator('dialog.lightbox')).toBeHidden();
+    }
+  });
+
+  test('the placeholder detail entry is never served', async ({ page }) => {
+    const res = await page.goto('/en/projects/_unpublished');
+    expect(res?.status()).toBe(404);
   });
 });
 

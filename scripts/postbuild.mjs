@@ -2,7 +2,7 @@
 // for asset responses only; the Worker sets the same baseline on its own responses — worker/headers.ts).
 // Mode-aware: preview builds are noindex; production adds HSTS and upgrade-insecure-requests.
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { pageVisibility } from '../src/content/data/visibility.ts';
+import { pageVisibility, UNPUBLISHED_SLUG } from '../src/content/data/visibility.ts';
 
 const production = process.env.CONTENT_MODE === 'production';
 if (!existsSync('out')) {
@@ -58,9 +58,14 @@ console.log(`postbuild: out/_headers written (${production ? 'production' : 'pre
 
 // Hidden routes. A page that calls notFound() is still written by the static export (with the 404 markup), which the
 // host would serve as a 200 "soft 404". Remove those files so the request falls through to the real 404 response:
-// pages hidden by client decision (src/content/data/visibility.ts) and, in production, the preview-only style guide.
+// pages hidden by client decision (src/content/data/visibility.ts), the placeholder entry of a detail route with nothing
+// to publish (UNPUBLISHED_SLUG) and, in production, the preview-only style guide.
 const LOCALE_DIRS = ['en', 'ar', 'zh'];
-const hidden = [...Object.entries(pageVisibility).flatMap(([slug, visible]) => (visible ? [] : [`/${slug}`])), ...(production ? ['/_lab'] : [])];
+const hidden = [
+  ...Object.entries(pageVisibility).flatMap(([slug, visible]) => (visible ? [] : [`/${slug}`])),
+  `/projects/${UNPUBLISHED_SLUG}`,
+  ...(production ? ['/_lab'] : []),
+];
 for (const l of LOCALE_DIRS)
   for (const path of hidden) for (const f of [`out/${l}${path}.html`, `out/${l}${path}.txt`, `out/${l}${path}`]) rmSync(f, { recursive: true, force: true });
 console.log(`postbuild: hidden routes removed (${hidden.join(', ') || 'none'})`);
