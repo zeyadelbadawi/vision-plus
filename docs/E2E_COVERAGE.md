@@ -92,7 +92,7 @@ Full-page screenshots compared pixel for pixel, generated and checked only insid
 | GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
 | GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
 | Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
-| Local, Chromium projects | P5A-09 Partners (before commit) | `pnpm test:e2e` | 280 passed, 10 skipped, 0 failed (3.8 min) |
+| Local, Chromium projects | `f101971` (P5A-09 Partners) | `pnpm test:e2e` | 280 passed, 10 skipped, 0 failed (3.8 min) |
 | GitHub E2E matrix, run 37084530746 | `e1af358` (P5A-08 Projects) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **671 passed, 24 skipped, 0 failed** (22.3 min) |
 | GitHub visual regression, run 37084179633 | `a1ea9a7` | `pnpm test:visual` in `mcr.microsoft.com/playwright:v1.56.1-noble` | **168 passed** (4.2 min): identical to the local baselines |
 | Local, Chromium projects | `0fa3b4b` (P5A-08 Projects) | `pnpm test:e2e` | 268 passed, 10 skipped, 0 failed (3.2 min) |
