@@ -206,6 +206,27 @@
         "ar": "أمين صندوق يخدم زبونًا عند صندوق الدفع في سوبرماركت، وخلفهما كاميرا قبة في السقف ومتسوقون بين الممرات.",
         "zh": "收银员在超市收银台为顾客结账，身后是吸顶球形摄像机和在货架间购物的顾客。"
       }
+    },
+    "HOME-MNVR": {
+      "status": "final",
+      "source": "Client-supplied image, approved by Ziad for the homepage Mobile NVR section (2026-10-03). Desktop is the file as supplied (1440×1620 WebP = manifest master size, 8:9), saved as sRGB JPG q90. Mobile is a 4:3 crop of the same file framed on the icon grid (x 0–1440, y 40–1120) resized to 1080×810. Contains ten English system labels baked into the artwork.",
+      "size": {
+        "width": 1440,
+        "height": 1620
+      },
+      "mobileSize": {
+        "width": 1080,
+        "height": 810
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.08
+      },
+      "alt": {
+        "en": "A gated residential compound at dusk: a car waits at a barrier beside a lit guardhouse with security cameras. Above it, icons for CCTV & Security Systems, Lighting Control, HVAC Management, Shading & Blinds, Access Control, Vehicle Access & Parking Management, Smart Home Automation, Energy Management, Building Management System (BMS) and Intercom.",
+        "ar": "مجمع سكني مسوّر عند الغسق: سيارة تنتظر عند حاجز بجوار كشك حراسة مضاء مزوّد بكاميرات مراقبة. وفوقه أيقونات لأنظمة المراقبة والأمن، والتحكم في الإضاءة، وإدارة التكييف، والستائر والتظليل، والتحكم في الدخول، ودخول المركبات وإدارة المواقف، وأتمتة المنزل الذكي، وإدارة الطاقة، ونظام إدارة المباني (BMS)، والاتصال الداخلي.",
+        "zh": "黄昏时分的封闭式住宅小区：一辆汽车停在道闸前，旁边是装有监控摄像机、灯火通明的岗亭。上方是各系统图标：闭路电视与安防系统、照明控制、暖通空调管理、遮阳与百叶、门禁控制、车辆出入与停车管理、智能家居自动化、能源管理、楼宇管理系统（BMS）和对讲系统。"
+      }
     }
   }
 }
