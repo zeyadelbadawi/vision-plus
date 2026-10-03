@@ -690,6 +690,97 @@ test.describe('Partners (§26.9)', () => {
   }
 });
 
+// P5A-10 Contact UI (MASTER_PROJECT_PLAN §26.10, §30, §55.3.13). Sending is Phase 6; office data pending (D-01–D-03).
+test.describe('Contact (§26.10, §30)', () => {
+  for (const l of LOCALES) {
+    test(`/${l.code}/contact: form fields, LTR email/phone, labelled sample offices, no live contact links`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(`/${l.code}/contact`);
+      await expect(page.locator('#inquiry form')).toHaveCount(1);
+      await expect(page.locator('input[name="type"]')).toHaveCount(4);
+      await expect(page.locator('#type-consultation')).toBeChecked();
+      for (const id of ['name', 'company', 'email', 'phone', 'location', 'industry', 'solution', 'message', 'consent'])
+        await expect(page.locator(`#${id}`)).toHaveCount(1);
+      await expect(page.locator('#category')).toHaveCount(0);
+      await expect(page.locator('#email')).toHaveAttribute('dir', 'ltr');
+      await expect(page.locator('#phone')).toHaveAttribute('dir', 'ltr');
+      await expect(page.locator('#email')).toHaveAttribute('autocomplete', 'email');
+      await expect(page.locator('#industry option')).toHaveCount(14); // placeholder + 12 industries (Q-08) + Other
+      await expect(page.locator('label[for="consent"] a')).toHaveAttribute('href', `/${l.code}/privacy`);
+      // honeypot: present for bots, unreachable for people
+      await expect(page.locator('#company_website')).toHaveAttribute('tabindex', '-1');
+      await expect(page.locator('#company_website')).not.toBeInViewport();
+      // offices: labelled samples, plain text only (D-01, D-02, D-04), labelled map placeholders (D-03)
+      const offices = page.locator('#locations .office');
+      await expect(offices).toHaveCount(2);
+      for (const o of await offices.all()) {
+        await expect(o).toHaveAttribute('data-sample', '');
+        await expect(o.locator('.sample-tag')).toHaveCount(1);
+        await expect(o.locator('[data-slot^="CONTACT-MAP-"]')).toHaveCount(1);
+      }
+      await expect(page.locator('#locations a[href^="tel:"], #locations a[href^="mailto:"], #locations iframe')).toHaveCount(0);
+      expect(errors).toEqual([]);
+    });
+  }
+
+  test('pre-fills from the query string and shows the fields of the chosen type', async ({ page }) => {
+    await page.goto('/en/contact?type=consultation&solution=access-control&industry=banking-finance');
+    await expect(page.locator('#solution')).toHaveValue('access-control');
+    await expect(page.locator('#industry')).toHaveValue('banking-finance');
+    await page.goto('/en/contact?type=product&category=video-intercom');
+    await expect(page.locator('#type-product')).toBeChecked();
+    await expect(page.locator('#category')).toHaveValue('video-intercom');
+    await expect(page.locator('#industry, #solution')).toHaveCount(0);
+    await page.locator('label:has(#type-partnership)').click();
+    await expect(page.locator('#industry, #solution, #category')).toHaveCount(0);
+    await page.goto('/en/contact?type=bogus&solution=nope');
+    await expect(page.locator('#type-consultation')).toBeChecked();
+    await expect(page.locator('#solution')).toHaveValue('');
+  });
+
+  test('submit with errors: a summary names each field and focus moves to the first invalid one', async ({ page }) => {
+    await page.goto('/en/contact');
+    await page.locator('button[type="submit"]').click();
+    const summary = page.locator('.form-summary[role="alert"]');
+    await expect(summary).toBeVisible();
+    await expect(summary.locator('li')).toHaveCount(6); // name, company, email, location, message, consent
+    await expect(summary.locator('li').first()).toContainText('Full name');
+    await expect(page.locator('#name')).toBeFocused();
+    await expect(page.locator('#name')).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#name')).toHaveAttribute('aria-describedby', 'name-error');
+    await summary.locator('a[href="#email"]').click();
+    await expect(page).toHaveURL(/#email$/);
+  });
+
+  test('blur validates the field; fixing everything and sending in one click is not swallowed by a layout shift', async ({ page }) => {
+    await page.goto('/en/contact?type=general');
+    await page.fill('#email', 'not-an-email');
+    await page.locator('#name').focus();
+    await expect(page.locator('#email-error')).toBeVisible();
+    await page.locator('button[type="submit"]').click(); // errors + summary
+    await page.fill('#name', 'Test Person');
+    await page.fill('#email', 'test@example.com');
+    await page.selectOption('#location', 'qatar');
+    await page.fill('#message', 'We need a site survey for a new building.');
+    await page.check('#consent');
+    await page.locator('button[type="submit"]').click(); // the consent error disappears only after this click
+    await expect(page.locator('.form-summary')).toHaveCount(0);
+    await expect(page.locator('.field__error')).toHaveCount(0);
+    // preview: nothing is sent before Phase 6, and the form says so (no simulated success)
+    await expect(page.locator('.contact-form__status')).toContainText('Phase 6');
+  });
+
+  test('without JavaScript the page says the form needs it and points to the offices', async ({ browser }) => {
+    const ctx = await browser.newContext({ javaScriptEnabled: false });
+    const page = await ctx.newPage();
+    await page.goto('/en/contact');
+    await expect(page.locator('.form-noscript')).toBeVisible();
+    await expect(page.locator('.form-noscript a')).toHaveAttribute('href', '#locations');
+    await ctx.close();
+  });
+});
+
 test.describe('Mobile NVR page — On board scene (Concept A cutaway)', () => {
   type Page = import('@playwright/test').Page;
   const layerOpacity = (page: Page, n: number) =>

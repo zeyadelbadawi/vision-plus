@@ -26,6 +26,7 @@ module.exports = {
         'http://localhost:4173/en/industries',
         'http://localhost:4173/en/about',
         'http://localhost:4173/en/projects',
+        'http://localhost:4173/en/contact',
       ],
       numberOfRuns: 3,
       // Colour contrast is enforced by the Playwright + axe suite on every template × locale × 2 viewports,

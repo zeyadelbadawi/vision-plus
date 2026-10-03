@@ -83,6 +83,7 @@
     "pendingWording": "措辞待客户审核",
     "pendingOrder": "排序待客户审核",
     "withheld": "内容暂不显示，待客户提供措辞（Q-04）",
+    "formNotConnected": "发送功能将在第 6 阶段接入——此次未发送任何内容。",
     "sectionPending": "栏目内容：第 5 阶段",
     "templatePending": "页面模板：完整页面将在第 5 阶段构建。此处显示仅为让预览中的导航可以正常使用。",
     "label": "预览",

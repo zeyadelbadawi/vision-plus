@@ -338,6 +338,35 @@
     position: absolute; inset-block-end: 4px; inset-inline-end: 6px; font-size: 10px; color: var(--placeholder-mark);
   }
   .partner-cell__name { margin-block-start: 12px; font-size: var(--fs-caption); font-weight: 400; color: var(--fg-muted); }
+
+  /* Contact (§26.10, §30): form 7/12 beside the offices 5/12 (sticky on desktop); stacked on mobile */
+  .contact-form { display: grid; gap: 28px; }
+  .contact-form__row { display: grid; gap: 28px; }
+  @media (min-width: 768px) { .contact-form__row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); align-items: start; } }
+  .contact-form__actions { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; }
+  .contact-form__status { font-size: var(--fs-body-sm); color: var(--fg-muted); }
+  .contact-form__status:empty { display: none; }
+  .form-summary { padding: 20px 24px; border: 1px solid var(--fg); border-inline-start: 3px solid var(--color-gold); background: var(--bg-raised); }
+  .form-summary__title { font-weight: 500; }
+  .form-summary__field { font-weight: 500; }
+  .form-summary ul { display: grid; gap: 6px; margin-block-start: 10px; font-size: var(--fs-body-sm); }
+  .form-summary a { text-decoration: underline; text-underline-offset: 3px; }
+  .form-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .form-noscript { margin-block-start: 16px; padding-inline-start: 12px; border-inline-start: 2px solid var(--color-gold); font-size: var(--fs-body-sm); }
+  @media (min-width: 1024px) {
+    .contact__locations { position: sticky; inset-block-start: calc(64px + 32px); align-self: start; }
+  }
+  .offices { display: grid; gap: 40px; }
+  .office { display: grid; gap: 12px; padding-block-start: 20px; border-block-start: 1px solid var(--line); }
+  .office__facts { display: grid; gap: 10px; }
+  .office__facts dt { font-size: var(--fs-caption); color: var(--fg-muted); }
+  .office__facts dd { font-size: var(--fs-body-sm); }
+  [dir='rtl'] .office__facts dd[dir='ltr'] { text-align: end; }
+  .office__directions { justify-self: start; font-size: var(--fs-body-sm); }
+  .office-map { position: relative; margin-block-start: 8px; }
+  .office-map__frame { display: block; width: 100%; aspect-ratio: 3 / 2; border: 0; }
+  .office-map__surface { display: grid; place-items: center; aspect-ratio: 3 / 2; padding: 24px; background: var(--bg-raised); border: 1px solid var(--line); text-align: center; color: var(--fg-muted); }
+  .office-map__overlay { position: absolute; inset: auto 0 0; display: grid; gap: 8px; justify-items: start; padding: 16px; background: linear-gradient(to top, var(--bg), transparent); }
 }
 
 /* Style guide (preview only) */
