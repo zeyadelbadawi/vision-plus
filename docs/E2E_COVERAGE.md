@@ -83,7 +83,7 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 | GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
 | GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
 | Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
-| Local, Chromium projects | P5A-07 About (before commit) | `pnpm test:e2e` | 240 passed, 10 skipped, 0 failed (3.0 min) |
+| Local, Chromium projects | `ddbac22` (P5A-07 About) | `pnpm test:e2e` | 240 passed, 10 skipped, 0 failed (3.0 min) |
 | GitHub E2E matrix, [run 37077807521](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37077807521) | `46ca5f5` (P5A-03 to P5A-06) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **581 passed, 24 skipped, 0 failed, 0 flaky** (20.3 min) |
 | Local, Chromium projects | `52e9338` (P5A-03 to P5A-06: 404, solution template, Services, Industries) | `pnpm test:e2e` | 232 passed, 10 skipped, 0 failed (2.9 min). The 3 new skips are layout-only: the Industries master–detail tests on the mobile project and the stacked-layout test on the desktop project |
 
