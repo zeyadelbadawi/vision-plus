@@ -58,6 +58,21 @@ test('the supplied hero banner renders as a responsive picture with localized al
   }
 });
 
+test('the supplied statement image renders beside the positioning text with localized alt text', async ({ page }) => {
+  for (const [code, fragment] of [
+    ['en', 'One vision for all Connected solutions'],
+    ['ar', 'فوق مشهد عند الغروب'],
+    ['zh', '黄昏时分的书桌场景'],
+  ] as const) {
+    await page.goto(`/${code}`);
+    const img = page.locator('[aria-labelledby="positioning-title"] picture img');
+    await expect(img).toHaveAttribute('alt', new RegExp(fragment));
+    await img.scrollIntoViewIfNeeded();
+    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    await expect(page.locator('[data-slot="HOME-STATEMENT"]')).toHaveCount(0);
+  }
+});
+
 test.describe('desktop navigation', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1200, 'desktop only');
 
