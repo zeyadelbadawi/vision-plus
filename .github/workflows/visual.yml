@@ -1,0 +1,40 @@
+# Visual regression (MASTER_PROJECT_PLAN §40 "CI (on labelled PRs)", §55.3.10; P5-T1). Runs inside the official
+# Playwright image, the same one `pnpm test:visual` uses locally, so committed baselines compare pixel for pixel.
+# Keep the image tag equal to the installed @playwright/test version (tests/unit/visual-image.test.ts checks it).
+name: Visual regression
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+permissions:
+  contents: read
+
+env:
+  CONTENT_MODE: preview
+  NEXT_TELEMETRY_DISABLED: 1
+
+jobs:
+  visual:
+    name: Screenshots (Playwright image)
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'visual')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      options: --ipc=host
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true # baselines are Git LFS objects (.gitattributes)
+      - uses: pnpm/action-setup@v6
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm test:visual
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-diffs
+          path: test-results/
+          retention-days: 7

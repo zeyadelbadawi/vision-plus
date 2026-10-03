@@ -65,6 +65,15 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 | Industries master–detail: selection, focus, hash, header menu, back/forward | Mobile projects (390 px) | The explorer is master–detail only at ≥ 1024 px; below it the stacked sections are tested instead |
 | Industries stacked layout with chip index | Desktop projects (1440 px) | The stacked layout is the < 1024 px and no-JavaScript view (no-JS is tested separately at 1440 px) |
 
+## Visual regression (P5-T1, `tests/visual/`)
+
+Full-page screenshots compared pixel for pixel, generated and checked only inside the Playwright Docker image (`pnpm test:visual`; CI: `visual.yml` on dispatch and `visual`-labelled PRs). Baselines live in `tests/visual/__screenshots__/` (Git LFS). Update them only deliberately (`pnpm test:visual:update`) and review the diff.
+
+| Scope | Screenshots | Status |
+|---|---|---|
+| Solution template (§26.2): 7 pages × en/ar/zh × 390/768/1440/1920 × default/reduced motion | 168 | Generated and verified 2026-10-03; not yet committed (Git LFS host blocked in the session environment) |
+| Other templates (homepage, hub, Services, Industries, About, Mobile NVR with scene checkpoints, …) | — | Not yet baselined |
+
 ## Results
 
 | Where | Commit | Command | Result |
@@ -83,6 +92,7 @@ All are `test.skip` conditions on the viewport width (`home.spec.ts` lines 62 an
 | GitHub E2E matrix, run 37028280756 | `17f3cae` (temporary start-up diagnostic) | same | **2 failed** (firefox-desktop On board "scrolling back"; the diagnostic itself on webkit-mobile), 326 passed, 17 skipped |
 | GitHub E2E matrix, [run 37038533676](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37038533676) | `eb98ad5` (hydration fix) | same | **338 passed, 17 skipped, 0 failed, 0 flaky** |
 | Local, Chromium projects | `eb98ad5` | `pnpm test:e2e` | 135 passed, 7 skipped |
+| GitHub E2E matrix, run 37080638510 | `58f2beb` (P5A-07 About) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **601 passed, 24 skipped, 0 failed** (13.2 min) |
 | Local, Chromium projects | `ddbac22` (P5A-07 About) | `pnpm test:e2e` | 240 passed, 10 skipped, 0 failed (3.0 min) |
 | GitHub E2E matrix, [run 37077807521](https://github.com/zeyadelbadawi/vision-plus/actions/runs/37077807521) | `46ca5f5` (P5A-03 to P5A-06) | `pnpm test:e2e` with `PW_ALL_BROWSERS=1` | **581 passed, 24 skipped, 0 failed, 0 flaky** (20.3 min) |
 | Local, Chromium projects | `52e9338` (P5A-03 to P5A-06: 404, solution template, Services, Industries) | `pnpm test:e2e` | 232 passed, 10 skipped, 0 failed (2.9 min). The 3 new skips are layout-only: the Industries master–detail tests on the mobile project and the stacked-layout test on the desktop project |
