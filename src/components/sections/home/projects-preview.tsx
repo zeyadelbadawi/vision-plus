@@ -5,6 +5,7 @@ import { previewSlots, projects } from '@/content/data/registry';
 import { sampleProjects } from '@/content/data/samples';
 import { Section, SectionHeading } from '@/components/layout/section';
 import { ImageSlot } from '@/components/media/image-slot';
+import { slotForInstance } from '@/content/media';
 import { LinkButton } from '@/components/ui/button';
 import { ArrowEnd } from '@/components/ui/icons';
 import { isPreview } from '@/lib/env';
@@ -48,7 +49,7 @@ export async function HomeProjects({ locale }: { locale: Locale }) {
             return (
               <li key={p.slug} className={cn('project-slot', i === 0 && 'project-slot--lead')} data-sample="">
                 <ImageSlot
-                  id="PROJ-{slug}-COVER"
+                  id={slotForInstance('PROJ-{slug}-COVER', p.slug)}
                   locale={locale}
                   sizes={i === 0 ? '(min-width: 1024px) 752px, 100vw' : '(min-width: 1024px) 528px, 100vw'}
                   labelAlign="bottom-start"

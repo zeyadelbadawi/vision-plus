@@ -6,6 +6,7 @@
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import sharp from 'sharp';
+import { resolveSlot } from './media-slots.mjs';
 
 const mode = process.env.CONTENT_MODE === 'production' ? 'production' : 'preview';
 const manifest = JSON.parse(readFileSync('src/content/media/manifest.generated.json', 'utf8'));
@@ -28,7 +29,7 @@ for (const id of referenced) if (!manifest[id]) errors.push(`source references u
 
 // 3. finals
 for (const [id, f] of Object.entries(finals)) {
-  const slot = manifest[id];
+  const slot = resolveSlot(manifest, id);
   if (!slot) {
     errors.push(`images.json: unknown slot ${id}`);
     continue;

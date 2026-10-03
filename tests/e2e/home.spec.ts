@@ -100,6 +100,21 @@ test('the supplied Mobile NVR chapter image renders as a responsive picture with
   }
 });
 
+test('projects preview: the three sample cards show their approved covers with localized alt text', async ({ page }) => {
+  for (const [code, fragment] of [
+    ['en', 'white coaches'],
+    ['ar', 'الحافلات البيضاء'],
+    ['zh', '白色大巴'],
+  ] as const) {
+    await page.goto(`/${code}`);
+    const cards = page.locator('.project-slot');
+    await expect(cards).toHaveCount(3);
+    await expect(cards.locator('picture img')).toHaveCount(3);
+    await expect(cards.locator('[data-slot]')).toHaveCount(0);
+    await expect(cards.first().locator('picture img')).toHaveAttribute('alt', new RegExp(fragment));
+  }
+});
+
 test.describe('desktop navigation', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1200, 'desktop only');
 

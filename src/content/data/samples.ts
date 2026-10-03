@@ -5,7 +5,9 @@ import type { IndustrySlug, SolutionSlug } from './registry';
  *
  * The client asked to show the Projects section with four complete sample projects and to use clearly labelled
  * dummy office details until verified data arrives. None of this is a Vision Plus fact: there are no client names,
- * real locations, dates, values, photographs or outcomes. Every element rendered from here carries `data-sample`
+ * real locations, dates, values, project photographs or outcomes (the three home-preview covers are client-approved
+ * illustrative images, images.json PROJ-sample-*-COVER, not photos of delivered work). Every element rendered from
+ * here carries `data-sample`
  * and a visible "sample" label; `pnpm site:check` fails a production build that contains any `data-sample`
  * element. Text lives in copy/<locale>/samples.json; replace or delete both files when verified data is supplied.
  */

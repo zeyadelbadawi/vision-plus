@@ -8,6 +8,7 @@ import { Link } from '@/i18n/navigation';
 import { PageIntro } from '@/components/layout/page-intro';
 import { Section } from '@/components/layout/section';
 import { ImageSlot } from '@/components/media/image-slot';
+import { slotForInstance } from '@/content/media';
 import { CtaBand } from '@/components/sections/shared/cta-band';
 import { HeroBand } from '@/components/sections/shared/hero-band';
 import { ArrowEnd } from '@/components/ui/icons';
@@ -71,7 +72,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
                   const name = samples.projects[p.slug as keyof typeof samples.projects].name;
                   return (
                     <li key={p.slug} className="project-card" data-sample="">
-                      <ImageSlot id="PROJ-{slug}-COVER" locale={locale} sizes="(min-width: 768px) 50vw, 100vw" />
+                      <ImageSlot id={slotForInstance('PROJ-{slug}-COVER', p.slug)} locale={locale} sizes="(min-width: 768px) 50vw, 100vw" />
                       <p className="sample-tag mt-6">{samples.label}</p>
                       <h3 className="t-h3 mt-3">
                         <Link href={`/projects/${p.slug}`} className="project-card__link" {...tx(name)}>

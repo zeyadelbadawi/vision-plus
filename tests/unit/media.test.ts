@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import manifest from '../../src/content/media/manifest.generated.json';
-import { getSlot, ratioToCss, variantBase, variantWidths } from '@/content/media';
+import { getSlot, ratioToCss, slotForInstance, variantBase, variantWidths } from '@/content/media';
 
 describe('image registry', () => {
   it('mirrors the approved manifest dimensions for the homepage hero', () => {
@@ -30,5 +30,16 @@ describe('image registry', () => {
     expect(variantBase('public/images/home/home-hero.jpg')).toBe('/_img/home/home-hero');
     expect(ratioToCss('16:10')).toBe('16 / 10');
     expect(ratioToCss('free (fit box)')).toBe('auto');
+  });
+
+  it('resolves concrete instances of templated slots and falls back to the template placeholder', () => {
+    const cover = getSlot('PROJ-sample-fleet-surveillance-COVER');
+    expect(cover.path).toBe('public/images/projects/sample-fleet-surveillance/cover.jpg');
+    expect(cover.desktop).toEqual({ width: 1620, height: 1080 });
+    expect(cover.templated).toBe(false);
+    expect(slotForInstance('PROJ-{slug}-COVER', 'sample-fleet-surveillance')).toBe('PROJ-sample-fleet-surveillance-COVER');
+    expect(slotForInstance('PROJ-{slug}-COVER', 'not-delivered')).toBe('PROJ-{slug}-COVER');
+    expect(() => getSlot('PROJ-Sample-COVER')).toThrow();
+    expect(() => getSlot('PROJ-x-GALLERY-01')).toThrow();
   });
 });

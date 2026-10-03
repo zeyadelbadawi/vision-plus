@@ -48,8 +48,24 @@ const finals = (finalsJson as { assets: Record<string, FinalAsset> }).assets;
 
 export type ImageId = string;
 
+/**
+ * A concrete instance of a templated slot (e.g. PROJ-sample-fleet-surveillance-COVER for PROJ-{slug}-COVER): the
+ * template's spec with the slug filled into its ID and file paths. Same rules as scripts/images.mjs and
+ * scripts/assets-check.mjs (instanceOf there).
+ */
+function instanceOf(id: ImageId): ManifestSlot | undefined {
+  for (const t of Object.values(manifest)) {
+    if (!t.templated || !t.id.includes('{slug}') || /\{(?!slug\})/.test(t.id)) continue;
+    const re = new RegExp(`^${t.id.replace('{slug}', '([a-z0-9-]+)')}$`);
+    const slug = re.exec(id)?.[1];
+    if (!slug) continue;
+    const fill = (p: string) => p.replace('{slug}', slug);
+    return { ...t, id, path: fill(t.path), mobilePath: t.mobilePath && fill(t.mobilePath), templated: false };
+  }
+}
+
 export function getSlot(id: ImageId): ManifestSlot {
-  const slot = manifest[id];
+  const slot = manifest[id] ?? instanceOf(id);
   if (!slot) throw new Error(`Unknown image slot "${id}" — not in docs/image-asset-manifest.csv`);
   return slot;
 }
@@ -60,6 +76,12 @@ export function getFinal(id: ImageId): FinalAsset | undefined {
 
 export function isFinal(id: ImageId): boolean {
   return finals[id]?.status === 'final';
+}
+
+/** The slot for one instance of a templated slot: the concrete ID once its image is final, else the template's placeholder. */
+export function slotForInstance(template: ImageId, slug: string): ImageId {
+  const id = template.replace('{slug}', slug);
+  return isFinal(id) ? id : template;
 }
 
 /** Widths generated at build time by scripts/images.mjs (must stay in sync). */
