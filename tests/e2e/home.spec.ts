@@ -45,9 +45,9 @@ test('image placeholders are hidden from assistive technology and carry manifest
 
 test('the supplied hero banner renders as a responsive picture with localized alt text', async ({ page }) => {
   for (const [code, fragment] of [
-    ['en', 'VISION PLUS logo'],
-    ['ar', 'شعار VISION PLUS'],
-    ['zh', 'VISION PLUS 标志'],
+    ['en', 'VP monogram carrying CCTV cameras'],
+    ['ar', 'شعار VP بلونين فحمي وذهبي'],
+    ['zh', 'VP 字母造型'],
   ] as const) {
     await page.goto(`/${code}`);
     const img = page.locator('.hero picture img');

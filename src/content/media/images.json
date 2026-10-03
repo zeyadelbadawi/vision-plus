@@ -17,7 +17,7 @@
   "assets": {
     "HOME-HERO": {
       "status": "final",
-      "source": "Client-supplied banner (2026-09-29). Mobile file is a 4:5 crop of the same banner framed on the logo lock-up (x 750–1500). Interim resolution: 1500×938 vs 2880×1800 master spec.",
+      "source": "Client-supplied banner, approved by Ziad as the home hero banner (2026-10-03); replaces the 2026-09-29 banner. Mobile file is a 4:5 crop of the same banner framed on the VP lock-up (x 720–1470). Interim resolution: 1500×938 vs 2880×1800 master spec.",
       "size": {
         "width": 1500,
         "height": 938
@@ -32,9 +32,9 @@
       },
       "textZone": "left",
       "alt": {
-        "en": "VISION PLUS logo with the line “From vision to execution” on a charcoal-to-grey grain background.",
-        "ar": "شعار VISION PLUS مع عبارة «من الرؤية إلى التنفيذ» على خلفية متدرجة من الفحمي إلى الرمادي.",
-        "zh": "VISION PLUS 标志及“从愿景到执行”字样，背景为由炭黑渐变至灰色的颗粒质感。"
+        "en": "A charcoal-and-gold VP monogram carrying CCTV cameras, a PTZ dome camera, a monitor showing camera feeds, a smart lock and a door intercom, set among modern buildings in front of a city skyline at night.",
+        "ar": "شعار VP بلونين فحمي وذهبي يحمل كاميرات مراقبة وكاميرا قبة متحركة وشاشة تعرض بث الكاميرات وقفلًا ذكيًا وجهاز اتصال داخلي للباب، بين مبانٍ حديثة أمام أفق مدينة ليلًا.",
+        "zh": "炭黑与金色的 VP 字母造型，承载着监控摄像机、PTZ 球形摄像机、显示监控画面的显示器、智能门锁和门禁对讲机，背景为现代建筑与城市夜景天际线。"
       }
     }
   }
