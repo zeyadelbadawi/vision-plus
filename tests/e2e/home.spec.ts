@@ -73,6 +73,18 @@ test('the supplied statement image renders beside the positioning text with loca
   }
 });
 
+test('industry index uses the delivered industry images; the missing ones keep their placeholders', async ({ page }) => {
+  await page.goto('/en');
+  const section = page.locator('[aria-labelledby="industries-title"]');
+  for (const id of ['IND-TRANSPORT', 'IND-GOV', 'IND-BANKING', 'IND-HOSPITALITY', 'IND-RETAIL', 'IND-RESIDENTIAL', 'IND-LOGISTICS', 'IND-INDUSTRIAL']) {
+    await expect(section.locator(`[data-slot="${id}"]`)).toHaveCount(0);
+  }
+  for (const id of ['IND-COMMERCIAL', 'IND-EDUCATION', 'IND-HEALTHCARE']) {
+    await expect(section.locator(`[data-slot="${id}"]`).first()).toBeAttached();
+  }
+  expect(await section.locator('picture img').count()).toBeGreaterThan(0);
+});
+
 test.describe('desktop navigation', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1200, 'desktop only');
 

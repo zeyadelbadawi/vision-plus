@@ -53,6 +53,142 @@
         "ar": "عبارة «One vision for all Connected solutions.» فوق مشهد عند الغروب من مكتب عليه خوذة عمل ومخططات طوابق وجهاز لوحي يعرض بث الكاميرات، أمام مبنى حديث مضاء مزوّد بكاميرا قبة ولوحة تحكم بالدخول، وأفق مدينة عند الغروب.",
         "zh": "“One vision for all Connected solutions.”字样，叠加在黄昏时分的书桌场景上：桌上有安全帽、楼层平面图和显示监控画面的平板电脑，对面是一栋灯火通明、装有球形摄像机和门禁面板的现代建筑，远处是日落时的城市天际线。"
       }
+    },
+    "IND-BANKING": {
+      "status": "final",
+      "source": "Client-supplied industry image (Bank-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A banker in a suit shows a brochure to a client at a bank desk, with a ceiling dome camera and a monitor showing camera feeds behind them.",
+        "ar": "موظف بنك ببدلة رسمية يعرض كتيّبًا على عميلة عند مكتب في البنك، وخلفهما كاميرا قبة في السقف وشاشة تعرض بث الكاميرات.",
+        "zh": "身穿西装的银行职员在柜台向客户展示宣传册，身后是吸顶球形摄像机和显示监控画面的屏幕。"
+      }
+    },
+    "IND-TRANSPORT": {
+      "status": "final",
+      "source": "Client-supplied industry image (Fleet-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A truck and a van approach a vehicle checkpoint with a barrier arm and a guard booth at sunset, on a palm-lined road with a city skyline behind.",
+        "ar": "شاحنة وسيارة نقل تقتربان من نقطة تفتيش للمركبات بحاجز وكشك حراسة عند الغروب، على طريق تحفّه أشجار النخيل وخلفه أفق المدينة.",
+        "zh": "日落时分，一辆卡车和一辆厢式车驶近设有道闸和岗亭的车辆检查口，道路两旁是棕榈树，远处是城市天际线。"
+      }
+    },
+    "IND-GOV": {
+      "status": "final",
+      "source": "Client-supplied industry image (Government.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A car stops at a barrier gate beside a guard booth with security cameras, in front of a columned government building flying a flag at dusk.",
+        "ar": "سيارة تتوقف عند بوابة بحاجز بجوار كشك حراسة مزوّد بكاميرات مراقبة، أمام مبنى حكومي ذي أعمدة يرفرف عليه علم عند الغسق.",
+        "zh": "黄昏时分，一辆汽车停在道闸前，旁边是装有监控摄像机的岗亭，后方是一座悬挂旗帜的柱廊式政府建筑。"
+      }
+    },
+    "IND-HOSPITALITY": {
+      "status": "final",
+      "source": "Client-supplied industry image (Hospitality1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A guest with a suitcase checks in with a smiling receptionist at a hotel front desk, with ceiling cameras above the lobby.",
+        "ar": "نزيلة تحمل حقيبة سفر تسجّل وصولها لدى موظفة استقبال مبتسمة في مكتب استقبال فندق، وفوق الردهة كاميرات في السقف.",
+        "zh": "一位拖着行李箱的客人在酒店前台办理入住，前台接待员面带微笑，大堂天花板上装有摄像机。"
+      }
+    },
+    "IND-RESIDENTIAL": {
+      "status": "final",
+      "source": "Client-supplied industry image (Residential-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "Aerial view of a residential community at dusk: apartment blocks around landscaped gardens, a lawn and swimming pools.",
+        "ar": "منظر جوي لمجمع سكني عند الغسق: مبانٍ سكنية حول حدائق منسّقة ومسطح أخضر وأحواض سباحة.",
+        "zh": "黄昏时分住宅社区的鸟瞰图：公寓楼环绕着景观花园、草坪和游泳池。"
+      }
+    },
+    "IND-INDUSTRIAL": {
+      "status": "final",
+      "source": "Client-supplied industry image (industrial-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "Two engineers in hard hats and high-visibility vests on a factory floor with robotic arms on a production line, beside a control room showing camera feeds.",
+        "ar": "مهندسان بخوذتين وسترتين عاكستين في أرضية مصنع بها أذرع آلية على خط إنتاج، بجوار غرفة تحكم تعرض بث الكاميرات.",
+        "zh": "两名戴安全帽、穿反光背心的工程师站在工厂车间里，生产线上有机械臂，旁边的控制室显示着监控画面。"
+      }
+    },
+    "IND-LOGISTICS": {
+      "status": "final",
+      "source": "Client-supplied industry image (logistics-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "Aerial view of a container port at sunset: a loaded container ship beside gantry cranes, with trucks moving through the terminal.",
+        "ar": "منظر جوي لميناء حاويات عند الغروب: سفينة محمّلة بالحاويات بجوار رافعات جسرية، وشاحنات تتحرك داخل المحطة.",
+        "zh": "日落时分集装箱港口的鸟瞰图：满载集装箱的货轮停靠在岸桥旁，卡车在码头内穿行。"
+      }
+    },
+    "IND-RETAIL": {
+      "status": "final",
+      "source": "Client-supplied industry image (retail-1080-x-1350.png), approved by Ziad for the home industries section (2026-10-03). Delivered at the manifest master size (1080×1350, 4:5), saved as sRGB JPG q88.",
+      "size": {
+        "width": 1080,
+        "height": 1350
+      },
+      "focal": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "alt": {
+        "en": "A cashier serves a customer at a supermarket checkout, with a ceiling dome camera and shoppers in the aisles behind.",
+        "ar": "أمين صندوق يخدم زبونًا عند صندوق الدفع في سوبرماركت، وخلفهما كاميرا قبة في السقف ومتسوقون بين الممرات.",
+        "zh": "收银员在超市收银台为顾客结账，身后是吸顶球形摄像机和在货架间购物的顾客。"
+      }
     }
   }
 }
