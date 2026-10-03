@@ -7,6 +7,7 @@ import { MAX_BEATS, ScrollScene, type SceneBeat } from '@/components/scenes/scro
 import { beatAt } from '@/components/scenes/lab/lab-frame-driver';
 import { MnvrOnboardScene } from '@/components/sections/solution/mnvr-onboard-scene';
 import { ELV_FRAMES, ELV_SYSTEMS, ElvSectionArt, mirrorViewBox } from '@/components/scenes/elv-section-art';
+import { CCTV_CAMERAS, CCTV_FRAMES, CctvPlanArt, mirrorViewBox as mirrorCctv } from '@/components/scenes/cctv-plan-art';
 import { scenes } from '@/content/data/scenes';
 import { sceneText, sentences } from '@/content/scene-text';
 import { textAttrs } from '@/lib/text-attrs';
@@ -98,7 +99,7 @@ describe('placeholder text direction', () => {
 
 describe('scene engine hardening (P5B-01)', () => {
   const beats = (n: number): SceneBeat[] => Array.from({ length: n }, (_, i) => ({ key: `b${i + 1}`, title: `Beat ${i + 1}`, labels: [] }));
-  const scene = (n: number, frames = n, driver?: 'scroll' | 'manual') =>
+  const scene = (n: number, frames = n, driver?: 'scroll' | 'manual', desktop?: 'pinned' | 'sticky') =>
     renderToStaticMarkup(
       <ScrollScene
         locale="en"
@@ -110,6 +111,7 @@ describe('scene engine hardening (P5B-01)', () => {
         ))}
         stepsLabel="Steps"
         driver={driver}
+        desktop={desktop}
       />,
     );
 
@@ -135,6 +137,21 @@ describe('scene engine hardening (P5B-01)', () => {
     expect(lab).not.toContain('data-progress');
     expect(lab).not.toContain('data-steps');
     expect(lab).toContain('data-driver="manual"');
+  });
+
+  it('desktop="sticky" keeps the step tracking but not the scroll progress (stepped scenes with sticky art)', () => {
+    const sticky = scene(3, 3, 'scroll', 'sticky');
+    expect(sticky).toMatch(/^<div class="scene scene--sticky"/);
+    expect(sticky).not.toContain('data-progress');
+    expect(sticky).toContain('data-steps=""');
+    const lab = scene(3, 3, 'manual', 'sticky');
+    expect(lab).not.toContain('data-steps');
+    expect(lab).toContain('data-driver="manual"');
+    // default stays pinned: existing scenes render as before
+    expect(scene(3)).toMatch(/^<div class="scene" data-scene="test" data-progress="follow"/);
+    // each beat waits until its step is reached, for every beat the engine supports
+    const css = readFileSync('src/styles/scenes.css', 'utf8');
+    for (let n = 1; n <= MAX_BEATS; n++) expect(css).toContain(`.motion-ok:not(.scene-lite) .scene--sticky[data-reached~='${n}'] { --b${n}: 1; }`);
   });
 
   it('the On board scene follows the same driver rule', () => {
@@ -177,5 +194,33 @@ describe('ELV scene artwork (elv-one-infrastructure)', () => {
     const rtl = renderToStaticMarkup(<ElvSectionArt rtl viewBox={ELV_FRAMES[2]} />);
     expect(rtl).toContain(`viewBox="${mirrorViewBox(ELV_FRAMES[2]!)}"`);
     expect(rtl).toContain('transform="matrix(-1 0 0 1 1200 0)"');
+  });
+});
+
+describe('CCTV scene artwork (cctv-see-know-respond)', () => {
+  const cctv = scenes.find((s) => s.id === 'cctv-see-know-respond')!;
+
+  it('has one stepped frame per approved beat, stepped on every breakpoint (§23.6.4)', () => {
+    expect(CCTV_FRAMES).toHaveLength(cctv.beats.length);
+    expect(new Set(CCTV_FRAMES).size).toBe(CCTV_FRAMES.length);
+    expect(cctv.modes).toEqual({ base: 'stepped', lg: 'stepped' });
+    expect(cctv.status).toBe('built-review');
+  });
+
+  it('tags every animated part with a beat and shows no text inside the drawing', () => {
+    const svg = renderToStaticMarkup(<CctvPlanArt rtl={false} />);
+    for (const n of [1, 2, 3]) expect(svg).toContain(`data-beat="${n}"`);
+    expect(svg).not.toMatch(/<text/);
+    expect(svg.match(/class="cctv-cone"/g)).toHaveLength(CCTV_CAMERAS.length); // cones on the main site only
+    expect(svg.match(/class="cctv-cam"/g)).toHaveLength(CCTV_CAMERAS.length + 2); // + one camera per smaller site
+    expect(svg.match(/class="cctv-feed"/g)).toHaveLength(3); // one feed per site
+  });
+
+  it('mirrors the drawing and its crop windows in RTL', () => {
+    expect(mirrorCctv('470 400 400 440')).toBe('570 400 400 440');
+    expect(mirrorCctv(mirrorCctv(CCTV_FRAMES[0]!))).toBe(CCTV_FRAMES[0]);
+    const rtl = renderToStaticMarkup(<CctvPlanArt rtl viewBox={CCTV_FRAMES[1]} />);
+    expect(rtl).toContain(`viewBox="${mirrorCctv(CCTV_FRAMES[1]!)}"`);
+    expect(rtl).toContain('transform="matrix(-1 0 0 1 1440 0)"');
   });
 });

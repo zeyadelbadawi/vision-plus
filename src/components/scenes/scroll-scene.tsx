@@ -10,6 +10,9 @@ import { textAttrs } from '@/lib/text-attrs';
  *  - stepped (mobile/tablet, and desktop on save-data / low-memory devices): each step shows its own
  *    cropped frame of the same artwork, which plays its beat once when it enters view.
  *  - static (reduced motion / no JS): every --bN keeps its registered initial value 1 → final state.
+ * `desktop="sticky"` (stepped scenes with sticky art on desktop, e.g. CCTV §23.6.4): the same sticky stage, but not
+ * scrubbed: no --p is written, and each beat plays once (CSS transition) when the reader reaches its step
+ * (data-reached from the MotionController), in both scroll directions. Mobile and tablet stay stepped.
  * The root is also a [data-steps] container: the MotionController marks the reader's current beat (data-current) so a
  * scene can play short, finite emphasis for that beat only (both scroll directions; none without JS or with reduced
  * motion). The step list is the real HTML text (approved copy) for screen readers and search engines; all
@@ -31,6 +34,9 @@ export const MAX_BEATS = 8;
  */
 export type SceneDriver = 'scroll' | 'manual';
 
+/** Desktop behaviour: `pinned` scrubs the beats with the scroll (--p); `sticky` keeps the stage but plays beat by step. */
+export type SceneDesktop = 'pinned' | 'sticky';
+
 /** Low-power heuristic (§23.5 rule 8): fall back to stepped mode even on desktop. */
 const lowPowerScript = `(function(){try{var n=navigator,c=n.connection;if((c&&c.saveData)||(n.deviceMemory&&n.deviceMemory<=2))document.documentElement.classList.add('scene-lite');}catch(e){}})();`;
 
@@ -43,6 +49,7 @@ export function ScrollScene({
   className,
   locale,
   driver = 'scroll',
+  desktop = 'pinned',
 }: {
   locale: Locale;
   id: string;
@@ -52,6 +59,7 @@ export function ScrollScene({
   stepsLabel: string;
   className?: string;
   driver?: SceneDriver;
+  desktop?: SceneDesktop;
 }) {
   const n = beats.length;
   // Fail the build, not the page: beyond 8 beats the CSS has no --bN, and every beat needs its stepped frame.
@@ -59,9 +67,9 @@ export function ScrollScene({
   if (frames.length !== n) throw new Error(`ScrollScene "${id}": ${frames.length} stepped frames for ${n} beats`);
   return (
     <div
-      className={['scene', className].filter(Boolean).join(' ')}
+      className={['scene', desktop === 'sticky' && 'scene--sticky', className].filter(Boolean).join(' ')}
       data-scene={id}
-      data-progress={driver === 'scroll' ? 'follow' : undefined}
+      data-progress={driver === 'scroll' && desktop === 'pinned' ? 'follow' : undefined}
       data-steps={driver === 'scroll' ? '' : undefined}
       data-driver={driver === 'manual' ? 'manual' : undefined}
       style={{ '--beats': n } as CSSProperties}

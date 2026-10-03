@@ -17,7 +17,8 @@ export function beatAt(p: number, beats: number): number {
  *  - mode (query `?mode=`): `static` drops `motion-ok` (the reduced-motion / no-JS composition), `lite` adds
  *    `scene-lite` (stepped frames on desktop, §23.5 rule 8); `pinned` and `stepped` follow the frame width.
  *  - progress (query `?p=`, then postMessage `{ type: 'vp-scene-lab', p }` from the same origin): `progress` scenes get
- *    --p plus the current beat and, in stepped modes, the frames up to that beat; `steps` scenes get the step.
+ *    --p plus the current beat; `steps` scenes get the step. In stepped modes the frames up to that beat or step
+ *    count as in view.
  */
 export function LabFrameDriver({ kind, beats }: { kind: 'progress' | 'steps'; beats: number }) {
   useEffect(() => {
@@ -36,13 +37,11 @@ export function LabFrameDriver({ kind, beats }: { kind: 'progress' | 'steps'; be
       root.dataset.live = '';
       root.dataset.current = String(current);
       root.dataset.reached = Array.from({ length: current }, (_, i) => i + 1).join(' ');
-      if (kind === 'progress') {
-        root.style.setProperty('--p', p.toFixed(4));
-        root.querySelectorAll<HTMLElement>('[data-frame]').forEach((f) => {
-          if (Number(f.dataset.frame) <= current) f.setAttribute('data-inview', '');
-          else f.removeAttribute('data-inview');
-        });
-      }
+      if (kind === 'progress') root.style.setProperty('--p', p.toFixed(4));
+      root.querySelectorAll<HTMLElement>('[data-frame]').forEach((f) => {
+        if (Number(f.dataset.frame) <= current) f.setAttribute('data-inview', '');
+        else f.removeAttribute('data-inview');
+      });
     };
     apply(Math.min(1, Math.max(0, Number(query.get('p') ?? 0)) || 0));
     const onMessage = (e: MessageEvent) => {

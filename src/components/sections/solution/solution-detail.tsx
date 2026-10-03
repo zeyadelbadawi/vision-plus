@@ -20,6 +20,7 @@ import { LinkButton } from '@/components/ui/button';
 import { ArrowEnd } from '@/components/ui/icons';
 import { isPreview } from '@/lib/env';
 import { textAttrs } from '@/lib/text-attrs';
+import { CctvScene } from './cctv-scene';
 import { ElvScene } from './elv-scene';
 import '@/styles/pages.css';
 
@@ -124,7 +125,13 @@ export async function SolutionDetail({ locale, slug }: { locale: Locale; slug: T
               </h2>
             )}
             <div className="mt-12">
-              {scene.id === 'elv-one-infrastructure' ? <ElvScene locale={locale} scene={scene} name={name} /> : <SceneSteps locale={locale} scene={scene} />}
+              {scene.id === 'elv-one-infrastructure' ? (
+                <ElvScene locale={locale} scene={scene} name={name} />
+              ) : scene.id === 'cctv-see-know-respond' ? (
+                <CctvScene locale={locale} scene={scene} name={name} />
+              ) : (
+                <SceneSteps locale={locale} scene={scene} />
+              )}
             </div>
           </div>
         </Section>

@@ -11,4 +11,10 @@ export const LAB_SCENES = [
     kind: 'progress',
     beats: scenes.find((s) => s.id === 'elv-one-infrastructure')!.beats.length,
   },
+  {
+    id: 'cctv-see-know-respond',
+    title: 'CCTV & Security Systems · See · Know · Respond',
+    kind: 'steps',
+    beats: scenes.find((s) => s.id === 'cctv-see-know-respond')!.beats.length,
+  },
 ] as const satisfies readonly { id: string; title: string; kind: 'progress' | 'steps'; beats: number }[];

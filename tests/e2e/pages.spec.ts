@@ -870,6 +870,88 @@ test.describe('ELV Systems scene "One Infrastructure" (§23.6.3)', () => {
   });
 });
 
+test.describe('CCTV scene "See · Know · Respond" (§23.6.4)', () => {
+  const CCTV = '/solutions/cctv-security-systems';
+  type Page = import('@playwright/test').Page;
+  const opacity = (page: Page, sel: string) =>
+    page
+      .locator(sel)
+      .first()
+      .evaluate((el) => Number(getComputedStyle(el).opacity));
+
+  test('desktop: sticky art, not scrubbed; each beat plays once as its step is reached, and reverses', async ({ page }, info) => {
+    test.skip((info.project.use.viewport?.width ?? 0) < 1024, 'the sticky stage exists only at ≥ 1024 px');
+    await page.goto(`/en${CCTV}`);
+    const scene = page.locator('.scene');
+    await expect(scene).toHaveClass(/scene--sticky/);
+    await expect(scene).not.toHaveAttribute('data-progress');
+    await expect(page.locator('.scene__stage')).toHaveCSS('position', 'sticky');
+    const zone = '.scene__stage [data-beat="2"]';
+    const feeds = '.scene__stage g[data-beat="3"]';
+    // above the scene: no beat reached yet, so beats 2 and 3 wait at 14 %
+    expect(await opacity(page, zone)).toBeCloseTo(0.14, 2);
+    for (const n of [1, 2, 3]) {
+      await page
+        .locator(`.scene__step[data-step="${n}"]`)
+        .evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - innerHeight * 0.3));
+      await expect(scene).toHaveAttribute('data-current', String(n));
+    }
+    await expect.poll(() => opacity(page, zone)).toBeCloseTo(1, 2);
+    await expect.poll(() => opacity(page, feeds)).toBeCloseTo(1, 2);
+    // back above step 2: beats 2 and 3 return to waiting
+    await page.locator('.scene__step[data-step="1"]').evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - innerHeight * 0.3));
+    await expect(scene).toHaveAttribute('data-current', '1');
+    await expect.poll(() => opacity(page, feeds)).toBeCloseTo(0.14, 2);
+  });
+
+  test('stepped: one frame per beat below 1024 px, each a crop of the same plan', async ({ page }, info) => {
+    test.skip((info.project.use.viewport?.width ?? 0) >= 1024, 'stepped frames are the mobile and tablet layout');
+    await page.goto(`/en${CCTV}`);
+    await expect(page.locator('.scene__stage')).toBeHidden();
+    const boxes = await page.locator('.scene__frame svg').evaluateAll((s) => s.map((e) => e.getAttribute('viewBox')));
+    expect(boxes).toHaveLength(3);
+    expect(new Set(boxes).size).toBe(3);
+  });
+
+  test('RTL mirrors the plan (and its crop windows) but never the text', async ({ page }) => {
+    await page.goto(`/ar${CCTV}`);
+    await expect(page.locator('.scene .scene__stage svg > g').first()).toHaveAttribute('transform', 'matrix(-1 0 0 1 1440 0)');
+    const en = await (await page.request.get(`/en${CCTV}`)).text();
+    const crop = (html: string) => html.match(/viewBox="([^"]+)"[^>]*data-frame-art="2"/)?.[1];
+    const [x, , w] = crop(en)!.split(' ').map(Number) as [number, number, number];
+    expect(
+      crop(await page.content())!
+        .split(' ')
+        .map(Number)[0],
+    ).toBe(1440 - x - w);
+    await expect(page.locator('.scene__step h3').first()).not.toHaveAttribute('dir', 'rtl');
+  });
+
+  test('reduced motion: the final state, the three beat titles and their labels', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto(`/en${CCTV}`);
+    await expect(page.locator('html')).not.toHaveClass(/motion-ok/);
+    await expect(page.locator('.scene__step h3')).toHaveText(['See More.', 'Know More.', 'Respond Better.']);
+    await expect(page.locator('.scene__step .scene__labels')).toHaveText([
+      'IP CCTV Systems',
+      'Intelligent Video AnalyticsPerimeter Surveillance',
+      'Centralized MonitoringMulti-Site Surveillance',
+    ]);
+    const art = (await page.locator('.scene__stage').isVisible()) ? '.scene__stage' : '.scene__frame[data-frame="3"]';
+    expect(await opacity(page, `${art} g[data-beat="3"]`)).toBeCloseTo(1, 2);
+    expect(await opacity(page, `${art} .cctv-cone`)).toBeCloseTo(1, 2);
+    // no signal travels
+    expect(
+      await page
+        .locator(`${art} .cctv-signal`)
+        .first()
+        .evaluate((el) => getComputedStyle(el).animationName),
+    ).toBe('none');
+    await ctx.close();
+  });
+});
+
 test.describe('Scene lab (§23.6, P5B-01; preview only)', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1024, 'tooling page, checked at desktop width');
   type Page = import('@playwright/test').Page;
@@ -902,6 +984,11 @@ test.describe('Scene lab (§23.6, P5B-01; preview only)', () => {
     await slide(page, 'mnvr-onboard', 0.4);
     await expect(onboard).toHaveAttribute('data-current', '2');
     await expect(onboard).toHaveAttribute('data-reached', '1 2');
+    // CCTV steps through its beats; in stepped mode its frames up to the step count as in view
+    const cctv = frame(page, 'cctv-see-know-respond').locator('.scene[data-driver="manual"]');
+    await slide(page, 'cctv-see-know-respond', 0.67);
+    await expect(cctv).toHaveAttribute('data-reached', '1 2');
+    await expect(cctv.locator('[data-frame][data-inview]')).toHaveCount(2);
   });
 
   test('static mode is the reduced-motion composition; Arabic mirrors the artwork; the frames hide the site chrome', async ({ page }) => {

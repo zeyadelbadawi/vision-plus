@@ -111,6 +111,27 @@
     .scene-lite .scene__frame { display: block; }
   }
 
+  /* Desktop sticky (ScrollScene desktop="sticky": stepped scenes with sticky art on desktop, e.g. CCTV §23.6.4).
+     The pinned layout (sticky stage, ~70 svh per step), but nothing is scrubbed: each beat plays once, by transition,
+     when the MotionController marks its step reached, and reverses when the reader scrolls back above it. Like the
+     stepped frames, beats wait from first paint whenever motion is allowed (motion-ok), so nothing collapses when the
+     controller starts; without motion-ok (no JS, reduced motion) every --bN keeps its initial value 1. */
+  @media (min-width: 1024px) {
+    .motion-ok:not(.scene-lite) .scene--sticky {
+      --b1: 0; --b2: 0; --b3: 0; --b4: 0; --b5: 0; --b6: 0; --b7: 0; --b8: 0;
+      transition: --b1 1100ms var(--ease-precise), --b2 900ms var(--ease-precise), --b3 1400ms var(--ease-precise), --b4 900ms var(--ease-precise),
+        --b5 900ms var(--ease-precise), --b6 900ms var(--ease-precise), --b7 900ms var(--ease-precise), --b8 900ms var(--ease-precise);
+    }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='1'] { --b1: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='2'] { --b2: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='3'] { --b3: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='4'] { --b4: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='5'] { --b5: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='6'] { --b6: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='7'] { --b7: 1; }
+    .motion-ok:not(.scene-lite) .scene--sticky[data-reached~='8'] { --b8: 1; }
+  }
+
   /* ---------- Mobile NVR fleet-level scene: Concept B, the architecture schematic (mnvr-architecture-art.tsx) ----------
      Every part carries data-beat; its build follows that beat's --bN, so the pinned stage scrubs with the scroll in
      both directions, each stepped frame shows its own state (earlier beats built, its beat plays on entry, later beats
@@ -214,4 +235,45 @@
   .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(4)::before { background: repeating-linear-gradient(90deg, currentColor 0px 10px, transparent 10px 14px, currentColor 14px 16px, transparent 16px 20px); }
   .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(5)::before { background: repeating-linear-gradient(90deg, currentColor 0px 4px, transparent 4px 7px); }
   .scene--elv .scene__step[data-step='1'] .scene__labels li:nth-child(6)::before { background: repeating-linear-gradient(90deg, currentColor 0px 10px, transparent 10px 14px, currentColor 14px 16px, transparent 16px 20px, currentColor 20px 22px, transparent 22px 26px); }
+
+  /* ---------- CCTV & Security Systems scene "See · Know · Respond": a site plan (cctv-plan-art.tsx) ----------
+     Beat 1 opens the main site's field-of-view cones (grey fill, gold edge; overlaps show through the translucent
+     fill), 2 activates the analytics zone (dashed gold) and draws the perimeter in gold, 3 draws the feeds from the
+     three sites and activates the monitoring node. While beat 3 is the reader's step, a short gold signal travels
+     each feed three times, then rests (no flashing). Each part follows its beat's --bN; static shows everything. */
+  .scene--cctv .scene__frame, .scene--cctv .scene__step:last-child .scene__frame { aspect-ratio: auto; border-radius: 12px; overflow: hidden; }
+  .scene--cctv .scene__frame svg { height: auto; }
+  svg.cctv { overflow: visible; stroke-linecap: round; stroke-linejoin: round; }
+  .cctv-fence { fill: none; stroke: var(--line-strong); stroke-width: 2; }
+  .cctv-building { fill: color-mix(in srgb, var(--fg) 6%, transparent); stroke: var(--fg); stroke-width: 2.5; }
+  .cctv-cam { fill: var(--fg); }
+  .cctv-tick { stroke: var(--fg); stroke-width: 3; }
+  .cctv-cone {
+    fill: color-mix(in srgb, var(--color-gray-mid) 16%, transparent); stroke: var(--color-gold); stroke-width: 2;
+    transform-origin: 0 0; transform: scale(calc(0.5 + 0.5 * var(--k, 1)), calc(0.04 + 0.96 * var(--k, 1)));
+    opacity: calc(0.3 + 0.7 * var(--k, 1));
+  }
+  .cctv-zone { fill: color-mix(in srgb, var(--color-gold) 8%, transparent); stroke: var(--color-gold); stroke-width: 2.5; stroke-dasharray: 10 7; }
+  .cctv-perimeter, .cctv-feed { fill: none; stroke: var(--color-gold); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--k, 1)); }
+  .cctv-perimeter { stroke-width: 3.5; }
+  .cctv-feed { stroke-width: 3; }
+  .cctv-node { fill: var(--bg-raised); stroke: var(--line-strong); stroke-width: 2.5; }
+  .cctv-node--on { fill: none; stroke: var(--color-gold); stroke-width: 3.5; }
+  .cctv-node-core { fill: var(--color-gold); }
+  .cctv-signal { fill: none; stroke: var(--color-gold); stroke-width: 8; stroke-dasharray: 0.06 2; stroke-dashoffset: 0.06; opacity: 0; }
+  .cctv [data-beat] { opacity: calc(0.14 + 0.86 * var(--k, 1)); }
+  .cctv [data-beat='1'] { --k: var(--b1); }
+  .cctv [data-beat='2'] { --k: var(--b2); }
+  .cctv [data-beat='3'] { --k: var(--b3); }
+  /* the cameras sit in the beat 1 layer but are always shown: only their cones open */
+  .cctv .cctv-cones[data-beat] { opacity: 1; }
+  .scene[data-live][data-current='3'] :is(.scene__stage, .scene__frame[data-frame='3']) .cctv-signal { animation: cctv-signal 1.6s linear calc(1s + var(--i) * 0.25s) 3 both; }
+  @keyframes cctv-signal {
+    0% { stroke-dashoffset: 0.06; opacity: 0; }
+    12%, 88% { opacity: 1; }
+    100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cctv * { animation: none !important; }
+  }
 }

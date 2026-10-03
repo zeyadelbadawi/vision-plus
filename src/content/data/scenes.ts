@@ -206,7 +206,7 @@ export const scenes: Scene[] = [
     classification: 'moderate',
     modes: { base: 'stepped', lg: 'stepped' },
     budgetKb: 30,
-    status: 'storyboard-pending-d20',
+    status: 'built-review',
     beats: [
       {
         key: 'see',
