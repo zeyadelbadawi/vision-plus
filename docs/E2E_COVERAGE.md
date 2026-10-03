@@ -1,6 +1,6 @@
 # VISION PLUS — End-to-End Browser Coverage
 
-This record covers the Playwright browser projects, which tests run where, and why each remaining skip is necessary. `main` has this file as of `e137ea6`, and its Route tests check the earlier city-map artwork that is still on `main`. On the working branch `claude/confident-cori-lahb3k`, both Mobile NVR scenes were replaced on 2026-10-02 (Concept A On board, Concept B fleet scene; `626c894`), and the Route and On board tests were updated to validate the new artwork (below).
+This record covers the Playwright browser projects, which tests run where, and why each remaining skip is necessary. `main` has this file as of `e137ea6`, and its Route tests check the earlier city-map artwork that is still on `main`. On the working branch `claude/confident-cori-lahb3k`, both Mobile NVR scenes were replaced on 2026-10-02 (Concept A On board, Concept B fleet scene; `626c894`), and the Route and On board tests were updated to validate the new artwork (below). On 2026-10-03 `main` (up to `3c245b7`) was merged into the working branch: `main`'s Route tests (`ab86f47`) checked the city-map artwork that the branch had already replaced, so the branch's rewritten tests, which keep the same viewport-based selection, were kept; `main`'s coverage rows are all in the table below.
 
 ## Projects
 

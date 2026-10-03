@@ -99,7 +99,7 @@ export const getProjectsCopy = (locale: Locale): ProjectsCopy => projectsCopy[lo
 export const getSeoCopy = (locale: Locale): SeoCopy => seoCopy[locale];
 export const getServicesCopy = (locale: Locale): ServicesCopy => servicesCopy[locale];
 export const getSolutionsCopy = (locale: Locale): SolutionsCopy => solutionsCopy[locale];
-/** Illustrative sample content (Q-12, D-01, D-02) — preview builds only; see data/samples.ts. */
+/** Illustrative sample content (Q-12, D-01, D-02, D-10) — preview builds only; see data/samples.ts. */
 export const getSamplesCopy = (locale: Locale): SamplesCopy => samplesCopy[locale];
 export const getPrivacyCopy = (locale: Locale): PrivacyCopy => privacyCopy[locale];
 

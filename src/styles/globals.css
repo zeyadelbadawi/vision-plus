@@ -418,7 +418,7 @@ body:has(main[data-hero='dark']) .site-header--top {
 /* Client stacked logo (D-05): offset the artboard padding (62/330 × 200 px, 60/320 × 194 px) so the drawing aligns */
 .footer-logo { display: block; width: 200px; height: auto; margin-inline-start: -38px; margin-block: -36px -28px; }
 
-/* Illustrative sample content (Q-12, D-01/D-02): always visibly labelled, preview builds only */
+/* Illustrative sample content (Q-12, D-01/D-02, D-10): always visibly labelled, preview builds only */
 .sample-tag {
   display: inline-block;
   font-size: var(--fs-caption);
