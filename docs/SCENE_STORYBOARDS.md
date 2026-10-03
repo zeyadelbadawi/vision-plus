@@ -45,7 +45,7 @@ Per the plan's working rule, the storyboards are text, not images. Each frame be
 | 2 | Route (fleet level) | Mobile NVR & Mobile Surveillance | Rich | pinned / stepped / stepped | 6 + coda | D-20 approved the six-pillar storyboard. The visual was replaced on 2026-10-02 by **Concept B** (architecture schematic; scope authorised by Ziad for the Mobile NVR page only): **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE** |
 | 2a | On board | Mobile NVR & Mobile Surveillance | Rich, step-synchronised | sticky / sticky / sticky (static in RM) | 5 | **Concept A** (isometric cutaway), replacing the 2026-10-02 vehicle illustration: **IMPLEMENTED 2026-10-02 (`626c894`) — AWAITING ZIAD'S REVIEW OF THE IMPLEMENTED PAGE**; not covered by D-20 |
 | 3 | Responsive Space | Smart Building & Home Automation | Rich | pinned / stepped / stepped | 5 + coda | Approved (D-20, 2026-10-02) |
-| 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Approved (D-20, 2026-10-02) |
+| 4 | One Infrastructure | ELV Systems | Rich (moderate length) | pinned / stepped / stepped | 4 + coda | Approved (D-20, 2026-10-02). **IMPLEMENTED 2026-10-03 (P5B, Ziad's order E-7) — AWAITING REVIEW**; the coda is the pinned stage's final state (no fifth step). Open: the client question below (remove any strand?) |
 | 5 | See · Know · Respond | CCTV & Security Systems | Moderate | stepped (sticky art on D) | 3 | Approved (D-20, 2026-10-02) |
 | 6 | Who · Where · When | Access Control | Moderate | stepped (sticky art on D) | 3 + coda | Approved (D-20, 2026-10-02) |
 | 7 | Critical Sequence | Fire Alarm Systems | Moderate, restrained | in-view sequence | 4 + coda | Approved (D-20, 2026-10-02) |
