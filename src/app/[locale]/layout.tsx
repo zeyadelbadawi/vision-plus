@@ -14,6 +14,7 @@ import { MotionController } from '@/components/motion/motion-controller';
 import { motionBootScript } from '@/components/motion/motion-boot';
 import { copyStatus, getCompany } from '@/content';
 import { isPreview } from '@/lib/env';
+import { socialMetadata } from '@/lib/metadata';
 
 export const dynamicParams = false;
 
@@ -31,9 +32,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const company = getCompany(locale);
+  const title = `VISION PLUS — ${company.descriptor}`;
+  const description = company.tagline.join(' ');
   return {
-    title: { default: `VISION PLUS — ${company.descriptor}`, template: '%s — VISION PLUS' },
-    description: company.tagline.join(' '),
+    // Absolute og/twitter image URLs (§36). Unset in local and CI builds; site:check refuses a production build
+    // whose cards do not resolve to an absolute https URL.
+    metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
+    title: { default: title, template: '%s — VISION PLUS' },
+    description,
+    // The home card; inner pages replace it with their own (lib/metadata.ts).
+    ...socialMetadata(locale as Locale, 'home', title, description),
     // Preview builds must never be indexed (§36).
     robots: isPreview ? { index: false, follow: false } : undefined,
   };

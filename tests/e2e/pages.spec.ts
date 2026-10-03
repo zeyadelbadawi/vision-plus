@@ -803,6 +803,32 @@ test.describe('Company Profile (§33)', () => {
   }
 });
 
+test.describe('Open Graph cards (§36, P5A-14)', () => {
+  for (const l of LOCALES) {
+    test(`/${l.code}: home and a solution page reference their own 1200×630 card, which is served`, async ({ page, request }) => {
+      const want = { en: 'en_US', ar: 'ar_QA', zh: 'zh_CN' }[l.code];
+      const pages: [string, string][] = [
+        [`/${l.code}`, 'home'],
+        [`/${l.code}/solutions/access-control`, 'solution-access-control'],
+      ];
+      for (const [path, key] of pages) {
+        await page.goto(path);
+        const og = (p: string) => page.locator(`meta[property="og:${p}"]`).first().getAttribute('content');
+        expect(await og('locale')).toBe(want);
+        expect(await og('image:width')).toBe('1200');
+        expect(await og('title')).toBeTruthy();
+        const image = new URL((await og('image'))!).pathname;
+        expect(image).toBe(`/og/${l.code}/${key}.png`);
+        expect(await page.locator('meta[name="twitter:card"]').getAttribute('content')).toBe('summary_large_image');
+        const res = await request.get(image);
+        expect(res.status()).toBe(200);
+        const png = await res.body();
+        expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+      }
+    });
+  }
+});
+
 test.describe('Privacy (§26.12)', () => {
   for (const l of LOCALES) {
     test(`/${l.code}/privacy: one h1 and the pending-client line; no policy text or table of contents until D-16`, async ({ page }) => {

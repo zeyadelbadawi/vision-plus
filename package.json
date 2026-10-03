@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/content-check.mjs && node scripts/assets-check.mjs && node scripts/images.mjs && node scripts/fonts.mjs && next build && node scripts/postbuild.mjs",
+    "build": "node scripts/content-check.mjs && node scripts/assets-check.mjs && node scripts/images.mjs && node scripts/fonts.mjs && node scripts/og.mjs && next build && node scripts/postbuild.mjs",
     "serve": "node scripts/serve-static.mjs",
     "lint": "eslint . && node scripts/brand-check.mjs",
     "format": "prettier --write .",
@@ -25,6 +25,7 @@
     "i18n:export": "node scripts/i18n-export.mjs",
     "assets:check": "node scripts/assets-check.mjs",
     "images": "node scripts/images.mjs",
+    "og": "node scripts/og.mjs",
     "manifest:sync": "node scripts/sync-image-manifest.mjs",
     "worker:dev": "wrangler dev --local --port 8787",
     "worker:check": "wrangler deploy --dry-run --outdir .wrangler/dry-run && wrangler deploy --dry-run --env production --outdir .wrangler/dry-run-production",

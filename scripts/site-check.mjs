@@ -4,6 +4,7 @@
 //  - exactly one <h1>; <title> ≤ 60 characters and a meta description ≤ 155 (the 404 page is exempt)
 //  - <html lang/dir> match the locale prefix (en/ltr, ar/rtl, zh-Hans/ltr)
 //  - production builds contain no illustrative sample content ([data-sample], Q-12 / D-01 / D-02)
+//  - every og:image / twitter:image is a built 1200×630 PNG card (P5A-14); production needs absolute https URLs
 //  - production builds contain no placeholder or review text from messages (`pending`, `placeholder`, `preview`
 //    namespaces, every locale) in any deployable HTML page or RSC payload (.txt) — e.g. "Privacy policy text —
 //    pending client (D-16)"
@@ -81,6 +82,20 @@ for (const [route, h] of html) {
   else if (desc.length > 155) errors.push(`${where}: description is ${desc.length} chars (max 155)`);
 
   if (production && /\sdata-sample[=\s>]/.test(h)) errors.push(`${where}: production build renders illustrative sample content (data-sample)`);
+
+  const cards = [...h.matchAll(/<meta (?:property="og:image"|name="twitter:image") content="([^"]+)"/g)].map((m) => decode(m[1]));
+  if (!cards.length && !route.endsWith('/_lab')) errors.push(`${where}: no og:image`);
+  for (const url of cards) {
+    const path = url.replace(/^https?:\/\/[^/]+/, '');
+    if (production && !/^https:\/\/(?!localhost)[^/]+\//.test(url))
+      errors.push(`${where}: card URL is not absolute https (set NEXT_PUBLIC_SITE_URL, D-07): ${url}`);
+    if (!existsSync(join(OUT, path))) {
+      errors.push(`${where}: card ${path} was not built`);
+      continue;
+    }
+    const png = readFileSync(join(OUT, path));
+    if (png.readUInt32BE(16) !== 1200 || png.readUInt32BE(20) !== 630) errors.push(`${where}: card ${path} is not 1200×630`);
+  }
 
   const locale = route.split('/')[1];
   if (LOCALES[locale]) {
